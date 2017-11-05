@@ -562,8 +562,36 @@ vector<ull> Blub_blub_shum_generator (int n)
     return v;
 }
 
+pdd NOT_FOUND_D = mp(-100000,-100000);
+
+pdd try_solve (pdd p, pdd q)
+{
+    dd x1 = p.fs, y1 = p.sc, x2 = q.fs, y2 = q.sc;
+    
+    dd A = (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2);
+    dd B = (x2-x1)/2 + 2*x1*x2 - 2*x2*x2 - y1 + y2 + 2*y1*y2 - 2*y2*y2;
+    dd C = x2*x2 + y2*y2 - y2 - x2/2 + 0.25;
+    
+    dd D = B*B - A*C*4;
+    //if (fabs(D) < EPS) D = 0;
+    if (D < 0) return NOT_FOUND_D;
+    
+    dd t1 = (sqrt(D) - B)/(2*A), t2 = (sqrt(D) + B)/(2*A);
+    
+    if (t1 > 0 && t1 < 1) return mp(x1*t1 + x2*(1-t1), y1*t1 + y2*(1-t1));
+    if (t2 > 0 && t2 < 1) return mp(x1*t2 + x2*(1-t2), y1*t2 + y2*(1-t2));
+    return NOT_FOUND_D;
+}
+
+dd final_square (const vector<pdd> pnts)
+{
+    dd s = 0;
+    for (int i=1; i<(int)pnts.size(); i++) s += (pnts[i].sc + pnts[i-1].sc)*(pnts[i].fs - pnts[i-1].fs)/2;
+    return s;
+}
+
 int main() {
-    cout.precision(12);
+    cout.precision(15);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     //freopen("input.txt","rt",stdin);
@@ -571,6 +599,51 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    vector<dd> v(2);
+    
+    dd a = 1.0;
+    for (int steps=1; steps<=27; steps++) {
+        
+        cout << steps << endl;
+        a /= 2;
+        vector<dd> w;
+        for (int i=1; i<(int)v.size(); i++) {
+            w.push_back(v[i-1]);
+            w.push_back(a + (v[i-1] + v[i])/2);
+        }
+        w.push_back(v.back());
+        v.swap(w);
+    }
+    
+    vector<pdd> pnts;
+    dd s = 0;
+    for (int i=0; i<(int)v.size(); i++) {
+        pnts.push_back(mp(s,v[i]));
+        s += a;
+    }
+    
+    //for (int i=0; i<(int)pnts.size(); i++) cout << fixed << pnts[i].fs << " " << pnts[i].sc << endl;
+    
+    vector<pdd> final_pnts;
+    
+    for (int i=1; i<(int)pnts.size(); i++) {
+        
+        if (final_pnts.empty()) {
+            pdd p = try_solve(pnts[i-1], pnts[i]);
+            if (p != NOT_FOUND_D) {
+                final_pnts.push_back(p);
+                cout << i << endl;
+            }
+        }
+        else {
+            if (pnts[i].fs > 0.5) break;
+            final_pnts.push_back(pnts[i]);
+        }
+    }
+    
+    cout << fixed << final_pnts[0].fs << endl;
+    cout << fixed << final_square(final_pnts) << endl;
     
     cout << endl << ans << endl;
 }
