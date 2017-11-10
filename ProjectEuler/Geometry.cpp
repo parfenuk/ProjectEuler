@@ -210,3 +210,56 @@ point reflection_vector (point v, line p, point a = NOT_FOUND)
     if (a == NOT_FOUND) a = p.any_point();
     return symmetric_point(a+v, p) - a;
 }
+
+struct Polygon {
+    
+    vector<point> P;
+    
+    Polygon() {}
+    Polygon(int n) {
+        
+        for (int i=0; i<n; i++) {
+            P.push_back(make_point(cos((2*i+1)*PI/n),sin((2*i+1)*PI/n)));
+        }
+    }
+    point operator[] (int k) { return P[k]; }
+    
+    void show() {
+        
+        for (int i=0; i<(int)P.size(); i++) {
+            cout << fixed << P[i].x << " " << P[i].y << endl;
+        }
+    }
+};
+
+Polygon Minsowski_sum (Polygon V, Polygon W) // doesn't work correctly
+{
+    vector<point> a;
+    
+    int n = (int)V.P.size(), m = (int)W.P.size();
+    int kv = 0, kw = 0;
+    
+    for (int i=1; i<n; i++) {
+        if (V[i].x < V[kv].x || (V[i].x == V[kv].x && V[i].y < V[kv].y)) kv = i;
+    }
+    for (int i=1; i<m; i++) {
+        if (W[i].x < W[kw].x || (W[i].x == W[kw].x && W[i].y < W[kw].y)) kw = i;
+    }
+    
+    int i=0, j=0;
+    
+    while (i<n || j<m) {
+        a.push_back(V[(kv+i)%n]+W[(kw+j)%m]);
+        
+        dd a1 = (V[(kv+i+1)%n] - V[(kv+i)%n]).polar_angle();
+        dd a2 = (W[(kw+j+1)%m] - W[(kw+j)%m]).polar_angle();
+        
+        if (a1 < a2-EPS) i++;
+        else if (a1 > a2+EPS) j++;
+        else { i++; j++; }
+    }
+    
+    Polygon A;
+    A.P = a;
+    return A;
+}
