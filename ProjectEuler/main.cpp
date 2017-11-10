@@ -19,6 +19,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <unordered_map>
 #include <algorithm>
 #include <functional>
 #include <numeric>
@@ -158,13 +159,26 @@ dd decimal_part (dd a)
 
 ull integer_sqrt (ull n) // returns 0 if n != x*x
 {
+    if (n == 0) return 0;
+    
     ull x = (ull)sqrt((dd)(n-0.001));
     while (x*x < n) x++;
     if (x*x == n) return x;
     return 0;
 }
+
+ull integer_part_sqrt (ull n) // returns greatest x such that x*x <= n
+{
+    if (n == 0) return 0;
+    
+    ull x = (ull)sqrt((dd)(n-0.001));
+    while (x*x < n) x++;
+    if (x*x == n) return x;
+    return x-1;
+}
+
 // n = 153 -> (1,5,3)
-vector<int> digits (ull n, int base = 10)
+vector<int> digits (ull n, int base = 10, int min_size = 1)
 {
     vector<int> a;
     while (n) {
@@ -173,6 +187,7 @@ vector<int> digits (ull n, int base = 10)
         n /= base;
     }
     reverse(a.begin(), a.end());
+    while (a.size() < min_size) a.insert(a.begin(),0);
     return a;
 }
 
@@ -209,6 +224,7 @@ Lnum from_digits_lnum (vector<int> a)
 
 vector<bool> isPrime;
 vector<int> primes;
+vector<int> primePi;
 
 void Eratosthenes_sieve (int n, bool fill_primes = false)
 {
@@ -221,6 +237,16 @@ void Eratosthenes_sieve (int n, bool fill_primes = false)
     }
     
     if (fill_primes) for (int i=2; i<=n; i++) if (isPrime[i]) primes.push_back(i);
+}
+
+void fill_primePi (int n) // WARNING: call only after Erathosthenes_sieve with size greater than or equal to this n
+{
+    primePi = vector<int>(n+1);
+    int s = 0;
+    for (int i=0; i<=n; i++) {
+        s += isPrime[i];
+        primePi[i] = s;
+    }
 }
 
 vector<pull> factorize (ull n)
@@ -239,6 +265,13 @@ vector<pull> factorize (ull n)
     
     if (n != 1) a.push_back(make_pair(n,1));
     return a;
+}
+
+ll miobius (ull n)
+{
+    vector<pull> v = factorize(n);
+    for (int i=0; i<(int)v.size(); i++) if (v[i].sc > 1) return 0;
+    return v.size() % 2 ? -1 : 1;
 }
 
 ull rad (ull n)
@@ -451,6 +484,38 @@ vector<vector<int>> get_combinations (int n, int k)
     return b;
 }
 
+vector<vector<int>> sum_partitions (int n)
+{
+    vector<vector<int>> ret;
+    
+    vector<int> a;
+    for (int i=0; i<n; i++) a.push_back(1);
+    
+    ret.push_back(a);
+    while (a[0] != n) {
+        for (int j=(int)a.size()-2; j>=0; j--) {
+            if (j && a[j] < a[j-1]) {
+                a[j]++;
+                int k = 0, p = (int)a.size();
+                for (int t=j+1; t<p; t++) k += a[t];
+                for (int t=j+1; t<p; t++) a.pop_back();
+                for (int t=0; t<k-1; t++) a.push_back(1);
+                ret.push_back(a);
+                break;
+            }
+            if (j == 0) {
+                int k = a[0];
+                a.clear();
+                a.push_back(k+1);
+                for (int t=0; t<n-a[j]; t++) a.push_back(1);
+                ret.push_back(a);
+            }
+        }
+    }
+    
+    return ret;
+}
+
 vector<vector<vector<int>>> fill_partitions (int k)
 {
     vector<vector<vector<int>>> partitions[10];
@@ -530,6 +595,38 @@ vector<int> v_from_code (ll n, const vector<int> &matches)
     return v;
 }
 
+vector<vector<int>> find_connected_components (vector<int> g[], int N)
+{
+    vector<vector<int>> w;
+    
+    vector<bool> used(N);
+    for (int v=0; v<N; v++) {
+        
+        if (!used[v]) {
+            
+            vector<int> q;
+            int h=0, t=0;
+            q.push_back(v);
+            t++;
+            used[v] = true;
+            while (h < t)
+            {
+                int cur = q[h++];
+                for (vector<int>::iterator i=g[cur].begin(); i!=g[cur].end(); ++i)
+                    if (!used[*i])
+                    {
+                        used[*i] = true;
+                        q.push_back(*i);
+                        t++;
+                    }
+            }
+            w.push_back(q);
+        }
+    }
+    
+    return w;
+}
+
 vector<string> parse_by_symbol (const string &S, char p)
 {
     vector<string> v;
@@ -549,7 +646,20 @@ vector<string> parse_by_symbol (const string &S, char p)
     return v;
 }
 
-vector<ull> Blub_blub_shum_generator (int n)
+vector<ull> Lagged_Fibonacci_Generator (int n)
+{
+    vector<ull> s;
+    
+    for (ull i=1; i<=n; i++) {
+        
+        if (i <= 55) s.push_back((i*i*i*300007 - i*200003 + 100003) % 1000000);
+        else s.push_back((s[i-56]+s[i-25]) % 1000000);
+    }
+    
+    return s;
+}
+
+vector<ull> Blub_Blub_Shum_Generator (int n)
 {
     vector<ull> v;
     ull a = 14025256;
