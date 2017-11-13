@@ -672,15 +672,140 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+vector<vector<int>> combs_15;
+char A[16];
+
+int position_of_space()
+{
+    for (int i=0; i<16; i++) if (A[i] == '*') return i;
+    return -1;
+}
+
+vector<int> comb()
+{
+    vector<int> a;
+    int flag = 1;
+    for (int i=0; i<16; i++) {
+        if (A[i] == '*') flag--;
+        if (A[i] == 'R') a.push_back(i+flag);
+    }
+    return a;
+}
+
+int get_id()
+{
+    int s = position_of_space();
+    vector<int> a = comb();
+    
+    for (int i=0; i<(int)combs_15.size(); i++) {
+        if (a == combs_15[i]) return 6435*s + i;
+    }
+    
+    return -1;
+}
+
+void construct_from_id (int id)
+{
+    int s = id/6435;
+    int c = id%6435;
+    
+    for (int i=0; i<16; i++) A[i] = 'B';
+    A[s] = '*';
+    for (int i=0; i<(int)combs_15[c].size(); i++) {
+        int v = combs_15[c][i];
+        if (v <= s) A[v-1] = 'R';
+        else A[v] = 'R';
+    }
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    combs_15 = get_combinations(15,7);
+    
+    vector<pair<int,char>> g[102960];
+    
+    for (int i=0; i<102960; i++) {
+    
+        construct_from_id(i);
+        int s = position_of_space();
+        
+        if (s%4 != 3) { // right
+            swap(A[s],A[s+1]);
+            g[i].push_back(mp(get_id(),'R'));
+            swap(A[s],A[s+1]);
+        }
+        if (s%4 != 0) { // left
+            swap(A[s],A[s-1]);
+            g[i].push_back(mp(get_id(),'L'));
+            swap(A[s],A[s-1]);
+        }
+        if (s >= 4) { // down
+            swap(A[s],A[s-4]);
+            g[i].push_back(mp(get_id(),'D'));
+            swap(A[s],A[s-4]);
+        }
+        if (s < 12) { // up
+            swap(A[s],A[s+4]);
+            g[i].push_back(mp(get_id(),'U'));
+            swap(A[s],A[s+4]);
+        }
+    }
+    
+    for (int i=0; i<16; i++) A[i] = 'B';
+    A[0] = '*';
+    A[1] = A[4] = A[5] = A[8] = A[9] = A[12] = A[13] = 'R';
+    
+    queue<int> q;
+    q.push(get_id());
+    vector<int> d(102960,-1);
+    set<int> from[102960];
+    d[get_id()] = 0;
+    
+    while (!q.empty()) {
+        
+        int v = q.front();
+        q.pop();
+        
+        for (int i=0; i<(int)g[v].size(); i++) {
+            int to = g[v][i].fs;
+            if (d[to] != -1) {
+                if (d[to] == d[v]+1) from[to].insert(v);
+                continue;
+            }
+            d[to] = d[v] + 1;
+            q.push(to);
+            from[to].insert(v);
+        }
+    }
+    
+    vector<vector<int>> shortest_paths;
+    shortest_paths.push_back(vector<int>(1,4406));
+    
+    for (int n=1; n<=32; n++) {
+        vector<vector<int>> a;
+        for (int i=0; i<(int)shortest_paths.size(); i++) {
+            int v = shortest_paths[i].back();
+            for (set<int>::iterator it = from[v].begin(); it != from[v].end(); it++) {
+                a.push_back(shortest_paths[i]);
+                a[a.size()-1].push_back(*it);
+            }
+        }
+        
+        shortest_paths.swap(a);
+    }
+    
+    for (int i=0; i<(int)shortest_paths.size(); i++) {
+        for (int j=0; j<(int)shortest_paths[i].size(); j++) cout << shortest_paths[i][j] << " ";
+        cout << endl;
+    }
     
     cout << endl << ans << endl;
 }
