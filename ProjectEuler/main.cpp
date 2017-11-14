@@ -672,6 +672,42 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+#define N 1000000
+
+struct Position {
+    int id;
+    int left, bottom;
+    pdd loc;
+    dd size;
+    
+    dd calc_size() { return 0.5*(sqrt(4+(loc.fs-loc.sc)*(loc.fs-loc.sc)) - loc.fs - loc.sc); }
+}P[N];
+
+bool operator< (Position a, Position b)
+{
+    return a.size > b.size;
+}
+
+pii calculate_position (int n)
+{
+    pii p = mp(0,0);
+    
+    int left = P[n].left;
+    while (left != -1) {
+        left = P[left].left;
+        p.fs++;
+        if (p.fs > 3) break;
+    }
+    int bottom = P[n].bottom;
+    while (bottom != -1) {
+        bottom = P[bottom].bottom;
+        p.sc++;
+        if (p.sc > 3) break;
+    }
+    
+    return p;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -681,6 +717,44 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    Position initial;
+    initial.left = initial.bottom = -1;
+    initial.loc = mp(1,0);
+    initial.size = initial.calc_size();
+    
+    set<Position> s;
+    s.insert(initial);
+    
+    for (int n=0; n<N; n++) {
+        
+        Position p = *(s.begin());
+        s.erase(s.begin());
+        
+        P[n] = p;
+        P[n].id = n;
+        
+        Position L;
+        L.left = p.left;
+        L.bottom = n;
+        L.loc = mp(p.loc.fs, p.loc.sc + p.size);
+        L.size = L.calc_size();
+        
+        Position R;
+        R.left = n;
+        R.bottom = p.bottom;
+        R.loc = mp(p.loc.fs + p.size, p.loc.sc);
+        R.size = R.calc_size();
+        
+        s.insert(L);
+        s.insert(R);
+    }
+    
+    for (int n=0; n<N; n++) {
+        
+        pii p = calculate_position(n);
+        if (p == mp(3,3)) cout << n << endl;
+    }
     
     cout << endl << ans << endl;
 }
