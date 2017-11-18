@@ -672,6 +672,25 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+ull *g, *sg, *F, *SF;
+
+ull total_triangles (ull n) // amount of triangles with exact perimeter of n
+{
+    ull C = (n-1)*(n-2)/2;
+    ull cnt = 0;
+    
+    if (n%3 == 0) C += 2;
+    cnt += (n-1)/2;
+    C -= 3*((n-1)/2);
+    
+    //cout << C << " "; // must be divisible by 6, seems so :)
+    C /= 6;
+    
+    cnt += C;
+    cnt -= sg[n/2];
+    return cnt;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -680,7 +699,39 @@ int main() {
     //freopen("output.txt","wt",stdout);
 #endif
     
-    ull ans = 0;
+    ll ans = 0;
+    
+    g = new ull [10000000];
+    sg = new ull [10000000];
+    F = new ull [10000001];
+    SF = new ull [10000001];
+    
+    g[0] = sg[0] = 0;
+    for (int i=1; i<10000000; i++) {
+        g[i] = i/2;
+        sg[i] = sg[i-1] + g[i];
+    }
+    
+    SF[0] = 0;
+    for (ull n=1; n<=10000000; n++) {
+        F[n] = total_triangles(n);
+        SF[n] = SF[n-1] + F[n];
+        if (n <= 10) cout << SF[n] << endl;
+        //cout << F[n] << endl;
+    }
+    
+    int N = 10000000;
+    vector<ll> v(10000001);
+    v[N] = 1;
+    
+    for (int i=N; i>=3; i--) {
+        if (v[i] == 0) continue;
+        
+        ans += v[i]*SF[i];
+        for (int k=2; 3*k<=i; k++) {
+            v[i/k] -= v[i];
+        }
+    }
     
     cout << endl << ans << endl;
 }
