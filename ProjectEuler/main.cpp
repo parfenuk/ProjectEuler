@@ -672,6 +672,113 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+int N;
+int used[100][100];
+vector<int> directions;
+int cur_direction;
+pii pos;
+
+bool step_up()
+{
+    if (cur_direction == 5) return false;
+    
+    if (cur_direction == 1) {
+        pos.sc--;
+        directions.push_back(cur_direction);
+    }
+    if (cur_direction == 2) {
+        pos.fs--;
+        directions.push_back(cur_direction);
+    }
+    if (cur_direction == 3) {
+        pos.sc++;
+        directions.push_back(cur_direction);
+    }
+    if (cur_direction == 4) {
+        pos.fs++;
+        directions.push_back(cur_direction);
+    }
+    
+    if (pos.fs >= 0 && pos.fs < 4 && pos.sc >= 0 && pos.sc < N) used[pos.fs][pos.sc]++;
+    else return false;
+    
+    cur_direction = 1;
+    return true;
+}
+
+bool step_back()
+{
+    if (directions.empty()) return false;
+    
+    int dir = directions.back();
+    directions.pop_back();
+    
+    if (dir == 1) {
+        if (pos.fs >= 0 && pos.fs < 4 && pos.sc >= 0 && pos.sc < N) used[pos.fs][pos.sc]--;
+        pos.sc++;
+    }
+    if (dir == 2) {
+        if (pos.fs >= 0 && pos.fs < 4 && pos.sc >= 0 && pos.sc < N) used[pos.fs][pos.sc]--;
+        pos.fs++;
+    }
+    if (dir == 3) {
+        if (pos.fs >= 0 && pos.fs < 4 && pos.sc >= 0 && pos.sc < N) used[pos.fs][pos.sc]--;
+        pos.sc--;
+    }
+    if (dir == 4) {
+        if (pos.fs >= 0 && pos.fs < 4 && pos.sc >= 0 && pos.sc < N) used[pos.fs][pos.sc]--;
+        pos.fs--;
+    }
+    
+    cur_direction = dir+1;
+    
+    return true;
+}
+
+bool validate()
+{
+    if (used[pos.fs][pos.sc] > 1) return false;
+    if (pos == mp(3,0) && directions.size() != 4*N-1) return false;
+    return true;
+}
+
+bool correct()
+{
+    return pos == mp(3,0) && directions.size() == 4*N-1;
+}
+
+int backtrack()
+{
+    for (int i=0; i<N; i++) for (int j=0; j<N; j++) used[i][j] = 0;
+    used[0][0] = 1;
+    pos = mp(0,0);
+    cur_direction = 1;
+    int cnt = 0;
+    
+    while (true) {
+        bool success = step_up();
+        if (!success) {
+            bool possible = step_back();
+            if (!possible) {
+                break;
+            }
+        }
+        else {
+            if (!validate()) {
+                step_back(); // always possible
+            }
+            else {
+                if (correct()) {
+                    cnt++;
+                    step_back(); // always possible
+                }
+            }
+        }
+    }
+    
+    return cnt;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -681,6 +788,9 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    cin >> N;
+    ans = backtrack();
     
     cout << endl << ans << endl;
 }
