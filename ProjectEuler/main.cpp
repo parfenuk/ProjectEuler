@@ -713,11 +713,11 @@ map<ull,pull> M;
 
 bool coPrime (const vector<ull> &v)
 {
-    int A[6] = {2,3,5,7,11,13};
-    bool B[6] = {0,0,0,0,0,0};
+    int A[14] = {2,3,5,7,11,13,17,19,43,101,157,163,257,487};
+    bool B[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     
     for (int i=0; i<(int)v.size(); i++) {
-        for (int j=0; j<6; j++) {
+        for (int j=0; j<14; j++) {
             if (v[i]%A[j] == 0) {
                 if (B[j]) return false;
                 B[j] = true;
@@ -792,9 +792,9 @@ int main() {
         vector<ull> v = find_single_numbers(D[i]);
         if (v.empty()) continue;
         //ans++;
-        //cout << D[i] << ": ";
-        //for (int j=0; j<(int)v.size(); j++) cout << v[j] << " ";
-        //cout << endl;
+        cout << D[i] << ": ";
+        for (int j=0; j<(int)v.size(); j++) cout << v[j] << " ";
+        cout << endl;
         
         if (v.size() == 1) M[D[i]] = mp(v[0],0);
         else M[D[i]] = mp(v[0],v[1]);
@@ -803,10 +803,17 @@ int main() {
     set<ull> Eulers;
     vector<vector<int>> w2 = sum_partitions(10), w3 = sum_partitions(5), w5 = sum_partitions(2);
     
-    for (int i=0; i<(int)w2.size(); i++)
+    for (int i=1; i<(int)w2.size(); i++)
     for (int j=0; j<(int)w3.size(); j++)
     for (int k=0; k<(int)w5.size(); k++) {
         
+        if (i == 2 && j+k == 0) {
+            cout << Eulers.size() << endl;
+            for (set<ull>::iterator it = Eulers.begin(); it != Eulers.end(); it++) {
+                
+                cout << *it << endl;
+            }
+        }
         cout << i << " " << j << " " << k << endl;
         vector<int> v2 = w2[i], v3 = w3[j], v5 = w5[k];
         int n = (int)v2.size();
@@ -827,6 +834,12 @@ int main() {
                     
                     vector<ull> v = get_divisors_partition(v2, v3, a, p7, p11, p13);
                     vector<ull> e = process_divisors_partition(v);
+//                    if (!e.empty() && contains(e,28869630636)) {
+//                        cout << "RESULT: "; show(e);
+//                        show(v3);
+//                        show(a);
+//                        cout << p7 << " " << p11 << " " << p13 << endl;
+//                    }
                     for (int z=0; z<(int)e.size(); z++) {
                         Eulers.insert(e[z]);
                         if (e[z] % 2) Eulers.insert(2*e[z]);
