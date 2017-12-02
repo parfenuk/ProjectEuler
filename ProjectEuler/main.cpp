@@ -319,6 +319,32 @@ ull EulerPhi (ull n)
     return s;
 }
 
+// Currently works only for prime rests. Implement inverse function that commented
+ull Chinese_theorem (vector<ull> divs, vector<ull> rests)
+{
+    int k = (int)rests.size();
+    vector<ll> x(k);
+    for (int i=0; i<k; i++) {
+        x[i] = rests[i];
+        for (int j=0; j<i; j++) {
+            //x[i] = inverse(divs[j],divs[i]) * (x[i]-x[j]);
+            x[i] = powmod(divs[j],divs[i]-2,(int)divs[i]) * (x[i]-x[j]);
+            x[i] %= (int)divs[i];
+            if (x[i] < 0)  x[i] += divs[i];
+        }
+    }
+    
+    ull a = 0;
+    for (int i=0; i<k; i++) {
+        ull b = x[i], s = 1;
+        for (int j=0; j<i; j++) s *= divs[j];
+        b *= s;
+        a += b;
+    }
+    
+    return a;
+}
+
 vector<ull> Divisors (ull n) // returns in sorted order!
 {
     vector<ull> a, b;
