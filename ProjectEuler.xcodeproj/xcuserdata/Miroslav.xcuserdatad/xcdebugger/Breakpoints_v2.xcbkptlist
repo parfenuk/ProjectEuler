@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProjectEuler/main.cpp"
-            timestampString = "531436597.672168"
+            timestampString = "533862264.4585"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "492"
-            endingLineNumber = "492"
-            landmarkName = "fill_piphagorean_triplets (ull n, bool primitive_only = true)"
+            startingLineNumber = "494"
+            endingLineNumber = "494"
+            landmarkName = "sum_partitions (int n)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,11 +26,29 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ProjectEuler/main.cpp"
-            timestampString = "531436597.672815"
+            timestampString = "533862264.459161"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "603"
-            endingLineNumber = "603">
+            startingLineNumber = "605"
+            endingLineNumber = "605"
+            landmarkName = "find_connected_components (vector&lt;int&gt; g[], int N)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ProjectEuler/main.cpp"
+            timestampString = "533862264.459715"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "498"
+            endingLineNumber = "498"
+            landmarkName = "sum_partitions (int n)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -52,6 +52,7 @@ using namespace std;
 
 //const ull POWER[21] = {1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576};
 //const ull POWER[12] = {1,3,9,27,81,243,729,2187,6561,19683,59049,177147};
+const ull FACT[12] = {1,1,2,6,24,120,720,5040,40320,362880,3628800,39916800};
 
 void show (const vector<int> &a, bool show_endl = true, bool show_size = false)
 {
@@ -186,8 +187,9 @@ vector<int> digits (ull n, int base = 10, int min_size = 1)
         a.push_back(n%base);
         n /= base;
     }
+    while (a.size() < min_size) a.push_back(0);
     reverse(a.begin(), a.end());
-    while (a.size() < min_size) a.insert(a.begin(),0);
+    
     return a;
 }
 
