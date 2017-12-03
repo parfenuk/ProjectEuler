@@ -23,8 +23,10 @@ typedef unsigned int uint;
 #define fs first
 #define sc second
 
-ull f_GCD (ull a, ull b)
+ll f_GCD (ll a, ll b)
 {
+    if (a < 0) a = -a;
+    if (b < 0) b = -b;
     while (a && b) {
         
         if (a > b) a %= b;
@@ -35,12 +37,12 @@ ull f_GCD (ull a, ull b)
 
 struct fraction { // unsigned only
     
-    ull num, den;
+    ll num, den;
     fraction() { num = 0; den = 1; }
-    fraction(ull n) { num = n; den = 1; }
-    fraction(ull n, ull d) { num = n; den = d; }
+    fraction(ll n) { num = n; den = 1; }
+    fraction(ll n, ll d) { num = n; den = d; }
     void reduce() {
-        ull p = f_GCD(num, den);
+        ll p = f_GCD(num, den);
         num /= p;
         den /= p;
     }
@@ -65,41 +67,41 @@ bool operator!= (fraction A, fraction B) { return !(A == B); }
 fraction operator+ (fraction a, fraction b)
 {
     fraction c (a.num*b.den + a.den*b.num, a.den*b.den);
-    c.reduce();
+    //c.reduce();
     return c;
 }
 
 fraction operator- (fraction a, fraction b)
 {
     fraction c (a.num*b.den - a.den*b.num, a.den*b.den);
-    c.reduce();
+    //c.reduce();
     return c;
 }
 
-fraction operator* (fraction a, ull b)
+fraction operator* (fraction a, ll b)
 {
     fraction c (a.num*b, a.den);
-    c.reduce();
+    //c.reduce();
     return c;
 }
 
 fraction operator* (fraction a, fraction b)
 {
     fraction c (a.num*b.num, a.den*b.den);
-    c.reduce();
+    //c.reduce();
     return c;
 }
 
 fraction operator/ (fraction a, ull b)
 {
     fraction c (a.num, a.den*b);
-    c.reduce();
+    //c.reduce();
     return c;
 }
 
 fraction operator/ (fraction a, fraction b)
 {
     fraction c (a.num*b.den, a.den*b.num);
-    c.reduce();
+    //c.reduce();
     return c;
 }

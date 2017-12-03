@@ -709,6 +709,71 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+fraction act (fraction a, fraction b, int op)
+{
+    if (op == 0) return a+b;
+    if (op == 1) return a-b;
+    if (op == 2) return a*b;
+    return a/b;
+}
+
+set<ll> reachable_numbers;
+
+void get_number_if_found (const vector<fraction> &v, const vector<int> &operations, const vector<int> &order)
+{
+    vector<pii> operands;
+    for (int i=0; i<(int)operations.size(); i++) operands.push_back(mp(i,i+1));
+    
+    vector<fraction> w = v;
+    fraction F;
+    for (int i=0; i<(int)order.size(); i++) {
+        
+        int p = order[i];
+        if (w[operands[p].sc].num == 0 && operations[p] == 3) return;
+        F = act(w[operands[p].fs], w[operands[p].sc], operations[p]);
+        w[operands[p].fs] = F;
+        
+        for (int j=p+1; j<(int)operands.size(); j++) {
+            if (operands[j].fs == operands[p].sc) operands[j].fs = operands[p].fs;
+        }
+    }
+    
+    F = w[0];
+    if (F.num < 0 && F.den > 0) return;
+    if (F.num > 0 && F.den < 0) return;
+    if (F.num % F.den) return;
+    
+    reachable_numbers.insert(F.num/F.den);
+}
+
+vector<vector<int>> permuts[9];
+
+void process_configuration (ull code)
+{
+    vector<fraction> v;
+    vector<int> operations;
+    
+    vector<int> d = digits(code,5,8);
+    
+    ll cur = 0;
+    for (int i=1; i<=8; i++) {
+        cur = cur*10 + i;
+        if (d[i-1] != 4) {
+            v.push_back(fraction(cur));
+            cur = 0;
+            operations.push_back(d[i-1]);
+        }
+    }
+    
+    if (d.back() != 4) v.push_back(fraction(9));
+    else v.push_back(fraction(cur*10 + 9));
+    
+    int n = (int)operations.size();
+    for (int i=0; i<(int)permuts[n].size(); i++) {
+        get_number_if_found(v, operations, permuts[n][i]);
+    }
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -718,6 +783,37 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    permuts[0].push_back(vector<int>());
+    
+    for (int n=1; n<=8; n++) {
+        
+        for (int p=0; p<n; p++) {
+            
+            int l = p, r = n-p-1;
+            for (int i=0; i<(int)permuts[l].size(); i++) for (int j=0; j<(int)permuts[r].size(); j++) {
+                
+                vector<int> a = permuts[l][i];
+                for (int k=0; k<(int)permuts[r][j].size(); k++) a.push_back(permuts[r][j][k]+p+1);
+                a.push_back(p);
+                permuts[n].push_back(a);
+            }
+        }
+    }
+    
+    for (int i=0; i<(int)permuts[3].size(); i++) {
+        for (int j=0; j<(int)permuts[3][i].size(); j++) cout << permuts[3][i][j] << " ";
+        cout << endl;
+    }
+    
+    for (ull code=0; code<power(5,8); code++) {
+        process_configuration(code);
+    }
+    
+    cout << reachable_numbers.size() << endl;
+    for (set<ll>::iterator it = reachable_numbers.begin(); it != reachable_numbers.end(); it++) {
+        ans += *it;
+    }
     
     cout << endl << ans << endl;
 }
