@@ -619,7 +619,7 @@ vector<int> v_from_code (ll n, const vector<int> &matches)
 {
     vector<int> v;
     
-    for (int i=(int)v.size()-1; i>=0; i--) {
+    for (int i=(int)matches.size()-1; i>=0; i--) {
         v.push_back(n % (matches[i]+1));
         n /= (matches[i] + 1);
     }
@@ -720,4 +720,6 @@ int main() {
     ull ans = 0;
     
     cout << endl << ans << endl;
+    
+    return 0;
 }
