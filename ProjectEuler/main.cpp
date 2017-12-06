@@ -709,6 +709,249 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+pii cell_from_id[171];
+int id_from_cell[18][18];
+Lnum P2[171];
+
+void fill_cell_mapping()
+{
+    int K = 0;
+    for (int d=0; d<18; d++) for (int i=0; i<=d; i++) {
+        int j = d-i;
+        cell_from_id[K] = mp(i,j);
+        id_from_cell[i][j] = K;
+        K++;
+    }
+}
+
+struct Figure
+{
+    int N;
+    vector<pii> v; // size = N
+    int max_r, max_c;
+    
+    void adjust_r (int r) {
+        for (int i=0; i<(int)v.size(); i++) v[i].fs += r;
+    }
+    void adjust_c (int c) {
+        for (int i=0; i<(int)v.size(); i++) v[i].sc += c;
+    }
+    Lnum code() {
+        Lnum A;
+        for (int i=0; i<(int)v.size(); i++) A = A + P2[id_from_cell[v[i].fs][v[i].sc]];
+        return A;
+    }
+    void rotate() { // clockwise
+        for (int i=0; i<(int)v.size(); i++) v[i] = mp(v[i].sc,N-v[i].fs-1);
+        int offset_y = N-max_r-1;
+        for (int i=0; i<(int)v.size(); i++) v[i].sc -= offset_y;
+        swap(max_r, max_c);
+    }
+    void reflect() {
+        for (int i=0; i<(int)v.size(); i++) v[i].sc = max_c - v[i].sc;
+    }
+    Lnum normalize() {
+        vector<pii> w = v;
+        Lnum c = code();
+    
+        for (int i=0; i<7; i++) {
+            if (i == 3) reflect();
+            else rotate();
+            Lnum d = code();
+            if (d < c) {
+                c = d;
+                w = v;
+            }
+        }
+        
+        v = w;
+        sort(v.begin(), v.end());
+        
+        return c;
+    }
+    bool stable (int p) {
+        for (int i=0; i<(int)v.size(); i++) {
+            if (v[i].fs == max_r && v[i].sc == p) return true;
+        }
+        return false;
+    }
+    void draw() {
+        bool used[18][18];
+        for (int i=0; i<N; i++) for (int j=0; j<N; j++) used[i][j] = false;
+        for (int i=0; i<(int)v.size(); i++) used[v[i].fs][v[i].sc] = true;
+        for (int i=0; i<N; i++) {
+            for (int j=0; j<N; j++) if (used[i][j]) cout << "*"; else cout << ".";
+            cout << endl;
+        }
+        cout << endl;
+    }
+};
+
+Figure figure_from_code (const Lnum &c) // must be normalized!!!
+{
+    vector<int> d = digits(c,2);
+    Figure F;
+    F.max_r = F.max_c = 0;
+    for (int i=0; i<(int)d.size(); i++) {
+        if (d[i]) {
+            pii p = cell_from_id[i];
+            F.v.push_back(p);
+            if (p.fs > F.max_r) F.max_r = p.fs;
+            if (p.sc > F.max_c) F.max_c = p.sc;
+        }
+    }
+    F.N = (int)F.v.size();
+    return F;
+}
+
+map<Lnum,bool> M[19];
+
+void add_figures_from_figure (const Figure &F) // must be normalized!!!
+{
+    vector<pii> v = F.v, w, possible_insertions;
+    
+    for (int i=0; i<(int)v.size(); i++) {
+        v[i].fs--; w.push_back(v[i]);
+        v[i].fs+=2; w.push_back(v[i]);
+        v[i].fs--; v[i].sc--; w.push_back(v[i]);
+        v[i].sc+=2; w.push_back(v[i]);
+        v[i].sc--;
+    }
+    
+    sort(v.begin(), v.end());
+    sort(w.begin(), w.end());
+    
+    int n = 0, m = 0;
+    
+    while (m < (int)w.size()) {
+        
+        if (m && w[m] == w[m-1]) { m++; continue; }
+        if (n < (int)v.size() && v[n] == w[m]) { n++; m++; }
+        else if (n < (int)v.size() && v[n] < w[m]) n++;
+        else possible_insertions.push_back(w[m++]);
+    }
+    
+    for (int i=0; i<(int)possible_insertions.size(); i++) {
+        v.push_back(possible_insertions[i]);
+        Figure G;
+        G.v = v;
+        G.N = (int)v.size();
+        
+        if (possible_insertions[i].fs == -1) {
+            G.adjust_r(1);
+            G.max_r = F.max_r+1;
+            G.max_c = F.max_c;
+        }
+        else if (possible_insertions[i].sc == -1) {
+            G.adjust_c(1);
+            G.max_r = F.max_r;
+            G.max_c = F.max_c+1;
+        }
+        else {
+            G.max_r = F.max_r;
+            G.max_c = F.max_c;
+            if (possible_insertions[i].fs > G.max_r) G.max_r = possible_insertions[i].fs;
+            if (possible_insertions[i].sc > G.max_c) G.max_c = possible_insertions[i].sc;
+        }
+        Lnum A = G.normalize();
+        
+        M[G.N][A] = true;
+        v.pop_back();
+    }
+}
+
+int find_balance (const vector<int> &v)
+{
+    int left_weight = 0, left_sum = 0, right_weight = 0, right_sum = 0;
+    for (int i=1; i<(int)v.size(); i++) {
+        right_sum += v[i];
+        right_weight += i*v[i];
+    }
+    
+    for (int p=1; p<(int)v.size(); p++) {
+        
+        left_sum += v[p-1];
+        left_weight += left_sum;
+        right_weight -= right_sum;
+        right_sum -= v[p];
+        
+        if (left_weight == right_weight) return p;
+        if (left_weight > right_weight) return -1;
+    }
+    
+    return 0; // only if v.size() == 1
+}
+
+vector<Lnum> passed_codes;
+
+int process_figure (Figure F) // already adjusted, returns count of balanced figures, 0-4
+{
+    int ret = 0;
+    bool c[4] = {0,0,0,0};
+    Lnum codes[8];
+    
+    // process 1st figure
+    codes[0] = F.code();
+    vector<int> v(F.max_c+1);
+    for (int i=0; i<(int)F.v.size(); i++) v[F.v[i].sc]++;
+    int b1 = find_balance(v);
+    if (b1 != -1 && F.stable(b1)) {
+        ret++;
+        c[0] = true;
+    }
+    
+    // process 2nd figure
+    F.rotate();
+    codes[1] = F.code();
+    vector<int> w(F.max_c+1);
+    for (int i=0; i<(int)F.v.size(); i++) w[F.v[i].sc]++;
+    int b2 = find_balance(w);
+    if (b2 != -1 && codes[1] != codes[0] && F.stable(b2)) {
+        ret++;
+        c[1] = true;
+    }
+    
+    // process 3rd figure
+    F.rotate();
+    codes[2] = F.code();
+    if (b1 != -1) {
+        int b3 = (int)v.size()-b1-1;
+        if (codes[2] != codes[0] && codes[2] != codes[1] && F.stable(b3)) {
+            ret++;
+            c[2] = true;
+        }
+    }
+    
+    // process 4th figure
+    F.rotate();
+    codes[3] = F.code();
+    if (b2 != -1) {
+        int b4 = (int)w.size()-b2-1;
+        if (codes[3] != codes[0] && codes[3] != codes[1] && codes[3] != codes[2] && F.stable(b4)) {
+            ret++;
+            c[3] = true;
+        }
+    }
+    
+    if (ret) {
+
+        F.reflect(); codes[4] = F.code();
+        F.rotate(); codes[5] = F.code();
+        F.rotate(); codes[6] = F.code();
+        F.rotate(); codes[7] = F.code();
+
+        if (c[1] && codes[1] == codes[7]) {
+            ret--;
+        }
+        if (c[2] && (codes[2] == codes[6] || codes[2] == codes[7])) {
+            ret--;
+        }
+        if (c[3] && (codes[3] == codes[5] || codes[3] == codes[6] || codes[3] == codes[7])) ret--;
+    }
+    
+    return ret;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -719,5 +962,30 @@ int main() {
     
     ull ans = 0;
     
+    fill_cell_mapping();
+    for (int i=0; i<171; i++) P2[i] = power(Lnum(2),i);
+    
+    M[1][1] = true;
+    const int N = 18;
+    
+    for (int n=2; n<=N; n++) {
+        
+        int K = 0;
+        for (map<Lnum,bool>::iterator it = M[n-1].begin(); it != M[n-1].end(); it++) {
+            K++;
+            add_figures_from_figure(figure_from_code((*it).fs));
+        }
+        cout << n << " " << M[n].size() << endl;
+        M[n-1].clear();
+    }
+    
+    int K = 0;
+    for (map<Lnum,bool>::iterator it = M[N].begin(); it != M[N].end(); it++) {
+        K++;
+        ans += process_figure(figure_from_code((*it).fs));
+    }
+    
     cout << endl << ans << endl;
+    
+    return 0;
 }

@@ -15,7 +15,7 @@ typedef int ltype;
 
 using namespace std;
 
-#define LSIZE 5
+#define LSIZE 7
 const ltype BASE = 1000000000;
 
 class Lnum
@@ -418,4 +418,16 @@ Lnum lnum_sqrt (Lnum A)
         if (lb > ub) break;
     }
     return O;
+}
+
+vector<int> digits (Lnum n, int base = 10)
+{
+    vector<int> a;
+    while (n != O) {
+        
+        a.push_back(n%base);
+        n = n / base;
+    }
+
+    return a;
 }
