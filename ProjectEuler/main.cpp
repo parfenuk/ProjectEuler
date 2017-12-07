@@ -709,6 +709,66 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+struct Partition {
+    int id;
+    vector<int> v; // sorted in decreasing order
+    vector<pii> p; // p[i] = positions of first and second number i in v;
+    void fill_p() {
+        p = vector<pii>(v[0]+1,mp(0,0));
+        for (int i=0; i<(int)v.size(); i++) {
+            int t = v[i];
+            if (p[t].fs == 0) p[t].fs = i+1;
+            else if (p[t].sc == 0) p[t].sc = i+1;
+        }
+    }
+    void show() { cout << id << ": "; ::show(v); }
+};
+
+bool operator< (Partition a, Partition b)
+{
+    if (a.v.size() < b.v.size()) return true;
+    if (a.v.size() > b.v.size()) return false;
+    
+    for (int i=0; i<(int)a.v.size(); i++) {
+        if (a.v[i] < b.v[i]) return true;
+        if (a.v[i] > b.v[i]) return false;
+    }
+    
+    return false;
+}
+
+bool operator== (Partition a, Partition b)
+{
+    if (a.v.size() != b.v.size()) return false;
+    
+    for (int i=0; i<(int)a.v.size(); i++) {
+        if (a.v[i] != b.v[i]) return false;
+    }
+    
+    return false;
+}
+
+vector<Partition> P[41];
+
+int find_partition_id (int N, const vector<int> &v)
+{
+    Partition p;
+    p.v = v;
+    
+    vector<Partition>::iterator it = lower_bound(P[N].begin(), P[N].end(), p);
+    
+    return (*it).id;
+}
+
+pii new_indeces (Partition &a, int left_number, int right_number)
+{
+    pii p;
+    p.fs = a.p[left_number].fs;
+    p.sc = a.p[right_number].fs;
+    if (p.fs && p.sc == p.fs) p.sc = a.p[right_number].sc;
+    return p;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -718,6 +778,246 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (int n=1; n<=40; n++) {
+        
+        int k = 0;
+        vector<vector<int>> a = sum_partitions(n);
+        
+        for (int i=0; i<(int)a.size(); i++) {
+            if (a[i].size()+n-1 <= 40) {
+                k++;
+                Partition p;
+                p.v = a[i];
+                p.fill_p();
+                P[n].push_back(p);
+            }
+        }
+        cout << n << ": " << a.size() << " " << k << endl;
+        
+        sort(P[n].begin(), P[n].end());
+        for (int i=0; i<k; i++) P[n][i].id = i;
+    }
+    
+    for (int i=0; i<(int)P[5].size(); i++) P[5][i].show();
+    vector<int> test_vector;
+    test_vector.push_back(2);
+    test_vector.push_back(2);
+    test_vector.push_back(1);
+    int test_value = find_partition_id(5, test_vector);
+    cout << test_value << endl;
+    
+    int N = 40;
+    dd *dp[4242];
+    for (int i=0; i<4242; i++) dp[i] = new dd [160000];
+    dd *new_dp[4242];
+    for (int i=0; i<4242; i++) new_dp[i] = new dd [160000];
+    
+    // fill dp for N-1
+    for (int i=0; i<(int)P[N-1].size(); i++) for (int j=0; j<160000; j++) dp[i][j] = 0;
+    for (int i=0; i<N; i++) {
+        if (i == 0 || i == N-1) {
+            vector<int> a;
+            a.push_back(N-1);
+            vector<int> config(4); // max_blocks, cur_blocks, index_left, index_right
+            config[2] = 1;
+            dp[0][from_digits(config,20)] += 1.0/N;
+        }
+        else {
+            vector<int> a;
+            a.push_back(i);
+            a.push_back(N-i-1);
+            if (a[0] < a[1]) swap(a[0],a[1]);
+            vector<int> config(4); // max_blocks, cur_blocks, index_left, index_right
+            config[2] = 1;
+            config[3] = 2;
+            dp[find_partition_id(N-1,a)][from_digits(config,20)] += 1.0/N;
+        }
+    }
+    
+    for (int i=0; i<42; i++) for (int j=0; j<160000; j++) {
+        if (dp[i][j]) cout << fixed << dp[i][j] << endl;
+    }
+    
+    // fill next dp for n basing on dp for n+1
+    for (int n=N-2; n>=1; n--) {
+        cout << "n = " << n << endl;
+        for (int i=0; i<(int)P[n].size(); i++) for (int j=0; j<160000; j++) new_dp[i][j] = 0;
+        
+        for (int x=0; x<(int)P[n+1].size(); x++) for (int y=0; y<160000; y++) {
+            if (dp[x][y] == 0) continue;
+            
+            vector<int> v = P[n+1][x].v; // sum == n+1
+            vector<int> config = digits(y,20,4);
+            //int max_blocks = config[0];
+            //int cur_blocks = config[1];
+            int index_left = config[2];
+            int index_right = config[3];
+            int left_number = index_left ? v[index_left-1] : 0;
+            int right_number = index_right ? v[index_right-1] : 0;
+            
+            vector<int> new_config(4);
+            
+            for (int i=0; i<(int)v.size(); i++) {
+                
+                vector<int> a = v;
+                if (i+1 == index_left) {
+                    if (v[i] == 1) {
+                        dd prob = dp[x][y]/(n+1);
+                        new_config = config;
+                        a.pop_back();
+                        Partition p = P[n][find_partition_id(n,a)];
+                        pii q = new_indeces(p, 0, right_number);
+                        new_config[2] = q.fs;
+                        new_config[3] = q.sc;
+                        new_dp[p.id][from_digits(new_config,20)] += prob;
+                    }
+                    else {
+                        // if close to next block
+                        dd prob = dp[x][y]/(n+1);
+                        new_config = config;
+                        a[i]--; sort(a.rbegin(), a.rend());
+                        Partition p = P[n][find_partition_id(n,a)];
+                        pii q = new_indeces(p, left_number-1, right_number);
+                        new_config[2] = q.fs;
+                        new_config[3] = q.sc;
+                        new_dp[p.id][from_digits(new_config,20)] += prob;
+                        
+                        // if close to border
+                        new_config = config;
+                        new_config[1]++;
+                        if (new_config[1] > new_config[0]) new_config[0]++;
+                        q = new_indeces(p, 0, right_number);
+                        new_config[2] = q.fs;
+                        new_config[3] = q.sc;
+                        new_dp[p.id][from_digits(new_config,20)] += prob;
+                        
+                        // if middle
+                        for (int j=1; j<v[i]-1; j++) {
+                            a = v;
+                            a[i] = j;
+                            a.push_back(v[i]-j-1);
+                            sort(a.rbegin(), a.rend());
+                            new_config = config;
+                            new_config[1]++;
+                            if (new_config[1] > new_config[0]) new_config[0]++;
+                            
+                            Partition p = P[n][find_partition_id(n,a)];
+                            pii q = new_indeces(p, j, right_number);
+                            new_config[2] = q.fs;
+                            new_config[3] = q.sc;
+                            
+                            new_dp[p.id][from_digits(new_config,20)] += prob;
+                        }
+                    }
+                }
+                else if (i+1 == index_right) {
+                    if (v[i] == 1) {
+                        dd prob = dp[x][y]/(n+1);
+                        new_config = config;
+                        a.pop_back();
+                        Partition p = P[n][find_partition_id(n,a)];
+                        pii q = new_indeces(p, left_number, 0);
+                        new_config[2] = q.fs;
+                        new_config[3] = q.sc;
+                        new_dp[p.id][from_digits(new_config,20)] += prob;
+                    }
+                    else {
+                        // if close to next block
+                        dd prob = dp[x][y]/(n+1);
+                        new_config = config;
+                        a[i]--; sort(a.rbegin(), a.rend());
+                        Partition p = P[n][find_partition_id(n,a)];
+                        pii q = new_indeces(p, left_number, right_number-1);
+                        new_config[2] = q.fs;
+                        new_config[3] = q.sc;
+                        new_dp[p.id][from_digits(new_config,20)] += prob;
+                        
+                        // if close to border
+                        new_config = config;
+                        new_config[1]++;
+                        if (new_config[1] > new_config[0]) new_config[0]++;
+                        q = new_indeces(p, left_number, 0);
+                        new_config[2] = q.fs;
+                        new_config[3] = q.sc;
+                        new_dp[p.id][from_digits(new_config,20)] += prob;
+                        
+                        // if middle
+                        for (int j=1; j<v[i]-1; j++) {
+                            a = v;
+                            a[i] = j;
+                            a.push_back(v[i]-j-1);
+                            sort(a.rbegin(), a.rend());
+                            new_config = config;
+                            new_config[1]++;
+                            if (new_config[1] > new_config[0]) new_config[0]++;
+                            
+                            Partition p = P[n][find_partition_id(n,a)];
+                            pii q = new_indeces(p, left_number, j);
+                            new_config[2] = q.fs;
+                            new_config[3] = q.sc;
+                            
+                            new_dp[p.id][from_digits(new_config,20)] += prob;
+                        }
+                    }
+                }
+                else {
+                    
+                    if (v[i] == 1) {
+                        dd prob = dp[x][y]/(n+1);
+                        new_config = config;
+                        new_config[1]--;
+                        a.pop_back();
+                        new_dp[find_partition_id(n,a)][from_digits(new_config,20)] += prob;
+                    }
+                    else {
+                        // border case
+                        dd prob = 2*dp[x][y]/(n+1);
+                        a[i]--; sort(a.rbegin(), a.rend());
+                        new_config = config;
+                        Partition p = P[n][find_partition_id(n,a)];
+                        pii q = new_indeces(p, left_number, right_number);
+                        new_config[2] = q.fs;
+                        new_config[3] = q.sc;
+                        new_dp[p.id][from_digits(new_config,20)] += prob;
+                        
+                        // middle case
+                        prob = dp[x][y]/(n+1);
+                        for (int j=1; j<v[i]-1; j++) {
+                            a = v;
+                            a[i] = j;
+                            a.push_back(v[i]-j-1);
+                            sort(a.rbegin(), a.rend());
+                            new_config = config;
+                            new_config[1]++;
+                            if (new_config[1] > new_config[0]) new_config[0]++;
+                            Partition p = P[n][find_partition_id(n,a)];
+                            
+                            pii q = new_indeces(p, left_number, right_number);
+                            new_config[2] = q.fs;
+                            new_config[3] = q.sc;
+                            
+                            new_dp[p.id][from_digits(new_config,20)] += prob;
+                        }
+                    }
+                }
+            }
+        }
+        
+        for (int i=0; i<(int)P[n].size(); i++) for (int j=0; j<160000; j++) dp[i][j] = new_dp[i][j];
+    }
+    
+    dd total[21];
+    for (int i=0; i<21; i++) total[i] = 0;
+    for (int j=0; j<160000; j++) {
+        vector<int> config = digits(j,20,4);
+        total[config[0]+1] += dp[0][j];
+    }
+    
+    for (int i=1; i<21; i++) cout << i << " " << fixed << total[i] << endl;
+    dd res = 0;
+    for (int i=1; i<21; i++) res += i*total[i];
+    cout << endl << fixed << res << endl;
     
     cout << endl << ans << endl;
     
