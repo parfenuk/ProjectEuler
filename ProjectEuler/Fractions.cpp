@@ -12,7 +12,6 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef long double dd;
 typedef short int sint;
-typedef unsigned int uint;
 
 #define pii pair<int,int>
 #define pll pair<ll,ll>

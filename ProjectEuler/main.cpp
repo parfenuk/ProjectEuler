@@ -29,6 +29,7 @@
 #include "Lnum.cpp"
 #include "Geometry.cpp"
 #include "Fractions.cpp"
+#include "Matrix.cpp"
 #pragma comment(linker, "/STACK:416777216")
 
 typedef long long ll;
@@ -52,7 +53,7 @@ using namespace std;
 
 //const ull POWER[21] = {1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576};
 //const ull POWER[12] = {1,3,9,27,81,243,729,2187,6561,19683,59049,177147};
-const ull FACT[12] = {1,1,2,6,24,120,720,5040,40320,362880,3628800,39916800};
+//const ull FACT[12] = {1,1,2,6,24,120,720,5040,40320,362880,3628800,39916800};
 
 void show (const vector<int> &a, bool show_endl = true, bool show_size = false)
 {
@@ -356,6 +357,20 @@ vector<ull> Divisors (ull n) // returns in sorted order!
         }
     }
     while (!b.empty()) { a.push_back(b.back()); b.pop_back(); }
+    return a;
+}
+
+vector<ull> Divisors_square (ull n) // returns divisors of n^2
+{
+    vector<ull> a = Divisors(n);
+    
+    set<ull> s;
+    for (int i=0; i<(int)a.size(); i++) for (int j=0; j<(int)a.size(); j++) {
+        s.insert(a[i]*a[j]);
+    }
+    a.clear();
+    for (set<ull>::iterator it = s.begin(); it != s.end(); it++) a.push_back(*it);
+        
     return a;
 }
 
@@ -710,7 +725,7 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
 }
 
 int main() {
-    cout.precision(12);
+    cout.precision(14);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     //freopen("input.txt","rt",stdin);

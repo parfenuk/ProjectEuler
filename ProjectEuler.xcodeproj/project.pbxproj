@@ -31,6 +31,7 @@
 		D1E55E851F24C7B600ADF93D /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry.cpp; sourceTree = "<group>"; };
 		D1E55E871F261C0F00ADF93D /* Lnum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lnum.cpp; sourceTree = "<group>"; };
 		D1F909651F51C2EC00A70540 /* Complex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Complex.cpp; sourceTree = "<group>"; };
+		FA5901EE1FD9DF56003B1AF3 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +69,7 @@
 				D1E55E871F261C0F00ADF93D /* Lnum.cpp */,
 				D1E55E851F24C7B600ADF93D /* Geometry.cpp */,
 				D17A22091F7443F5009BF742 /* Fractions.cpp */,
+				FA5901EE1FD9DF56003B1AF3 /* Matrix.cpp */,
 				D15BA4D01F0D988F00B64B78 /* input.txt */,
 				D15BA4D11F0D988F00B64B78 /* output.txt */,
 			);
