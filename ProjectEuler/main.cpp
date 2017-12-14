@@ -630,7 +630,7 @@ ll code_from_v (const vector<int> &v, const vector<int> &matches) // returns num
     return ret;
 }
 
-vector<int> v_from_code (ll n, const vector<int> &matches)
+vector<int> v_from_code (ull n, const vector<int> &matches)
 {
     vector<int> v;
     
@@ -710,18 +710,34 @@ vector<ull> Lagged_Fibonacci_Generator (int n)
 vector<ull> Blub_Blub_Shum_Generator (int n)
 {
     vector<ull> v;
-    ull a = 14025256;
-    
-    vector<bool> used(20300713);
+    ull a = 290797;
     
     for (int i=0; i<n; i++) {
-        if (used[a]) break;
-        v.push_back(a);
-        used[a] = true;
-        a = a*a % 20300713;
+
+        v.push_back(a%61);
+        a = a*a % 50515093;
     }
     
     return v;
+}
+
+const ull LIMIT = 100;
+
+ull cnt_eq (ull a)
+{
+    ull lb = a+1;
+    ull ub = (ull)(a + (dd)a/sqrt(2.0));
+    
+    cout << a << " " << ub << " ";
+    
+    ull ret = 0;
+    if (lb > ub) ret = 0;
+    else if (lb >= LIMIT/2) ret = 0;
+    else if (ub >= LIMIT/2) ret = LIMIT/2 - lb;
+    else ret = ub-lb+1;
+    
+    cout << ret << endl;
+    return ret;
 }
 
 int main() {
@@ -733,6 +749,24 @@ int main() {
 #endif
     
     ull ans = 0;
+
+    for (ull a=1; a<=LIMIT/2; a++) ans += cnt_eq(a);
+    
+    for (ull p=2; p*p<2*LIMIT; p++) for (ull q=1; q<p; q++) {
+        if ((p+q)%2 == 0) continue;
+        if (GCD(p,q) != 1) continue;
+        
+        for (ull m=1;;m++) {
+            
+            ull b = m*(p*p - q*q);
+            ull d = 2*p*q*m;
+            ull c = m*(p*p + q*q);
+            
+            if (b+d >= LIMIT) break;
+            
+            if ((2*b*d) % (b+d+c) == 0) ans += 2;
+        }
+    }
     
     cout << endl << ans << endl;
     
