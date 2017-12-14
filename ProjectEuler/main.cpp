@@ -721,25 +721,6 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-const ull LIMIT = 100;
-
-ull cnt_eq (ull a)
-{
-    ull lb = a+1;
-    ull ub = (ull)(a + (dd)a/sqrt(2.0));
-    
-    cout << a << " " << ub << " ";
-    
-    ull ret = 0;
-    if (lb > ub) ret = 0;
-    else if (lb >= LIMIT/2) ret = 0;
-    else if (ub >= LIMIT/2) ret = LIMIT/2 - lb;
-    else ret = ub-lb+1;
-    
-    cout << ret << endl;
-    return ret;
-}
-
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -749,8 +730,26 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const ull LIMIT = 100000000;
 
-    for (ull a=1; a<=LIMIT/2; a++) ans += cnt_eq(a);
+    for (ull p=1; p*p<=LIMIT; p++) for (ull q=1; q<=p; q++) {
+        if ((p+q)%2 == 0) continue;
+        if (GCD(p,q) != 1) continue;
+        
+        bool minus = false;
+        if (q*q + 2*p*q <= p*p) minus = true;
+        
+        ull b = p*p + q*q;
+        if (2*b >= LIMIT) continue;
+        ull a = 2*b - (p*p + 2*p*q - q*q);
+        ull c = minus ? p*p - q*q - 2*p*q : q*q + 2*p*q - p*p;
+        
+        if ((a+c)%2) continue;
+        
+        ans += (LIMIT/2) / b;
+        if ((LIMIT/2) % b == 0) ans--;
+    }
     
     for (ull p=2; p*p<2*LIMIT; p++) for (ull q=1; q<p; q++) {
         if ((p+q)%2 == 0) continue;
