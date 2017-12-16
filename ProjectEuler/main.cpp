@@ -724,6 +724,121 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+struct Combo
+{
+    int id;
+    vector<int> v;
+};
+
+Combo make_combo (vector<int> a)
+{
+    Combo C;
+    C.id = 0;
+    C.v = a;
+    return C;
+}
+
+bool operator< (Combo a, Combo b)
+{
+    if (a.v.size() < b.v.size()) return true;
+    if (a.v.size() > b.v.size()) return false;
+    for (int i=0; i<(int)a.v.size(); i++) {
+        if (a.v[i] < b.v[i]) return true;
+        if (a.v[i] > b.v[i]) return false;
+    }
+    return false;
+}
+
+bool operator== (Combo a, Combo b)
+{
+    if (a.v.size() != b.v.size()) return false;
+    for (int i=0; i<(int)a.v.size(); i++) {
+        if (a.v[i] != b.v[i]) return false;
+    }
+    return true;
+}
+
+bool check_valid (const vector<int> &v)
+{
+    vector<int> m5;
+    for (int i=0; i<(int)v.size(); i++) {
+        if (v[i] >= 5) m5.push_back(v[i]);
+    }
+    
+    for (int i=0; i<(int)m5.size(); i++) if (m5[i] != 5+i) return false;
+    return true;
+}
+
+vector<Combo> C;
+
+int find_combo_id (const vector<int> &v)
+{
+    Combo A = make_combo(v);
+    vector<Combo>::iterator it = lower_bound(C.begin(),C.end(),A);
+    
+    return (*it).id;
+}
+
+void normalize_vectors (vector<int> &c, vector<int> &m)
+{
+    vector<bool> used(5);
+    vector<pii> a;
+    for (int i=0; i<(int)c.size(); i++) {
+        int k = index_of_object(m,c[i]);
+        if (k != -1) {
+            //m[k] = i;
+            //used[k] = true;
+            a.push_back(mp(k,i));
+        }
+    }
+    for (int i=0; i<(int)a.size(); i++) {
+        m[a[i].fs] = a[i].sc;
+        used[a[i].fs] = true;
+    }
+    
+    int n = 5;
+    for (int i=0; i<(int)m.size(); i++) {
+        if (!used[i]) m[i] = n++;
+    }
+}
+
+vector<pair<pii,int>> process_situation (const vector<int> &memory) // always contains 10 elements
+{
+    int n = (int)memory.size();
+    vector<int> call;
+    for (int i=0; i<n; i++) call.push_back(i);
+    
+    vector<pair<pii,int>> res;
+    pair<pii,int> item;
+    
+    for (int d=0; d<10; d++) {
+        vector<int> c = call, m = memory;
+        if (d < n) {
+            c.erase(c.begin()+d);
+            c.push_back(d);
+            item.fs.fs = 1;
+        }
+        else {
+            c.push_back(d);
+            if (c.size() == 6) c.erase(c.begin());
+            item.fs.fs = 0;
+        }
+        
+        if (contains(m,d)) item.fs.sc = 1;
+        else {
+            item.fs.sc = 0;
+            m.push_back(d);
+            if (m.size() == 6) m.erase(m.begin());
+        }
+        
+        normalize_vectors(c,m);
+        item.sc = find_combo_id(m);
+        res.push_back(item);
+    }
+    
+    return res;
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -733,6 +848,81 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    vector<int> v;
+    for (int n=0; n<4; n++) {
+        v.clear();
+        for (int i=0; i<=n; i++) v.push_back(i);
+        do {
+            C.push_back(make_combo(v));
+        } while (next_permutation(v.begin(),v.end()));
+    }
+    
+    vector<vector<int>> c10 = get_combinations(10,5);
+    for (int n=0; n<252; n++) {
+        v = c10[n];
+        for (int i=0; i<5; i++) v[i]--;
+        do {
+            if (check_valid(v)) C.push_back(make_combo(v));
+        } while (next_permutation(v.begin(),v.end()));
+    }
+    
+    cout << C.size() << endl;
+    sort(C.begin(),C.end());
+    for (int i=0; i<(int)C.size(); i++) C[i].id = i;
+    for (int i=0; i<(int)C.size(); i++) { cout << i << " "; show(C[i].v); }
+    
+    vector<pair<pii,int>> results[1579];
+    for (int i=0; i<1579; i++) {
+        results[i] = process_situation(C[i].v);
+    }
+    
+    for (int i=0; i<10; i++) {
+        pair<pii,int> p = results[2][i];
+        cout << p.fs.fs << " " << p.fs.sc << " " << p.sc << endl;
+    }
+    
+    dd *dp[50][50], *new_dp[50][50];
+    for (int i=0; i<50; i++) for (int j=0; j<50; j++) { dp[i][j] = new dd [1579]; new_dp[i][j] = new dd [1579]; }
+    for (int i=0; i<50; i++) for (int j=0; j<50; j++) for (int k=0; k<1579; k++) dp[i][j][k] = 0;
+    dp[0][0][0] = 1;
+    
+    const int N = 50;
+    
+    for (int turn=2; turn<=N; turn++) {
+        cout << turn << endl;
+        for (int i=0; i<50; i++) for (int j=0; j<50; j++) for (int k=0; k<1579; k++) new_dp[i][j][k] = 0;
+        
+        for (int k=0; k<1579; k++) {
+            
+            for (int i=0; i<50; i++) for (int j=0; j<50; j++) {
+                if (dp[i][j][k] == 0) continue;
+                
+                for (int s=0; s<10; s++) {
+                    pair<pii,int> p = results[k][s];
+                    new_dp[i+p.fs.fs][j+p.fs.sc][p.sc] += dp[i][j][k]*0.1;
+                }
+            }
+        }
+        
+        for (int i=0; i<50; i++) for (int j=0; j<50; j++) for (int k=0; k<1579; k++) dp[i][j][k] = new_dp[i][j][k];
+    }
+    
+    dd Prob[50][50];
+    for (int i=0; i<50; i++) for (int j=0; j<50; j++) Prob[i][j] = 0;
+    for (int i=0; i<50; i++) for (int j=0; j<50; j++) for (int k=0; k<1579; k++) Prob[i][j] += dp[i][j][k];
+    
+    dd sum1 = 0, sum2 = 0, sum3 = 0, sum = 0;
+    for (int i=0; i<N; i++) for (int j=0; j<N; j++) {
+        cout << i << " " << j << " " << fixed << Prob[i][j] << endl;
+        if (i > j) sum1 += Prob[i][j];
+        if (i < j) sum2 += Prob[i][j];
+        if (i == j) sum3 += Prob[i][j];
+        if (i > j) sum += (i-j)*Prob[i][j];
+        else sum += (j-i)*Prob[i][j];
+    }
+    cout << fixed << sum1 << " " << sum2 << " " << sum3 << endl;
+    cout << fixed << sum << endl;
     
     cout << endl << ans << endl;
     
