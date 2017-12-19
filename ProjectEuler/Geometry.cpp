@@ -70,6 +70,10 @@ bool operator== (point a, point b)
     return a.x == b.x && a.y == b.y;
 }
 
+bool operator< (point a, point b) {
+    return a.x < b.x || (a.x == b.x && a.y < b.y);
+}
+
 point operator+ (point a, point b)
 {
     point c;
@@ -130,10 +134,53 @@ dd triangle_area (point a, point b, point c)
     return 0.5*fabs((a.x-c.x)*(b.y-c.y) - (a.y-c.y)*(b.x-c.x));
 }
 
+dd signed_area (point a, point b, point c)
+{
+    return 0.5*((a.x-c.x)*(b.y-c.y) - (a.y-c.y)*(b.x-c.x));
+}
+
 bool triangle_contains_point (point a, point b, point c, point d) // abc contains d?
 {
     return triangle_area(a,b,c) == triangle_area(a,b,d) + triangle_area(b,c,d) + triangle_area(a,c,d);
 }
+
+bool geom_cw (point a, point b, point c, bool q = false) {
+    if (q) return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) < 0;
+    return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) <= 0;
+}
+
+bool geom_ccw (point a, point b, point c, bool q = false) {
+    if (q) return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) > 0;
+    return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) >= 0;
+}
+
+vector<point> convex_hull (vector<point> a, bool should_skip_border_points = true)
+{
+    if (a.size() == 1) return vector<point>();
+    
+    sort (a.begin(), a.end());
+    point p1 = a[0],  p2 = a.back();
+    vector<point> up, down;
+    up.push_back (p1);
+    down.push_back (p1);
+    for (size_t i=1; i<a.size(); ++i) {
+        if (i==a.size()-1 || geom_cw(p1, a[i], p2, should_skip_border_points)) {
+            while (up.size()>=2 && !geom_cw(up[up.size()-2], up[up.size()-1], a[i], should_skip_border_points))
+                up.pop_back();
+            up.push_back (a[i]);
+        }
+        if (i==a.size()-1 || geom_ccw(p1, a[i], p2, !should_skip_border_points)) {
+            while (down.size()>=2 && !geom_ccw(down[down.size()-2], down[down.size()-1], a[i], should_skip_border_points))
+                down.pop_back();
+            down.push_back (a[i]);
+        }
+    }
+    vector<point>b;
+    for (size_t i=0; i<up.size(); ++i) b.push_back (up[i]);
+    for (size_t i=down.size()-2; i>0; --i) b.push_back (down[i]);
+    return b;
+}
+
 
 struct line
 {
@@ -213,7 +260,8 @@ point reflection_vector (point v, line p, point a = NOT_FOUND)
 
 struct Polygon {
     
-    vector<point> P;
+    vector<point> P; // should be sorted in angle order!
+    dd area;
     
     Polygon() {}
     Polygon(int n) {
@@ -230,36 +278,27 @@ struct Polygon {
             cout << fixed << P[i].x << " " << P[i].y << endl;
         }
     }
+    
+    void calculate_area() { // works for convex polygons only
+        
+        area = 0;
+        for (int i=2; i<(int)P.size(); i++) area += triangle_area(P[0],P[i-1],P[i]);
+    }
+    // area must be calculated before
+    bool contains_point (point p, bool strictly_inside = false) {
+        
+        dd a = 0;
+        for (int i=1; i<(int)P.size(); i++) {
+            
+            dd sq = triangle_area(p,P[i-1],P[i]);
+            if (sq == 0) return !strictly_inside;
+            a += sq;
+        }
+        dd sq = triangle_area(p,P.back(),P[0]);
+        if (sq == 0) return !strictly_inside;
+        a += sq;
+        
+        return a == area;
+    }
 };
 
-Polygon Minsowski_sum (Polygon V, Polygon W) // doesn't work correctly
-{
-    vector<point> a;
-    
-    int n = (int)V.P.size(), m = (int)W.P.size();
-    int kv = 0, kw = 0;
-    
-    for (int i=1; i<n; i++) {
-        if (V[i].x < V[kv].x || (V[i].x == V[kv].x && V[i].y < V[kv].y)) kv = i;
-    }
-    for (int i=1; i<m; i++) {
-        if (W[i].x < W[kw].x || (W[i].x == W[kw].x && W[i].y < W[kw].y)) kw = i;
-    }
-    
-    int i=0, j=0;
-    
-    while (i<n || j<m) {
-        a.push_back(V[(kv+i)%n]+W[(kw+j)%m]);
-        
-        dd a1 = (V[(kv+i+1)%n] - V[(kv+i)%n]).polar_angle();
-        dd a2 = (W[(kw+j+1)%m] - W[(kw+j)%m]).polar_angle();
-        
-        if (a1 < a2-EPS) i++;
-        else if (a1 > a2+EPS) j++;
-        else { i++; j++; }
-    }
-    
-    Polygon A;
-    A.P = a;
-    return A;
-}
