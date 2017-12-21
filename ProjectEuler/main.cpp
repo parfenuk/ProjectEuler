@@ -406,6 +406,17 @@ ull power_fact (ull n, ull k) // n! = S * k^x, returns x
     return p;
 }
 
+bool isPractical (ull n)
+{
+    vector<ull> d = Divisors(n);
+    ull sum = 0;
+    for (int i=0; i<(int)d.size(); i++) {
+        if (sum < d[i]-1) return false;
+        sum += d[i];
+    }
+    return true;
+}
+
 ull sum_divisible_by (ull n, ull lb, ull ub) // sum of all numbers in range [lb,ub] that are divisible by n
 {
     ull cnt = ub/n - (lb-1)/n;
