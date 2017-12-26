@@ -15,7 +15,7 @@ typedef int ltype;
 
 using namespace std;
 
-#define LSIZE 5
+#define LSIZE 14
 const ltype BASE = 1000000000;
 
 class Lnum
@@ -35,6 +35,7 @@ public:
     int digits_count();
     string to_string();
     int to_int();
+    long long to_long_long();
     dd to_double();
     ltype operator[] (int k) { return z[k]; }
     void set_value (int pos, ltype k) { z[pos] = k; }
@@ -130,6 +131,18 @@ string Lnum::to_string() // warning - only with BASE == 10^9 works!
 int Lnum::to_int()
 {
     int s = 0, k = 1;
+    for (int i=0; i<size; i++) {
+        
+        s += k*z[i];
+        k *= BASE;
+    }
+    if (minus) s = -s;
+    return s;
+}
+
+long long Lnum::to_long_long()
+{
+    long long s = 0, k = 1;
     for (int i=0; i<size; i++) {
         
         s += k*z[i];
