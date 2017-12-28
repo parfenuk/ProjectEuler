@@ -736,6 +736,85 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+#define N 30000000000
+
+dd ddist (pll a, pll b)
+{
+    ll D = (a.fs-b.fs)*(a.fs-b.fs) + (a.sc-b.sc)*(a.sc-b.sc);
+    return sqrt((dd)D);
+}
+
+map<ull,pull> prime_partitions;
+
+pull prime_partition (ull p)
+{
+    if (prime_partitions.find(p) != prime_partitions.end()) return prime_partitions[p];
+    
+    for (ull a=1; a*a<=p/2; a++) {
+        ull b = integer_sqrt(p-a*a);
+        if (b) {
+            prime_partitions[p] = mp(a,b);
+            return mp(a,b);
+        }
+    }
+    
+    return mp(0,0);
+}
+
+complex product (complex z, int max_degree, int positive_degree)
+{
+    return power(z,positive_degree)*power(z.conjugate(),max_degree-positive_degree);
+}
+
+set<pull> square_partitions (ull n)
+{
+    set<pull> v;
+    
+    vector<pull> f = factorize(n);
+    
+    ull m1 = 1, m2 = 1; // contains product of form 4k+3
+    vector<int> matches;
+    vector<complex> factors;
+    
+    for (int i=0; i<(int)f.size(); i++) {
+        
+        if (f[i].fs % 4 == 3) {
+            if (f[i].sc % 2) return v;
+            ull m = power(f[i].fs,(int)f[i].sc/2);
+            m1 *= m; m2 *= m;
+        }
+        else {
+            pull p = prime_partition(f[i].fs);
+            factors.push_back(complex((ll)p.fs,(ll)p.sc));
+            matches.push_back((int)f[i].sc);
+        }
+    }
+    
+    if (factors.empty()) return v;
+    
+    ll NN = 1;
+    for (int i=0; i<(int)matches.size(); i++) NN *= (matches[i]+1);
+    
+    for (ll i=0; i<NN; i++) {
+        
+        vector<int> code = v_from_code(i, matches);
+        complex z(1);
+        
+        for (int j=0; j<(int)code.size(); j++) {
+            z = z*product(factors[j], matches[j], code[j]);
+        }
+        
+        if (z.x < 0) z.x = -z.x;
+        if (z.y < 0) z.y = -z.y;
+        
+        if (z.x > z.y) swap(z.x,z.y);
+        
+        v.insert(mp(z.x*m1,z.y*m2));
+    }
+    
+    return v;
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -745,6 +824,48 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    dd res = 0;
+    for (ull n=2; n<N; n++) {
+
+        set<pull> s = square_partitions(n);
+        vector<pull> v;
+        for (set<pull>::iterator it = s.begin(); it != s.end(); it++) {
+            v.push_back(*it);
+        }
+        
+        vector<pll> a;
+        for (int i=0; i<(int)v.size(); i++) {
+            ll x = v[i].fs, y = v[i].sc;
+            a.push_back(mp(x,y));
+            if (x) a.push_back(mp(-x,y));
+            a.push_back(mp(x,-y));
+            if (x) a.push_back(mp(-x,-y));
+            if (x != y) {
+                a.push_back(mp(y,x));
+                a.push_back(mp(-y,x));
+                if (x) a.push_back(mp(y,-x));
+                if (x) a.push_back(mp(-y,-x));
+            }
+        }
+        for (int i=0; i<(int)a.size(); i++) for (int j=i+1; j<(int)a.size(); j++) for (int k=j+1; k<(int)a.size(); k++) {
+            
+            if (a[i].fs+a[j].fs+a[k].fs == 5 && a[i].sc+a[j].sc+a[k].sc == 0) {
+                
+                dd P = ddist(a[i],a[j]) + ddist(a[i],a[k]) + ddist(a[j],a[k]);
+                if (P <= 100000) {
+                    res += P;
+                    ans++;
+                    cout << "(" << a[i].fs << " " << a[i].sc << ") ";
+                    cout << "(" << a[j].fs << " " << a[j].sc << ") ";
+                    cout << "(" << a[k].fs << " " << a[k].sc << ")";
+                    cout << endl;
+                }
+            }
+        }
+    }
+    
+    cout << fixed << res;
     
     cout << endl << ans << endl;
     
