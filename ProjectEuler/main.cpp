@@ -746,6 +746,62 @@ int main() {
     
     ull ans = 0;
     
+    const ull Q = power(10,8);
+    int N; cin >> N;
+    
+    ull f1[31][31], f2[31][31], f3[31][31], f5[31][31], f6[31][31];
+    
+    // calculate f2
+    for (int i=0; i<=N; i++) f2[0][i] = f2[i][0] = 0;
+    for (int i=1; i<=N; i++) f2[1][i] = f2[i][1] = 1;
+    for (int i=2; i<=N; i++) for (int j=2; j<=N; j++) {
+        f2[i][j] = (f2[i-1][j] + f2[i][j-1]) % Q;
+    }
+    
+    // calculate f3
+    for (int i=0; i<=N; i++) f3[0][i] = f3[i][0] = f2[N][i];
+    for (int m=1; m<=N; m++) for (int n=1; n<=N; n++) {
+        
+        ull s = (f3[m-1][n] + f3[m][n-1]) % Q;
+        for (int i=1; i<N; i++) s = (s + f2[m][i]*f2[n][N-i]) % Q;
+        f3[m][n] = s;
+    }
+    
+    // calculate f5
+    for (int i=0; i<=N; i++) f5[0][i] = f5[i][0] = 1;
+    for (int m=1; m<=N; m++) for (int n=1; n<=N; n++) {
+        
+        ull s = (f2[m][n] + f5[m-1][n]) % Q;
+        for (int i=1; i<n; i++) s = (s + f2[i][m]) % Q;
+        f5[m][n] = s;
+    }
+    
+    // calculate f6
+    for (int i=0; i<=N; i++) f6[0][i] = f6[i][0] = f5[N][i];
+    for (int m=1; m<=N; m++) for (int n=1; n<=N; n++) {
+        
+        ull s = (f3[m][n] + f6[m-1][n]) % Q;
+        for (int i=1; i<=N; i++) s = (s + f2[m][i]*f5[n][N-i]) % Q;
+        for (int i=1; i<n; i++) s = (s + f3[m][i]) % Q;
+        f6[m][n] = s;
+    }
+    
+    // calculate f1
+    f2[0][1] = f2[1][0] = 1;
+    for (int i=0; i<=N; i++) f1[0][i] = f1[i][0] = f3[N][i];
+    for (int m=1; m<=N; m++) for (int n=1; n<=N; n++) {
+     
+        ull s = f1[m-1][n];
+        for (int i=1; i<=N; i++) s = (s + f2[m-1][i]*f6[n][N-i]) % Q;
+        for (int i=1; i<=N; i++) s = (s + f3[m-1][i]*f5[n][N-i]) % Q;
+        for (int i=1; i<n; i++) s = (s + f1[m-1][i]) % Q;
+        f1[m][n] = s;
+    }
+    
+    ans = f1[N-1][N-1];
+    for (int i=1; i<=N; i++) ans = (ans + f2[N-1][i]*f3[N][N-i]) % Q;
+    for (int i=1; i<N; i++) ans = (ans + f2[N][N-i]*f3[i][N-1]) % Q;
+
     cout << endl << ans << endl;
     
     return 0;
