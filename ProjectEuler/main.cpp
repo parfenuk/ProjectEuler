@@ -736,6 +736,49 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+vector<point> all_vectors (int n)
+{
+    vector<point> v;
+    for (int x=0; x<n; x++) for (int y=0;;y++) {
+        if (x == 0 && y == 0) continue;
+        
+        if (x*x + y*y >= n*n) break;
+        if (integer_sqrt(x*x+y*y) == 0) continue;
+        
+        v.push_back(make_point(x,y));
+        if (x) v.push_back(make_point(-x,y));
+        if (y) v.push_back(make_point(x,-y));
+        if (x*y) v.push_back(make_point(-x,-y));
+    }
+    
+    sort(v.begin(), v.end(), polar_angle_sort);
+    return v;
+}
+
+int ID[121][61];
+vector<pii> v_from_id;
+
+void construct_valid_vectors (int n)
+{
+    for (int i=0; i<121; i++) for (int j=0; j<60; j++) ID[i][j] = -1;
+    int K = 0;
+    
+    for (int x=-(n-1); x<n; x++) for (int y=0; y<n; y++) {
+        if (x*x + y*y < n*n) {
+            ID[x+n-1][y] = K++;
+            v_from_id.push_back(mp(x,y));
+        }
+    }
+}
+
+const int N = 120;
+
+int get_id (pii p)
+{
+    if (p.sc < 0 || p.fs*p.fs + p.sc*p.sc >= N*N/4) return -1;
+    return ID[p.fs+N/2-1][p.sc];
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -745,6 +788,61 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    vector<point> pnts = all_vectors(N/2);
+    
+    vector<pii> v;
+    v.push_back(mp(0,0));
+    for (int i=0; i<(int)pnts.size(); i++) v.push_back(mp(pnts[i].x,pnts[i].y));
+    
+    vector<pii> index_range; // [from .. to], inclusive
+    index_range.push_back(mp(1,(int)v.size()-1));
+    
+    for (int i=1; i<(int)v.size(); i++) {
+        
+        pii p = mp(0,0);
+        int x = v[i].fs, y = v[i].sc;
+        p.fs = i+1;
+        for (int j=i+1; j<(int)v.size(); j++) {
+            if (v[j].fs*y != v[j].sc*x) break;
+            p.fs++;
+        }
+        p.sc = p.fs;
+        for (int j=p.fs+1; j<(int)v.size(); j++) {
+            if (v[j].fs*y == v[j].sc*x) break;
+            p.sc++;
+        }
+        index_range.push_back(p);
+    }
+    
+    for (int i=0; i<(int)v.size(); i++) cout << i << ": " << v[i].fs << " " << v[i].sc << " (" << index_range[i].fs << " " << index_range[i].sc << ")\n";
+
+    construct_valid_vectors(N/2);
+    
+    ull *dp[5698][121]; // { sum_vector, perimeter, last_used_vector_id }
+    for (int i=0; i<5698; i++) for (int j=0; j<121; j++) dp[i][j] = new ull [437];
+    for (int i=0; i<5698; i++) for (int j=0; j<121; j++) for (int k=0; k<437; k++) dp[i][j][k] = 0;
+    
+    dp[get_id(mp(0,0))][0][0] = 1;
+    
+    for (int n=1; n<(int)v.size(); n++) {
+        
+        int L = (int)integer_sqrt(v[n].fs*v[n].fs + v[n].sc*v[n].sc); // length to add
+        
+        for (int k=0; k<n; k++) {
+            if (n < index_range[k].fs || n > index_range[k].sc) continue;
+            
+            for (int p=0; p+L<=N; p++) for (int i=0; i<(int)v_from_id.size(); i++) {
+                if (dp[i][p][k] == 0) continue;
+                
+                pii a = mp(v_from_id[i].fs + v[n].fs, v_from_id[i].sc + v[n].sc);
+                int id = get_id(a);
+                if (id >= 0) dp[id][p+L][n] += dp[i][p][k];
+            }
+        }
+    }
+    
+    for (int p=1; p<=N; p++) for (int k=0; k<(int)v.size(); k++) ans += dp[get_id(mp(0,0))][p][k];
     
     cout << endl << ans << endl;
     
