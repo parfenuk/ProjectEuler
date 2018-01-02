@@ -257,7 +257,7 @@ vector<pull> factorize (ull n)
 {
     vector<pull> a;
     
-    for (ll i=2; i*i<=n; i++) {
+    for (ull i=2; i*i<=n; i++) {
         
         int k = 0;
         while (n % i == 0) {
