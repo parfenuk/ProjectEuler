@@ -736,6 +736,133 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+const int CF[14][4] = { // configurations for inputes 1,3,5,7 correspondingly
+    {2,4,6,8},
+    {2,4,8,6},
+    {2,6,4,8},
+    {2,8,4,6},
+    {2,8,6,4},
+    {4,2,6,8},
+    {4,2,8,6},
+    {6,2,4,8},
+    {6,4,2,8},
+    {8,2,4,6},
+    {8,2,6,4},
+    {8,4,2,6},
+    {8,4,6,2},
+    {8,6,4,2},
+};
+
+const int VM[4][4] = {{-1,1,2,-1},{8,9,10,3},{7,11,12,4},{-1,6,5,-1}}; // vertices map
+vector<int> cf;
+
+pair<pii,int> get_next_direction (pii coords, int dir) // get next coords and next input dir
+{
+    int r = coords.fs, c = coords.sc, v = VM[coords.fs][coords.sc];
+    int output_dir = CF[cf[v-9]][dir/2];
+    if (output_dir == 2) { r--; return mp(mp(r,c),5); }
+    if (output_dir == 4) { c++; return mp(mp(r,c),7); }
+    if (output_dir == 6) { r++; return mp(mp(r,c),1); }
+    if (output_dir == 8) { c--; return mp(mp(r,c),3); }
+    
+    return mp(mp(0,0),-1);
+}
+
+pii get_destination (int v)
+{
+    int used_edges = 1;
+    
+    pair<pii,int> p;
+    if (v == 1) p = mp(mp(1,1),1);
+    if (v == 2) p = mp(mp(1,2),1);
+    if (v == 3) p = mp(mp(1,2),3);
+    if (v == 4) p = mp(mp(2,2),3);
+    if (v == 5) p = mp(mp(2,2),5);
+    if (v == 6) p = mp(mp(2,1),5);
+    if (v == 7) p = mp(mp(2,1),7);
+    if (v == 8) p = mp(mp(1,1),7);
+    
+    do {
+        p = get_next_direction(p.fs, p.sc);
+        used_edges++;
+    } while (VM[p.fs.fs][p.fs.sc] > 8);
+    
+    return mp(VM[p.fs.fs][p.fs.sc], used_edges);
+}
+
+vector<int> build_graph () // construct graph as a permutation. 'cf' is 4 configurations for vefrtices 9-12
+{
+    int used_edges_count = 0;
+    vector<int> a;
+    for (int v=1; v<=8; v++) {
+        pii p = get_destination(v);
+        used_edges_count += p.sc;
+        a.push_back(p.fs);
+    }
+    
+    if (used_edges_count != 24) return {};
+    return a;
+}
+
+bool is_increasing_cycle (vector<int> c)
+{
+    c.push_back(c[0]);
+    int inc = 0, dec = 0;
+    for (int i=1; i<(int)c.size(); i++) {
+        if (c[i] > c[i-1]) inc++;
+        else dec++;
+    }
+    return inc > dec;
+}
+
+int cycles_count (vector<int> g) // permutation graph
+{
+    g.insert(g.begin(),0);
+    vector<bool> used(9);
+    
+    int cnt = 1;
+    for (int i=1; i<=8; i++) {
+        if (used[i]) continue;
+        int s = i;
+        used[s] = true;
+        vector<int> cycle(1,s);
+        while (true) {
+            s = g[s];
+            if (used[s]) break;
+            used[s] = true;
+            cycle.push_back(s);
+        }
+        
+        cnt *= (int)cycle.size();
+    }
+    
+    return cnt;
+}
+
+void output_to_mathematica (ull n)
+{
+    vector<int> g = digits(n);
+    int A[8][8];
+    for (int i=0; i<8; i++) for (int j=0; j<8; j++) A[i][j] = 0;
+    for (int i=0; i<8; i++) { A[i][i] = 1; A[i][(i+1)%8] = -1; }
+    for (int i=1; i<=8; i++) {
+        if (g[i-1] == i) continue;
+        A[i-1][g[i-1]-1]--;
+        A[g[i-1]-1][g[i-1]-1]++;
+    }
+    cout << "Det[{";
+    for (int i=1; i<8; i++) {
+        cout << "{";
+        for (int j=1; j<8; j++) {
+            cout << A[i][j];
+            if (j != 7) cout << ",";
+        }
+        cout << "}";
+        if (i != 7) cout << ",";
+    }
+    cout << "}]";
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -745,6 +872,25 @@ int main() {
 #endif
     
     ull ans = 0;
+    map<ull,int> M;
+    
+    for (ull n=0; n<power(14,4); n++) {
+        cf = digits(n,14,4);
+        vector<int> g = build_graph();
+        if (g.empty()) continue;
+        
+        ull m = from_digits(g);
+        //cout << m << endl;
+        M[m]++;
+    }
+    
+    for (map<ull,int>::iterator it=M.begin(); it!=M.end(); it++) {
+        
+//        cout << (*it).sc << "*";
+//        output_to_mathematica((*it).fs);
+//        cout << " + ";
+        ans += (*it).sc * cycles_count(digits((*it).fs));
+    }
     
     cout << endl << ans << endl;
     
