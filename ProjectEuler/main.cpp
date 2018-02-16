@@ -736,7 +736,7 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-const int CF[14][4] = { // configurations for inputes 1,3,5,7 correspondingly
+const int CFin[14][4] = { // configurations for inputes 1,3,5,7 correspondingly
     {2,4,6,8},
     {2,4,8,6},
     {2,6,4,8},
@@ -753,118 +753,248 @@ const int CF[14][4] = { // configurations for inputes 1,3,5,7 correspondingly
     {8,6,4,2},
 };
 
-const int VM[3][7] = {{-1,1,2,3,4,5,-1},{12,13,14,15,16,17,6},{-1,11,10,9,8,7,-1}}; // vertices map
-vector<int> cf;
+const int CFed[2][2] = {
+    {2,4},
+    {4,2}
+};
 
-pair<pii,int> get_next_direction (pii coords, int dir) // get next coords and next input dir
-{
-    int r = coords.fs, c = coords.sc, v = VM[coords.fs][coords.sc];
-    int output_dir = CF[cf[v-13]][dir/2];
-    if (output_dir == 2) { r--; return mp(mp(r,c),5); }
-    if (output_dir == 4) { c++; return mp(mp(r,c),7); }
-    if (output_dir == 6) { r++; return mp(mp(r,c),1); }
-    if (output_dir == 8) { c--; return mp(mp(r,c),3); }
-    
-    return mp(mp(0,0),-1);
-}
+const ull Q = 10000000000;
+int N, M, EDGES = 0;
+vector<int> g[100];
 
-pii get_destination (int v)
+void enumerate_edges()
 {
-    int used_edges = 1;
+    int K = 0, E = 0, S = M+1;
     
-    pair<pii,int> p;
-    if (v == 1) p = mp(mp(1,1),1);
-    if (v == 2) p = mp(mp(1,2),1);
-    if (v == 3) p = mp(mp(1,3),1);
-    if (v == 4) p = mp(mp(1,4),1);
-    if (v == 5) p = mp(mp(1,5),1);
-    if (v == 6) p = mp(mp(1,5),3);
-    if (v == 7) p = mp(mp(1,5),5);
-    if (v == 8) p = mp(mp(1,4),5);
-    if (v == 9) p = mp(mp(1,3),5);
-    if (v == 10) p = mp(mp(1,2),5);
-    if (v == 11) p = mp(mp(1,1),5);
-    if (v == 12) p = mp(mp(1,1),7);
-    
-    do {
-        p = get_next_direction(p.fs, p.sc);
-        used_edges++;
-    } while (VM[p.fs.fs][p.fs.sc] > 12);
-    
-    return mp(VM[p.fs.fs][p.fs.sc], used_edges);
-}
-
-vector<int> build_graph () // construct graph as a permutation. 'cf' is 4 configurations for vefrtices 9-12
-{
-    int used_edges_count = 0;
-    vector<int> a;
-    for (int v=1; v<=12; v++) {
-        pii p = get_destination(v);
-        used_edges_count += p.sc;
-        a.push_back(p.fs);
+    // fill edges count
+    for (int i=0; i<=N; i++) for (int j=0; j<=M; j++) {
+        
+        int side = 0;
+        if (i == 0 || i == N) side++;
+        if (j == 0 || j == M) side++;
+        
+        if (side == 0) g[K] = vector<int>(9);
+        if (side == 1) g[K] = vector<int>(5);
+        if (side == 2) g[K] = vector<int>(3);
+        K++;
     }
     
-    if (used_edges_count != 32) return {};
-    return a;
-}
-
-bool is_increasing_cycle (vector<int> c)
-{
-    c.push_back(c[0]);
-    int inc = 0, dec = 0;
-    for (int i=1; i<(int)c.size(); i++) {
-        if (c[i] > c[i-1]) inc++;
-        else dec++;
-    }
-    return inc > dec;
-}
-
-int cycles_count (vector<int> g) // permutation graph
-{
-    g.insert(g.begin(),0);
-    vector<bool> used(13);
-    
-    int cnt = 1;
-    for (int i=1; i<=12; i++) {
-        if (used[i]) continue;
-        int s = i;
-        used[s] = true;
-        vector<int> cycle(1,s);
-        while (true) {
-            s = g[s];
-            if (used[s]) break;
-            used[s] = true;
-            cycle.push_back(s);
+    // fill edges
+    K = 0;
+    for (int i=0; i<=N; i++) for (int j=0; j<=M; j++) {
+        
+        if (i == 0) { // top case
+            
+            if (j == 0) { // top-left corner case
+                
+                g[K][1] = g[K+S][4] = E++;
+                g[K][2] = g[K+1][1] = E++;
+            }
+            else if (j == M) { // top-right corner case
+                
+                g[K][2] = g[K+S][1] = E++;
+            }
+            else {
+                
+                g[K][2] = g[K+S][1] = E++;
+                g[K][3] = g[K+S][2] = E++;
+                g[K][4] = g[K+1][1] = E++;
+            }
+        }
+        else if (i == N) { // bottom case
+            
+            if (j == M-1) { // pre-bottom-right case
+                
+                g[K][1] = g[K+1][2] = E++;
+            }
+            else if (j == M) { // bottom-right case
+                
+            }
+            else { // including bottom-left case
+                
+                g[K][1] = g[K+1][4] = E++;
+            }
+        }
+        else if (j == 0) { // left middle case
+            
+            if (i == N-1) { // pre-bottom-left case
+                
+                g[K][1] = g[K+S][2] = E++;
+                g[K][2] = g[K+1][7] = E++;
+                g[K][3] = g[K+1][8] = E++;
+            }
+            else {
+                
+                g[K][1] = g[K+S][4] = E++;
+                g[K][2] = g[K+1][7] = E++;
+                g[K][3] = g[K+1][8] = E++;
+            }
+        }
+        else if (j == M) { // right middle case
+            
+            g[K][4] = g[K+S][1] = E++;
+        }
+        else { // inner case
+            
+            if (i == N-1) {
+                
+                if (j == M-1) {
+                    
+                    g[K][3] = g[K+1][2] = E++;
+                    g[K][4] = g[K+1][3] = E++;
+                    g[K][5] = g[K+S][2] = E++;
+                    g[K][6] = g[K+S][3] = E++;
+                }
+                else {
+                    
+                    g[K][3] = g[K+1][8] = E++;
+                    g[K][4] = g[K+1][7] = E++;
+                    g[K][5] = g[K+S][2] = E++;
+                    g[K][6] = g[K+S][3] = E++;
+                }
+            }
+            else if (j == M-1) {
+                
+                g[K][3] = g[K+1][2] = E++;
+                g[K][4] = g[K+1][3] = E++;
+                g[K][5] = g[K+S][2] = E++;
+                g[K][6] = g[K+S][1] = E++;
+            }
+            else {
+                
+                g[K][3] = g[K+1][8] = E++;
+                g[K][4] = g[K+1][7] = E++;
+                g[K][5] = g[K+S][2] = E++;
+                g[K][6] = g[K+S][1] = E++;
+            }
         }
         
-        cnt *= (int)cycle.size();
+        K++;
     }
     
-    return cnt;
+    EDGES = E;
 }
 
-void output_to_mathematica (ull n)
+map<string,ull> P_old, P_new;
+
+void save_path (const vector<pii> &v, ull count)
 {
-    vector<int> g = digits(n);
-    int A[8][8];
-    for (int i=0; i<8; i++) for (int j=0; j<8; j++) A[i][j] = 0;
-    for (int i=0; i<8; i++) { A[i][i] = 1; A[i][(i+1)%8] = -1; }
-    for (int i=1; i<=8; i++) {
-        if (g[i-1] == i) continue;
-        A[i-1][g[i-1]-1]--;
-        A[g[i-1]-1][g[i-1]-1]++;
+    string S;
+    for (int i=0; i<(int)v.size(); i++) {
+        S += to_string(v[i].fs);
+        S += "#";
+        S += to_string(v[i].sc);
+        S += "#";
     }
-    cout << "Det[{";
-    for (int i=1; i<8; i++) {
-        cout << "{";
-        for (int j=1; j<8; j++) {
-            cout << A[i][j];
-            if (j != 7) cout << ",";
+    
+    P_new[S] = (P_new[S] + count) % Q;
+}
+
+void merge_corner_path (vector<pii> v, pii p, ull count) // v in the form <start_edge, end_edge>
+{
+    for (int i=0; i<(int)v.size(); i++) {
+        if (v[i].sc == p.fs) {
+            v[i].sc = p.sc;
+            break;
         }
-        cout << "}";
-        if (i != 7) cout << ",";
+        if (v[i].fs == p.sc) {
+            v[i].fs = p.fs;
+            break;
+        }
     }
-    cout << "}]";
+    
+    sort(v.begin(), v.end());
+    save_path(v,count);
+}
+
+void merge_side_path (vector<pii> v, int K, ull count)
+{
+    for (int cf=0; cf<2; cf++) {
+        
+        vector<pii> p;
+        p.push_back(mp(g[K][1], g[K][CFed[cf][0]]));
+        p.push_back(mp(g[K][3], g[K][CFed[cf][1]]));
+        
+        int s[2] = {-1,-1}, e[2] = {-1,-1};
+        for (int i=0; i<(int)v.size(); i++) {
+            
+            for (int j=0; j<2; j++) {
+                if (v[i].fs == p[j].sc) e[j] = i;
+                if (v[i].sc == p[j].fs) s[j] = i;
+            }
+        }
+        
+        bool ok = true;
+        for (int i=0; i<2; i++) if (s[i] == e[i] && s[i] != -1) { ok = false; break; }
+        if (!ok) continue;
+        
+        vector<pii> w = v;
+        vector<int> indeces_to_erase;
+        for (int i=0; i<2; i++) {
+            
+            if (s[i] == -1 && e[i] == -1) w.push_back(p[i]);
+            else if (s[i] == -1) w[e[i]].fs = p[i].fs;
+            else if (e[i] == -1) w[s[i]].sc = p[i].sc;
+            else {
+                w[s[i]].sc = w[e[i]].sc;
+                indeces_to_erase.push_back(e[i]);
+            }
+        }
+        
+        sort(indeces_to_erase.begin(), indeces_to_erase.end());
+        for (int i=(int)indeces_to_erase.size()-1; i>=0; i--) {
+            w.erase(w.begin()+indeces_to_erase[i]);
+        }
+        
+        sort(w.begin(),w.end());
+        save_path(w,count);
+    }
+}
+
+void merge_inner_path (vector<pii> v, int K, ull count)
+{
+    for (int cf=0; cf<14; cf++) {
+        
+        vector<pii> p;
+        p.push_back(mp(g[K][1], g[K][CFin[cf][0]]));
+        p.push_back(mp(g[K][3], g[K][CFin[cf][1]]));
+        p.push_back(mp(g[K][5], g[K][CFin[cf][2]]));
+        p.push_back(mp(g[K][7], g[K][CFin[cf][3]]));
+        
+        int s[4] = {-1,-1,-1,-1}, e[4] = {-1,-1,-1,-1};
+        for (int i=0; i<(int)v.size(); i++) {
+            
+            for (int j=0; j<4; j++) {
+                if (v[i].fs == p[j].sc) e[j] = i;
+                if (v[i].sc == p[j].fs) s[j] = i;
+            }
+        }
+        
+        bool ok = true;
+        for (int i=0; i<4; i++) if (s[i] == e[i] && s[i] != -1) { ok = false; break; }
+        if (!ok) continue;
+        
+        vector<pii> w = v;
+        vector<int> indeces_to_erase;
+        for (int i=0; i<4; i++) {
+            
+            if (s[i] == -1 && e[i] == -1) w.push_back(p[i]);
+            else if (s[i] == -1) w[e[i]].fs = p[i].fs;
+            else if (e[i] == -1) w[s[i]].sc = p[i].sc;
+            else {
+                w[s[i]].sc = w[e[i]].sc;
+                indeces_to_erase.push_back(e[i]);
+            }
+        }
+        
+        sort(indeces_to_erase.begin(), indeces_to_erase.end());
+        for (int i=(int)indeces_to_erase.size()-1; i>=0; i--) {
+            w.erase(w.begin()+indeces_to_erase[i]);
+        }
+        
+        sort(w.begin(),w.end());
+        save_path(w,count);
+    }
 }
 
 int main() {
@@ -876,25 +1006,61 @@ int main() {
 #endif
     
     ull ans = 0;
-    map<ull,int> M;
     
-    for (ull n=0; n<power(14,5); n++) {
-        cf = digits(n,14,5);
-        vector<int> g = build_graph();
-        if (g.empty()) continue;
-        
-        ull m = from_digits(g,13);
-        //cout << m << endl;
-        M[m]++;
+    cin >> N >> M; // N >= M for now
+    enumerate_edges();
+    
+    int K = 0;
+    for (int i=0; i<=N; i++) for (int j=0; j<=M; j++) {
+
+        cout << K << ": ";
+        for (int k=1; k<(int)g[K].size(); k++) cout << g[K][k] << " ";
+        cout << endl;
+        K++;
     }
     
-    cout << M.size() << endl;
-    for (map<ull,int>::iterator it=M.begin(); it!=M.end(); it++) {
+    K = 0;
+    for (int i=0; i<=N; i++) for (int j=0; j<=M; j++) {
         
-//        cout << (*it).sc << "*";
-//        output_to_mathematica((*it).fs);
-//        cout << " + ";
-        ans += (*it).sc * cycles_count(digits((*it).fs));
+        if (K == 0) {
+            P_old["0#1#"] = 1;
+            K++;
+            continue;
+        }
+        if (K == (N+1)*(M+1)-1) {
+            string S = to_string(g[K][2]);
+            S += "#";
+            S += to_string(g[K][1]);
+            S += "#";
+            ans = P_old[S];
+            
+            cout << "Iteration #" << K << endl;
+            for (map<string,ull>::iterator it = P_old.begin(); it != P_old.end(); it++) {
+                cout << (*it).fs << " " << (*it).sc << endl;
+            }
+            continue;
+        }
+        
+        cout << "Iteration #" << K << endl;
+        for (map<string,ull>::iterator it = P_old.begin(); it != P_old.end(); it++) {
+            
+            ull count = (*it).sc;
+            vector<string> vs = parse_by_symbol((*it).fs, '#');
+            vector<pii> v;
+            for (int i=0; i<(int)vs.size(); i+=2) {
+                v.push_back(mp(atoi(vs[i].c_str()), atoi(vs[i+1].c_str())));
+            }
+            
+            cout << (*it).fs << " " << count << endl;
+            
+            if ((i == 0 || i == N) && (j == 0 || j == M)) merge_corner_path(v, mp(g[K][1],g[K][2]), count);
+            else if (i == 0 || i == N || j == 0 || j == M) merge_side_path(v, K, count);
+            else merge_inner_path(v, K, count);
+        }
+        
+        K++;
+        P_old.swap(P_new);
+        P_new.clear();
     }
     
     cout << endl << ans << endl;
