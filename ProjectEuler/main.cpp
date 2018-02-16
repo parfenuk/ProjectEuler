@@ -916,35 +916,27 @@ void merge_side_path (vector<pii> v, int K, ull count)
         p.push_back(mp(g[K][3], g[K][CFed[cf][1]]));
         
         int s[2] = {-1,-1}, e[2] = {-1,-1};
-        for (int i=0; i<(int)v.size(); i++) {
-            
-            for (int j=0; j<2; j++) {
-                if (v[i].fs == p[j].sc) e[j] = i;
-                if (v[i].sc == p[j].fs) s[j] = i;
-            }
-        }
         
         bool ok = true;
-        for (int i=0; i<2; i++) if (s[i] == e[i] && s[i] != -1) { ok = false; break; }
-        if (!ok) continue;
-        
         vector<pii> w = v;
-        vector<int> indeces_to_erase;
-        for (int i=0; i<2; i++) {
+        for (int j=0; j<2; j++) {
             
-            if (s[i] == -1 && e[i] == -1) w.push_back(p[i]);
-            else if (s[i] == -1) w[e[i]].fs = p[i].fs;
-            else if (e[i] == -1) w[s[i]].sc = p[i].sc;
+            for (int i=0; i<(int)w.size(); i++) {
+                if (w[i].fs == p[j].sc) e[j] = i;
+                if (w[i].sc == p[j].fs) s[j] = i;
+            }
+            if (s[j] == e[j] && s[j] != -1) { ok = false; break; }
+            
+            if (s[j] == -1 && e[j] == -1) w.push_back(p[j]);
+            else if (s[j] == -1) w[e[j]].fs = p[j].fs;
+            else if (e[j] == -1) w[s[j]].sc = p[j].sc;
             else {
-                w[s[i]].sc = w[e[i]].sc;
-                indeces_to_erase.push_back(e[i]);
+                w[s[j]].sc = w[e[j]].sc;
+                w.erase(w.begin()+e[j]);
             }
         }
         
-        sort(indeces_to_erase.begin(), indeces_to_erase.end());
-        for (int i=(int)indeces_to_erase.size()-1; i>=0; i--) {
-            w.erase(w.begin()+indeces_to_erase[i]);
-        }
+        if (!ok) continue;
         
         sort(w.begin(),w.end());
         save_path(w,count);
@@ -962,37 +954,39 @@ void merge_inner_path (vector<pii> v, int K, ull count)
         p.push_back(mp(g[K][7], g[K][CFin[cf][3]]));
         
         int s[4] = {-1,-1,-1,-1}, e[4] = {-1,-1,-1,-1};
-        for (int i=0; i<(int)v.size(); i++) {
-            
-            for (int j=0; j<4; j++) {
-                if (v[i].fs == p[j].sc) e[j] = i;
-                if (v[i].sc == p[j].fs) s[j] = i;
-            }
-        }
+//        for (int i=0; i<(int)v.size(); i++) {
+//
+//            for (int j=0; j<4; j++) {
+//                if (v[i].fs == p[j].sc) e[j] = i;
+//                if (v[i].sc == p[j].fs) s[j] = i;
+//            }
+//        }
         
         bool ok = true;
-        for (int i=0; i<4; i++) if (s[i] == e[i] && s[i] != -1) { ok = false; break; }
-        if (!ok) continue;
-        
         vector<pii> w = v;
-        vector<int> indeces_to_erase;
-        for (int i=0; i<4; i++) {
+        for (int j=0; j<4; j++) {
             
-            if (s[i] == -1 && e[i] == -1) w.push_back(p[i]);
-            else if (s[i] == -1) w[e[i]].fs = p[i].fs;
-            else if (e[i] == -1) w[s[i]].sc = p[i].sc;
+            for (int i=0; i<(int)w.size(); i++) {
+                if (w[i].fs == p[j].sc) e[j] = i;
+                if (w[i].sc == p[j].fs) s[j] = i;
+            }
+            if (s[j] == e[j] && s[j] != -1) { ok = false; break; }
+            
+            if (s[j] == -1 && e[j] == -1) w.push_back(p[j]);
+            else if (s[j] == -1) w[e[j]].fs = p[j].fs;
+            else if (e[j] == -1) w[s[j]].sc = p[j].sc;
             else {
-                w[s[i]].sc = w[e[i]].sc;
-                indeces_to_erase.push_back(e[i]);
+                w[s[j]].sc = w[e[j]].sc;
+                w.erase(w.begin()+e[j]);
             }
         }
         
-        sort(indeces_to_erase.begin(), indeces_to_erase.end());
-        for (int i=(int)indeces_to_erase.size()-1; i>=0; i--) {
-            w.erase(w.begin()+indeces_to_erase[i]);
-        }
+        if (!ok) continue;
         
         sort(w.begin(),w.end());
+//        if (w.size() == 3 && w[2].sc == 7) {
+//            cout << "WHAT?\n";
+//        }
         save_path(w,count);
     }
 }
@@ -1051,7 +1045,7 @@ int main() {
                 v.push_back(mp(atoi(vs[i].c_str()), atoi(vs[i+1].c_str())));
             }
             
-            cout << (*it).fs << " " << count << endl;
+            //cout << (*it).fs << " " << count << endl;
             
             if ((i == 0 || i == N) && (j == 0 || j == M)) merge_corner_path(v, mp(g[K][1],g[K][2]), count);
             else if (i == 0 || i == N || j == 0 || j == M) merge_side_path(v, K, count);
