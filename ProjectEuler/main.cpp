@@ -106,7 +106,7 @@ ull power (ull n, int k)
     return s;
 }
 
-ull powmod(ull a, ull k, int mod = 0)
+ull powmod (ull a, ull k, int mod = 0)
 {
     ull b = 1;
     while (k) {
@@ -736,6 +736,37 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+const ull LIMIT = 100000;
+const ull N = LIMIT*LIMIT;
+
+vector<ull> possible_ns (ull L, ull k, ull phi_L) // L,k are odd and relatively primes
+{
+    vector<ull> v;
+    
+    ull A = (k*k + L*L)/2;
+    ull b0 = (L-A%L)*powmod(k,phi_L-1,(int)L) % L;
+    
+    bool ok = false;
+    for (ull t=0;;t++) {
+        
+        ull b = b0 + L*t;
+        ull a = (k*b + A)/L;
+        ull n = a*a + b*b;
+        if (n > N) break;
+        
+        if (ok) { v.push_back(n); continue; }
+        
+        ok = true;
+        for (ull i=1; i<L; i++) {
+            ull x = k*i/L + 1;
+            if ((a-i)*(a-i) + (b+x)*(b+x) < n) { ok = false; break; }
+        }
+        if (ok) v.push_back(n);
+    }
+    
+    return v;
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -745,6 +776,62 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    map<ull,int> M;
+    vector<vector<ull>> w;
+    
+    for (ull L=1; L<135; L+=2) {
+        ull phi = EulerPhi(L);
+        
+        for (ull k=L; k*k + L*L <= 2*L*LIMIT; k+=2) {
+            if (GCD(L,k) != 1) continue;
+        
+            vector<ull> v = possible_ns(L, k, phi);
+            
+            if (!v.empty()) {
+                w.push_back(v);
+                cout << L << " " << k << ": " << v.size() << ", ";
+                if (v.size() > 0) cout << v[0] << endl;
+                else show(v);
+            }
+            
+            for (int i=0; i<(int)v.size(); i++) M[v[i]]++;
+        }
+    }
+    cout << "Number of containers: " << w.size() << endl;
+    
+    ans += M.size();
+    vector<ull> ms; // contains multiples
+    
+    for (map<ull,int>::iterator it=M.begin(); it!=M.end(); it++) {
+        if ((*it).sc > 1) ms.push_back((*it).fs);
+    }
+    
+    cout << "Number of multiples: " << ms.size() << endl;
+    map<pii,int> P;
+    
+    for (int i=0; i<(int)w.size(); i++) {
+        
+        vector<int> mi; // contains multiple indices from ms that are stored in w[i]
+        for (int j=0; j<(int)ms.size(); j++) {
+            vector<ull>::iterator it = lower_bound(w[i].begin(), w[i].end(), ms[j]);
+            if (*it == ms[j]) mi.push_back(j);
+        }
+        
+        for (int j=0; j<(int)mi.size(); j++) for (int k=j+1; k<(int)mi.size(); k++) {
+            P[mp(mi[j],mi[k])]++;
+        }
+        
+        ull n = (ull)w[i].size();
+        ans += n*(n-1)/2;
+    }
+    
+    int couples = 0;
+    for (map<pii,int>::iterator it=P.begin(); it!=P.end(); it++) {
+        couples += ((*it).sc-1);
+    }
+    cout << "Couples = " << couples << endl;
+    ans -= couples;
     
     cout << endl << ans << endl;
     
