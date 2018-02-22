@@ -25,7 +25,7 @@ typedef unsigned int uint;
 #define sc second
 
 const dd PI = acos(-1.0);
-const dd EPS = 0.00000001;
+const dd EPS = 0.000000001;
 
 struct point
 {

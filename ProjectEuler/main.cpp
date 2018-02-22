@@ -736,6 +736,135 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+int Gauss (vector <vector<dd>> a, vector<dd> & ans) // 0 - no solutions, 1 - one solution, 2 - infinitely many solutions
+{
+    int n = (int) a.size();
+    int m = (int) a[0].size() - 1;
+    
+    vector<int> where (m, -1);
+    for (int col=0, row=0; col<m && row<n; col++) {
+        
+        int sel = row;
+        for (int i=row; i<n; i++) {
+            if (abs (a[i][col]) > abs (a[sel][col])) sel = i;
+        }
+        if (abs (a[sel][col]) < EPS) continue;
+        for (int i=col; i<=m; i++) swap (a[sel][i], a[row][i]);
+        where[col] = row;
+        
+        for (int i=0; i<n; i++) {
+            if (i != row) {
+                dd c = a[i][col] / a[row][col];
+                for (int j=col; j<=m; ++j) a[i][j] -= a[row][j] * c;
+            }
+        }
+        row++;
+    }
+    
+    ans.assign (m, 0);
+    for (int i=0; i<m; i++) {
+        if (where[i] != -1) ans[i] = a[where[i]][m] / a[where[i]][i];
+    }
+    for (int i=0; i<n; i++) {
+        dd sum = 0;
+        for (int j=0; j<m; ++j) sum += ans[j] * a[i][j];
+        if (abs (sum - a[i][m]) > EPS) return 0;
+    }
+    
+    for (int i=0; i<m; ++i) {
+        if (where[i] == -1) return 2;
+    }
+    
+    return 1;
+}
+
+dd M[462][25];
+vector<vector<int>> combs;
+vector<int> g[25];
+
+bool vector_sort (const vector<int> &a, const vector<int> &b)
+{
+    int ca = 0, cb = 0;
+    for (int i=0; i<(int)a.size(); i++) {
+        if (a[i] < 5) ca++;
+    }
+    for (int i=0; i<(int)b.size(); i++) {
+        if (b[i] < 5) cb++;
+    }
+    
+    if (ca != cb) return ca > cb;
+    return a.size() < b.size();
+}
+
+int ID_from_comb (vector<int> c)
+{
+    sort(c.begin(), c.end());
+    for (int i=0; i<(int)combs.size(); i++) {
+        if (c == combs[i]) return i;
+    }
+    return -1;
+}
+
+void solve (int n)
+{
+    vector<int> v = combs[n];
+    vector<int> forbidden_cells;
+    if (v.size() == 4) {
+        for (int i=0; i<5; i++) if (!contains(v,i)) forbidden_cells.push_back(i);
+    }
+    else { // v.size() == 5
+        for (int i=20; i<25; i++) if (contains(v,i)) forbidden_cells.push_back(i);
+    }
+    
+    vector<int> ID(25); // ids of variables
+    for (int i=0; i<(int)forbidden_cells.size(); i++) ID[forbidden_cells[i]] = -1;
+    int K = 0;
+    for (int i=0; i<25; i++) {
+        if (ID[i] == -1) continue;
+        ID[i] = K++;
+    }
+    
+    vector<vector<dd>> system;
+    for (int i=0; i<25; i++) {
+        if (ID[i] == -1) continue;
+        
+        vector<dd> equation(K+1);
+        equation[ID[i]] = 1;
+        
+        for (int j=0; j<(int)g[i].size(); j++) {
+            
+            if (ID[g[i][j]] == -1) {
+                vector<int> a = v;
+                if (g[i][j] < 5) a.push_back(g[i][j]);
+                else {
+                    int index = index_of_object(a,g[i][j]);
+                    a.erase(a.begin()+index);
+                }
+                
+                equation[K] += (1 + M[ID_from_comb(a)][g[i][j]])/g[i].size();
+            }
+            else {
+                
+                equation[ID[g[i][j]]] = -1.0/g[i].size();
+                equation[K] += 1.0/g[i].size();
+            }
+        }
+        
+        system.push_back(equation);
+    }
+    
+    vector<dd> res;
+    if (Gauss(system, res) != 1) {
+        cout << "Oh, no!\n";
+    }
+    
+    for (int i=0; i<25; i++) {
+        if (ID[i] == -1) continue;
+        
+        M[n][i] = res[ID[i]];
+    }
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -745,6 +874,42 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (int i=0; i<25; i++) {
+        if (i%5)      g[i].push_back(i-1);
+        if (i >= 5)   g[i].push_back(i-5);
+        if (i < 20)   g[i].push_back(i+5);
+        if (i%5 != 4) g[i].push_back(i+1);
+    }
+    
+    vector<vector<int>> c = get_combinations(10,5);
+    for (int i=0; i<(int)c.size(); i++) {
+        for (int j=0; j<5; j++) {
+            if (c[i][j] < 6) c[i][j]--;
+            else c[i][j] += 14;
+        }
+        combs.push_back(c[i]);
+    }
+    c = get_combinations(10,4);
+    for (int i=0; i<(int)c.size(); i++) {
+        for (int j=0; j<4; j++) {
+            if (c[i][j] < 6) c[i][j]--;
+            else c[i][j] += 14;
+        }
+        combs.push_back(c[i]);
+    }
+    sort(combs.begin(), combs.end(), vector_sort);
+//    for (int i=0; i<(int)combs.size(); i++) {
+//        for (int j=0; j<(int)combs[i].size(); j++) cout << combs[i][j] << " ";
+//        cout << endl;
+//    }
+    
+    for (int i=0; i<25; i++) M[0][i] = 0;
+    
+    for (int i=1; i<462; i++) solve(i);
+    
+    dd res = M[461][12];
+    cout << fixed << res << endl;
     
     cout << endl << ans << endl;
     
