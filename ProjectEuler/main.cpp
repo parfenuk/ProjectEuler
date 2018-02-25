@@ -798,9 +798,8 @@ int main() {
     
     ull ans = 0;
     
-    pair<vector<ull>, int> p = PQa(0,1,123);
-    show(p.fs);
-    cout << p.sc;
+    pair<Lnum,Lnum> p = pell1_min(73);
+    p.fs.show(); cout << " "; p.sc.show();
     
     cout << endl << ans << endl;
     

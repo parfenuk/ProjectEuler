@@ -54,3 +54,31 @@ pair<vector<ull>, int> PQa (ll p0, ll q0, ull d) // d > 0, q0 != 0, (p0*p0 - d) 
     return make_pair(alphas, i-ir);
 }
 
+
+// Minimal solution of x^2 - d*y^2 = +-1
+pair<Lnum, Lnum> pell1_min (ull d, bool plus_one = true)
+{
+    pair<vector<ull>,int> pv = PQa(0,1,d);
+    vector<ull> alphas = pv.fs; int l = pv.sc;
+    
+    int index;
+    if (l & 1) {
+        index = plus_one ? 2*l - 1 : l-1;
+    }
+    else {
+        if (!plus_one) return make_pair(Lnum(-1), Lnum(-1));
+        index = l-1;
+    }
+    Lnum bi, bim(1), gi(1), gim;
+    int prel = (int)alphas.size() - l;
+    Lnum alphai;
+    for (int i=0; i<1+index; i++) {
+        if (i < prel) alphai = Lnum(alphas[i]);
+        else alphai = Lnum(alphas[prel+(i-prel)%l]);
+        Lnum t = bim; bim = bi; bi = alphai*bi + t;
+        t = gim; gim = gi; gi = alphai*gi + t;
+    }
+    
+    return make_pair(gi,bi);
+}
+

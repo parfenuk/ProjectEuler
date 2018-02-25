@@ -15,7 +15,7 @@ typedef int ltype;
 
 using namespace std;
 
-#define LSIZE 14
+#define LSIZE 10
 const ltype BASE = 1000000000;
 
 class Lnum
