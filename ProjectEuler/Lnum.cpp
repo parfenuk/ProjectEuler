@@ -421,6 +421,12 @@ Lnum power(Lnum A, int k)
     return B;
 }
 
+Lnum lnum_abs (Lnum A)
+{
+    if (A.isNegative()) A.change_sign();
+    return A;
+}
+
 Lnum lnum_sqrt (Lnum A)
 {
     Lnum lb(1), ub = A;

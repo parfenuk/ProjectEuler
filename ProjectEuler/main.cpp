@@ -798,8 +798,10 @@ int main() {
     
     ull ans = 0;
     
-    pair<Lnum,Lnum> p = pell1_min(73);
-    p.fs.show(); cout << " "; p.sc.show();
+    vector<pair<Lnum,Lnum>> p = quad_s(5,3,137,power(Lnum(10),10));
+    for (int i=0; i<(int)p.size(); i++) {
+        p[i].fs.show(); cout << " "; p[i].sc.show(); cout << endl;
+    }
     
     cout << endl << ans << endl;
     

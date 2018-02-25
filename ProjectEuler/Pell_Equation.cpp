@@ -82,3 +82,83 @@ pair<Lnum, Lnum> pell1_min (ull d, bool plus_one = true)
     return make_pair(gi,bi);
 }
 
+vector<pair<Lnum,Lnum>> pell_fundamentals (ull d, ull n)
+{
+    pair<Lnum,Lnum> tu = pell1_min(d);
+    vector<pair<Lnum,Lnum>> funds;
+    Lnum D(d), N(n);
+    
+    for (Lnum y=Lnum(); y*y*2*D <= N*(tu.fs-one); y=y+one) {
+        
+        Lnum x = lnum_sqrt(y*y*D + N);
+        if (x == O) continue;
+        funds.push_back(make_pair(x,y));
+        if (divmod(x*x + D*y*y, N).sc != O || divmod(x*y*2, N).sc != O) funds.push_back(make_pair(x*Lnum(-1),y));
+    }
+    return funds;
+}
+
+vector<pair<Lnum,Lnum>> pell_bf (ull d, ull n, Lnum max_x)
+{
+    vector<pair<Lnum,Lnum>> funds = pell_fundamentals(d,n);
+    set<pair<Lnum,Lnum>> sols;
+    
+    //cout << "FUNDS:\n";
+    for (int i=0; i<(int)funds.size(); i++) {
+        Lnum x = funds[i].fs, y = funds[i].sc;
+        //x.show(); cout << " "; y.show(); cout << endl;
+        if (x.isNegative()) x.change_sign();
+        if (y.isNegative()) y.change_sign();
+        sols.insert(make_pair(x,y));
+    }
+    
+    pair<Lnum, Lnum> min_sol = pell1_min(d);
+    //cout << "SOLUTIONS:\n";
+    if (min_sol.fs != Lnum(-1)) {
+        Lnum t = min_sol.fs, u = min_sol.sc;
+        Lnum x = t, y = u;
+        while (true) {
+            Lnum T = x, U = y;
+            //T.show(); cout << " "; U.show(); cout << endl;
+            bool added = false;
+            for (int i=0; i<(int)funds.size(); i++) {
+                Lnum r = funds[i].fs, s = funds[i].sc;
+                Lnum X = r*T + s*U*Lnum(d);
+                Lnum Y = r*U + s*T;
+                if (lnum_abs(X) <= max_x) {
+                    sols.insert(make_pair(lnum_abs(X), lnum_abs(Y)));
+                    added = true;
+                }
+            }
+            if (!added) break;
+            
+            Lnum tmp = x; x = t*x + u*y*Lnum(d); y = t*y + tmp*u;
+        }
+    }
+    
+    vector<pair<Lnum,Lnum>> v;
+    for (set<pair<Lnum,Lnum>>::iterator it = sols.begin(); it != sols.end(); it++) {
+        pair<Lnum,Lnum> p = *it;
+        v.push_back(p);
+    }
+    
+    return v;
+}
+
+// a*x^2 - b*y^2 == c
+vector<pair<Lnum,Lnum>> quad_s (ull a, ull b, ull c, Lnum max_x)
+{
+    Lnum A(a);
+    vector<pair<Lnum,Lnum>> res, v = pell_bf(a*b, a*c, max_x*A);
+//    cout << "PELL_BF:\n";
+//    for (int i=0; i<(int)v.size(); i++) {
+//        v[i].fs.show(); cout << " "; v[i].sc.show(); cout << endl;
+//    }
+    
+    for (int i=0; i<(int)v.size(); i++) {
+        pair<Lnum,Lnum> xrem = divmod(v[i].fs,A);
+        if (xrem.sc == O) res.push_back(make_pair(xrem.fs,v[i].sc));
+    }
+    return res;
+}
+
