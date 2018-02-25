@@ -90,7 +90,7 @@ Matrix operator* (Matrix a, Matrix b)
     return c;
 }
 
-Matrix power (Matrix A, ull k)
+Matrix matrix_power (Matrix A, ull k)
 {
     int N = A.N;
     Matrix B(N);
