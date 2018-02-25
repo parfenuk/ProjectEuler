@@ -6,8 +6,6 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
-#include <stdio.h>
-
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double dd;

@@ -358,8 +358,12 @@ ltype operator% (Lnum A, ltype b) // assume that b > 0
     return carry;
 }
 
-pair<Lnum,Lnum> operator/ (Lnum A, Lnum B) // div and mod
+pair<Lnum,Lnum> divmod (Lnum A, Lnum B) // div and mod
 {
+    if (B.get_size() == 1) {
+        return make_pair(A/B[0], A%B[0]);
+    }
+    
     bool neg_a = false, neg_b = false;
     if (A.isNegative()) {
         

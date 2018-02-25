@@ -6,14 +6,13 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
-#include <iostream>
-#include <math.h>
-
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double dd;
 typedef short int sint;
 typedef unsigned int uint;
+
+using namespace std;
 
 #define pii pair<int,int>
 #define pll pair<ll,ll>

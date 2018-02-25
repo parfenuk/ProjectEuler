@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+#include <math.h>
 #include <ctime>
 #include <cstring>
 #include <string>
@@ -26,11 +27,12 @@
 #include <random>
 #include <utility>
 
-#include "Lnum.cpp"
+//#include "Lnum.cpp"
 #include "Geometry.cpp"
 #include "Fractions.cpp"
 #include "Matrix.cpp"
 #include "Complex.cpp"
+#include "Pell_Equation.cpp"
 #pragma comment(linker, "/STACK:416777216")
 
 typedef long long ll;
@@ -92,6 +94,14 @@ ull GCD (ull a, ull b)
         else b %= a;
     }
     return a + b;
+}
+
+pll Extended_Euclid (ll a, ll b)
+{
+    if (b == 0) return mp(1,0);
+    pll qr = mp(a/b, a%b);
+    pll st = Extended_Euclid(b, qr.sc);
+    return mp(st.sc, st.fs - qr.fs*st.sc);
 }
 
 ull LCM (ull a, ull b)
@@ -787,6 +797,10 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    pair<vector<ull>, int> p = PQa(0,1,123);
+    show(p.fs);
+    cout << p.sc;
     
     cout << endl << ans << endl;
     
