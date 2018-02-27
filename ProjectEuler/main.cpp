@@ -427,6 +427,11 @@ bool isPractical (ull n)
     return true;
 }
 
+ull count_divisible_by (ull n, ull lb, ull ub)
+{
+    return ub/n - (lb-1)/n;
+}
+
 ull sum_divisible_by (ull n, ull lb, ull ub) // sum of all numbers in range [lb,ub] that are divisible by n
 {
     ull cnt = ub/n - (lb-1)/n;
@@ -788,6 +793,18 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+bool Achiless (ull n)
+{
+    vector<pull> f = factorize(n);
+    ull G = f[0].sc;
+    for (int i=0; i<(int)f.size(); i++) {
+        if (f[i].sc == 1) return false;
+        G = GCD(G,f[i].sc);
+    }
+    
+    return G == 1;
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -797,6 +814,14 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (ull n=2; n<=100000000; n++) {
+        ull m = EulerPhi(n);
+        if (Achiless(n) && Achiless(m)) {
+            cout << n << " " << m << endl;
+            ans++;
+        }
+    }
     
     cout << endl << ans << endl;
     
