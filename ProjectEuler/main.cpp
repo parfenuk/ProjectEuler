@@ -403,17 +403,18 @@ ull Divisors_count (ull n)
     return s;
 }
 
-ull power_fact (ull n, ull k) // n! = S * k^x, returns x
+ull power_fact (ull n, ull p) // n! = S * p^x, returns x, p is prime
 {
-    if (k > n) return 0;
+    if (p > n) return 0;
     
-    ull p = 0;
-    for (ull i=k; i<=n; i+=k) {
-        
-        ull s = i;
-        while (s % k == 0) { s /= k; p++; }
+    ull cnt = 0, s = p;
+    while (true) {
+        cnt += n/s;
+        if (s > n/p) break;
+        s *= p;
     }
-    return p;
+    
+    return cnt;
 }
 
 bool isPractical (ull n)
