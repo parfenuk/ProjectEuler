@@ -61,14 +61,18 @@ bool operator!= (fraction A, fraction B) { return !(A == B); }
 
 fraction operator+ (fraction a, fraction b)
 {
-    fraction c (a.num*b.den + a.den*b.num, a.den*b.den);
+    ull d = f_GCD(a.den, b.den);
+    ull a_mult = b.den/d, b_mult = a.den/d;
+    fraction c (a.num*a_mult + b.num*b_mult, a.den*a_mult);
     c.reduce();
     return c;
 }
 
 fraction operator- (fraction a, fraction b)
 {
-    fraction c (a.num*b.den - a.den*b.num, a.den*b.den);
+    ull d = f_GCD(a.den, b.den);
+    ull a_mult = b.den/d, b_mult = a.den/d;
+    fraction c (a.num*a_mult - b.num*b_mult, a.den*a_mult);
     c.reduce();
     return c;
 }

@@ -790,7 +790,7 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
 }
 
 int main() {
-    cout.precision(14);
+    cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     //freopen("input.txt","rt",stdin);
