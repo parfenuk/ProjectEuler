@@ -789,6 +789,28 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+vector<ull> CFF; // current factorial factorization
+const ull N = power(10,18);
+
+bool ok (ull n, ull p) // true if n! is divisible by p^(CFF[p]*1234567890)
+{
+    return power_fact(n, p) >= CFF[p]*1234567890;
+}
+
+ull min_fact (ull p) // min n: n! is divisible by p^(CFF[p]*1234567890)
+{
+    ull lb = 1, ub = N;
+    ull res = 0;
+    while (lb <= ub) {
+        
+        ull n = (lb + ub)/2;
+        if (ok(n,p)) { res = n; ub = n-1; }
+        else lb = n+1;
+    }
+    
+    return res;
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -798,6 +820,24 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    Eratosthenes_sieve(1000000, true);
+    vector<int> index_of_prime(1000000);
+    for (int i=0; i<(int)primes.size(); i++) index_of_prime[primes[i]] = i;
+    
+    CFF = vector<ull>(1000000);
+    ull current_min_fact = 1;
+    for (ull n=2; n<=1000000; n++) {
+        
+        vector<pull> f = factorize(n);
+        for (int i=0; i<(int)f.size(); i++) CFF[f[i].fs] += f[i].sc;
+        for (int i=0; i<(int)f.size(); i++) {
+            ull d = min_fact(f[i].fs);
+            if (d > current_min_fact) current_min_fact = d;
+        }
+        
+        if (n >= 10) ans = (ans + current_min_fact) % N;
+    }
     
     cout << endl << ans << endl;
     
