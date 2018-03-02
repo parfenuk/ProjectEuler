@@ -789,6 +789,52 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+ull twin_sum (ull a, ull b) // a + (a+2) + (a+4) ... + b, b-a is even
+{
+    return (a+b)*((b-a)/2 + 1)/2;
+}
+
+vector<ull> beans;
+ull ones_left, ones_right, left_after_gap, right_after_gap;
+
+ull iteration()
+{
+    ull res = 0;
+    int n = (int)beans.size();
+    
+    if (ones_left == ones_right) {
+        res += twin_sum(n, n+ones_left+ones_right);
+        beans[0]--;
+        beans.back()--;
+        ones_left = ones_left + left_after_gap + 1;
+        ones_right = ones_right + right_after_gap + 1;
+        left_after_gap = right_after_gap = 0;
+    }
+    else if (ones_left > ones_right) {
+        
+        res += twin_sum(n+ones_left-ones_right, n+ones_left+ones_right);
+        beans.back()--;
+        ones_left = ones_left - ones_right - 1;
+        left_after_gap = left_after_gap + ones_right + 1;
+        ones_right = ones_right + right_after_gap + 1;
+        right_after_gap = 0;
+    }
+    else { // ones_left < ones_right
+        
+        res += twin_sum(n+ones_right-ones_left, n+ones_right+ones_left);
+        beans[0]--;
+        ones_right = ones_right - ones_left - 1;
+        right_after_gap = right_after_gap + ones_left + 1;
+        ones_left = ones_left + left_after_gap + 1;
+        left_after_gap = 0;
+    }
+    
+    while (!beans.empty() && beans.back() <= 1) { beans.pop_back(); ones_right++; }
+    while (!beans.empty() && beans[0] <= 1) { beans.erase(beans.begin()); ones_left++; }
+    
+    return res;
+}
+
 int main() {
     cout.precision(14);
     ios_base::sync_with_stdio(false);
@@ -798,6 +844,17 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    ones_left = ones_right = left_after_gap = right_after_gap = 0;
+    int t = 123456;
+    for (int i=1; i<=1500; i++) {
+        if (t % 2 == 0) t = t/2;
+        else { t = t/2; t = t^926252; }
+        beans.push_back(t%2048 + 1);
+    }
+    //for (int i=0; i<1500; i++) cout << beans[i] << " ";
+    
+    while (!beans.empty()) ans += iteration();
     
     cout << endl << ans << endl;
     
