@@ -789,6 +789,13 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+#define N 1000
+
+void shower (int output)
+{
+    if (output == 2 || output % 6 == 2) cout << endl;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -798,6 +805,42 @@ int main() {
 #endif
     
     ull ans = 0;
+
+    bool A[N][N]; for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = true;
+    
+    int step = 0, dir = 0;
+    pii pos = mp(N/2, N/2);
+    int count_black = 0;
+    
+    vector<int> v; v.push_back(0);
+    while (pos.fs >= 0 && pos.fs < N && pos.sc >= 0 && pos.sc < N) {
+        
+        if (A[pos.fs][pos.sc]) { A[pos.fs][pos.sc] = false; count_black++; dir = (dir+1)%4; }
+        else { A[pos.fs][pos.sc] = true; count_black--; dir--; if (dir == -1) dir = 3; }
+        
+        if (dir == 0) pos.fs--;
+        if (dir == 1) pos.sc++;
+        if (dir == 2) pos.fs++;
+        if (dir == 3) pos.sc--;
+        
+        step++;
+        v.push_back(count_black);
+        //cout << step << " " << count_black << endl;
+    }
+    
+    //for (int i=0; i<16; i++) cout << v[i] << " " ; cout << endl;
+    bool plus = true; int cnt = 0;
+    int output = 0;
+    for (int i=1; i<1000; i++) {
+        if (v[i] > v[i-1]) {
+            if (plus) cnt++;
+            else { plus = true; cout << "-" << cnt << " "; cnt = 1; output++; shower(output); }
+        }
+        else {
+            if (!plus) cnt++;
+            else { plus = false; cout << "+" << cnt << " "; cnt = 1; output++; shower(output); }
+        }
+    }
     
     cout << endl << ans << endl;
     
