@@ -799,6 +799,32 @@ int main() {
     
     ull ans = 0;
     
+#define N 500
+    
+    ull dp[N+1][N+1], fg[N+1][N+1];
+    for (int i=1; i<=N; i++) dp[i][i] = 0;
+    for (int n=2; n<=N; n++) {
+        for (int s=1; s+n<=N+1; s++) {
+            ull L = 10000000;
+            for (int i=s; i<=s+n-1; i++) {
+                if (i == s && i + dp[i+1][s+n-1] < L) { L = i+dp[s+1][s+n-1]; fg[s][s+n-1] = i; }
+                if (i == s+n-1 && i + dp[s][i-1] < L) { L = i+dp[s][i-1]; fg[s][s+n-1] = i; }
+                if (i > s && i < s+n-1 && i + max(dp[s][i-1],dp[i+1][s+n-1]) < L) {
+                    L = i + max(dp[s][i-1],dp[i+1][s+n-1]);
+                    fg[s][s+n-1] = i;
+                }
+            }
+            dp[s][s+n-1] = L;
+        }
+    }
+    
+    for (int i=1; i<=N; i++) {
+        ans += dp[1][i];
+        cout << "F(" << i << ") = " << dp[1][i];
+        cout << " first guess: " << fg[1][i] << endl;
+    }
+    //vector<int> first_guess[N+1];
+    
     cout << endl << ans << endl;
     
     return 0;
