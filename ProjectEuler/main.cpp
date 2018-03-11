@@ -799,56 +799,74 @@ int main() {
     
     ull ans = 0;
     
-#define N 1000
+#define N 200000
+#define LIM 20000
     
-    ull *dp[N+1], *fg[N+1];
-    for (int i=0; i<=N; i++) { dp[i] = new ull [N+1]; fg[i] = new ull [N+1]; }
-    for (int i=1; i<=N; i++) dp[i][i] = 0;
-    for (int n=2; n<=N; n++) {
-        for (int s=1; s+n<=N+1; s++) {
-            ull L = 10000000;
-            for (int i=s; i<=s+n-1; i++) {
-                if (i == s && i + dp[i+1][s+n-1] < L) { L = i+dp[s+1][s+n-1]; fg[s][s+n-1] = i; }
-                if (i == s+n-1 && i + dp[s][i-1] < L) { L = i+dp[s][i-1]; fg[s][s+n-1] = i; }
-                if (i > s && i < s+n-1 && i + max(dp[s][i-1],dp[i+1][s+n-1]) < L) {
-                    L = i + max(dp[s][i-1],dp[i+1][s+n-1]);
-                    fg[s][s+n-1] = i;
-                }
-            }
-            dp[s][s+n-1] = L;
+    const int D[16] = {0,1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384};
+    
+    int *dp[N+1];
+    int *fg[N+1];
+    for (int i=0; i<=N; i++) {
+        if (i != 1) {
+            dp[i] = new int [LIM];
+            fg[i] = new int [LIM];
+        }
+        else {
+            dp[i] = new int [N+1];
+            fg[i] = new int [N+1];
         }
     }
     
-    vector<int> first_guess[N+1];
-    for (int n=2; n<=N; n++) {
-        ull L = dp[1][n];
-        for (int i=1; i<=n; i++) {
-            if (i == 1 && i + dp[i+1][n] == L) first_guess[n].push_back(i);
-            if (i == n && i + dp[1][i-1] == L) first_guess[n].push_back(i);
-            if (i > 1 && i < n && i + max(dp[1][i-1],dp[i+1][n]) == L) {
-                first_guess[n].push_back(i);
+    for (int i=1; i<=N; i++) { dp[i][1] = 0; fg[i][1] = 0; }
+    for (int i=1; i<=N; i++) { dp[i][2] = i; fg[i][2] = i; }
+    for (int i=1; i<=N; i++) { dp[i][3] = i+1; fg[i][3] = i+1; }
+    
+    for (int n=4; n<=N; n++) {
+        int upper_limit;
+        if (n < LIM) upper_limit = N+1;
+        else upper_limit = n+1;
+        for (int s=1; s+n<=upper_limit; s++) {
+            
+            int L = 10000000;
+            int g = fg[s][n-1] + 1; // initial_guess
+            
+            for (int p=0; p<16; p++) {
+                if (g <= D[p]) break;
+                int i = g - D[p];
+                if (i < s) break;
+                if (s+n-1-i > LIM) break;
+                
+                if (i == s && i + dp[s+1][n-1] < L) { L = i+dp[s+1][n-1]; fg[s][n] = i; }
+                if (i == s+n-1 && i + dp[s][n-1] < L) { L = i+dp[s][n-1]; fg[s][n] = i; }
+                if (i > s && i < s+n-1 && i + max(dp[s][i-s],dp[i+1][s+n-i-1]) < L) {
+                    L = i + max(dp[s][i-s],dp[i+1][s+n-i-1]);
+                    fg[s][n] = i;
+                }
             }
+            dp[s][n] = L;
         }
     }
     
     set<int> S;
     
-    for (int i=1; i<=N; i++) {
-        ans += dp[1][i];
-        cout << "F(" << i << ") = " << dp[1][i];
-        //cout << " first guess: " << fg[1][i] << endl;
-        cout << " first guesses: ";
-        for (int j=0; j<(int)first_guess[i].size(); j++) {
-            S.insert(i-first_guess[i][j]);
-            cout << first_guess[i][j] << " ";
+    const int K = 1;
+    for (int i=K+1; i<=N; i++) {
+        ans += (ull)dp[K][i];
+        cout << "F(" << i << ") = " << dp[K][i];
+        cout << " first guess: " << fg[K][i] << endl;
+
+        if (i != K+1) {
+            S.insert(fg[K][i-1] + 1 - fg[K][i]);
         }
-        cout << endl;
     }
     //vector<int> first_guess[N+1];
-    cout << "Differences:\n";
-    for (set<int>::iterator it=S.begin(); it!=S.end(); it++) cout << *it << " ";
+    //cout << "Differences:\n";
+    //for (set<int>::iterator it=S.begin(); it!=S.end(); it++) cout << *it << " ";
     
     cout << endl << ans << endl;
     
     return 0;
 }
+// 100  : 17575
+// 1000 : 3120345
+// 2000 : 14210783
