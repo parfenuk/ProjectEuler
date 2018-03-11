@@ -799,9 +799,10 @@ int main() {
     
     ull ans = 0;
     
-#define N 500
+#define N 1000
     
-    ull dp[N+1][N+1], fg[N+1][N+1];
+    ull *dp[N+1], *fg[N+1];
+    for (int i=0; i<=N; i++) { dp[i] = new ull [N+1]; fg[i] = new ull [N+1]; }
     for (int i=1; i<=N; i++) dp[i][i] = 0;
     for (int n=2; n<=N; n++) {
         for (int s=1; s+n<=N+1; s++) {
@@ -818,12 +819,34 @@ int main() {
         }
     }
     
+    vector<int> first_guess[N+1];
+    for (int n=2; n<=N; n++) {
+        ull L = dp[1][n];
+        for (int i=1; i<=n; i++) {
+            if (i == 1 && i + dp[i+1][n] == L) first_guess[n].push_back(i);
+            if (i == n && i + dp[1][i-1] == L) first_guess[n].push_back(i);
+            if (i > 1 && i < n && i + max(dp[1][i-1],dp[i+1][n]) == L) {
+                first_guess[n].push_back(i);
+            }
+        }
+    }
+    
+    set<int> S;
+    
     for (int i=1; i<=N; i++) {
         ans += dp[1][i];
         cout << "F(" << i << ") = " << dp[1][i];
-        cout << " first guess: " << fg[1][i] << endl;
+        //cout << " first guess: " << fg[1][i] << endl;
+        cout << " first guesses: ";
+        for (int j=0; j<(int)first_guess[i].size(); j++) {
+            S.insert(i-first_guess[i][j]);
+            cout << first_guess[i][j] << " ";
+        }
+        cout << endl;
     }
     //vector<int> first_guess[N+1];
+    cout << "Differences:\n";
+    for (set<int>::iterator it=S.begin(); it!=S.end(); it++) cout << *it << " ";
     
     cout << endl << ans << endl;
     
