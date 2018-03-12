@@ -632,8 +632,8 @@ void fill_piphagorean_triplets (ull n, bool primitive_only = true) // a^2 + b^2 
         
         for (ull k=1;;k++) {
         
-            a *= k; b *= k; c *= k;
-            if (c <= n) pits[c].push_back(make_pair(a,b));
+            ull A = a*k, B = b*k, C = c*k;
+            if (C <= n) pits[C].push_back(make_pair(A,B));
             else break;
             
             if (primitive_only) break;
