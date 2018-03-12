@@ -800,20 +800,20 @@ int main() {
     ull ans = 0;
     
 #define N 200000
-#define LIM 20000
+#define LIM 12500
     
-    const int D[16] = {0,1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384};
+    const int D[15] = {0,1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192};
     
-    int *dp[N+1];
-    int *fg[N+1];
+    vector<vector<int>> dp;
+    vector<vector<int>> fg;
     for (int i=0; i<=N; i++) {
         if (i != 1) {
-            dp[i] = new int [LIM];
-            fg[i] = new int [LIM];
+            dp.push_back(vector<int>(LIM));
+            fg.push_back(vector<int>(LIM));
         }
         else {
-            dp[i] = new int [N+1];
-            fg[i] = new int [N+1];
+            dp.push_back(vector<int>(N+1));
+            fg.push_back(vector<int>(N+1));
         }
     }
     
@@ -830,11 +830,11 @@ int main() {
             int L = 10000000;
             int g = fg[s][n-1] + 1; // initial_guess
             
-            for (int p=0; p<16; p++) {
-                if (g <= D[p]) break;
+            for (int p=0; p<15; p++) {
+                
                 int i = g - D[p];
                 if (i < s) break;
-                if (s+n-1-i > LIM) break;
+                if (s+n-1-i >= LIM) break;
                 
                 if (i == s && i + dp[s+1][n-1] < L) { L = i+dp[s+1][n-1]; fg[s][n] = i; }
                 if (i == s+n-1 && i + dp[s][n-1] < L) { L = i+dp[s][n-1]; fg[s][n] = i; }
