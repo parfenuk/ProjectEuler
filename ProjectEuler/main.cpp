@@ -253,7 +253,7 @@ void Eratosthenes_sieve (int n, bool fill_primes = false)
     if (fill_primes) for (int i=2; i<=n; i++) if (isPrime[i]) primes.push_back(i);
 }
 
-void fill_primePi (int n) // WARNING: call only after Erathosthenes_sieve with size greater than or equal to this n
+void fill_primePi (int n) // WARNING: call only after Eratosthenes_sieve with size greater than or equal to this n
 {
     primePi = vector<int>(n+1);
     int s = 0;
@@ -329,6 +329,24 @@ ull EulerPhi (ull n)
     }
     
     return s;
+}
+
+vector<ull> EulerPhiSieve (ull n)
+{
+    vector<ull> E(n+1);
+    vector<bool> sieve(n+1);
+    for (int i=1; i<=n; i++) E[i] = i;
+    for (int i=2; i<=n; i++) {
+        if (!sieve[i]) {
+            for (int j=i; j<=n; j+=i) {
+                sieve[j] = true;
+                E[j] /= i;
+                E[j] *= i-1;
+            }
+        }
+    }
+    
+    return E;
 }
 
 // Currently works only for prime rests. Implement inverse function that commented
