@@ -428,6 +428,11 @@ bool isPractical (ull n)
     return true;
 }
 
+ull count_divisible_by (ull n, ull lb, ull ub)
+{
+    return ub/n - (lb-1)/n;
+}
+
 ull sum_divisible_by (ull n, ull lb, ull ub) // sum of all numbers in range [lb,ub] that are divisible by n
 {
     ull cnt = ub/n - (lb-1)/n;
@@ -810,6 +815,30 @@ ull rectangles_count (ull n, ull m)
     return (ull)s.size();
 }
 
+ull representation_count (ull N) // amount of ways to represent d = a*b, d <= N, 1 < a < b
+{
+    if (N < 6) return 0;
+    
+    ull L = integer_part_sqrt(N);
+    vector<pull> ranges(L+1);
+    for (ull d=1; d<=L; d++) ranges[d] = mp((N+d+1)/(d+1),N/d);
+    
+    ull sum = 0;
+    for (ull d=2; d<ranges[L].fs; d++) sum += N/d;
+    for (ull r=2; r<=L; r++) sum += (r-1)*(ranges[r].sc-ranges[r].fs+1);
+    sum -= (L-1); // exclude case a = b
+    sum -= (ranges[L].fs-2); // exclude case a = 1
+    
+    ull res = sum/2; // divide by 2 because a < b
+    
+    return res;
+}
+
+ull representation_count (ull a, ull b)
+{
+    return representation_count(b) - representation_count(a-1);
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -820,19 +849,46 @@ int main() {
     
     ull ans = 0;
     
-    const ull N = 100000;
+    const ull N = 1000000000000;
+    const ull L = 1000000; // [sqrt(N)]
     
-    for (ull d=1; d<N; d++) ans += (N/d)*(N/(d+1));
+    // actually, algorithm will work correctly only if N/(L+1) < L, that's the case here
+    // Otherwise we need to calculate ranges to L inclusive and use more accurate limitations in the cycles below
+    // see representation_count(ull) function. Calculations here are correct and clean
+    vector<pull> ranges(L);
+    for (ull d=1; d<L; d++) ranges[d] = mp((N+d+1)/(d+1),N/d);
+    //for (ull d=1; d<L; d++) cout << d << ": (" << ranges[d].fs << " " << ranges[d].sc << ")\n";
     
-    ull reflects = 0;
-    for (ull d=2; d<=N; d++) reflects += (N/d);
+    Lnum Ans;
     
-    ull duals = 0;
-    for (ull d=2; d*d<=N; d++) duals += (N/(d*d));
-    for (ull d=2; d*(d+1)<=N; d++) for (ull e=d+1; e*d<=N; e++) duals += 2*(N/(e*d));
+    // calculating: for (ull d=1; d<N; d++) ans += (N/d)*(N/(d+1));
+    for (ull d=1; d<L; d++) Ans = Ans + Lnum(N/d)*Lnum(N/(d+1));
+    for (ull r=1; r<L; r++) Ans = Ans + Lnum(r*(r+1)); // handle case if d is in range[r+1] and d+1 is in range[r]
+    for (ull r=1; r<L; r++) Ans = Ans + Lnum(r*r)*Lnum(ranges[r].sc-ranges[r].fs);
+    cout << "Current ans = "; Ans.show(); cout << endl;
     
-    ans -= reflects;
-    ans -= duals;
+    Lnum reflects;
+    // calculating: for (ull d=2; d<=N; d++) reflects += (N/d);
+    for (ull d=2; d<=L; d++) reflects = reflects + Lnum(N/d);
+    for (ull r=1; r<L; r++) reflects = reflects + Lnum(r*(ranges[r].sc-ranges[r].fs+1));
+    cout << "Reflects = "; reflects.show(); cout << endl;
+    
+    Lnum duals = 0;
+    // calculating: for (ull d=2; d*(d+1)<=N; d++) for (ull e=d+1; e*d<=N; e++) duals += 2*(N/(e*d));
+    for (ull d=2; d*(d+1)<=N; d++) for (ull e=d+1; e*d<=L; e++) duals = duals + Lnum(N/(e*d));
+    for (ull r=1; r<L; r++) {
+        duals = duals + Lnum(r)*Lnum(representation_count(ranges[r].fs, ranges[r].sc));
+    }
+    duals = duals*2;
+    
+    // here naive calculations is ok :)
+    for (ull d=2; d*d<=N; d++) duals = duals + Lnum(N/(d*d));
+    
+    cout << "Duals = "; duals.show(); cout << endl;
+    
+    Ans = Ans - reflects;
+    Ans = Ans - duals;
+    Ans.show();
     
     cout << endl << ans << endl;
     
