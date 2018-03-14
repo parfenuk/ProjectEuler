@@ -789,6 +789,27 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+vector<ull> D[100001];
+
+ull rectangles_count (ull n, ull m)
+{
+    set<pull> s;
+    for (int i=0; i<(int)D[n].size(); i++) for (int j=0; j<(int)D[m].size(); j++) {
+        pull p = mp(0,0);
+        if (D[m][j] == D[n][i]+1) {
+            p = mp(n+n/D[n][i],m-m/D[m][j]);
+        }
+        if (D[n][i] == D[m][j]+1) {
+            p = mp(n-n/D[n][i],m+m/D[m][j]);
+        }
+        if (!p.fs) continue;
+        if (p.fs < p.sc) swap(p.fs,p.sc);
+        if (p.fs != n) s.insert(p);
+    }
+    
+    return (ull)s.size();
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -798,6 +819,20 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const ull N = 100000;
+    
+    for (ull d=1; d<N; d++) ans += (N/d)*(N/(d+1));
+    
+    ull reflects = 0;
+    for (ull d=2; d<=N; d++) reflects += (N/d);
+    
+    ull duals = 0;
+    for (ull d=2; d*d<=N; d++) duals += (N/(d*d));
+    for (ull d=2; d*(d+1)<=N; d++) for (ull e=d+1; e*d<=N; e++) duals += 2*(N/(e*d));
+    
+    ans -= reflects;
+    ans -= duals;
     
     cout << endl << ans << endl;
     
