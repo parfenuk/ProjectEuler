@@ -982,11 +982,7 @@ void merge_inner_path (vector<pii> v, int K, ull count)
         }
         
         if (!ok) continue;
-        
         sort(w.begin(),w.end());
-//        if (w.size() == 3 && w[2].sc == 7) {
-//            cout << "WHAT?\n";
-//        }
         save_path(w,count);
     }
 }
@@ -1004,7 +1000,7 @@ int main() {
     cin >> N >> M; // N >= M for now
     enumerate_edges();
     
-    int K = 0;
+    int K = 0; // output all edges
     for (int i=0; i<=N; i++) for (int j=0; j<=M; j++) {
 
         cout << K << ": ";
