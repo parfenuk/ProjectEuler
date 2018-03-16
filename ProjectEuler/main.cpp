@@ -32,7 +32,7 @@
 #include "Fractions.cpp"
 #include "Matrix.cpp"
 #include "Complex.cpp"
-#include "Pell_Equation.cpp"
+//#include "Pell_Equation.cpp"
 #pragma comment(linker, "/STACK:416777216")
 
 typedef long long ll;
