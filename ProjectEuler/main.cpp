@@ -318,8 +318,12 @@ bool isProbablePrime (ull n)
     return true;
 }
 
+vector<ull> eulerPhi;
+
 ull EulerPhi (ull n)
 {
+    if (n < (int)eulerPhi.size()) return eulerPhi[n];
+    
     ull s = 1;
     vector<pull> a = factorize(n);
     
@@ -331,22 +335,20 @@ ull EulerPhi (ull n)
     return s;
 }
 
-vector<ull> EulerPhiSieve (ull n)
+void EulerPhiSieve (ull n)
 {
-    vector<ull> E(n+1);
+    eulerPhi = vector<ull>(n+1);
     vector<bool> sieve(n+1);
-    for (int i=1; i<=n; i++) E[i] = i;
+    for (int i=1; i<=n; i++) eulerPhi[i] = i;
     for (int i=2; i<=n; i++) {
         if (!sieve[i]) {
             for (int j=i; j<=n; j+=i) {
                 sieve[j] = true;
-                E[j] /= i;
-                E[j] *= i-1;
+                eulerPhi[j] /= i;
+                eulerPhi[j] *= i-1;
             }
         }
     }
-    
-    return E;
 }
 
 // Currently works only for prime rests. Implement inverse function that commented
