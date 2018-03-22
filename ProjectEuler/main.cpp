@@ -73,6 +73,20 @@ void show (const vector<ull> &a, bool show_endl = true, bool show_size = false)
     if (show_endl) cout << endl;
 }
 
+void show (const vector<pii> &a, bool show_endl = true, bool show_size = false)
+{
+    if (show_size) cout << a.size() << endl;
+    for (int i=0; i<(int)a.size(); i++) cout << "(" << a[i].fs << " " << a[i].sc << ") ";
+    if (show_endl) cout << endl;
+}
+
+void show (const vector<pull> &a, bool show_endl = true, bool show_size = false)
+{
+    if (show_size) cout << a.size() << endl;
+    for (int i=0; i<(int)a.size(); i++) cout << "(" << a[i].fs << " " << a[i].sc << ") ";
+    if (show_endl) cout << endl;
+}
+
 int total_vector_sum (const vector<int> &a)
 {
     int s = 0;
