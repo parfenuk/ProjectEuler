@@ -824,38 +824,63 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-#define N 5
+vector<bool> odd_row; // odd_row[i] is true if there're odd number of black squares in i-th row
+vector<int> count_odd_rows; // count_odd_rows[i] contains count of odd rows (and cols) in range 0..i
 
-struct Field {
-    bool A[N][N];
-    Field() { for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = false; }
+ull odd_cols_in_range (ull l, ull r)
+{
+    if (l == 0) return count_odd_rows[r];
+    return count_odd_rows[r] - count_odd_rows[l-1];
+}
 
-    void flip (int n) // 0 <= n < N^2
-    {
-        int r = n/N, c = n%N;
+ull even_cols_in_range (ull l, ull r)
+{
+    if (l == 0) return r + 1 - count_odd_rows[r];
+    return r-l+1-(count_odd_rows[r] - count_odd_rows[l-1]);
+}
+
+ull solve (ull n) // n is even
+{
+    ull ans = 0;
+    
+    odd_row = vector<bool>(n);
+    count_odd_rows = vector<int>(n);
+    
+    for (ull x=0; x<n; x++) {
+        ull ymin = integer_part_sqrt((n-1)*(n-1) - x*x);
+        if (ymin*ymin < (n-1)*(n-1) - x*x) ymin++;
+        ull ymax = integer_part_sqrt(n*n - x*x);
+        if (ymax*ymax == n*n - x*x) ymax--;
         
-        for (int i=0; i<N; i++) A[r][i] = !A[r][i];
-        for (int i=0; i<N; i++) if (i != r) A[i][c] = !A[i][c];
+        ull cnt = ymax-ymin+1;
+        odd_row[x] = cnt%2;
+        if (x == 0) count_odd_rows[x] = odd_row[x];
+        else count_odd_rows[x] = count_odd_rows[x-1] + odd_row[x];
     }
-    //1 0 0 0 1 0 1 1 1 0 0 1 1 1 0 1 0 0 0 1 1 0 0 0 1
-    void show()
-    {
-        for (int i=0; i<N; i++) {
-            for (int j=0; j<N; j++) {
-                if (A[i][j]) cout << "*";
-                else cout << "o";
-            }
-            cout << endl;
+    
+    for (ull x=0; x<n; x++) {
+        // in row x cells from [ymin, ymax] are black, other cells are white
+        ull ymin = integer_part_sqrt((n-1)*(n-1) - x*x);
+        if (ymin*ymin < (n-1)*(n-1) - x*x) ymin++;
+        ull ymax = integer_part_sqrt(n*n - x*x);
+        if (ymax*ymax == n*n - x*x) ymax--;
+        
+        if (ymin) {
+            if (odd_row[x]) ans += even_cols_in_range(0, ymin-1);
+            else ans += odd_cols_in_range(0, ymin-1);
+        }
+        
+        if (odd_row[x]) ans += odd_cols_in_range(ymin,ymax);
+        else ans += even_cols_in_range(ymin, ymax);
+        
+        if (ymax != n-1) {
+            if (odd_row[x]) ans += even_cols_in_range(ymax+1, n-1);
+            else ans += odd_cols_in_range(ymax+1, n-1);
         }
     }
     
-    int get_number()
-    {
-        vector<int> d;
-        for (int i=0; i<N; i++) for (int j=0; j<N; j++) d.push_back(A[i][j]);
-        return (int)from_digits(d,2);
-    }
-};
+    return ans;
+}
 
 int main() {
     cout.precision(12);
@@ -867,30 +892,15 @@ int main() {
     
     ull ans = 0;
     
-    vector<int> configs(power(2,N*N));
-    
-    for (ull n=0; n<power(2,N*N); n++) {
-        Field F;
-        vector<int> d = digits(n,2,N*N);
-        if (d[0] || d[5] || d[10] || d[15] || d[21] || d[22] || d[23] || d[24]) continue;
-        for (int i=0; i<(int)d.size(); i++) if (d[i]) F.flip(i);
+    for (int i=30; i>=4; i-=2) {
+        ull n = power(2,i)-i;
+        ull d = solve(n);
         
-        configs[F.get_number()]++;
-        if (F.get_number() == 29426721) {
-            int s = total_vector_sum(d);
-            if (s < 5) {
-                cout << n << " "; show(d);
-            }
-        }
-        //cout << F.get_number() << endl;
-        //F.show();
-        //cout << endl << endl;
+        cout << "T(" << n << ") = " << d << endl;
+        ans += d;
     }
     
-    for (int i=0; i<(int)configs.size(); i++) {
-        if (configs[i]) cout << i << " " << configs[i] << endl;
-        if (configs[i]) ans++;
-    }
+    ans += 3; // because T(5) is the only odd solvable board :)
     
     cout << endl << ans << endl;
     
