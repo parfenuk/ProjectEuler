@@ -824,6 +824,39 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+#define N 5
+
+struct Field {
+    bool A[N][N];
+    Field() { for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = false; }
+
+    void flip (int n) // 0 <= n < N^2
+    {
+        int r = n/N, c = n%N;
+        
+        for (int i=0; i<N; i++) A[r][i] = !A[r][i];
+        for (int i=0; i<N; i++) if (i != r) A[i][c] = !A[i][c];
+    }
+    //1 0 0 0 1 0 1 1 1 0 0 1 1 1 0 1 0 0 0 1 1 0 0 0 1
+    void show()
+    {
+        for (int i=0; i<N; i++) {
+            for (int j=0; j<N; j++) {
+                if (A[i][j]) cout << "*";
+                else cout << "o";
+            }
+            cout << endl;
+        }
+    }
+    
+    int get_number()
+    {
+        vector<int> d;
+        for (int i=0; i<N; i++) for (int j=0; j<N; j++) d.push_back(A[i][j]);
+        return (int)from_digits(d,2);
+    }
+};
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -833,6 +866,31 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    vector<int> configs(power(2,N*N));
+    
+    for (ull n=0; n<power(2,N*N); n++) {
+        Field F;
+        vector<int> d = digits(n,2,N*N);
+        if (d[0] || d[5] || d[10] || d[15] || d[21] || d[22] || d[23] || d[24]) continue;
+        for (int i=0; i<(int)d.size(); i++) if (d[i]) F.flip(i);
+        
+        configs[F.get_number()]++;
+        if (F.get_number() == 29426721) {
+            int s = total_vector_sum(d);
+            if (s < 5) {
+                cout << n << " "; show(d);
+            }
+        }
+        //cout << F.get_number() << endl;
+        //F.show();
+        //cout << endl << endl;
+    }
+    
+    for (int i=0; i<(int)configs.size(); i++) {
+        if (configs[i]) cout << i << " " << configs[i] << endl;
+        if (configs[i]) ans++;
+    }
     
     cout << endl << ans << endl;
     
