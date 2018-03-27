@@ -149,6 +149,12 @@ ull powmod(ull a, ull k, int mod = 0)
     return b;
 }
 
+ull inverse (ull a, ull mod, ull p = 0) // returns x: a*x % mod == 1. mod = p^n, GCD(a,mod) = 1
+{
+    if (p == 0) p = mod;
+    return powmod(a,mod-mod/p-1,(int)mod);
+}
+
 ull ones_mod (ull k, int mod) // 11...1 k times % mod
 {
     ull b = 0, n = 1, a = 1;
@@ -248,6 +254,27 @@ Lnum from_digits_lnum (vector<int> a)
         s = s * 10;
         s = s + Lnum(a[i]);
     }
+    return s;
+}
+
+// returns a*b % mod.
+// Useful if direct calculations are impossible in int64
+// mod*81 should fit in int64
+ull product_mod (ull a, ull b, ull mod)
+{
+    ull s = 0;
+    vector<int> da = digits(a); int n = (int)da.size();
+    vector<int> db = digits(b); int m = (int)db.size();
+    vector<ull> mods;
+    mods.push_back(1);
+    for (int i=1; i<n+m; i++) mods.push_back(mods.back()*10 % mod);
+    
+    for (int i=0; i<n; i++) for (int j=0; j<m; j++) {
+        int deg10 = n-1-i+m-1-j;
+        s += mods[deg10]*da[i]*db[j];
+        s %= mod;
+    }
+    
     return s;
 }
 
@@ -373,18 +400,23 @@ void EulerPhiSieve (ull n)
     }
 }
 
-// Currently works only for prime rests. Implement inverse function that commented
-ull Chinese_theorem (vector<ull> divs, vector<ull> rests)
+// all divs must be coprime and in the form p^n
+ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
 {
+    vector<ll> prime_divs; // find the only p[i] is the divisor of divs[i]
+    for (int i=0; i<(int)divs.size(); i++) {
+        vector<pull> f = factorize(divs[i]);
+        prime_divs.push_back(f[0].fs);
+    }
+    
     int k = (int)rests.size();
     vector<ll> x(k);
     for (int i=0; i<k; i++) {
         x[i] = rests[i];
         for (int j=0; j<i; j++) {
-            //x[i] = inverse(divs[j],divs[i]) * (x[i]-x[j]);
-            x[i] = powmod(divs[j],divs[i]-2,(int)divs[i]) * (x[i]-x[j]);
-            x[i] %= (int)divs[i];
-            if (x[i] < 0)  x[i] += divs[i];
+            x[i] = (x[i] - x[j]) * (ll)inverse(divs[j],divs[i],prime_divs[i]);
+            x[i] %= divs[i];
+            if (x[i] < 0) x[i] += divs[i];
         }
     }
     
@@ -447,6 +479,7 @@ ull Divisors_count (ull n)
 
 ull power_fact (ull n, ull p) // n! = S * p^x, returns x, p is prime
 {
+    // TODO: investigate https://proofwiki.org/wiki/Factorial_Divisible_by_Prime_Power
     if (p > n) return 0;
     
     ull cnt = 0, s = p;
@@ -468,6 +501,13 @@ bool isPractical (ull n)
         sum += d[i];
     }
     return true;
+}
+
+ull count_divisible_by (ull n, ull mod, ull lb, ull ub) // returns count of numbers a in range [lb,ub] that a%n == mod
+{
+    ull add = n - mod;
+    if (lb == 0) return (ub+add)/n;
+    return (ub+add)/n - (lb+add-1)/n;
 }
 
 ull sum_divisible_by (ull n, ull lb, ull ub) // sum of all numbers in range [lb,ub] that are divisible by n
