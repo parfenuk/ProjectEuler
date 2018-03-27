@@ -282,7 +282,14 @@ vector<pull> factorize (ull n)
 {
     vector<pull> a;
     
-    for (ull i=2; i*i<=n; i++) {
+    int p2 = 0;
+    while (n % 2 == 0) {
+        n /= 2;
+        p2++;
+    }
+    if (p2) a.push_back(make_pair(2,p2));
+    
+    for (ull i=3; i*i<=n; i+=2) {
         
         int k = 0;
         while (n % i == 0) {
