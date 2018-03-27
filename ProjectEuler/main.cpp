@@ -793,16 +793,98 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-bool Achiless (ull n)
+const ull N = 1000000000000000000;
+
+bool is_good (const vector<ull> &a, ull gcd = 0)
 {
-    vector<pull> f = factorize(n);
-    ull G = f[0].sc;
-    for (int i=0; i<(int)f.size(); i++) {
-        if (f[i].sc == 1) return false;
-        G = GCD(G,f[i].sc);
+    if (gcd == 1) return true;
+    ull G = gcd ? gcd : a[0];
+    for (int i=0; i<(int)a.size(); i++) {
+        G = GCD(G,a[i]);
+        if (G == 1) return true;
+    }
+    return false;
+}
+
+// m is squarefree
+// m = p1*p2*p3*..*pn - in factors
+// let phi(m) = p1^k1 * p2^k2 * p3^k3 * ... * pn^kn * q1^s1 * q2^s2 * ... * qm^sm
+// s[i] are guaranteed to be greater than 1, gcd is their gcd
+// {k1,k2,k3,...,kn} are in e_degrees (can be equal zero)
+ull process_count_numbers (ull m, vector<ull> factors, vector<ull> e_degrees, ull gcd)
+{
+    set<ull> result_numbers;
+    
+    int K = (int)factors.size();
+    ull e_ones = 0;
+    for (int i=0; i<K; i++) if (e_degrees[i] <= 1) e_ones++;
+    // first pair: <factor_degrees, count_ones>
+    // second pair: <e_degrees, count_ones>
+    // third number: m
+    queue<pair< pair<pair<vector<ull>,ull>, pair<vector<ull>,ull>> ,ull>> q;
+    q.push(mp(mp(mp(vector<ull>(K,1),K), mp(e_degrees, e_ones)), m));
+    map<ull,bool> used;
+    
+    while (!q.empty()) {
+        
+        ull n = q.front().sc;
+        vector<ull> f = q.front().fs.fs.fs;
+        ull f_ones = q.front().fs.fs.sc;
+        vector<ull> e = q.front().fs.sc.fs;
+        e_ones = q.front().fs.sc.sc;
+        
+        q.pop();
+        
+        // here we check if valid
+        if (!f_ones && !e_ones) {
+            if (is_good(e,gcd) && is_good(f)) result_numbers.insert(n);
+        }
+        
+        for (int i=0; i<K; i++) {
+            if (n > N/factors[i]) continue;
+            if (used[n*factors[i]]) continue;
+            used[n*factors[i]] = true;
+            
+            f[i]++; if (f[i] == 2) f_ones--;
+            e[i]++; if (e[i] == 2) e_ones--;
+            
+            q.push(mp(mp(mp(f,f_ones), mp(e, e_ones)), n*factors[i]));
+            
+            f[i]--; if (f[i] == 1) f_ones++;
+            e[i]--; if (e[i] == 1) e_ones++;
+        }
     }
     
-    return G == 1;
+    return (ull)result_numbers.size();
+}
+
+vector<pull> clever_factorize (ull n)
+{
+    if (isPrime[n]) return {};
+    
+    vector<pull> a;
+    
+    int p2 = 0;
+    while (n % 2 == 0) {
+        n /= 2;
+        p2++;
+        if (p2 > 1) return {};
+    }
+    if (p2) a.push_back(make_pair(2,p2));
+    
+    for (ull i=3; i*i<=n; i+=2) {
+        
+        int k = 0;
+        while (n % i == 0) {
+            n /= i;
+            k++;
+            if (k > 1) return {};
+        }
+        if (k) a.push_back(make_pair(i,k));
+    }
+    
+    if (n != 1) a.push_back(make_pair(n,1));
+    return a;
 }
 
 int main() {
@@ -815,12 +897,50 @@ int main() {
     
     ull ans = 0;
     
-    for (ull n=2; n<=100000000; n++) {
-        ull m = EulerPhi(n);
-        if (Achiless(n) && Achiless(m)) {
-            cout << n << " " << m << endl;
-            ans++;
+    Eratosthenes_sieve(177330230);
+    
+    vector<vector<pull>> F(630000);
+    for (ull n=2; n<630000; n++) F[n] = factorize(n);
+    
+    for (ull n=3; n<177330230; n++) {
+        vector<pull> f;
+        if (n < 630000) f = F[n];
+        else f = clever_factorize(n);
+        
+        if (f.size() <= 1) continue;
+        if (f.back().fs > 630000) continue;
+        if (n < 630000) {
+            bool sq_free = true;
+            for (int i=0; i<(int)f.size(); i++) if (f[i].sc != 1) { sq_free = false; break; }
+            if (!sq_free) continue;
         }
+        if (n*n > N/f.back().fs) continue;
+        
+        vector<ull> v; for (int i=0; i<(int)f.size(); i++) v.push_back(f[i].fs);
+        vector<ull> e_factors(f.size());
+        map<ull,int> extra_factors;
+        for (int i=0; i<(int)v.size(); i++) {
+            f = F[v[i]-1];
+            for (int j=0; j<(int)f.size(); j++) {
+                int d = index_of_object(v,f[j].fs);
+                if (d != -1) {
+                    e_factors[d] += f[j].sc;
+                    continue;
+                }
+                extra_factors[f[j].fs] += f[j].sc;
+            }
+        }
+        bool ok = true;
+        ull gcd = 0;
+        for (map<ull,int>::iterator it=extra_factors.begin(); it!=extra_factors.end(); it++) {
+            if ((*it).sc == 1) { ok = false; break; }
+            if (!gcd) gcd = (*it).sc;
+            else gcd = GCD(gcd,(*it).sc);
+        }
+        
+        if (!ok) continue;
+        
+        ans += process_count_numbers(n, v, e_factors, gcd);
     }
     
     cout << endl << ans << endl;
