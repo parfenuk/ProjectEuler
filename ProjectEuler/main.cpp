@@ -578,7 +578,7 @@ vector<int> join_vectors (vector<int> a, const vector<int> &b)
     return a;
 }
 
-void join_vectors (vector<int> &a, const vector<int> &b, bool flag = true)
+void join_vectors (vector<ull> &a, const vector<ull> &b)
 {
     for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
 }
@@ -871,6 +871,78 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+ull my_atoi (string S)
+{
+    vector<int> d;
+    for (int i=0; i<(int)S.length(); i++) d.push_back(S[i]-'0');
+    return from_digits(d);
+}
+
+vector<ull> pattern_set (const string &S)
+{
+    ull from, to;
+    vector<int> stars_position;
+    for (int i=0; i<(int)S.length(); i++) if (S[i] == '*') stars_position.push_back(i);
+    
+    if (stars_position.empty()) return { my_atoi(S) };
+    
+    int stars = (int)stars_position.size();
+    to = power(10,stars)-1;
+    if (S[0] == '*') from = power(10,stars-1);
+    else from = 0;
+    
+    vector<ull> v;
+    for (ull i=from; i<=to; i++) {
+        string T = S;
+        vector<int> d = digits(i,10,stars);
+        for (int j=0; j<stars; j++) {
+            T[stars_position[j]] = d[j] + '0';
+        }
+        v.push_back(my_atoi(T));
+    }
+    
+    return v;
+}
+
+ull get_position (ull n, int k) // n = 235, k = 1 -> position of '3'
+{
+    ull s = 0;
+    vector<int> d = digits(n);
+    for (int i=1; i<(int)d.size(); i++) {
+        s += (power(10,i)-power(10,i-1))*i;
+    }
+    s += (n-power(10,(int)d.size()-1))*(int)d.size();
+    
+    return s + k + 1;
+}
+
+vector<ull> extended_pattern_set (string S, int addons)
+{
+    size_t star = S.find("*");
+    if (star == string::npos) return pattern_set(S);
+    
+    vector<ull> v = pattern_set(S);
+    
+    if (star == 0) {
+        for (int i=0; i<=addons; i++) for (int j=0; j+i<=addons; j++) {
+            string T = S;
+            for (int k=0; k<i; k++) T.insert(T.begin(),'*');
+            for (int k=0; k<j; k++) T.push_back('*');
+            cout << T << endl;
+            join_vectors(v, pattern_set(T));
+        }
+    }
+    else {
+        for (int i=0; i<addons; i++) {
+            S.insert(S.begin()+star,'*');
+            cout << S << endl;
+            join_vectors(v, pattern_set(S));
+        }
+    }
+    
+    return v;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -880,6 +952,25 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    cout << get_position(1442159432320,4) << endl;
+    
+    const ull N = 1594323;
+    const vector<string> patterns = { "1594323", "5943231", "9432315", "4323159", "3231594", "2315943", "3159432",
+        "*1594323", "1594323*", "594323*1", "94323*15", "4323*159", "323*1594", "23*15943", "3*159432"
+    };
+    
+    set<ull> S;
+    for (int i=0; i<(int)patterns.size(); i++) {
+        vector<ull> v = extended_pattern_set(patterns[i],5);
+        for (int j=0; j<(int)v.size(); j++) S.insert(v[j]);
+    }
+    
+    if ((ull)S.size() < N) { cout << "\nNot enough patterns!"; return 0; }
+    
+    set<ull>::iterator it = S.begin();
+    advance(it,N-1);
+    ans = *it;
     
     cout << endl << ans << endl;
     
