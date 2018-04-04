@@ -28,8 +28,8 @@
 #include <utility>
 
 //#include "Lnum.cpp"
-//#include "Geometry.cpp"
-#include "Geometry3D.cpp"
+#include "Geometry.cpp"
+//#include "Geometry3D.cpp"
 #include "Fractions.cpp"
 #include "Matrix.cpp"
 #include "Complex.cpp"

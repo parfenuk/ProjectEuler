@@ -155,7 +155,7 @@ bool geom_ccw (point a, point b, point c, bool q = false) {
 
 vector<point> convex_hull (vector<point> a, bool should_skip_border_points = true)
 {
-    if (a.size() == 1) return vector<point>();
+    if (a.size() <= 1) return vector<point>();
     
     sort (a.begin(), a.end());
     point p1 = a[0],  p2 = a.back();
@@ -257,10 +257,22 @@ point reflection_vector (point v, line p, point a = NOT_FOUND)
     return symmetric_point(a+v, p) - a;
 }
 
+pair<point,dd> circumscribed_circle (point a, point b, point c)
+{
+    line p(a,b), q(a,c);
+    p = orthogonal_line((a+b)/2, p);
+    q = orthogonal_line((a+c)/2, q);
+    
+    point t = intersection_point(p,q);
+    
+    return make_pair(t,dist(a,t));
+}
+
 struct Polygon {
     
     vector<point> P; // should be sorted in angle order!
     dd area;
+    dd perimeter;
     
     Polygon() {}
     Polygon(int n) {
@@ -270,6 +282,9 @@ struct Polygon {
         }
     }
     point operator[] (int k) { return P[k]; }
+    bool empty() { return P.empty(); }
+    int size() { return (int)P.size(); }
+    void addPoint (point p) { P.push_back(p); }
     
     void show() {
         
@@ -282,6 +297,15 @@ struct Polygon {
         
         area = 0;
         for (int i=2; i<(int)P.size(); i++) area += triangle_area(P[0],P[i-1],P[i]);
+    }
+    
+    void calculate_perimeter() {
+        
+        perimeter = 0;
+        for (int i=0; i<(int)P.size(); i++) {
+            int n = i+1; if (n == (int)P.size()) n = 0;
+            perimeter += dist(P[i], P[n]);
+        }
     }
     // area must be calculated before
     bool contains_point (point p, bool strictly_inside = false) {
