@@ -24,7 +24,7 @@ using namespace std;
 #define sc second
 
 const dd PI = acos(-1.0);
-const dd EPS = 0.00000001;
+const dd EPS = 0.0000000001;
 
 struct point
 {

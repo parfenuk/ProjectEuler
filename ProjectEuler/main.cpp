@@ -871,6 +871,27 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+dd shortest_path (dd m)
+{
+    point o;
+    dd dp[251][251];
+    for (int i=0; i<=250; i++) for (int j=0; j<=250; j++) dp[i][j] = 1000000000;
+    dp[0][250] = 0;
+    
+    for (int y=250; y>=0; y--) for (int x=0; x<=250; x++) {
+        if (y == 250 && x == 0) continue;
+        
+        point q(x,y);
+        for (int i=0; i<=x; i++) for (int j=y; j<=250; j++) {
+            point p(i,j);
+            dd w = dist(p,q)*m - triangle_area(q,p,o);
+            if (dp[i][j] + w < dp[x][y]) dp[x][y] = dp[i][j] + w;
+        }
+    }
+    
+    return dp[250][0];
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -880,6 +901,21 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const dd DELTA = 0.00000001;
+    
+    dd res = 0;
+    dd lb = 132, ub = 133;
+    while (ub - lb > DELTA) {
+        dd M = (lb + ub)/2;
+        cout << fixed << M << endl;
+        dd s = shortest_path(M);
+        if (fabs(s) < EPS) { res = M; break; }
+        if (s > 0) ub = M - DELTA;
+        else lb = M + DELTA;
+    }
+    
+    cout << fixed << res << endl;
     
     cout << endl << ans << endl;
     
