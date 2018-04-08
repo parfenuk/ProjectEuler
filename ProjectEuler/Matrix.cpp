@@ -24,11 +24,18 @@ struct Matrix
         for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = 0;
         for (int i=0; i<N; i++) A[i][i] = 1;
     }
-    Matrix(ll **B, int n) {
+    Matrix (ll **B, int n) {
         N = n; Q = 0;
         A = new ll *[n];
         for (int i=0; i<N; i++) A[i] = new ll [n];
         for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = B[i][j];
+    }
+    Matrix (vector<vector<ll>> a) {
+        int n = (int)a.size();
+        N = n;
+        A = new ll *[n];
+        for (int i=0; i<N; i++) A[i] = new ll [n];
+        for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = a[i][j];
     }
     ll *operator[] (int k) { return A[k]; }
     void show() {
