@@ -131,7 +131,7 @@ ull power (ull n, int k)
     return s;
 }
 
-ull powmod(ull a, ull k, int mod = 0)
+ull powmod (ull a, ull k, int mod = 0)
 {
     ull b = 1;
     while (k) {
@@ -871,15 +871,149 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+const int Q = 1001001011;
+ll FACT[21];
+ll Bin[21][21];
+ll B_even[21], B_odd[21];
+#define N 20
+
+// for single side
+ll calculate_P (const vector<int> &a)
+{
+    vector<ll> count(N+1);
+    ll n = N, res = 1;
+    for (int i=0; i<(int)a.size(); i++) count[a[i]]++;
+    
+    for (int i=0; i<(int)a.size(); i++) {
+        res *= Bin[n][a[i]];
+        res %= Q;
+        res *= FACT[a[i]-1];
+        res %= Q;
+        n -= a[i];
+    }
+    
+    for (int i=1; i<=N; i++) {
+        res *= inverse(FACT[count[i]], Q);
+        res %= Q;
+    }
+    
+    return res;
+}
+
+ll calculate_in (const vector<int> &a, const vector<int> &b)
+{
+    ll res = 1;
+    
+    int n = (int)a.size() + (int)b.size();
+    int k = (int)a.size();
+    
+    // create data structures
+    vector<int> len(n);
+    for (int i=0; i<k; i++) len[i] = a[i];
+    for (int i=k; i<n; i++) len[i] = b[i-k];
+    vector<bool> should_be_even(n);
+    vector<int> g[40];
+    
+    // fill the graph
+    for (int i=0; i<k; i++) for (int j=k; j<n; j++) {
+        int d = (int)GCD(len[i],len[j]);
+        int s1 = len[i]/d, s2 = len[j]/d;
+        if (s1 % 2 && s2 % 2) {
+            g[i].push_back(j);
+            g[j].push_back(i);
+        }
+        else if (s1 % 2 == 0) {
+            should_be_even[i] = true;
+        }
+        else { // s2 % 2 == 0
+            should_be_even[j] = true;
+        }
+    }
+    
+    vector<vector<int>> w = find_connected_components(g,n);
+    for (int c=0; c<(int)w.size(); c++) {
+        
+        vector<int> v = w[c]; // a component
+        
+        bool is_even = false;
+        ll mult_even = 1, mult_odd = 1;
+        for (int i=0; i<(int)v.size(); i++) {
+            if (should_be_even[v[i]]) { is_even = true; break; }
+        }
+        
+        // calculate even case
+        for (int i=0; i<(int)v.size(); i++) {
+            mult_even *= B_even[len[v[i]]];
+            mult_even %= Q;
+        }
+        
+        if (is_even) mult_odd = 0;
+        else for (int i=0; i<(int)v.size(); i++) {
+            mult_odd *= B_odd[len[v[i]]];
+            mult_odd %= Q;
+        }
+        
+        res *= (mult_even + mult_odd);
+        res %= Q;
+    }
+    
+    return res;
+}
+
+ll calculate_cycles (const vector<int> &a, const vector<int> &b)
+{
+    ll cycles = 0;
+    for (int i=0; i<(int)a.size(); i++) for (int j=0; j<(int)b.size(); j++) {
+        cycles += GCD(a[i],b[j]);
+    }
+    return cycles;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    FACT[0] = 1;
+    for (ll i=1; i<=N; i++) FACT[i] = FACT[i-1]*i % Q;
+    for (ll i=1; i<=N; i++) for (ll j=0; j<=i; j++) {
+        Bin[i][j] = FACT[i]*inverse(FACT[j],Q) % Q;
+        Bin[i][j] *= inverse(FACT[i-j],Q);
+        Bin[i][j] %= Q;
+    }
+    for (ll n=1; n<=N; n++) {
+        B_even[n] = B_odd[n] = 0;
+        for (ll i=0; i<=n; i+=2) B_even[n] += Bin[n][i];
+        for (ll i=1; i<=n; i+=2) B_odd[n] += Bin[n][i];
+        B_even[n] %= Q;
+        B_odd[n] %= Q;
+    }
+    
+    vector<vector<int>> a = sum_partitions(N);
+    //for (int i=0; i<(int)a.size(); i++) show(a[i]);
+    
+    for (int i=0; i<(int)a.size(); i++) for (int j=0; j<(int)a.size(); j++) {
+        
+        ll sum = calculate_P(a[i])*calculate_P(a[j]) % Q;
+        sum *= calculate_in(a[i],a[j]);
+        sum %= Q;
+        sum *= powmod(2,calculate_cycles(a[i],a[j]),Q);
+        sum %= Q;
+        
+        ans += sum;
+        if (ans >= Q) ans -= Q;
+    }
+    
+    cout << ans << endl;
+    ans *= inverse(FACT[N]*FACT[N]%Q,Q);
+    ans %= Q;
+    ans *= inverse(powmod(4,N,Q),Q);
+    ans %= Q;
     
     cout << endl << ans << endl;
     
