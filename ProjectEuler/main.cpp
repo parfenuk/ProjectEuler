@@ -400,6 +400,35 @@ void EulerPhiSieve (ull n)
     }
 }
 
+map<ll,ll> eulerCache;
+vector<ll> eulerPhiSum; // prefill small values for function
+ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPhi(n) modulo Q
+{
+    if (n < (ll)eulerPhiSum.size()) return eulerPhiSum[n];
+    if (eulerCache.find(n) != eulerCache.end()) return eulerCache[n];
+    
+    ll u = integer_part_sqrt(n);
+    ll res;
+    if (n % 2 == 0) res = ((n/2)%Q)*((n+1)%Q) % Q;
+    else res = (((n+1)/2)%Q)*(n%Q) % Q;
+    
+    for (ll i=2; i<=u; i++) {
+        res -= EulerPhiSum(n/i, Q);
+        if (res < 0) res += Q;
+    }
+    
+    ll ub = u;
+    if (u == n/u) ub--;
+    
+    for (ll i=1; i<=ub; i++) {
+        res -= (((n/i - n/(i+1))%Q)*EulerPhiSum(i,Q) % Q);
+        if (res < 0) res += Q;
+    }
+    
+    eulerCache[n] = res;
+    return res;
+}
+
 // all divs must be coprime and in the form p^n
 ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
 {
