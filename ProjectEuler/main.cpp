@@ -309,6 +309,35 @@ vector<pull> factorize (ull n)
 {
     vector<pull> a;
     
+    if (!primes.empty()) {
+        
+        for (ull i=0; primes[i]*1ll*primes[i]<=n; i++) {
+            
+            int k = 0;
+            while (n % primes[i] == 0) {
+                n /= primes[i];
+                k++;
+            }
+            if (k) a.push_back(make_pair(primes[i],k));
+        }
+        
+        ull from = primes.back() + 2;
+        if (from == 4) from--; // just in the case primes == {2}, which is almost impossible :)
+        
+        for (ull i=from; i*i<=n; i+=2) {
+            
+            int k = 0;
+            while (n % i == 0) {
+                n /= i;
+                k++;
+            }
+            if (k) a.push_back(make_pair(i,k));
+        }
+        
+        if (n != 1) a.push_back(make_pair(n,1));
+        return a;
+    }
+    
     int p2 = 0;
     while (n % 2 == 0) {
         n /= 2;
@@ -909,7 +938,7 @@ int main() {
 #endif
     
     ull ans = 0;
-    
+        
     cout << endl << ans << endl;
     
     return 0;
