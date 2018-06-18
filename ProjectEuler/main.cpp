@@ -929,6 +929,41 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+#define N 10
+#define P2N 1024
+
+int ones_count (int n)
+{
+    int cnt = 0;
+    vector<int> d = digits(n,2);
+    for (int i=0; i<(int)d.size(); i++) if (d[i]) cnt++;
+    return cnt;
+}
+
+vector<pii> possible_moves (pii pos) // pos.fs != 0
+{
+    vector<pii> a;
+    vector<int> d = digits(pos.fs,2,N);
+    // general moves
+    for (int i=0; i<(int)d.size(); i++) {
+        if (!d[i]) continue;
+        
+        for (int j=i+1; j<(int)d.size(); j++) {
+            if (d[j]) break;
+            swap(d[i],d[j]);
+            a.push_back(mp(from_digits(d,2),pos.sc));
+            swap(d[i],d[j]);
+        }
+    }
+    // special move
+    for (int i=(int)d.size()-1; i>=0; i--) {
+        if (d[i]) { d[i] = 0; break; }
+    }
+    a.push_back(mp(from_digits(d,2),pos.sc-1));
+    
+    return a;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -938,7 +973,23 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    bool G[P2N][N+1];
+    for (int i=0; i<P2N; i++) for (int j=0; j<=N; j++) G[i][j] = false;
+    
+    for (int i=1; i<P2N; i++) for (int j=1; j<=ones_count(i); j++) {
+        vector<pii> a = possible_moves(mp(i,j));
         
+        for (int k=0; k<(int)a.size(); k++) {
+            if (!G[a[k].fs][a[k].sc]) { G[i][j] = true; break; }
+        }
+    }
+    
+    for (int i=1; i<P2N; i++) {
+        if (ones_count(i) != 6) continue;
+        if (!G[i][3]) cout << i << endl;
+    }
+    
     cout << endl << ans << endl;
     
     return 0;
