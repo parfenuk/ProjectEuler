@@ -915,15 +915,11 @@ vector<ull> Lagged_Fibonacci_Generator (int n)
 vector<ull> Blub_Blub_Shum_Generator (int n)
 {
     vector<ull> v;
-    ull a = 14025256;
-    
-    vector<bool> used(20300713);
+    ull a = 290797;
     
     for (int i=0; i<n; i++) {
-        if (used[a]) break;
         v.push_back(a);
-        used[a] = true;
-        a = a*a % 20300713;
+        a = a*a % 50515093;
     }
     
     return v;

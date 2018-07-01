@@ -32,7 +32,9 @@ struct point
     
     point() { x = y = 0; }
     point(dd xx, dd yy) { x = xx; y = yy; }
+    point(pii p) { x = p.fs; y = p.sc; }
     void read() { std::cin >> x >> y; }
+    void show() { cout << x << " " << y << endl; }
     dd len() { return sqrt(x*x + y*y); }
     void set_length (dd L) {
         dd l = len();
@@ -108,6 +110,11 @@ point operator/ (point a, dd k)
     b.x = a.x/k;
     b.y = a.y/k;
     return b;
+}
+
+bool is_collinear (point a, point b)
+{
+    return a.x*b.y == a.y*b.x;
 }
 
 dd dist (point a, point b)
