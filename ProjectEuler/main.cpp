@@ -938,7 +938,28 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (int x1=-20; x1<=20; x1++)
+    for (int x2=x1; x2<=20; x2++)
+    for (int x3=x2; x3<=20; x3++)
+    for (int y1=-20; y1<=20; y1++)
+    for (int y2=-20; y2<=20; y2++)
+    for (int y3=-20; y3<=20; y3++)
+    {
+        point a(x1,y1), b(x2,y2), c(x3,y3);
+        if (!(a < b && b < c)) continue;
         
+        if (x1+x2+x3==0 && y1+y2+y3==0 && x1*x2 + x1*x3 + x2*x3 - y1*y2 - y2*y3 - y1*y3 == -39 && x1 *y2 + x1 *y3 + x2 *y1 + x2 *y3 + x3 *y1 + x3 *y2 == 0) {
+            dd t = triangle_area(a,b,c);
+            //cout << fixed << t << endl;
+            cout << "(" << x1 << " " << y1 << ")";
+            cout << "(" << x2 << " " << y2 << ")";
+            cout << "(" << x3 << " " << y3 << ")";
+            cout << ": " << t << endl;
+            ans += t;
+        }
+    }
+    
     cout << endl << ans << endl;
     
     return 0;
