@@ -925,6 +925,8 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+#define N 100
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -934,7 +936,35 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    bool dp[N+1][N+1];
+    for (int i=0; i<=N; i++) for (int j=0; j<=N; j++) dp[i][j] = false;
+    for (int i=1; i<=N; i++) dp[1][i] = true;
+    
+    for (int n=2; n<=N; n++) {
         
+        for (int i=n; i<=N; i++) dp[n][i] = true;
+        for (int i=1; i<n; i++) {
+            if (dp[n][i-1]) { dp[n][i] = true; continue; }
+            
+            int m = min(N,2*i);
+            dp[n][i] = !dp[n-i][m];
+        }
+    }
+    
+    //for (int n=2; n<=N; n++) if (!dp[n][n-1]) cout << n << " ";
+    for (int n=2; n<=N; n++) {
+        
+        cout << n << ": ";
+        int first_move = 0;
+        for (int i=1; i<n; i++) {
+            int m = min(N,2*i);
+            if (!dp[n-i][m]) { cout << i << " "; first_move = i; }
+        }
+        ans += first_move;
+        cout << endl;
+    }
+    
     cout << endl << ans << endl;
     
     return 0;
