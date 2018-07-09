@@ -174,14 +174,23 @@ ull ones_mod (ull k, int mod) // 11...1 k times % mod
     return b;
 }
 
-ull Binomial (ull n, ull k) // C(n,k)
+ull Binomial (ull n, ull k, int p = 0) // C(n,k) mod p. p must be prime and greater than n and k.
 {
     if (k > n) return 0;
     
+    if (p == 0) {
+        ull s = 1;
+        for (ull i=0; i<k; i++) {
+            s *= (n-i);
+            s /= (i+1);
+        }
+        return s;
+    }
+    
     ull s = 1;
     for (ull i=0; i<k; i++) {
-        s *= (n-i);
-        s /= (i+1);
+        s *= (n-i); s %= p;
+        s *= inverse((i+1),p); s %= p;
     }
     return s;
 }
@@ -934,7 +943,7 @@ int main() {
 #endif
     
     ull ans = 0;
-        
+    
     cout << endl << ans << endl;
     
     return 0;
