@@ -934,6 +934,49 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+const ull N = 200000;
+
+ull to_max_number (ull n, ull k)
+{
+    while (n*k <= N) n *= k;
+    return n;
+}
+
+dd A (ll k, ll w, ll m)
+{
+    dd a = Binomial(k+w-1,w);
+    if (w % 2) a = -a;
+    if (m+w) for (int i=0; i<w; i++) a *= m;
+    for (int i=0; i<k+w; i++) a /= 10;
+    return a;
+}
+
+#define K 20
+#define D 4000
+
+vector<vector<int>> T = {
+    {0,12,13,14,15,16,17,18,19,20},
+    {11,0,13,14,15,16,17,18,19,20},
+    {11,12,0,14,15,16,17,18,19,20},
+    {11,12,13,0,15,16,17,18,19,20},
+    {11,12,13,14,0,16,17,18,19,20},
+    {11,12,13,14,15,0,17,18,19,20},
+    {11,12,13,14,15,16,0,18,19,20},
+    {11,12,13,14,15,16,17,0,19,20},
+    {11,12,13,14,15,16,17,18,0,20},
+    {11,12,13,14,15,16,17,18,19,0},
+    {1,12,13,14,15,16,17,18,19,20},
+    {11,2,13,14,15,16,17,18,19,20},
+    {11,12,3,14,15,16,17,18,19,20},
+    {11,12,13,4,15,16,17,18,19,20},
+    {11,12,13,14,5,16,17,18,19,20},
+    {11,12,13,14,15,6,17,18,19,20},
+    {11,12,13,14,15,16,7,18,19,20},
+    {11,12,13,14,15,16,17,8,19,20},
+    {11,12,13,14,15,16,17,18,9,20},
+    {11,12,13,14,15,16,17,18,19,10},
+};
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -943,6 +986,34 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    int n = (int)T.size();
+    dd *S[D+1][21];
+    for (int i=0; i<=D; i++) for (int j=0; j<=n; j++) S[i][j] = new dd [K+1];
+    for (int i=0; i<=D; i++) for (int j=0; j<=n; j++) for (int k=0; k<=K; k++) S[i][j][k] = 0;
+    
+    for (int k=1; k<=K; k++) {
+        for (int i=1; i<=9; i++) S[1][11+i][k] = pow(i,-k);
+    }
+    for (int k=1; k<=K; k++) {
+        for (int i=10; i<100; i++) {
+            vector<int> d = digits(i);
+            if (d[0] == d[1]) S[2][d[1]+1][k] += pow(i,-k);
+            else S[2][d[1]+11][k] += pow(i,-k);
+        }
+    }
+    
+    for (int i=3; i<=D; i++) for (int j=1; j<=n; j++) for (int k=1; k<=K; k++) {
+        // calculate S[i][j][k]
+        for (int l=1; l<=n; l++) for (int m=0; m<10; m++) {
+            if (T[l-1][m] != j) continue;
+            for (int w=0; k+w<=K; w++) S[i][j][k] += A(k,w,m)*S[i-1][l][k+w];
+        }
+    }
+    
+    dd res = 0;
+    for (int i=1; i<=D; i++) for (int j=1; j<=n; j++) res += S[i][j][1];
+    cout << fixed << res << endl;
     
     cout << endl << ans << endl;
     
