@@ -866,7 +866,7 @@ vector<string> parse_by_symbol (const string &S, char p)
     return v;
 }
 
-int Gauss (vector <vector<dd>> a, vector<dd> & ans) // 0 - no solutions, 1 - one solution, 2 - infinitely many solutions
+int Gauss (vector<vector<dd>> a, vector<dd> & ans) // 0 - no solutions, 1 - one solution, 2 - infinitely many solutions
 {
     int n = (int) a.size();
     int m = (int) a[0].size() - 1;
@@ -891,7 +891,7 @@ int Gauss (vector <vector<dd>> a, vector<dd> & ans) // 0 - no solutions, 1 - one
         row++;
     }
     
-    ans.assign (m, 0);
+    ans.assign(m,0);
     for (int i=0; i<m; i++) {
         if (where[i] != -1) ans[i] = a[where[i]][m] / a[where[i]][i];
     }
@@ -934,8 +934,56 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+#define SIZE 11
+vector<vector<int>> G;
+int N;
+
+int get_class (const vector<int> &v)
+{
+    vector<bool> used(SIZE);
+    vector<int> partition;
+    int s = 0;
+    while (true) {
+        int c = 0;
+        while (s < SIZE && used[s]) s++;
+        if (s == SIZE) break;
+        while (!used[s]) {
+            used[s] = true;
+            s = v[s];
+            c++;
+        }
+        partition.push_back(c);
+    }
+    
+    sort(partition.begin(), partition.end());
+    reverse(partition.begin(), partition.end());
+    for (int i=0; i<N; i++) if (partition == G[i]) return i;
+    return -1;
+}
+
+vector<vector<int>> possible_permutations (const vector<int> &v)
+{
+    vector<vector<int>> a;
+    
+    vector<vector<int>> c = get_combinations(SIZE,3);
+    
+    for (int i=0; i<(int)c.size(); i++) {
+        vector<int> p = c[i];
+        for (int j=0; j<3; j++) p[j]--;
+        
+        vector<int> b = v; a.push_back(b);
+        swap(b[p[1]],b[p[2]]); a.push_back(b);
+        swap(b[p[0]],b[p[1]]); a.push_back(b);
+        swap(b[p[1]],b[p[2]]); a.push_back(b);
+        swap(b[p[0]],b[p[1]]); a.push_back(b);
+        swap(b[p[1]],b[p[2]]); a.push_back(b);
+    }
+    
+    return a;
+}
+
 int main() {
-    cout.precision(12);
+    cout.precision(5);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     //freopen("input.txt","rt",stdin);
@@ -943,6 +991,69 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    G = sum_partitions(SIZE);
+    N = (int)G.size();
+    
+    for (int i=0; i<N; i++) show(G[i]);
+    
+    vector<vector<int>> class_member(N);
+    vector<int> class_count(N);
+    
+    vector<int> P; for (int i=0; i<SIZE; i++) P.push_back(i);
+    class_member[0] = P;
+    class_count[0] = 1;
+    int K = 0;
+    while (next_permutation(P.begin(), P.end())) {
+        int n = get_class(P);
+        //show(P,false); cout << " " << n << endl;
+        K++;
+        if (class_member[n].empty()) class_member[n] = P;
+        class_count[n]++;
+    }
+    
+    vector<vector<int>> system = {{}};
+    system[0].push_back(1); for (int i=1; i<=N; i++) system[0].push_back(0);
+    
+    for (int n=1; n<N; n++) {
+        system.push_back(vector<int>(N+1,0));
+        vector<int> p = class_member[n];
+        show(p);
+        vector<vector<int>> a = possible_permutations(p);
+        int s = (int)a.size();
+
+        for (int i=0; i<s; i++) {
+            int m = get_class(a[i]);
+            system[n][m]--;
+        }
+        system[n][N] = s;
+        system[n][n] += s;
+    }
+    
+    for (int i=0; i<N; i++) {
+        for (int j=0; j<N; j++) {
+            if (!system[i][j]) continue;
+            if (j && system[i][j] > 0) cout << "+";
+            cout << system[i][j] << "m" << j;
+        }
+        cout << "==" << system[i][N] << endl;
+    }
+    
+    vector<vector<dd>> System;
+    for (int i=0; i<N; i++) {
+        System.push_back({});
+        for (int j=0; j<=N; j++) System[i].push_back(system[i][j]);
+    }
+    vector<dd> sol;
+    Gauss(System,sol);
+    for (int i=0; i<N; i++) {
+        cout << fixed << sol[i] << endl;
+    }
+    
+    dd res = 0;
+    for (int i=1; i<N; i++) res += sol[i]*class_count[i];
+    for (int i=2; i<=SIZE; i++) res /= i;
+    cout << fixed << res << endl;
     
     cout << endl << ans << endl;
     
