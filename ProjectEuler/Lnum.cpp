@@ -15,7 +15,7 @@ typedef int ltype;
 
 using namespace std;
 
-#define LSIZE 10
+#define LSIZE 5
 const ltype BASE = 1000000000;
 
 class Lnum
@@ -427,18 +427,14 @@ Lnum lnum_abs (Lnum A)
     return A;
 }
 
-Lnum lnum_sqrt (Lnum A)
+Lnum lnum_sqrt (Lnum A) // round(sqrt(A))
 {
-    Lnum lb(1), ub = A;
-    while (true) {
+    Lnum lb(1), ub = A, ret;
+    while (lb <= ub) {
         Lnum M = (lb + ub) / 2;
         Lnum N = M*M;
-        if (N < A) lb = M + one;
-        else if (N > A) ub = M - one;
-        else {
-            return M;
-        }
-        if (lb > ub) break;
+        if (N <= A) { ret = M; lb = M + one; }
+        else ub = M - one;
     }
-    return O;
+    return ret;
 }
