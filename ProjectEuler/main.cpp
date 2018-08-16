@@ -934,15 +934,83 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+vector<int> INITIAL_VALUES  = {0,1,3,5,21,61,381,2045};
+
+vector<int> MODS = {1000000000,1562500,312500,62500,12500,2500,500,100,20,4};
+vector<int> min_degrees = {0,9,2,2,2,2,2,2,2,2};
+
+vector<ll> n; // {n%MODS[0],n%MODS[1],...,n%MODS[9]}
+
+void calculate_next_mods() // update n
+{
+    vector<ll> m(10);
+    m[9] = (3*(n[9]+1) - 1) % MODS[9];
+    
+    for (int i=8; i>=0; i--) {
+        
+        ll deg = n[i+1] + 1;
+        if (deg < min_degrees[i+1]) deg += MODS[i+1];
+        
+        ll res = powmod(2,deg,MODS[i]);
+        res = (res*(n[i] + 1) - 1) % MODS[i];
+        if (res < 0) res += MODS[i];
+        m[i] = res;
+    }
+    
+    n = m;
+}
+
+ll next_answer() // (2^(n+1)-1)*(n+1) - 1;
+{
+    ll deg = n[1] + 1;
+    if (deg < min_degrees[1]) deg += MODS[1];
+    
+    ll res = powmod(2,deg,MODS[0]) - 1;
+    if (res < 0) res += MODS[0];
+    
+    res = res*(n[0]+1) % MODS[0];
+    return res;
+}
+
 int main() {
-    cout.precision(12);
+    cout.precision(15);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    for (int i=0; i<8; i++) ans += INITIAL_VALUES[i];
+    n = vector<ll>(10);
+    
+    for (int i=8; i<16; i++) {
+        
+        ll count = INITIAL_VALUES[i-8];
+        ll N = INITIAL_VALUES[i-8] + 2;
+        for (int j=0; j<10; j++) n[j] = N % MODS[j];
+        
+        // first iteration - manually
+        ll add = (powmod(2,N+1,MODS[0])-1)*(N+1) % MODS[0];
+        if (add < 0) add += MODS[0];
+        count += add; count %= MODS[0];
+        
+        for (int j=0; j<10; j++) {
+            n[j] = (powmod(2,N+1,MODS[j])*(N+1) - 1) % MODS[j];
+            if (n[j] < 0) n[j] += MODS[j];
+        }
+        
+        for (ll k=N-1; k>=0; k--) {
+            
+            add = next_answer();
+            count += add; count %= MODS[0];
+            calculate_next_mods();
+        }
+        
+        cout << i << " " << count << endl;
+        ans = (ans + count) % MODS[0];
+    }
     
     cout << endl << ans << endl;
     
