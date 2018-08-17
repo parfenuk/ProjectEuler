@@ -934,6 +934,147 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+set<ppll> s1, s2, s3, s5;
+
+const int D[16][4] = {
+    {0,0,0,0},
+    {0,0,0,1},
+    {0,0,1,0},
+    {0,0,1,1},
+    {0,1,0,0},
+    {0,1,0,1},
+    {0,1,1,0},
+    {0,1,1,1},
+    {1,0,0,0},
+    {1,0,0,1},
+    {1,0,1,0},
+    {1,0,1,1},
+    {1,1,0,0},
+    {1,1,0,1},
+    {1,1,1,0},
+    {1,1,1,1}
+};
+
+set<ppll> generate_all_quads (ppll p) // p must be sorted
+{
+    vector<vector<ll>> v;
+    vector<ll> a = {p.fs.fs,p.fs.sc,p.sc.fs,p.sc.sc};
+    
+    do {
+        v.push_back(a);
+    } while (next_permutation(a.begin(), a.end()));
+    
+    set<ppll> S;
+    for (int n=0; n<(int)v.size(); n++) {
+        
+        for (int i=0; i<16; i++) {
+            for (int j=0; j<4; j++) {
+                if (D[i][j] && v[n][j] > 0) v[n][j] = -v[n][j];
+                if (!D[i][j] && v[n][j] < 0) v[n][j] = -v[n][j];
+            }
+            S.insert(mp(mp(v[n][0],v[n][1]),mp(v[n][2],v[n][3])));
+        }
+    }
+    
+    return S;
+}
+
+void fill_sets()
+{
+    s1.insert(mp(mp(0,0),mp(0,1)));
+    s2.insert(mp(mp(0,0),mp(1,1)));
+    s3.insert(mp(mp(0,1),mp(1,1)));
+    s5.insert(mp(mp(0,0),mp(1,2)));
+    
+    s1 = generate_all_quads(*s1.begin());
+    s2 = generate_all_quads(*s2.begin());
+    s3 = generate_all_quads(*s3.begin());
+    s5 = generate_all_quads(*s5.begin());
+    
+    cout << s2.size() << " " << s5.size() << endl;
+}
+
+set<ppll> attach_set (const set<ppll> &s, const set<ppll> &s1)
+{
+    set<pair<pll,pll>> S;
+    int k = 0;
+    for (set<ppll>::iterator it = s.begin(); it != s.end(); it++) {
+        
+        k++;
+        set<ppll> sq = generate_all_quads(*it);
+        
+        for (set<ppll>::iterator it3 = sq.begin(); it3 != sq.end(); it3++) {
+            
+            ppll p = *it3;
+            ll a1 = p.fs.fs, a2 = p.fs.sc, a3 = p.sc.fs, a4 = p.sc.sc;
+            
+            for (set<ppll>::iterator it2 = s1.begin(); it2 != s1.end(); it2++) {
+                
+                ppll q = *it2;
+                
+                ll b1 = q.fs.fs, b2 = q.fs.sc, b3 = q.sc.fs, b4 = q.sc.sc;
+                
+                ppll P = mp(mp(a1*b1-a2*b2-a3*b3-a4*b4,a1*b2+a2*b1+a3*b4-a4*b3),mp(a1*b3-a2*b4+a3*b1+a4*b2,a1*b4+a2*b3-a3*b2+a4*b1));
+                if (P.fs.fs < 0 || P.fs.fs > P.fs.sc || P.fs.sc > P.sc.fs || P.sc.fs > P.sc.sc) continue;
+                
+                S.insert(P);
+            }
+        }
+    }
+    
+    return S;
+}
+
+ull actual_size (ull N)
+{
+    vector<ull> d = Divisors(N);
+    
+    ull sum = 0;
+    for (int i=0; i<(int)d.size(); i++) if (d[i]%2) sum += d[i];
+    return sum*24;
+}
+
+ull process_set (const set<ppll> &S, ull N) // N = 5^k, k <= 10
+{
+    const ull T = 10000000000;
+    ll k = T/N;
+    ull res = 0;
+    ll K = 0;
+    
+    set<pair<pll,ll>> triples;
+    
+    for (set<ppll>::iterator it = S.begin(); it != S.end(); it++) {
+        K++;
+        ppll f = *it;
+        ull gcd = GCD(GCD(GCD(f.fs.fs,f.fs.sc),f.sc.fs),f.sc.sc);
+        if (gcd != 1) continue;
+        
+        vector<ll> v = {f.fs.fs,f.fs.sc,f.sc.fs,f.sc.sc}; // sorted m,n,p,q
+        do {
+            ll a = v[0]*v[0] + v[1]*v[1] - v[2]*v[2] - v[3]*v[3]; if (a < 0) a = -a;
+            ll b = (v[0]*v[3] + v[1]*v[2])*2;
+            ll c = (v[1]*v[3] - v[0]*v[2])*2; if (c < 0) c = -c;
+            if (GCD(GCD(a,b),c) != 1) continue;
+            if (b > c) swap(b,c); if (a > b) swap(a,b); if (b > c) swap(b,c);
+            triples.insert(mp(mp(k*a,k*b),k*c));
+        } while (next_permutation(v.begin(), v.end()));
+    }
+    
+    cout << "triples size = " << triples.size() << endl;
+    K = 0;
+    for (set<pair<pll,ll>>::iterator it = triples.begin(); it != triples.end(); it++) {
+        K++;
+        pair<pll,ll> p = *it;
+        ll a = p.fs.fs, b = p.fs.sc, c = p.sc;
+        
+        if (a == 0 && b == 0) res += c*6;
+        else if (a == 0) res += (b+c)*24;
+        else res += (a+b+c)*48;
+    }
+    
+    return res;
+}
+
 int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
@@ -943,6 +1084,19 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    fill_sets();
+
+    ull N = 1;
+    set<ppll> S = s1;
+    ans += process_set(S,N);
+
+    for (int i=1; i<=10; i++) {
+        N *= 5;
+        S = attach_set(S,s5);
+        cout << "N = " << N << ", size = " << S.size() << ", actual size = " << actual_size(N) << endl;
+        ans += process_set(S,N);
+    }
     
     cout << endl << ans << endl;
     
