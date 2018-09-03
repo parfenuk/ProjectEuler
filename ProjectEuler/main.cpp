@@ -965,6 +965,7 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
 }
 
 int main() {
+    clock_t Total_Time = clock();
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
@@ -975,6 +976,8 @@ int main() {
     ull ans = 0;
     
     cout << endl << ans << endl;
+    Total_Time = clock() - Total_Time;
+    cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
     
     return 0;
 }
