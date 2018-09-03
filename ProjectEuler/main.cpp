@@ -650,6 +650,36 @@ void join_vectors (vector<int> &a, const vector<int> &b, bool flag = true)
     for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
 }
 
+int count_greater_than (const vector<int> &a, int value) // a - sorted, returns count of elements in vector that are greater than given value
+{
+    if (a[0] > value) return (int)a.size();
+    if (a.back() <= value) return 0;
+    
+    int lb = 0, ub = (int)a.size()-1;
+    while (lb < ub) {
+        int M = (lb+ub)/2;
+        if (a[M] <= value) lb = M+1;
+        else ub = M;
+    }
+    
+    return (int)a.size() - lb;
+}
+
+int count_less_than (const vector<int> &a, int value) // a - sorted, returns count of elements in vector that are less than given value
+{
+    if (a[0] >= value) return 0;
+    if (a.back() < value) return (int)a.size();
+    
+    int lb = 0, ub = (int)a.size()-1;
+    while (lb < ub) {
+        int M = (lb+ub+1)/2;
+        if (a[M] >= value) ub = M-1;
+        else lb = M;
+    }
+    
+    return lb+1;
+}
+
 ull join_numbers (ull n, ull m)
 {
     return from_digits(join_vectors(digits(n), digits(m)));
