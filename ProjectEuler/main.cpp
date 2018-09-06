@@ -467,6 +467,15 @@ ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPh
     return res;
 }
 
+int moebiusMu (ull n)
+{
+    if (n == 1) return 1;
+    vector<pull> f = factorize(n);
+    for (int i=0; i<(int)f.size(); i++) if (f[i].sc > 1) return 0;
+    if (f.size() % 2) return -1;
+    return 1;
+}
+
 // all divs must be coprime and in the form p^n
 ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
 {
@@ -586,6 +595,19 @@ ull sum_divisible_by (ull n, ull lb, ull ub) // sum of all numbers in range [lb,
     ull b = ub - ub%n;
     
     return (a+b)*cnt/2;
+}
+
+// returns amount of numbers in range [from,to] that are coprime to N
+ull coprime_count_in_range (ull N, ull from, ull to)
+{
+    if (from > to) return 0;
+    if (from != 1) return coprime_count_in_range(N,1,to) - coprime_count_in_range(N,1,from-1);
+    
+    // now from == 1
+    vector<ull> D = Divisors(N);
+    ll res = 0;
+    for (int i=0; i<(int)D.size(); i++) res += moebiusMu(D[i])*(to/D[i]);
+    return res;
 }
 
 bool isPalindrom (const vector<int> &a)
