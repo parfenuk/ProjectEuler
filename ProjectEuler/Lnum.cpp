@@ -15,7 +15,7 @@ typedef int ltype;
 
 using namespace std;
 
-#define LSIZE 5
+#define LSIZE 4
 const ltype BASE = 1000000000;
 
 class Lnum
@@ -324,6 +324,9 @@ Lnum operator* (Lnum A, Lnum B)
     
     Lnum C(c, size_c);
     C.set_sign(minus);
+    
+    delete[] c;
+    
     return C;
 }
 
