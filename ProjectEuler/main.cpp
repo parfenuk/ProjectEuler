@@ -986,6 +986,68 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+const int N = 10;
+
+vector<vector<int>> M;
+
+// d: 0 - free, 1 - down, 2 - occupied
+// interim format 0 - up, 1 - left, 2 - right, 3 - down
+vector<ull> all_compatible_masks (const vector<int> &a) // both masks are valid
+{
+    vector<ull> masks_count(power(3,N));
+    
+    vector<int> non_zero_indices; int k = 0;
+    for (int i=0; i<N; i++) if (a[i]) { k++; non_zero_indices.push_back(i); }
+    
+    vector<int> mask(N);
+    
+    for (int n=0; n<power(3,k); n++) {
+        
+        vector<int> d = digits(n,3,k);
+        for (int i=0; i<k; i++) mask[non_zero_indices[i]] = d[i]+1;
+        
+        if (mask[0] == 1 || mask[N-1] == 2) continue; // check for impossible moves
+        vector<bool> occupied(N); for (int i=0; i<N; i++) if (a[i] == 1) occupied[i] = true;
+        
+        bool valid = true;
+        
+        // check for the same edge
+        for (int i=0; i<N-1; i++) if (mask[i] == 2 && mask[i+1] == 1) { valid = false; break; }
+        if (!valid) continue;
+        
+        // check for not hitting the same cell twice
+        for (int i=0; i<N; i++) {
+            if (mask[i] == 1) {
+                if (occupied[i-1]) { valid = false; break; }
+                occupied[i-1] = true;
+            }
+            if (mask[i] == 2) {
+                if (occupied[i+1]) { valid = false; break; }
+                occupied[i+1] = true;
+            }
+        }
+        if (!valid) continue;
+        
+        // check for occupience of down cells
+        for (int i=0; i<N; i++) if (mask[i] == 3 && !occupied[i]) { valid = false; break; }
+        if (!valid) continue;
+        
+        // mask is valid, proceed it
+        for (int i=0; i<N; i++) {
+            if (mask[i] == 3) mask[i] = 1;
+            else {
+                if (occupied[i]) mask[i] = 2;
+                else mask[i] = 0;
+            }
+        }
+        
+        masks_count[from_digits(mask,3)]++;
+        mask = vector<int>(N);
+    }
+    
+    return masks_count;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -996,6 +1058,25 @@ int main() {
 #endif
     
     ull ans = 0;
+    ull P = power(3,N);
+    for (int i=0; i<P; i++) M.push_back(digits(i,3,N));
+    
+    vector<ull> dp[11]; for (int i=0; i<=N; i++) dp[i] = vector<ull>(P);
+    dp[0][P-1] = 1;
+    
+    for (int n=0; n<N; n++) {
+        
+        for (int i=0; i<P; i++) {
+            if (dp[n][i] == 0) continue;
+            
+            vector<ull> v = all_compatible_masks(M[i]);
+            for (int j=0; j<(int)v.size(); j++) {
+                dp[n+1][j] += dp[n][i]*v[j];
+            }
+        }
+    }
+    
+    ans = dp[N][P-1];
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
