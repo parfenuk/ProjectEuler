@@ -986,6 +986,46 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+vector<ll> mu(200001);
+vector<ll> sqfree;
+
+map<pll,ll> M[34];
+map<ll,ll> M1;
+
+ll S1 (ll N) // count of sqfree numbers in range [2,N]
+{
+    if (N <= 1) return 0;
+    if (M1.find(N) != M1.end()) return M1[N];
+    ll sum = 0;
+    for (ll k=1; k*k<=N; k++) sum += (N/(k*k))*mu[k];
+    M1[N] = sum-1;
+    return sum-1;
+}
+
+ll S (int cnt, ll N, int id) // expecting return greater than 0
+{
+    if (N <= 1) return 0;
+    ll n = sqfree[id];
+    if (M[cnt].find(mp(N,n)) != M[cnt].end()) return M[cnt][mp(N,n)];
+
+    if (cnt == 2) {
+        ll d = S1(N/n) - S1(n-1);
+        M[2][mp(N,n)] = d;
+        return d;
+    }
+
+    ll sum = 0, Nn = N/n;
+    for (int i=id; i<(int)sqfree.size(); i++) {
+
+        ll s = sqfree[i];
+        if (power(s,cnt-1) > Nn) break;
+        sum += S(cnt-1,Nn,i);
+    }
+    
+    M[cnt][mp(N,n)] = sum;
+    return sum;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -996,6 +1036,29 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (ll i=1; i<=200000; i++) mu[i] = moebiusMu(i);
+    for (ll i=2; i<=100000; i++) {
+        vector<pull> f = factorize(i);
+        bool ok = true;
+        for (int k=0; k<(int)f.size(); k++) if (f[k].sc > 1) { ok = false; break; }
+        if (ok) sqfree.push_back(i);
+    }
+    cout << sqfree.size() << endl;
+    
+    const ll N = power(10,10);
+    
+    ans = S1(N); cout << "S1 = " << ans << endl;
+    for (int cnt=2; cnt<=33; cnt++) {
+        
+        for (int i=0; i<(int)sqfree.size(); i++) {
+            
+            ll n = sqfree[i];
+            if (power(n,cnt) > N) break;
+            ans += S(cnt,N,i);
+            cout << cnt << " " << n << " " << S(cnt,N,i) << endl;
+        }
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
