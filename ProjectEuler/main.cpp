@@ -808,11 +808,11 @@ vector<vector<vector<int>>> fill_partitions (int k)
     return partitions[k];
 }
 
-vector<pull> *pits;
+vector<vector<pull>> pits;
 
-void fill_piphagorean_triplets (ull n, bool primitive_only = true) // a^2 + b^2 = c^2, c <= n
+void fill_pythagorean_triples (ull n, bool primitive_only = true) // a^2 + b^2 = c^2, c <= n
 {
-    pits = new vector<pull> [n+1];
+    pits = vector<vector<pull>>(n+1);
     for (ull p=2; p*p<=n; p++) for (ull q=1+p%2; q<p; q+=2) {
         
         if (GCD(p,q) != 1) continue;
