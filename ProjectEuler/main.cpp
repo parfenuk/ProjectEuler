@@ -368,7 +368,7 @@ vector<pull> factorize (ull n)
     return a;
 }
 
-ll miobius (ull n)
+int moebiusMu (ull n)
 {
     vector<pull> v = factorize(n);
     for (int i=0; i<(int)v.size(); i++) if (v[i].sc > 1) return 0;
@@ -465,15 +465,6 @@ ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPh
     
     eulerCache[n] = res;
     return res;
-}
-
-int moebiusMu (ull n)
-{
-    if (n == 1) return 1;
-    vector<pull> f = factorize(n);
-    for (int i=0; i<(int)f.size(); i++) if (f[i].sc > 1) return 0;
-    if (f.size() % 2) return -1;
-    return 1;
 }
 
 // all divs must be coprime and in the form p^n
