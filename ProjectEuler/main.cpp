@@ -989,15 +989,6 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-ull Min (const vector<ull> &a)
-{
-    ull M = 100000000000;
-    for (int i=0; i<(int)a.size(); i++) {
-        if (a[i] < M) M = a[i];
-    }
-    return M;
-}
-
 ull Sum (ull a, ull b)
 {
     if (a > b) return 0;
@@ -1015,27 +1006,23 @@ int main() {
     
     ull ans = 0;
     
-    const int N = 317, k = 63484, n = 6308948;
-    const ull L = 2000000000; // N*n + k == L
+    const ull N = 317, k = 63484, n = 6308948, L = 2000000000; // N*n + k == L
 
     vector<ull> BG = Blub_Blub_Shum_Generator(n);
-    vector<pii> v;
+    vector<pull> v;
     for (int i=0; i<n; i++) v.push_back(mp(BG[i],i+1));
     sort(v.begin(), v.end());
 
     cout << v[0].fs << " " << v[0].sc << endl;
-    ans = (L+1-n)*(L+2-n)*v[0].fs/2;
-    cout << ans << endl;
+    ans = (L+1-n)*(L-n)*v[0].fs/2; // calculate all segments with length > n
     
-    Lnum Ans("5962206025208909793");
-    
-    set<int> S;
+    set<ull> S;
     S.insert(v[0].sc);
     
     for (int id=1; id<n; id++) {
 
-        int s = v[id].fs, p = v[id].sc, f, t;
-        set<int>::iterator it = S.lower_bound(p);
+        ull s = v[id].fs, p = v[id].sc, f, t;
+        set<ull>::iterator it = S.lower_bound(p);
 
         if (it == S.begin()) { f = *S.rbegin() + 1; t = *it - 1; }
         else if (it == S.end()) { f = *S.rbegin() + 1; t = *S.begin() - 1; }
@@ -1043,49 +1030,54 @@ int main() {
         if (f == n+1) f = 1; if (t == 0) t = n;
 
         if (f <= t) { // case A
-            if (k < p) Ans = Ans + Lnum(p-f+1)*(t-p+1)*s*N;
-            else if (k >= t) Ans = Ans + Lnum(p-f+1)*(t-p+1)*s*(N+1);
+            if (k < p) ans += (p-f+1)*(t-p+1)*s*N;
+            else if (k >= t) ans += (p-f+1)*(t-p+1)*s*(N+1);
             else {
-                Ans = Ans + Lnum(p-f+1)*(k-p+1)*s*(N+1);
-                Ans = Ans + Lnum(p-f+1)*(t-k)*s*N;
+                ans += (p-f+1)*(k-p+1)*s*(N+1);
+                ans += (p-f+1)*(t-k)*s*N;
             }
         }
         else if (p < f) { // case B
             // without begin crossing
-            if (k < p) Ans = Ans + Lnum(p)*(t-p+1)*s*N;
-            else if (k >= t) Ans = Ans + Lnum(p)*(t-p+1)*s*(N+1);
+            if (k < p) ans += p*(t-p+1)*s*N;
+            else if (k >= t) ans += p*(t-p+1)*s*(N+1);
             else {
-                Ans = Ans + Lnum(p)*(k-p+1)*s*(N+1);
-                Ans = Ans + Lnum(p)*(t-k)*s*N;
+                ans += p*(k-p+1)*s*(N+1);
+                ans += p*(t-k)*s*N;
             }
             // with begin crossing
-            if (k < p) Ans = Ans + Lnum(n-f+1)*(t-p+1)*s*(N-1);
-            else if (k >= t) Ans = Ans + Lnum(n-f+1)*(t-p+1)*s*N;
+            if (k < p) ans += (n-f+1)*(t-p+1)*s*(N-1);
+            else if (k >= t) ans += (n-f+1)*(t-p+1)*s*N;
             else {
-                Ans = Ans + Lnum(n-f+1)*(k-p+1)*s*N;
-                Ans = Ans + Lnum(n-f+1)*(t-k)*s*(N-1);
+                ans += (n-f+1)*(k-p+1)*s*N;
+                ans += (n-f+1)*(t-k)*s*(N-1);
             }
         }
         else { // case C
             if (k <= t) {
-                Ans = Ans + Lnum(p-f+1)*(n-p+1)*s*N;
-                Ans = Ans + Lnum(p-f+1)*k*s*N;
-                Ans = Ans + Lnum(p-f+1)*(t-k)*s*(N-1);
+                ans += (p-f+1)*(n-p+1)*s*N;
+                ans += (p-f+1)*k*s*N;
+                ans += (p-f+1)*(t-k)*s*(N-1);
             }
             else if (k < p) {
-                Ans = Ans + Lnum(p-f+1)*(n-p+1)*s*N;
-                Ans = Ans + Lnum(p-f+1)*t*s*N;
+                ans += (p-f+1)*(n-p+1)*s*N;
+                ans += (p-f+1)*t*s*N;
             }
             else {
-                Ans = Ans + Lnum(p-f+1)*(k-p+1)*s*(N+1);
-                Ans = Ans + Lnum(p-f+1)*(n-k)*s*N;
-                Ans = Ans + Lnum(p-f+1)*t*s*N;
+                ans += (p-f+1)*(k-p+1)*s*(N+1);
+                ans += (p-f+1)*(n-k)*s*N;
+                ans += (p-f+1)*t*s*N;
             }
         }
 
         S.insert(p);
     }
-    Ans.show(); cout << endl;
+    // I forgot this. I'm so fucking stupid...
+    ull m = v[0].sc; // min value position, which is 3
+    ans += Sum(1,n)*(N-2)*3; // for middle 3's
+    ans += Sum(n-m+1,n)*3; // for first '3'
+    ans += Sum(1,n+k-m)*3; // for last '3'
+    ans += (n+k-m+1)*(m-k)*3; // for last too
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
