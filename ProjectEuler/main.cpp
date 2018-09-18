@@ -652,6 +652,13 @@ vector<int> subvector (const vector<int> &a, int from, int to)
     return b;
 }
 
+vector<ull> subvector (const vector<ull> &a, int from, int to)
+{
+    vector<ull> b;
+    for (int i=from; i<=to; i++) b.push_back(a[i]);
+    return b;
+}
+
 vector<int> join_vectors (vector<int> a, const vector<int> &b)
 {
     for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
@@ -967,14 +974,34 @@ vector<ull> Lagged_Fibonacci_Generator (int n)
 vector<ull> Blub_Blub_Shum_Generator (int n)
 {
     vector<ull> v;
+    vector<int> used(50515093);
     ull a = 290797;
     
-    for (int i=0; i<n; i++) {
-        v.push_back(a);
+    for (int i=1; i<=n; i++) {
         a = a*a % 50515093;
+        if (used[a]) cout << "s[" << i << "] == s[" << used[a] << "]\n";
+        else {
+            v.push_back(a);
+            used[a] = i;
+        }
     }
     
     return v;
+}
+
+ull Min (const vector<ull> &a)
+{
+    ull M = 100000000000;
+    for (int i=0; i<(int)a.size(); i++) {
+        if (a[i] < M) M = a[i];
+    }
+    return M;
+}
+
+ull Sum (ull a, ull b)
+{
+    if (a > b) return 0;
+    return (a+b)*(b-a+1)/2;
 }
 
 int main() {
@@ -987,6 +1014,78 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const int N = 317, k = 63484, n = 6308948;
+    const ull L = 2000000000; // N*n + k == L
+
+    vector<ull> BG = Blub_Blub_Shum_Generator(n);
+    vector<pii> v;
+    for (int i=0; i<n; i++) v.push_back(mp(BG[i],i+1));
+    sort(v.begin(), v.end());
+
+    cout << v[0].fs << " " << v[0].sc << endl;
+    ans = (L+1-n)*(L+2-n)*v[0].fs/2;
+    cout << ans << endl;
+    
+    Lnum Ans("5962206025208909793");
+    
+    set<int> S;
+    S.insert(v[0].sc);
+    
+    for (int id=1; id<n; id++) {
+
+        int s = v[id].fs, p = v[id].sc, f, t;
+        set<int>::iterator it = S.lower_bound(p);
+
+        if (it == S.begin()) { f = *S.rbegin() + 1; t = *it - 1; }
+        else if (it == S.end()) { f = *S.rbegin() + 1; t = *S.begin() - 1; }
+        else { t = *it - 1; it--; f = *it + 1; }
+        if (f == n+1) f = 1; if (t == 0) t = n;
+
+        if (f <= t) { // case A
+            if (k < p) Ans = Ans + Lnum(p-f+1)*(t-p+1)*s*N;
+            else if (k >= t) Ans = Ans + Lnum(p-f+1)*(t-p+1)*s*(N+1);
+            else {
+                Ans = Ans + Lnum(p-f+1)*(k-p+1)*s*(N+1);
+                Ans = Ans + Lnum(p-f+1)*(t-k)*s*N;
+            }
+        }
+        else if (p < f) { // case B
+            // without begin crossing
+            if (k < p) Ans = Ans + Lnum(p)*(t-p+1)*s*N;
+            else if (k >= t) Ans = Ans + Lnum(p)*(t-p+1)*s*(N+1);
+            else {
+                Ans = Ans + Lnum(p)*(k-p+1)*s*(N+1);
+                Ans = Ans + Lnum(p)*(t-k)*s*N;
+            }
+            // with begin crossing
+            if (k < p) Ans = Ans + Lnum(n-f+1)*(t-p+1)*s*(N-1);
+            else if (k >= t) Ans = Ans + Lnum(n-f+1)*(t-p+1)*s*N;
+            else {
+                Ans = Ans + Lnum(n-f+1)*(k-p+1)*s*N;
+                Ans = Ans + Lnum(n-f+1)*(t-k)*s*(N-1);
+            }
+        }
+        else { // case C
+            if (k <= t) {
+                Ans = Ans + Lnum(p-f+1)*(n-p+1)*s*N;
+                Ans = Ans + Lnum(p-f+1)*k*s*N;
+                Ans = Ans + Lnum(p-f+1)*(t-k)*s*(N-1);
+            }
+            else if (k < p) {
+                Ans = Ans + Lnum(p-f+1)*(n-p+1)*s*N;
+                Ans = Ans + Lnum(p-f+1)*t*s*N;
+            }
+            else {
+                Ans = Ans + Lnum(p-f+1)*(k-p+1)*s*(N+1);
+                Ans = Ans + Lnum(p-f+1)*(n-k)*s*N;
+                Ans = Ans + Lnum(p-f+1)*t*s*N;
+            }
+        }
+
+        S.insert(p);
+    }
+    Ans.show(); cout << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
