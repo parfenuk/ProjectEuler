@@ -977,6 +977,137 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+//vector<string> forbidden_strings = {"000","111"};
+vector<string> forbidden_strings = {"000","111","00100","01010","10101","11011"};
+
+struct vertex {
+    int next[2]; // pointers to the children
+    bool leaf; // is forbidden string on this vertex
+    int p; // ancestor
+    char pch; // edge from acnestor to
+    int link; // suffix_link
+    int go[2]; // array of suffix_links with appending go[c] symbol
+    vertex() { next[0] = next[1] = -1; leaf = false; p = -1; pch = -1; link = -1; go[0] = go[1] = -1; }
+};
+
+vector<vertex> g;
+
+void add_string (const string &s)
+{
+    int v = 0;
+    for (size_t i=0; i<s.length(); i++) {
+        char c = s[i] - '0';
+        if (g[v].next[c] == -1) {
+            vertex w;
+            w.p = v;
+            w.pch = c;
+            g[v].next[c] = (int)g.size();
+            g.push_back(w);
+        }
+        v = g[v].next[c];
+    }
+    g[v].leaf = true;
+}
+
+int go (int v, char c);
+
+int get_link (int v)
+{
+    if (g[v].link == -1) {
+        if (v == 0 || g[v].p == 0) g[v].link = 0;
+        else g[v].link = go(get_link(g[v].p), g[v].pch);
+    }
+    return g[v].link;
+}
+
+int go (int v, char c)
+{
+    if (g[v].go[c] == -1) {
+        if (g[v].next[c] != -1) g[v].go[c] = g[v].next[c];
+        else g[v].go[c] = v==0 ? 0 : go(get_link(v), c);
+    }
+    return g[v].go[c];
+}
+
+vector<ull> total_count;
+
+void fill_total_count (int L) // amount of 'good' numbers with length L
+{
+    total_count.push_back(0);
+    total_count.push_back(1);
+    
+    int N = (int)g.size();
+    int v = g[0].go[1];
+    
+    vector<ull> a(N);
+    a[v] = 1;
+    
+    for (int z=0; z<L-1; z++) {
+        
+        vector<ull> b(N);
+        for (int i=0; i<N; i++) {
+            int l = g[i].go[0], r = g[i].go[1];
+            if (!g[l].leaf) b[l] += a[i];
+            if (!g[r].leaf) b[r] += a[i];
+        }
+        a.swap(b);
+        
+        total_count.push_back(total_vector_sum(a));
+    }
+}
+
+ull get_count (const string &s, int L) // amount of 'good' numbers with length L and starting from s
+{
+    int N = (int)g.size();
+    int v = 0;
+    for (int i=0; i<(int)s.length(); i++) {
+        v = g[v].go[s[i]-'0'];
+        if (g[v].leaf) return 0;
+    }
+    
+    vector<ull> a(N);
+    a[v] = 1;
+    
+    for (int z=0; z<L-(int)s.length(); z++) {
+        
+        vector<ull> b(N);
+        for (int i=0; i<N; i++) {
+            int l = g[i].go[0], r = g[i].go[1];
+            if (!g[l].leaf) b[l] += a[i];
+            if (!g[r].leaf) b[r] += a[i];
+        }
+        a.swap(b);
+    }
+    
+    return total_vector_sum(a);
+}
+
+string string_by_number (ull n) // returns n'th good number in binary string form
+{
+    int L = 1;
+    ull cnt = 0;
+    string ret = "1";
+    
+    while (true) {
+        if (cnt + total_count[L] >= n) break;
+        cnt += total_count[L];
+        L++;
+    }
+    
+    // now we know what length this number will have: L
+    ull res = n - cnt;
+    
+    for (int l=2; l<=L; l++) {
+        
+        string ret0 = ret + "0", ret1 = ret + "1";
+        ull c = get_count(ret0,L);
+        if (c < res) { res -= c; ret = ret1; }
+        else ret = ret0;
+    }
+    
+    return ret;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -987,6 +1118,47 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    // generation forbidden strings of sizes 8, 14, 26, 50, 98, 194, 386, 770
+    for (int z=1; z<=4; z++) {
+
+        int n = (int)forbidden_strings.size();
+        for (int i=n-4; i<=n-1; i++) {
+            string s = forbidden_strings[i];
+            string u; u.push_back(s[0]);
+            for (int j=1; j<(int)s.length()-1; j++) {
+                if (s[j] == '0') u += "01";
+                else u += "10";
+            }
+            if (s.back() == '0') u.push_back('1');
+            else u.push_back('0');
+            forbidden_strings.push_back(u);
+        }
+    }
+    
+    // init suffix automata by creation a root vertex
+    g.push_back(vertex());
+    
+    for (int i=0; i<(int)forbidden_strings.size(); i++) {
+        //cout << forbidden_strings[i] << endl;
+        add_string(forbidden_strings[i]);
+    }
+    for (int i=0; i<(int)g.size(); i++) { get_link(i); go(i,0); go(i,1); }
+
+    cout << "Tree size: " << g.size() << endl;
+//    for (int i=0; i<(int)g.size(); i++) {
+//        cout << i << ": " << g[i].next[0] << " " << g[i].next[1] << endl;
+//        cout << g[i].leaf << " " << g[i].link << " " << g[i].go[0] << " " << g[i].go[1] << endl;
+//        cout << endl;
+//    }
+    
+    fill_total_count(2*(int)forbidden_strings.back().length() - 2);
+    for (int n=1; n<2*(int)forbidden_strings.back().length() - 2; n++) {
+        ans += total_count[n];
+        cout << n << " " << total_count[n] << endl;
+    }
+    
+    cout << string_by_number(1000) << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
