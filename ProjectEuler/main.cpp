@@ -977,9 +977,6 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-//vector<string> forbidden_strings = {"000","111"};
-vector<string> forbidden_strings = {"000","111","00100","01010","10101","11011"};
-
 struct vertex {
     int next[2]; // pointers to the children
     bool leaf; // is forbidden string on this vertex
@@ -1119,8 +1116,11 @@ int main() {
     
     ull ans = 0;
     
+    //vector<string> forbidden_strings = {"000","111"};
+    vector<string> forbidden_strings = {"000","111","00100","01010","10101","11011"};
+    
     // generation forbidden strings of sizes 8, 14, 26, 50, 98, 194, 386, 770
-    for (int z=1; z<=4; z++) {
+    for (int z=1; z<=3; z++) {
 
         int n = (int)forbidden_strings.size();
         for (int i=n-4; i<=n-1; i++) {
@@ -1132,19 +1132,17 @@ int main() {
             }
             if (s.back() == '0') u.push_back('1');
             else u.push_back('0');
-            forbidden_strings.push_back(u);
+            forbidden_strings.push_back(u); // TODO: not to keep them in memory
         }
     }
     
     // init suffix automata by creation a root vertex
-    g.push_back(vertex());
-    
-    for (int i=0; i<(int)forbidden_strings.size(); i++) {
-        //cout << forbidden_strings[i] << endl;
-        add_string(forbidden_strings[i]);
-    }
+    g.push_back(vertex()); // adding tree root
+    for (int i=0; i<(int)forbidden_strings.size(); i++) add_string(forbidden_strings[i]);
     for (int i=0; i<(int)g.size(); i++) { get_link(i); go(i,0); go(i,1); }
 
+    // *** TREE CONSTRUCTION TEST ***
+    
     cout << "Tree size: " << g.size() << endl;
 //    for (int i=0; i<(int)g.size(); i++) {
 //        cout << i << ": " << g[i].next[0] << " " << g[i].next[1] << endl;
@@ -1152,13 +1150,32 @@ int main() {
 //        cout << endl;
 //    }
     
-    fill_total_count(2*(int)forbidden_strings.back().length() - 2);
-    for (int n=1; n<2*(int)forbidden_strings.back().length() - 2; n++) {
-        ans += total_count[n];
-        cout << n << " " << total_count[n] << endl;
+    // **** COUNTINGS ****
+    
+    fill_total_count(1000);
+    for (int n=33; n<1000; n++) {
+        if (total_count[n] == total_count[n-32] + total_count[n-16]) {
+            cout << "Equality holds for n >= " << n << endl;
+            break;
+        }
+    }
+    for (int n=1; n<200; n++) {
+        //cout << n << " " << total_count[n] << " ";
+        if (n >= 1) {
+            cout << get_count("0",n) << " " << get_count("00",n+1) << " ";
+            cout << get_count("01",n+1) << " " << get_count("0010",n+3);
+        }
+        cout << endl;
     }
     
-    cout << string_by_number(1000) << endl;
+    // ***** NUMBERS OBTAINING *****
+    
+//    for (int i=1; i<=1000; i++) {
+//        string s = string_by_number(i);
+//        vector<int> d;
+//        for (int j=0; j<(int)s.length(); j++) d.push_back(s[j]-'0');
+//        cout << from_digits(d,2) << endl;
+//    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
