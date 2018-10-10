@@ -977,6 +977,100 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+vector<vector<ull>> construct_paths (ull n) // n > 1, please
+{
+    vector<vector<ull>> a;
+    vector<ull> b(1,n);
+    while (b.back() != 1) b.push_back(b.back()/2);
+    a.push_back(b);
+    
+    while (true) {
+        bool found = false;
+        while (b.size() != 1) {
+            if (b[b.size()-2] == 2*b.back() + 1) {
+                found = true;
+                b.pop_back();
+                b.push_back((b.back()+1)/2);
+                break;
+            }
+            b.pop_back();
+        }
+        if (!found) break;
+        while (b.back() != 1) b.push_back(b.back()/2);
+        a.push_back(b);
+    }
+    
+    for (int i=0; i<(int)a.size(); i++) reverse(a[i].begin(),a[i].end());
+    
+    return a;
+}
+
+vector<ull> roots_for_path (const vector<ull> &a) // path of values a[0] == 1 always
+{
+    vector<pair<ull,bool>> roots, r; // vector of arguments, second param is a(n) == -1/1
+    roots.push_back(mp(0,true));
+    
+    for (int i=1; i<(int)a.size(); i++) {
+        
+        if (a[i] == 2*a[i-1] - 1) {
+            for (int j=0; j<(int)roots.size(); j++) {
+                ull n = roots[j].fs;
+                int d = 2*roots[j].sc - 1;
+                if (d == 1) r.push_back(mp(n*4,d==1));
+                if ((d == 1 && n%2) || (d == -1 && n%2 == 0)) {
+                    if (n % 2) d = -d;
+                    r.push_back(mp(n*4+2,d==1));
+                }
+            }
+        }
+        else if (a[i] == 2*a[i-1]) {
+            for (int j=0; j<(int)roots.size(); j++) {
+                ull n = roots[j].fs;
+                int d = 2*roots[j].sc - 1;
+                r.push_back(mp(n*4+1,d==1));
+                if (n % 2 == 0) d = -d;
+                r.push_back(mp(n*4+3,d==1));
+            }
+        }
+        else { // a[i] == 2*a[i-1] + 1
+            for (int j=0; j<(int)roots.size(); j++) {
+                ull n = roots[j].fs;
+                int d = 2*roots[j].sc - 1;
+                if (d == -1) r.push_back(mp(n*4,d==1));
+                if ((d == -1 && n%2) || (d == 1 && n%2 == 0)) {
+                    if (n % 2) d = -d;
+                    r.push_back(mp(n*4+2,d==1));
+                }
+            }
+        }
+        
+        if (r.empty()) return {};
+        roots.swap(r);
+        r.clear();
+    }
+    
+    vector<ull> b(roots.size());
+    for (int i=0; i<(int)roots.size(); i++) b[i] = roots[i].fs;
+    return b;
+}
+
+ull G (ull n, ull c)
+{
+    vector<vector<ull>> a = construct_paths(n);
+    cout << "Paths size = " << a.size() << endl;
+    priority_queue<ull> roots;
+    
+    for (int i=0; i<(int)a.size(); i++) {
+        vector<ull> r = roots_for_path(a[i]);
+        for (int j=0; j<(int)r.size(); j++) {
+            roots.push(r[j]);
+            if (roots.size() > c) roots.pop();
+        }
+    }
+    
+    return roots.top();
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -987,6 +1081,17 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    vector<ull> F(46);
+    F[0] = F[1] = 1;
+    for (int i=2; i<=45; i++) F[i] = F[i-1] + F[i-2];
+    
+    for (int t=2; t<=45; t++) {
+        cout << "Iteration #" << t << endl;
+        ull n = G(F[t],F[t-1]);
+        cout << "Result = " << n << endl;
+        ans += n;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
