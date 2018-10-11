@@ -977,7 +977,22 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-vector<ull> F(1126216795);
+map<int,ull> f;
+
+ull F (int n)
+{
+    if (n <= 3) return n;
+    if (f[n]) return f[n];
+    if (n % 2 == 0) {
+        ull s = F(n/2) + F(n/2+1);
+        f[n] = s;
+        return s;
+    }
+    ull s = 2*F((n+1)/2);
+    f[n] = s;
+    return s;
+}
+
 vector<string> v2 = {"00","01","10","11"};
 vector<string> v3 = {"001","010","011","100","101","110"};
 
@@ -1016,7 +1031,7 @@ string morph (const string &T, int type)
     return S;
 }
 
-pair<string,vector<int>> get_string (ull N, ull K)
+pair<string,vector<int>> get_string (int N, ull K)
 {
     vector<int> v; // 0 - ordinary morphism, 1 - left, 2 - right, 3 - inner
     
@@ -1025,50 +1040,50 @@ pair<string,vector<int>> get_string (ull N, ull K)
         ull max_index = 0;
         if (N % 2 == 0) {
             N /= 2;
-            max_index = F[N+1]-1;
+            max_index = F(N+1)-1;
             if (max_index >= K) {
-                K = F[N+1] + K;
+                K = F(N+1) + K;
                 N++;
                 v.push_back(3);
                 continue;
             }
-            max_index += F[N];
+            max_index += F(N);
             if (max_index >= K) {
-                K = K - F[N+1];
+                K = K - F(N+1);
                 v.push_back(0);
                 continue;
             }
-            max_index += F[N];
+            max_index += F(N);
             if (max_index >= K) {
-                K = K - F[N+1];
+                K = K - F(N+1);
                 v.push_back(0);
                 continue;
             }
-            K = K - F[N+1] - 2*F[N];
+            K = K - F(N+1) - 2*F(N);
             N++;
             v.push_back(3);
         }
         else {
             N = (N+1)/2;
-            max_index = F[N]-1;
+            max_index = F(N)-1;
             if (max_index >= K) {
-                K = F[N] + K;
+                K = F(N) + K;
                 v.push_back(2);
                 continue;
             }
-            max_index += F[N];
+            max_index += F(N);
             if (max_index >= K) {
-                K = K - F[N];
+                K = K - F(N);
                 v.push_back(1);
                 continue;
             }
-            max_index += F[N];
+            max_index += F(N);
             if (max_index >= K) {
-                K = K - F[N];
+                K = K - F(N);
                 v.push_back(1);
                 continue;
             }
-            K = K - 3*F[N];
+            K = K - 3*F(N);
             v.push_back(2);
         }
     }
@@ -1093,19 +1108,36 @@ ull number_from_string (const string &S)
 
 ull get_number (ull N)
 {
-    ull sum = 0, res = 0;
-    for (int n=1;;n++) {
-        if (sum + F[n] >= N) {
-            pair<string,vector<int>> p = get_string(n,N+F[n]-sum-1);
-            string S = p.fs;
-            for (int i=(int)p.sc.size()-1; i>=0; i--) S = morph(S,p.sc[i]);
-            res = number_from_string(S);
-            break;
+    ull sum = 6, res = 0;
+    int n = 3; ull m = 3;
+    for (ull k=1;;k*=2) {
+        for (int i=0; i<k; i++) {
+            n++;
+            if (sum + m + 2 >= N) {
+                pair<string,vector<int>> p = get_string(n,N+m+2-sum-1);
+                string S = p.fs;
+                for (int j=(int)p.sc.size()-1; j>=0; j--) S = morph(S,p.sc[j]);
+                res = number_from_string(S);
+                return res;
+            }
+            m += 2;
+            sum += m;
         }
-        sum += F[n];
+        for (int i=0; i<k; i++) {
+            n++;
+            if (sum + m + 1 >= N) {
+                pair<string,vector<int>> p = get_string(n,N+m+1-sum-1);
+                string S = p.fs;
+                for (int j=(int)p.sc.size()-1; j>=0; j--) S = morph(S,p.sc[j]);
+                res = number_from_string(S);
+                return res;
+            }
+            m++;
+            sum += m;
+        }
     }
     
-    return res;
+    return 0;
 }
 
 int main() {
@@ -1118,12 +1150,6 @@ int main() {
 #endif
     
     ull ans = 0;
-    
-    F[1] = 1; F[2] = 2; F[3] = 3;
-    for (int n=4; n<1126216795; n++) {
-        if (n%2) F[n] = 2*F[(n+1)/2];
-        else F[n] = F[n/2] + F[n/2+1];
-    }
     
     ull n = 1;
     for (int i=1; i<=18; i++) {
