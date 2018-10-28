@@ -977,6 +977,14 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+int random_integer (int from, int to)
+{
+    random_device rd;     // only used once to initialise (seed) engine
+    mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
+    uniform_int_distribution<int> uni(from,to); // guaranteed unbiased
+    return uni(rng);
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
