@@ -985,6 +985,30 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<int> process()
+{
+    const int N = 10000000;
+    vector<bool> used(N);
+    vector<int> separators, lengths;
+    
+    while (separators.size() != 99) {
+        int n = random_integer(1,N-1);
+        if (used[n]) continue;
+        used[n] = true;
+        separators.push_back(n);
+    }
+    
+    sort(separators.begin(), separators.end());
+    lengths.push_back(separators[0]);
+    lengths.push_back(N-separators.back());
+    for (int i=1; i<=98; i++) lengths.push_back(separators[i]-separators[i-1]);
+    
+    sort(lengths.begin(), lengths.end());
+    //cout << "min = " << lengths[0] << ", second min = " << lengths[1] << endl;
+    
+    return lengths;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -995,6 +1019,18 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const int ITERATIONS = 10000;
+    vector<dd> total(100);
+    
+    for (int i=0; i<ITERATIONS; i++) {
+        vector<int> d = process();
+        for (int k=0; k<100; k++) total[k] += d[k];
+    }
+    
+    for (int i=0; i<100; i++) {
+        cout << i+1 << ": " << fixed << total[i]/ITERATIONS << endl;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
