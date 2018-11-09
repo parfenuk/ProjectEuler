@@ -977,12 +977,23 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-int random_integer (int from, int to)
+int Random_Integer (int from, int to)
 {
     random_device rd;     // only used once to initialise (seed) engine
     mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
     uniform_int_distribution<int> uni(from,to); // guaranteed unbiased
     return uni(rng);
+}
+
+vector<int> s;
+
+int get_winning_move (int N)
+{
+    int cur = s[power(2,N+1)-2];
+    for (int i=(int)power(2,N+1)-3; i>=0; i--) {
+        if (cur - s[i] > N) cur = s[i];
+    }
+    return cur;
 }
 
 int main() {
@@ -995,6 +1006,17 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    s.push_back(0);
+    for (ull n=1; n<=power(2,21); n++) {
+        s.push_back(s.back() + total_vector_sum(digits(n,2)));
+    }
+    
+    for (int n=1; n<=20; n++) {
+        int w = get_winning_move(n);
+        cout << n << ": " << w << endl;
+        ans += w*w*w;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
