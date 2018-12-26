@@ -1035,23 +1035,7 @@ dd SL_2 (dd L, dd l1, dd l2, dd r1, dd r2)
 
 int ID[501][501];
 vector<Num> D;
-vector<pii> segments[197];
-
-dd E (dd L)
-{
-    dd s1 = 0, s2 = 0;
-    for (int g=0; g<=196; g++) {
-        for (int i=0; i<(int)segments[g].size(); i++)
-            for (int j=i; j<(int)segments[g].size(); j++) {
-                s1 += SL_1(L,D[segments[g][i].fs].dvalue(),D[segments[g][i].sc+1].dvalue(),D[segments[g][j].fs].dvalue(),D[segments[g][j].sc+1].dvalue());
-                s2 += SL_2(L,D[segments[g][i].fs].dvalue(),D[segments[g][i].sc+1].dvalue(),D[segments[g][j].fs].dvalue(),D[segments[g][j].sc+1].dvalue());
-            }
-    }
-    dd p1 = s1*2/(L-1), p2 = s2*2/(L-sqrt(2.0));
-    dd sum = L*(p1+p2)/2;
-    
-    return sum;
-}
+vector<pii> segments[212];
 
 int main() {
     clock_t Total_Time = clock();
@@ -1076,7 +1060,6 @@ int main() {
     
     sort(D.begin(), D.end());
     for (int i=0; i<(int)D.size(); i++) {
-        //cout << fixed << D[i].dvalue() << endl;
         ID[D[i].a][D[i].b] = i;
     }
     
@@ -1084,25 +1067,29 @@ int main() {
     vector<int> G(N,-1);
     G[0] = 0;
     
-    // read from input precalculated values
-    for (int i=1; i<=N-2; i++) {
-        string u1, u2, u3;
-        cin >> u1 >> u2 >> u3;
-        G[i] = atoi(u3.c_str());
-    }
-    
     int s = 0; // least unchecked G-value
     vector<bool> used_g[N];
-    for (int i=0; i<N; i++) used_g[i] = vector<bool>(200);
+    for (int i=0; i<N; i++) used_g[i] = vector<bool>(212);
 
     while (G[N-2] == -1) {
         // first fill segments
         while (G[s] != -1) {
             int t = s;
             while (G[s+1] == G[t]) s++;
-            for (int i=0; i<=t; i++) {
+            for (int i=0; i<=t; i++) { // length 1 case
                 int g = G[i]^G[s];
                 pii p1 = mp(D[i].a+D[t].a+1, D[i].b+D[t].b);
+                if (p1.fs > 500 || p1.sc > 500 || ID[p1.fs][p1.sc] == -1) continue;
+                pii p2 = (i != t) ? mp(D[i+1].a+D[s+1].a+1, D[i+1].b+D[s+1].b) : mp(D[s+1].a+D[s+1].a+1, D[s+1].b+D[s+1].b);
+                int id1 = ID[p1.fs][p1.sc];
+                int id2;
+                if (p2.fs > 500 || p2.sc > 500 || ID[p2.fs][p2.sc] == -1) id2 = N;
+                else id2 = ID[p2.fs][p2.sc];
+                for (int j=id1; j<id2; j++) used_g[j][g] = true;
+            }
+            for (int i=0; i<=t; i++) { // length sqrt2 case
+                int g = G[i]^G[s];
+                pii p1 = mp(D[i].a+D[t].a, D[i].b+D[t].b+1);
                 if (p1.fs > 500 || p1.sc > 500 || ID[p1.fs][p1.sc] == -1) continue;
                 pii p2 = (i != t) ? mp(D[i+1].a+D[s+1].a, D[i+1].b+D[s+1].b+1) : mp(D[s+1].a+D[s+1].a, D[s+1].b+D[s+1].b+1);
                 int id1 = ID[p1.fs][p1.sc];
@@ -1119,14 +1106,13 @@ int main() {
             for (int j=0;;j++) {
                 if (!used_g[n][j]) {
                     G[n] = j;
+                    if (G[n] > ans) ans = G[n];
                     //cout << "G[" << n << "] = " << G[n] << endl;
                     break;
                 }
             }
         }
     }
-    
-    G[N-1] = -1;
     
     int from = 0;
     for (int i=1; i<=N-1; i++) {
@@ -1135,22 +1121,12 @@ int main() {
         from = i;
     }
     
-//    for (int i=0; i<197; i++) {
-//        cout << "g = " << i << ", size = " << segments[i].size() << endl;
-//        for (int j=0; j<(int)segments[i].size(); j++) {
-//            cout << segments[i][j].fs << " " << segments[i][j].sc << " ";
-//            cout << fixed << D[segments[i][j].fs].dvalue() << " - " << D[segments[i][j].sc+1].dvalue() << endl;
-//        }
-//        cout << endl;
-//        ans += segments[i].size()*(segments[i].size()+1)/2;
-//    }
-    
     for (int n=3; n<N; n++) {
 
         dd L = D[n].dvalue();
-        //if (L < 200) continue;
+        if (L < 200) continue;
         dd s1 = 0, s2 = 0;
-        for (int g=0; g<=196; g++) {
+        for (int g=0; g<=211; g++) {
             for (int i=0; i<(int)segments[g].size(); i++)
             for (int j=i; j<(int)segments[g].size(); j++) {
                 s1 += SL_1(L,D[segments[g][i].fs].dvalue(),D[segments[g][i].sc+1].dvalue(),D[segments[g][j].fs].dvalue(),D[segments[g][j].sc+1].dvalue());
@@ -1160,23 +1136,14 @@ int main() {
         dd p1 = s1*2/(L-1), p2 = s2*2/(L-sqrt(2.0));
         dd sum = L*(p1+p2)/2;
 
-        cout << fixed << L << " " << p1 << " " << p2 << " " << sum << endl;
-        if (L >= 200 && sum > res) {
+        //cout << fixed << L << " " << p1 << " " << p2 << " " << sum << endl;
+        if (sum > res) {
             res = sum;
-            cout << "NEW MAX: " << fixed << res << endl;
+            cout << "NEW MAX: " << fixed << res << " for L = " << L << endl;
         }
     }
     
-//    for (dd L = 381.267027304750; L<=381.267027304770; L+=0.000000000001) {
-//        dd e = E(L);
-//        cout << fixed << L << " " << e << endl;
-//        if (e > res) {
-//            res = e;
-//            cout << "NEW MAX: " << fixed << res << endl;
-//        }
-//    }
-    
-    cout << "RES = " << fixed << res << endl;
+    cout << "ANS = " << fixed << res << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
