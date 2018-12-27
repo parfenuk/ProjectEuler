@@ -304,6 +304,26 @@ void Eratosthenes_sieve (int n, bool fill_primes = false)
     if (fill_primes) for (int i=2; i<=n; i++) if (isPrime[i]) primes.push_back(i);
 }
 
+bool primeQ (ull n)
+{
+    if (n < (int)isPrime.size()) return isPrime[n];
+    
+    if (n%2 == 0 && n != 2) return false;
+    
+    for (ull i=3; i*i<=n; i+=2) if (n % i == 0) return false;
+    return true;
+}
+
+bool isProbablePrime (ull n)
+{
+    for (int i=0; i<(int)primes.size(); i++) {
+        if (primes[i]*1ll*primes[i] > n) break;
+        if (n % primes[i] == 0) return false;
+    }
+    
+    return true;
+}
+
 void fill_primePi (int n) // WARNING: call only after Eratosthenes_sieve with size greater than or equal to this n
 {
     primePi = vector<int>(n+1);
@@ -368,11 +388,23 @@ vector<pull> factorize (ull n)
     return a;
 }
 
-int moebiusMu (ull n)
+int MoebiusMu (ull n)
 {
     vector<pull> v = factorize(n);
     for (int i=0; i<(int)v.size(); i++) if (v[i].sc > 1) return 0;
     return v.size() % 2 ? -1 : 1;
+}
+
+vector<sint> MoebuisMuSieve (ull n)
+{
+    vector<sint> mu = vector<sint>(n+1,1);
+    for (ull i=2; i<=n; i++) {
+        if (primeQ(i)) {
+            for (ull j=i; j<=n; j+=i) mu[j] = -mu[j];
+            for (ull j=i*i; j<=n; j+=i*i) mu[j] = 0;
+        }
+    }
+    return mu;
 }
 
 ull rad (ull n)
@@ -383,26 +415,6 @@ ull rad (ull n)
     for (int i=0; i<(int)v.size(); i++) s *= v[i].fs;
     
     return s;
-}
-
-bool primeQ (ull n)
-{
-    if (n < (int)isPrime.size()) return isPrime[n];
-    
-    if (n%2 == 0 && n != 2) return false;
-    
-    for (ull i=3; i*i<=n; i+=2) if (n % i == 0) return false;
-    return true;
-}
-
-bool isProbablePrime (ull n)
-{
-    for (int i=0; i<(int)primes.size(); i++) {
-        if (primes[i]*1ll*primes[i] > n) break;
-        if (n % primes[i] == 0) return false;
-    }
-    
-    return true;
 }
 
 vector<ull> eulerPhi;
