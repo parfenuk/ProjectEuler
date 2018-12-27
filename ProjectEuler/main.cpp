@@ -985,6 +985,16 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<dd> E(10000);
+
+dd M (dd n, dd m)
+{
+    //return (m+n)*(E[n-1]/n + E[m-1]/m - E[n-1]*E[m-1]/(n*E[m-1] + m*E[n-1]));
+    return (m+n)*(E[n-1]/n + E[m-1]/m) - sqrt(E[n-1]*E[m-1]);
+}
+// 298.8305352
+// 3268.5673
+// 4001.3212
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -995,6 +1005,21 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    E[2] = 1.5;
+    E[3] = 8.0/3;
+    
+    for (int n=4; n<10000; n++) {
+        
+        dd sum = 1;
+        sum += E[n-1]*2/n;
+        sum += E[n-2]*2/(n-1);
+        
+        for (int i=3; i<=n-2; i++) sum += M(n-i+1,i)/(n+1);
+        
+        E[n] = (n+1)*sum/n;
+        cout << n << " " << fixed << E[n] << endl;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
