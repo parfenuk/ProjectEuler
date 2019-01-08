@@ -985,15 +985,49 @@ int Random_Integer (int from, int to)
     return uni(rng);
 }
 
-vector<int> s;
+vector<ull> S;
+int N;
 
-int get_winning_move (int N)
+int F (int id) // next losing position for S[id]
 {
-    int cur = s[power(2,N+1)-2];
-    for (int i=(int)power(2,N+1)-3; i>=0; i--) {
-        if (cur - s[i] > N) cur = s[i];
+    for (int i=id; i>=0; i--) {
+        if (S[id] - S[i] > N) return i;
     }
-    return cur;
+    return -1;
+}
+
+ull Win()
+{
+    int n = 0;
+    vector<int> destination;
+    
+    queue<int> q;
+    int i = 0;
+    for (i=0;;i++) {
+        if (S[i] > N) break;
+        q.push(i);
+        destination.push_back(i);
+        n++;
+    }
+    
+    vector<int> count(n,1);
+    
+    for (;;i++) { // max i is 17069164, reachable for n = 905
+        if (S[i] - S[i-1] > N) return S[destination[i-1]]; // occurs only for n = 1,2,4
+        int f = F(i); // guaranteed not to be -1
+        q.push(i);
+        destination.push_back(destination[f]);
+        count[destination[f]]++;
+        while (q.front() < f) {
+            int v = destination[q.front()];
+            count[v]--;
+            if (count[v] == 0) n--;
+            q.pop();
+        }
+        if (n == 1) return S[destination.back()];
+    }
+    
+    return -1; // never reached
 }
 
 int main() {
@@ -1007,14 +1041,17 @@ int main() {
     
     ull ans = 0;
     
-    s.push_back(0);
-    for (ull n=1; n<=power(2,21); n++) {
-        s.push_back(s.back() + total_vector_sum(digits(n,2)));
+    vector<ull> T(20000001);
+    S = vector<ull>(20000001);
+    for (int i=1; i<=20000000; i++) {
+        if (i % 2) T[i] = T[i/2] + 1;
+        else T[i] = T[i/2];
+        S[i] = S[i-1] + T[i];
     }
     
-    for (int n=1; n<=20; n++) {
-        int w = get_winning_move(n);
-        cout << n << ": " << w << endl;
+    for (N=1; N<=1000; N++) {
+        ull w = Win();
+        cout << N << ": " << w << endl;
         ans += w*w*w;
     }
     
