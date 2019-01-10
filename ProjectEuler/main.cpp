@@ -925,7 +925,13 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-#define N 100
+const int Q = 100000000;
+
+ll Sum (ll a, ll n)
+{
+    Lnum A = Lnum(a*2+n-1)*Lnum(n)/2;
+    return A[0] % Q;
+}
 
 int main() {
     cout.precision(12);
@@ -937,32 +943,32 @@ int main() {
     
     ull ans = 0;
     
-    bool dp[N+1][N+1];
-    for (int i=0; i<=N; i++) for (int j=0; j<=N; j++) dp[i][j] = false;
-    for (int i=1; i<=N; i++) dp[1][i] = true;
+    const ll LIM = 1000000000000000000;
     
-    for (int n=2; n<=N; n++) {
+    vector<ll> F(87);
+    F[0] = 1; F[1] = 2;
+    for (int i=2; i<87; i++) F[i] = F[i-1] + F[i-2];
+    
+    for (int n=2; n<=85; n++) {
         
-        for (int i=n; i<=N; i++) dp[n][i] = true;
-        for (int i=1; i<n; i++) {
-            if (dp[n][i-1]) { dp[n][i] = true; continue; }
+        ll lb = F[n], ub = F[n+1]-1;
+        if (lb > LIM) break;
+        if (ub > LIM) ub = LIM;
+        
+        ll control_sum = 0;
+        int k = n;
+        
+        while (lb <= ub) {
             
-            int m = min(N,2*i);
-            dp[n][i] = !dp[n-i][m];
+            control_sum += F[k];
+            ll new_lb = (F[k] + 2*control_sum - 1)/2;
+            if (new_lb > ub) new_lb = ub;
+            ll start = lb - control_sum;
+            ll count = new_lb - lb + 1;
+            ans = (ans + Sum(start,count)) % Q;
+            lb = new_lb + 1;
+            k -= 2;
         }
-    }
-    
-    //for (int n=2; n<=N; n++) if (!dp[n][n-1]) cout << n << " ";
-    for (int n=2; n<=N; n++) {
-        
-        cout << n << ": ";
-        int first_move = 0;
-        for (int i=1; i<n; i++) {
-            int m = min(N,2*i);
-            if (!dp[n-i][m]) { cout << i << " "; first_move = i; }
-        }
-        ans += first_move;
-        cout << endl;
     }
     
     cout << endl << ans << endl;
