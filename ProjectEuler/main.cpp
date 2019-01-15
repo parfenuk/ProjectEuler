@@ -609,7 +609,7 @@ ull coprime_count_in_range (ull N, ull from, ull to)
     // now from == 1
     vector<ull> D = Divisors(N);
     ll res = 0;
-    for (int i=0; i<(int)D.size(); i++) res += moebiusMu(D[i])*(to/D[i]);
+    for (int i=0; i<(int)D.size(); i++) res += MoebiusMu(D[i])*(to/D[i]);
     return res;
 }
 
