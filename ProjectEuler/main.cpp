@@ -985,16 +985,6 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-vector<dd> E(10000);
-
-dd M (dd n, dd m)
-{
-    //return (m+n)*(E[n-1]/n + E[m-1]/m - E[n-1]*E[m-1]/(n*E[m-1] + m*E[n-1]));
-    return (m+n)*(E[n-1]/n + E[m-1]/m) - sqrt(E[n-1]*E[m-1]);
-}
-// 298.8305352
-// 3268.5673
-// 4001.3212
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1006,20 +996,39 @@ int main() {
     
     ull ans = 0;
     
-    E[2] = 1.5;
-    E[3] = 8.0/3;
+    const int N = 10000;
     
-    for (int n=4; n<10000; n++) {
-        
-        dd sum = 1;
-        sum += E[n-1]*2/n;
-        sum += E[n-2]*2/(n-1);
-        
-        for (int i=3; i<=n-2; i++) sum += M(n-i+1,i)/(n+1);
-        
-        E[n] = (n+1)*sum/n;
-        cout << n << " " << fixed << E[n] << endl;
+    vector<dd> dp00[10001], dp01[10001], dp10[10001], dp11[10001];
+    for (int i=0; i<=N; i++) {
+        dp00[i] = vector<dd>(N+1);
+        dp01[i] = vector<dd>(N+1);
+        dp10[i] = vector<dd>(N+1);
+        dp11[i] = vector<dd>(N+1);
     }
+    
+    dp01[2][1] = dp10[2][1] = 0.5;
+    dp11[2][2] = 1;
+    
+    for (int n=3; n<=N; n++) for (int k=1; k<=n; k++) {
+        
+        dp00[n][k] = dp01[n-1][k]*(n-k)/n;
+        dp01[n][k] = (dp00[n-1][k-1] + dp01[n-1][k-1])*k/n;
+        dp10[n][k] = dp11[n-1][k]*(n-k)/n;
+        dp11[n][k] = (dp10[n-1][k-1] + dp11[n-1][k-1])*k/n;
+    }
+    
+    vector<dd> P(10001), M(10001); M[1] = 1;
+    for (int n=2; n<=N; n++) {
+        P[n] = dp01[N][n] + dp10[N][n] + dp11[N][n];
+        M[n] = M[n-1] + (dd)N/(N-n+1);
+        cout << fixed << P[n] << endl;
+    }
+    
+    dd res = 0;
+    for (int n=1; n<=N; n++) {
+        res += (P[n]-P[n-1])*M[n];
+    }
+    cout << fixed << res << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
