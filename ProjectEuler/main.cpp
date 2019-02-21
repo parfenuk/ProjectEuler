@@ -1033,31 +1033,26 @@ int main() {
         for (ll b=a+1; b<=X; b++)
         for (ll c=b+1; c<=X; c++) {
             
-            pll BA = mp(k*(b-a),b*b-a*a);
-            pll CA = mp(k*(c-a),c*c-a*a);
-            if (is_45_degree(BA, CA)) {
-                //cout << "A " << k << " " << a << " " << b << " " << c << endl;
+            ll y1 = a+b, y2 = a+c;
+            if (k*k + y1*y2 > 0 && (k*k + k*(y1-y2) + y1*y2 == 0 || k*k + k*(y2-y1) + y1*y2 == 0)) {
                 ansA++;
                 continue;
             }
-            pll AB = mp(k*(a-b),a*a-b*b);
-            pll CB = mp(k*(c-b),c*c-b*b);
-            if (is_45_degree(AB, CB)) {
-                //cout << "B " << k << " " << a << " " << b << " " << c << endl;
+            y1 = a+b, y2 = c+b;
+            if (k*k + y1*y2 < 0 && (k*k + k*(y1-y2) + y1*y2 == 0 || k*k + k*(y2-y1) + y1*y2 == 0)) {
                 ansB++;
                 continue;
-                
             }
-            pll AC = mp(k*(a-c),a*a-c*c);
-            pll BC = mp(k*(b-c),b*b-c*c);
-            if (is_45_degree(AC, BC)) {
-                //cout << "C " << k << " " << a << " " << b << " " << c << endl;
+            y1 = a+c, y2 = b+c;
+            if (k*k + y1*y2 > 0 && (k*k + k*(y1-y2) + y1*y2 == 0 || k*k + k*(y2-y1) + y1*y2 == 0)) {
                 ansC++;
+                continue;
             }
         }
     }
     
     cout << ansA << " " << ansB << " " << ansC << endl;
+    ans = ansA+ansB+ansC;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
