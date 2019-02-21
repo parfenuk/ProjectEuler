@@ -1033,18 +1033,18 @@ int main() {
         for (ll b=a+1; b<=X; b++)
         for (ll c=b+1; c<=X; c++) {
             
-            ll y1 = a+b, y2 = a+c;
-            if (k*k + y1*y2 > 0 && (k*k + k*(y1-y2) + y1*y2 == 0 || k*k + k*(y2-y1) + y1*y2 == 0)) {
+            ll y1 = a+b, y2 = a+c; // angle A
+            if (k*k + k*(y1-y2) + y1*y2 == 0) {
                 ansA++;
                 continue;
             }
-            y1 = a+b, y2 = c+b;
-            if (k*k + y1*y2 < 0 && (k*k + k*(y1-y2) + y1*y2 == 0 || k*k + k*(y2-y1) + y1*y2 == 0)) {
+            y1 = a+b, y2 = c+b; // angle B
+            if (k*k + k*(y2-y1) + y1*y2 == 0) {
                 ansB++;
                 continue;
             }
-            y1 = a+c, y2 = b+c;
-            if (k*k + y1*y2 > 0 && (k*k + k*(y1-y2) + y1*y2 == 0 || k*k + k*(y2-y1) + y1*y2 == 0)) {
+            y1 = a+c, y2 = b+c; // angle C
+            if (k*k + k*(y1-y2) + y1*y2 == 0) {
                 ansC++;
                 continue;
             }
