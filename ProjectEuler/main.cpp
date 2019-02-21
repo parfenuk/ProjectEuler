@@ -997,16 +997,67 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+bool is_45_degree (pll v1, pll v2)
+{
+    ll sp = v1.fs*v2.fs + v1.sc*v2.sc; if (sp < 0) return false;
+    sp *= sp;
+    ll L = (v1.fs*v1.fs + v1.sc*v1.sc)*(v2.fs*v2.fs + v2.sc*v2.sc);
+    return 2*sp == L;
+}
+
+//bool is_45_degree (point v1, point v2)
+//{
+//    dd sp = v1*v2; sp *= sp;
+//    ll L = v1.len()*v2.len(); L *= L;
+//    return fabs(2*sp - L) < 0.01;
+//}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    const int K = 10;
+    const int X = 100;
+    
+    ll ansA = 0, ansB = 0, ansC = 0;
+    
+    for (ll k=1; k<=K; k++) {
+        for (ll a=-X; a<=X; a++)
+        for (ll b=a+1; b<=X; b++)
+        for (ll c=b+1; c<=X; c++) {
+            
+            pll BA = mp(k*(b-a),b*b-a*a);
+            pll CA = mp(k*(c-a),c*c-a*a);
+            if (is_45_degree(BA, CA)) {
+                //cout << "A " << k << " " << a << " " << b << " " << c << endl;
+                ansA++;
+                continue;
+            }
+            pll AB = mp(k*(a-b),a*a-b*b);
+            pll CB = mp(k*(c-b),c*c-b*b);
+            if (is_45_degree(AB, CB)) {
+                //cout << "B " << k << " " << a << " " << b << " " << c << endl;
+                ansB++;
+                continue;
+                
+            }
+            pll AC = mp(k*(a-c),a*a-c*c);
+            pll BC = mp(k*(b-c),b*b-c*c);
+            if (is_45_degree(AC, BC)) {
+                //cout << "C " << k << " " << a << " " << b << " " << c << endl;
+                ansC++;
+            }
+        }
+    }
+    
+    cout << ansA << " " << ansB << " " << ansC << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
