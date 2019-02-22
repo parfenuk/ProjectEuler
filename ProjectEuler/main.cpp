@@ -1023,36 +1023,50 @@ int main() {
     
     ull ans = 0;
     
-    const int K = 10;
-    const int X = 100;
+    const int K = 20;
+    const int X = 200;
     
-    ll ansA = 0, ansB = 0, ansC = 0;
-    
+    ll ansA = 0, ansB = 0, ansC = 0, ansD = 0;
+
     for (ll k=1; k<=K; k++) {
         for (ll a=-X; a<=X; a++)
         for (ll b=a+1; b<=X; b++)
         for (ll c=b+1; c<=X; c++) {
-            
+
+            bool A = false, B = false, C = false;
+
             ll y1 = a+b, y2 = a+c; // angle A
             if (k*k + k*(y1-y2) + y1*y2 == 0) {
                 ansA++;
-                continue;
+                A = true;
+                //continue;
             }
             y1 = a+b, y2 = c+b; // angle B
             if (k*k + k*(y2-y1) + y1*y2 == 0) {
                 ansB++;
-                continue;
+                B = true;
+                //continue;
             }
             y1 = a+c, y2 = b+c; // angle C
             if (k*k + k*(y1-y2) + y1*y2 == 0) {
                 ansC++;
-                continue;
+                C = true;
+                //continue;
             }
+
+            if (A && B) cout << "AB: " << k << " " << a << " " << b << " " << c << endl;
+            if (A && C) cout << "AC: " << k << " " << a << " " << b << " " << c << endl;
+            if (B && C) cout << "BC: " << k << " " << a << " " << b << " " << c << endl;
+            
+            // excluding duplicates
+            if (k*k + (a+b)*(a+c) == 0 && abs(b*b-a*a) == k*(c-a)) ansD++;
+            if (k*k + (a+b)*(c+b) == 0 && abs(a*a-b*b) == k*(c-b)) ansD++;
+            if (k*k + (a+c)*(b+c) == 0 && abs(a*a-c*c) == k*(c-b)) ansD++;
         }
     }
-    
-    cout << ansA << " " << ansB << " " << ansC << endl;
-    ans = ansA+ansB+ansC;
+
+    cout << ansA << " " << ansB << " " << ansC << " " << ansD << endl;
+    ans = ansA+ansB+ansC-ansD;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
