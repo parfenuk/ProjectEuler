@@ -66,6 +66,13 @@ void show (const vector<int> &a, bool show_endl = true, bool show_size = false)
     if (show_endl) cout << endl;
 }
 
+void show (const vector<ll> &a, bool show_endl = true, bool show_size = false)
+{
+    if (show_size) cout << a.size() << endl;
+    for (int i=0; i<(int)a.size(); i++) cout << a[i] << " ";
+    if (show_endl) cout << endl;
+}
+
 void show (const vector<ull> &a, bool show_endl = true, bool show_size = false)
 {
     if (show_size) cout << a.size() << endl;
