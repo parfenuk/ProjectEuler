@@ -66,6 +66,13 @@ void show (const vector<int> &a, bool show_endl = true, bool show_size = false)
     if (show_endl) cout << endl;
 }
 
+void show (const vector<ll> &a, bool show_endl = true, bool show_size = false)
+{
+    if (show_size) cout << a.size() << endl;
+    for (int i=0; i<(int)a.size(); i++) cout << a[i] << " ";
+    if (show_endl) cout << endl;
+}
+
 void show (const vector<ull> &a, bool show_endl = true, bool show_size = false)
 {
     if (show_size) cout << a.size() << endl;
@@ -510,10 +517,10 @@ ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
     return a;
 }
 
-vector<ull> Divisors (ull n) // returns in sorted order!
+vector<ll> Divisors (ll n) // returns in sorted order!
 {
-    vector<ull> a, b;
-    for (ull i=1; i*i<=n; i++) {
+    vector<ll> a, b;
+    for (ll i=1; i*i<=n; i++) {
         
         if (n%i == 0) {
             a.push_back(i);
@@ -524,29 +531,44 @@ vector<ull> Divisors (ull n) // returns in sorted order!
     return a;
 }
 
-vector<ull> Divisors_square (ull n) // returns divisors of n^2
+vector<ll> Divisors_square (ll n) // returns divisors of n^2
 {
-    vector<ull> a = Divisors(n);
+    vector<ll> a = Divisors(n);
     
-    set<ull> s;
+    set<ll> s;
     for (int i=0; i<(int)a.size(); i++) for (int j=0; j<(int)a.size(); j++) {
         s.insert(a[i]*a[j]);
     }
     a.clear();
-    for (set<ull>::iterator it = s.begin(); it != s.end(); it++) a.push_back(*it);
+    for (set<ll>::iterator it = s.begin(); it != s.end(); it++) a.push_back(*it);
         
     return a;
 }
 
-ull Divisors_sum (ull n)
+vector<ll> Divisors_2_square (ll n) // returns divisors of 2*n^2
 {
-    vector<ull> a = Divisors(n);
-    if (a.empty()) return 0;
-    a.pop_back();
-    ull sum = 0;
-    for (int i=0; i<(int)a.size(); i++) sum += a[i];
-    return sum;
+    vector<ll> a = Divisors(n);
+    
+    set<ll> s;
+    for (int i=0; i<(int)a.size(); i++) for (int j=0; j<(int)a.size(); j++) {
+        s.insert(a[i]*a[j]);
+        if ((n*n/(a[i]*a[j])) % 2) s.insert(a[i]*a[j]*2);
+    }
+    a.clear();
+    for (set<ll>::iterator it = s.begin(); it != s.end(); it++) a.push_back(*it);
+    
+    return a;
 }
+
+//ull Divisors_sum (ull n)
+//{
+//    vector<ull> a = Divisors(n);
+//    if (a.empty()) return 0;
+//    a.pop_back();
+//    ull sum = 0;
+//    for (int i=0; i<(int)a.size(); i++) sum += a[i];
+//    return sum;
+//}
 
 ull Divisors_count (ull n)
 {
@@ -571,16 +593,16 @@ ull power_fact (ull n, ull p) // n! = S * p^x, returns x, p is prime
     return cnt;
 }
 
-bool isPractical (ull n)
-{
-    vector<ull> d = Divisors(n);
-    ull sum = 0;
-    for (int i=0; i<(int)d.size(); i++) {
-        if (sum < d[i]-1) return false;
-        sum += d[i];
-    }
-    return true;
-}
+//bool isPractical (ull n)
+//{
+//    vector<ull> d = Divisors(n);
+//    ull sum = 0;
+//    for (int i=0; i<(int)d.size(); i++) {
+//        if (sum < d[i]-1) return false;
+//        sum += d[i];
+//    }
+//    return true;
+//}
 
 ull count_divisible_by (ull n, ull mod, ull lb, ull ub) // returns count of numbers a in range [lb,ub] that a%n == mod
 {
@@ -601,17 +623,17 @@ ull sum_divisible_by (ull n, ull lb, ull ub) // sum of all numbers in range [lb,
 }
 
 // returns amount of numbers in range [from,to] that are coprime to N
-ull coprime_count_in_range (ull N, ull from, ull to)
-{
-    if (from > to) return 0;
-    if (from != 1) return coprime_count_in_range(N,1,to) - coprime_count_in_range(N,1,from-1);
-    
-    // now from == 1
-    vector<ull> D = Divisors(N);
-    ll res = 0;
-    for (int i=0; i<(int)D.size(); i++) res += MoebiusMu(D[i])*(to/D[i]);
-    return res;
-}
+//ull coprime_count_in_range (ull N, ull from, ull to)
+//{
+//    if (from > to) return 0;
+//    if (from != 1) return coprime_count_in_range(N,1,to) - coprime_count_in_range(N,1,from-1);
+//
+//    // now from == 1
+//    vector<ull> D = Divisors(N);
+//    ll res = 0;
+//    for (int i=0; i<(int)D.size(); i++) res += MoebiusMu(D[i])*(to/D[i]);
+//    return res;
+//}
 
 bool isPalindrom (const vector<int> &a)
 {
@@ -997,20 +1019,30 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-bool is_45_degree (pll v1, pll v2)
+const ll NO_SOLUTION = -1000000001;
+
+pll module_solve (ll a, ll b, ll c, ll d) // |a*x + b| = c*x + d, finds x1, x2, integers
 {
-    ll sp = v1.fs*v2.fs + v1.sc*v2.sc; if (sp < 0) return false;
-    sp *= sp;
-    ll L = (v1.fs*v1.fs + v1.sc*v1.sc)*(v2.fs*v2.fs + v2.sc*v2.sc);
-    return 2*sp == L;
+    ll x1 = NO_SOLUTION;
+    if ((d-b)%(a-c) == 0) {
+        x1 = (d-b)/(a-c);
+        if (abs(a*x1+b) != c*x1 + d) x1 = NO_SOLUTION;
+    }
+    ll x2 = NO_SOLUTION;
+    if ((b+d)%(a+c) == 0) {
+        x2 = -(b+d)/(a+c);
+        if (abs(a*x2+b) != c*x2 + d) x2 = NO_SOLUTION;
+    }
+    if (x1 == x2) x2 = NO_SOLUTION;
+    
+    return mp(x1,x2);
 }
 
-//bool is_45_degree (point v1, point v2)
-//{
-//    dd sp = v1*v2; sp *= sp;
-//    ll L = v1.len()*v2.len(); L *= L;
-//    return fabs(2*sp - L) < 0.01;
-//}
+ll count_in_range (ll lb, ll ub)
+{
+    if (lb > ub) return 0;
+    return ub-lb+1;
+}
 
 int main() {
     clock_t Total_Time = clock();
@@ -1023,48 +1055,82 @@ int main() {
     
     ull ans = 0;
     
-    const int K = 20;
-    const int X = 200;
+    const int K = 1000000;
+    const int X = 1000000000;
     
     ll ansA = 0, ansB = 0, ansC = 0, ansD = 0;
-
+    
     for (ll k=1; k<=K; k++) {
-        for (ll a=-X; a<=X; a++)
-        for (ll b=a+1; b<=X; b++)
-        for (ll c=b+1; c<=X; c++) {
-
-            bool A = false, B = false, C = false;
-
-            ll y1 = a+b, y2 = a+c; // angle A
-            if (k*k + k*(y1-y2) + y1*y2 == 0) {
-                ansA++;
-                A = true;
-                //continue;
-            }
-            y1 = a+b, y2 = c+b; // angle B
-            if (k*k + k*(y2-y1) + y1*y2 == 0) {
-                ansB++;
-                B = true;
-                //continue;
-            }
-            y1 = a+c, y2 = b+c; // angle C
-            if (k*k + k*(y1-y2) + y1*y2 == 0) {
-                ansC++;
-                C = true;
-                //continue;
-            }
-
-            if (A && B) cout << "AB: " << k << " " << a << " " << b << " " << c << endl;
-            if (A && C) cout << "AC: " << k << " " << a << " " << b << " " << c << endl;
-            if (B && C) cout << "BC: " << k << " " << a << " " << b << " " << c << endl;
+        
+        vector<ll> D = Divisors_2_square(k);
+        int D_size = (int)D.size();
+        for (int i=0; i<D_size; i++) D.push_back(-D[i]);
+        
+        // count A:
+        for (int i=0; i<(int)D.size(); i++) {
+            ll d = D[i];
+            ll y2 = d-k, y1 = k - (k*k*2)/(k+y2);
+            if (y2 <= y1) continue;
             
-            // excluding duplicates
-            if (k*k + (a+b)*(a+c) == 0 && abs(b*b-a*a) == k*(c-a)) ansD++;
-            if (k*k + (a+b)*(c+b) == 0 && abs(a*a-b*b) == k*(c-b)) ansD++;
-            if (k*k + (a+c)*(b+c) == 0 && abs(a*a-c*c) == k*(c-b)) ansD++;
+            ll lb = -X, ub = X;
+            if (y1+X < ub) ub = y1+X;
+            if (y2-X > lb) lb = y2-X;
+            
+            ll U = (y1 > 0) ? (y1-1)/2 : y1/2 - 1;
+            if (U < ub) ub = U;
+            
+            ansA += count_in_range(lb,ub);
+        }
+        
+        // count B:
+        for (int i=0; i<(int)D.size(); i++) {
+            ll d = D[i];
+            ll y1 = d-k, y2 = k - (k*k*2)/(k+y1);
+            if (y2 <= y1) continue;
+            
+            ll lb = -X, ub = X;
+            if (y1+X < ub) ub = y1+X;
+            if (y2-X > lb) lb = y2-X;
+            
+            ll U = (y2 > 0) ? (y2-1)/2 : y2/2 - 1;
+            if (U < ub) ub = U;
+            ll L = (y1 >= 0) ? (y1/2 + 1) : (y1+1)/2;
+            if (L > lb) lb = L;
+            
+            ansB += count_in_range(lb,ub);
+        }
+        
+        // count D:
+        for (int i=0; i<(int)D.size(); i++) {
+            
+            ll d1 = D[i];
+            if (((k*k*2)/d1) % 2) continue; // not a divisor of k^2
+            if (d1 == -k) { ansD++; continue; } // partial case a = -k, b = 0, c = k
+            if (d1 == k) continue;// another exceptional case
+            ll d2 = -k*k/d1;
+            if (d1 >= d2) continue;
+            
+            pll A = module_solve(d1*2, -d1*d1, -k*2, k*d2);
+            ll a1 = A.fs, b1 = d1-a1, c1 = d2-a1;
+            if (-X <= a1 && a1 < b1 && b1 < c1 && c1 <= X) ansD+=2;
+            ll a2 = A.sc, b2 = d1-a2, c2 = d2-a2;
+            if (-X <= a2 && a2 < b2 && b2 < c2 && c2 <= X) ansD+=2;
+            
+            pll B = A;
+            b1 = B.fs; a1 = d1-b1; c1 = d2-b1;
+            if (-X <= a1 && a1 < b1 && b1 < c1 && c1 <= X) ansD++;
+            b2 = B.sc; a2 = d1-b2; c2 = d2-b2;
+            if (-X <= a2 && a2 < b2 && b2 < c2 && c2 <= X) ansD++;
+            
+//            pll C = module_solve(d1*2, -d1*d1, k*2, -k*d2);
+//            c1 = C.fs; a1 = d1-c1; b1 = d2-c1;
+//            if (-X <= a1 && a1 < b1 && b1 < c1 && c1 <= X) ansD++;
+//            c2 = C.sc; a2 = d1-c2; b2 = d2-c2;
+//            if (-X <= a2 && a2 < b2 && b2 < c2 && c2 <= X) ansD++;
         }
     }
 
+    ansC = ansA;
     cout << ansA << " " << ansB << " " << ansC << " " << ansD << endl;
     ans = ansA+ansB+ansC-ansD;
     
