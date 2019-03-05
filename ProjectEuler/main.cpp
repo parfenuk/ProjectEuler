@@ -1015,6 +1015,13 @@ int main() {
     
     ull ans = 0;
     
+    for (ull n=1; n<=1000000000; n++) {
+        
+        ull s1 = total_vector_sum(digits(n,5));
+        ull s2 = total_vector_sum(digits(2*n-1,5));
+        if (2*s1 <= s2) ans++;
+    }
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
