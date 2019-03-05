@@ -1015,11 +1015,17 @@ int main() {
     
     ull ans = 0;
     
-    for (ull n=1; n<=1000000000; n++) {
+    const ull N = 1000000000;
+    vector<sint> s(N*2);
+    s[1] = 1;
+    for (ull n=2; n<=N*2; n++) {
+        if (n%5) s[n] = s[n-1]+1;
+        else s[n] = s[n/5];
+    }
+    
+    for (ull n=1; n<=N; n++) {
         
-        ull s1 = total_vector_sum(digits(n,5));
-        ull s2 = total_vector_sum(digits(2*n-1,5));
-        if (2*s1 <= s2) ans++;
+        if (2*s[n] <= s[2*n-1]) ans++;
     }
     
     cout << endl << ans << endl;
