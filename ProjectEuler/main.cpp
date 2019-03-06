@@ -1004,6 +1004,50 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+ll s5(ll n)
+{
+    return total_vector_sum(digits(n,5));
+}
+
+ll max (ll a, ll b)
+{
+    if (a > b) return a; return b;
+}
+
+ll min (ll a, ll b)
+{
+    if (a < b) return a; return b;
+}
+
+map<pair<pll,pll>,ll> M;
+
+ll Sum (ll k, ll lb, ll ub, ll dif)
+{
+    ll n = power(5,(int)k);
+    if (ub > 5*n-1) ub = 5*n-1;
+    if (ub < lb) return 0;
+    
+    if (M.find(mp(mp(k,lb),mp(ub,dif))) != M.end()) return M[mp(mp(k,lb),mp(ub,dif))];
+    
+    ll res = 0;
+    if (k == 0) {
+        for (ll d=1; d<5; d++) {
+            if (d >= lb && d <= ub && s5(2*d-1)-2*s5(d) >= dif) res++;
+        }
+    }
+    else {
+        res = Sum(k-1,lb,ub,dif);
+        for (ll d=1; d<5; d++) {
+            if (d*n >= lb && d*n <= ub && s5(2*d*n-1)-2*s5(d*n) >= dif) res++;
+            res += Sum(k-1, max(1,lb-d*n), min(ub-d*n,(n+1)/2), dif+2*d-s5(2*d));
+            res += Sum(k-1, max((n+1)/2,lb-d*n), ub-d*n, dif+2*d-s5(2*d+1)+1);
+        }
+    }
+    
+    M[mp(mp(k,lb),mp(ub,dif))] = res;
+    return res;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1015,18 +1059,19 @@ int main() {
     
     ull ans = 0;
     
-    const ull N = 1000000000;
-    vector<sint> s(N*2);
-    s[1] = 1;
-    for (ull n=2; n<=N*2; n++) {
-        if (n%5) s[n] = s[n-1]+1;
-        else s[n] = s[n/5];
-    }
-    
-    for (ull n=1; n<=N; n++) {
-        
-        if (2*s[n] <= s[2*n-1]) ans++;
-    }
+    ans = Sum(25,1,1000000000000000000,0);
+//    const ull N = 1000000000;
+//    vector<sint> s(N*2);
+//    s[1] = 1;
+//    for (ull n=2; n<=N*2; n++) {
+//        if (n%5) s[n] = s[n-1]+1;
+//        else s[n] = s[n/5];
+//    }
+//
+//    for (ull n=1; n<=N; n++) {
+//
+//        if (2*s[n] <= s[2*n-1]) ans++;
+//    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
