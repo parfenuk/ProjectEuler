@@ -1004,6 +1004,19 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const int Q = 1000000007;
+const int N = 50000000;
+vector<ll> F(N+1), I(N+1), P5(N+1);
+
+ll f (ll n, ll k)
+{
+    if (n <= k) return 0;
+    ll s = F[n-1]*I[k] % Q;
+    s = s*I[n-1-k] % Q;
+    s = s*P5[n-k-1]*6 % Q;
+    return s;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1014,6 +1027,31 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    Eratosthenes_sieve(N);
+    fill_primePi(N);
+    
+    F[0] = 1; I[0] = 1; P5[0] = 1;
+    for (ull n=1; n<=N; n++) {
+        F[n] = F[n-1]*n % Q;
+        I[n] = inverse(F[n], Q);
+        P5[n] = P5[n-1]*5 % Q;
+    }
+    
+    vector<ll> C(N+1);
+    C[1] = 6; ans = 6;
+    for (ll n=2; n<=N; n++) {
+        if (isPrime[n]) {
+            C[n] = (C[n-1]*6 + f(n-1,primePi[n])*5) % Q;
+        }
+        else {
+            C[n] = (C[n-1]*6 - f(n-1,primePi[n])) % Q;
+            if (C[n] < 0) C[n] += Q;
+        }
+        ans += C[n];
+        if (ans >= Q) ans -= Q;
+        if (n <= 50) cout << n << " " << C[n] << endl;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
