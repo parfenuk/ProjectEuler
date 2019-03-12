@@ -105,7 +105,7 @@ Matrix matrix_power (Matrix A, ull k)
     Matrix B(N);
     B.Q = A.Q;
     while (k) {
-        cout << k << endl;
+        //cout << k << endl;
         if (k%2==0) {
             k /= 2;
             A = A*A; // [ a = (a*a)%n; ]
