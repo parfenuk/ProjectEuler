@@ -227,6 +227,27 @@ ull integer_part_sqrt (ull n) // returns greatest x such that x*x <= n
     return x-1;
 }
 
+ull modular_sqrt (ull a, ull p) // finds r, r^2 == a mod p (prime), returns 0 if doesn't exist
+{
+    if (powmod(a,(p-1)/2,(int)p) == p-1) return 0;
+    ll b = 2;
+    while (powmod(b,(p-1)/2,(int)p) != p-1) b++;
+    ull t = p-1, s = 0;
+    while (t % 2 == 0) { t /= 2; s++; }
+    ll ai = inverse(a,p);
+    ll c = powmod(b,t,(int)p), r = powmod(a,(t+1)/2, (int)p), e = powmod(2,s-1,(int)p);
+    
+    for (int i=1; i<s; i++) {
+        
+        e = e*(p+1)/2 % p;
+        ll d = powmod((r*r % p)*ai % p, e, (int)p);
+        if (d == p-1) r = r*c % p;
+        c = c*c % p;
+    }
+    
+    return r;
+}
+
 // n = 153 -> (1,5,3)
 vector<int> digits (ull n, int base = 10, int min_size = 1)
 {
