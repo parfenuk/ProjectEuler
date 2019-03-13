@@ -1025,6 +1025,47 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const int N = 100000000;
+vector<ll> L(N+1,-1);
+vector<ll> smallestDivs(N+1,2);
+
+ull get_L (ull p) // p is prime
+{
+    ll a = p-1, val = p-1;
+    while (a > 1) {
+        ll d = smallestDivs[a];
+        while (a % d == 0) a /= d;
+        while (val % d == 0 && powmod(10,val/d,(int)p) == 1) val /= d;
+    }
+    
+    return val;
+}
+
+void fill_p_values (ll p, ll val) // p is prime
+{
+    ll s = p;
+    bool still_divisible = true;
+    while (s <= N) {
+        if (!still_divisible) {
+            L[s] = L[s/p]*p;
+            s *= p;
+            continue;
+        }
+        if (powmod(10,val,(int)s) == 1) { L[s] = val; s *= p; }
+        else still_divisible = false;
+    }
+}
+
+ull get_L_composite (ull n) // n is composite, but coprime with 10
+{
+    ull k = 1, s = smallestDivs[n];
+    while (n % s == 0) {
+        n /= s;
+        k *= s;
+    }
+    return LCM(L[k],L[n]);
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1035,6 +1076,38 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    Eratosthenes_sieve(N,true);
+    for (int i=1; i<=N; i+=2) smallestDivs[i] = i;
+    for (int i=1; i<(int)primes.size(); i++) {
+        for (ll p=primes[i]; p<=N; p+=primes[i]) {
+            if (primes[i] < smallestDivs[p]) smallestDivs[p] = primes[i];
+        }
+    }
+    
+    L[1] = 0;
+    
+    for (ull p=2; p<=N; p++) {
+        
+        if (p%2 == 0) { L[p] = L[p/2]; continue; }
+        if (p%5 == 0) { L[p] = L[p/5]; continue; }
+        if (L[p] != -1) continue; // p is a prime power
+        
+        if (isPrime[p]) {
+            ll val = get_L(p);
+            fill_p_values(p,val);
+            continue;
+        }
+        
+        // p is not a power of prime and coprime with 10
+        L[p] = get_L_composite(p);
+    }
+    
+    for (int i=1; i<=N; i++) {
+        //if (L[i] == -1) cout << "ALARM " << i << endl;
+        //if (i <= 50) cout << i << ": " << L[i] << endl;
+        ans += L[i];
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
