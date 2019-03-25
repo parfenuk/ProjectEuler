@@ -1036,6 +1036,33 @@ int main() {
     
     ull ans = 0;
     
+    const int Q = 1000000007;
+    
+    ll x0 = 85, x1 = -65, y0 = 75, y1 = -25, f0 = 4, f1 = 6;
+    ll I_10 = inverse(10,Q);
+    ll I_24 = inverse(24,Q);
+    ll I_120 = inverse(120,Q);
+    ll x2 = 25032019, y2 = 25032019, f2 = 25032019;
+    
+    for (int n=2; n<=830545248; n++) {
+        // values are cycled with period Q+1, (11^14-1) % (Q+1) = 830545248
+        x2 = ((x0*x1-y0*y1)%Q)*I_10 % Q; if (x2 < 0) x2 += Q;
+        y2 = ((x1*y0-x0*y1)%Q)*I_10 % Q; if (y2 < 0) y2 += Q;
+        f2 = f1*f0 % Q;
+        
+//        ll val;
+//        if (n % 2 == 0) val = ((130*f2+19*x2+83*y2)%Q)*I_120 % Q;
+//        else            val = ((26*f2+17*x2-y2)%Q)*I_24 % Q;
+//        if (val < 0) val += Q;
+        
+        x0 = x1; x1 = x2;
+        y0 = y1; y1 = y2;
+        f0 = f1; f1 = f2;
+    }
+    
+    // n is even, so use first formula
+    ans = (130*f2+19*x2+83*y2)%Q * I_120 % Q;
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
