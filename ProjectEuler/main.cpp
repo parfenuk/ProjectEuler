@@ -1025,6 +1025,17 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+Lnum Sum (ll n) // [1 .. n]
+{
+    Lnum N(n);
+    return (power(N,4)+power(N,3)*2+power(N,2)*11+N*34)/24;
+}
+
+Lnum Sum (ll from, ll to) // [from .. to], 1 < from <= to
+{
+    return Sum(to) - Sum(from-1);
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1035,6 +1046,59 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const ll N = 1000000000000;
+    
+    // naive test
+//    for (ll x1=-N; x1<=N; x1++) {
+//
+//        for (ll x2=x1+1; x2<=N; x2++) {
+//            if (x1+x2 < -N || x1+x2 > N || x1*x2 < -N || x1*x2 > N) continue;
+//            ll k = x2-x1;
+//            cout << "Naive " << x1 << " " << x2 << " " << k*(k-1)*(k+1)/6 + k + 1 << endl;
+//            ans += k*(k-1)*(k+1)/6 + k + 1;
+//        }
+//    }
+    
+    // single points, 0-area case
+    for (ll x1=0;;x1++) {
+        if (2*x1 <= N && x1*x1 <= N) ans++;
+        else break;
+    }
+    for (ll x1=-1;;x1--) {
+        if (2*x1 >= -N && x1*x1 <= N) ans++;
+        else break;
+    }
+    
+    Lnum Ans;
+    for (ll x=0; x*x<=N; x++) {
+        
+        // case x, -x
+        if (x) {
+            Lnum K(2*x);
+            Ans = Ans + K*(K-one)*(K+one)/6 + K + one;
+        }
+        
+        // positive branch, x2 > x
+        ll x2 = N-x;
+        if (x && N/x < x2) x2 = N/x;
+        if (x2 > x) {
+            ll n = x2-x;
+            if (x) Ans = Ans + Sum(n)*2;
+            else   Ans = Ans + Sum(n);
+        }
+        
+        // negative branch, -x2 > x
+        x2 = N+x;
+        if (x && N/x < x2) x2 = N/x;
+        if (x2 > x) {
+            if (x) Ans = Ans + Sum(2*x+1,x2+x)*2;
+            else   Ans = Ans + Sum(2*x+1,x2+x);
+        }
+    }
+    
+    Ans = Ans + Lnum(ans);
+    Ans.show();
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
