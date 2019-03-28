@@ -1025,6 +1025,22 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+bool is_one_child (ull A)
+{
+    vector<int> da = digits(A);
+    int n = (int)da.size();
+    bool already = false;
+    for (int i=0; i<n; i++) for (int j=i; j<n; j++) {
+        vector<int> sa = subvector(da,i,j);
+        ull k = from_digits(sa);
+        if (k%n == 0) {
+            if (already) return false;
+            already = true;
+        }
+    }
+    return already;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1035,6 +1051,66 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (int D=1; D<=19; D++) {
+        
+//        int naive_count = 0;
+//        for (ull i=power(10,D-1); i<power(10,D); i++) {
+//            if (is_one_child(i)) naive_count++;
+//        }
+//        cout << D << "-Naive: " << naive_count << endl;
+        
+        ull sum = 0;
+        ull N = power(3,D);
+        vector<ull> A(N);
+        // fill 1-digits numbers
+        for (int k=1; k<10; k++) {
+            vector<int> d(D);
+            int r = k%D;
+            if (r) d[r]++;
+            else d[r] = 2;
+            A[from_digits(d,3)]++;
+        }
+        
+        for (int digits_cnt=2; digits_cnt<=D; digits_cnt++) {
+            
+            vector<ull> B(N);
+            for (ull n=0; n<N; n++) {
+                if (A[n] == 0) continue;
+                
+                vector<int> d = digits(n,3,D);
+                bool has_zero_remainder = d[0];
+                if (d[0]) d[0]--; // 0 remainder count on suffixes
+                
+                for (int k=0; k<10; k++) {
+                    vector<int> d_new(D);
+                    d_new[k%D]++; // last digit suffix
+                    if (has_zero_remainder && d_new[0]) continue;
+                    bool ok = true;
+
+                    for (int r=0; r<D; r++) {
+                        if (d[r] == 0) continue;
+                        int res = (r*10+k)%D;
+                        if (d[r] == 2 || d_new[res]) d_new[res] = 2;
+                        else d_new[res] = 1;
+                        if (d_new[0] == 2 || (d_new[0] == 1 && has_zero_remainder)) {
+                            ok = false; break;
+                        }
+                    }
+                    if (!ok) continue;
+                    if (d_new[0] == 1) d_new[0] = 2;
+                    else d_new[0] = has_zero_remainder;
+                    B[from_digits(d_new,3)] += A[n];
+                }
+            }
+            
+            A.swap(B);
+        }
+        
+        for (ull n=power(3,D-1); n<(int)A.size(); n++) sum += A[n];
+        cout << "D = " << D << ": " << sum << endl;
+        ans += sum;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
