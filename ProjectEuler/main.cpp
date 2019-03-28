@@ -507,6 +507,32 @@ ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPh
     return res;
 }
 
+ll primitiveRoot (ll p) // p is prime
+{
+    vector<ll> fact;
+    ll phi = p-1, n = phi;
+    for (int i=0;;i++) {
+        ll p = primes[i];
+        if (p*p > n) break;
+        if (n % p == 0) {
+            fact.push_back(p);
+            while (n % p == 0) n /= p;
+        }
+    }
+    if (n > 1) fact.push_back(n);
+    
+    for (ll res=2; res<=p; ++res) {
+        bool ok = true;
+        for (int i=0; i<(int)fact.size() && ok; i++) {
+            ll d = powmod(res, phi/fact[i], (int)p);
+            if (d == 1) ok = false;
+        }
+        if (ok) return res;
+    }
+    
+    return -1;
+}
+
 // all divs must be coprime and in the form p^n
 ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
 {
