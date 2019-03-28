@@ -1062,21 +1062,22 @@ int main() {
         
         ull sum = 0;
         ull N = power(3,D);
-        vector<ull> A(N);
+        map<int,ull> A;
         // fill 1-digits numbers
         for (int k=1; k<10; k++) {
             vector<int> d(D);
             int r = k%D;
             if (r) d[r]++;
             else d[r] = 2;
-            A[from_digits(d,3)]++;
+            A[(int)from_digits(d,3)]++;
         }
         
         for (int digits_cnt=2; digits_cnt<=D; digits_cnt++) {
             
-            vector<ull> B(N);
-            for (ull n=0; n<N; n++) {
-                if (A[n] == 0) continue;
+            map<int,ull> B;
+            for (map<int,ull>::iterator it=A.begin(); it!=A.end(); it++) {
+                int n = (*it).fs;
+                ull C = (*it).sc;
                 
                 vector<int> d = digits(n,3,D);
                 bool has_zero_remainder = d[0];
@@ -1100,14 +1101,16 @@ int main() {
                     if (!ok) continue;
                     if (d_new[0] == 1) d_new[0] = 2;
                     else d_new[0] = has_zero_remainder;
-                    B[from_digits(d_new,3)] += A[n];
+                    B[(int)from_digits(d_new,3)] += C;
                 }
             }
             
             A.swap(B);
         }
         
-        for (ull n=power(3,D-1); n<(int)A.size(); n++) sum += A[n];
+        for (map<int,ull>::iterator it=A.begin(); it!=A.end(); it++) {
+            if ((*it).fs >= N/3) sum += (*it).sc;
+        }
         cout << "D = " << D << ": " << sum << endl;
         ans += sum;
     }
