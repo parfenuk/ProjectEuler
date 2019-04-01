@@ -1051,16 +1051,69 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<string> ELEMS;
+map<string,int> CHEMS;
+
+const int Q = (int)power(2,30);
+
+vector<ll> values (int n)
+{
+    vector<ll> v = {0,0,0};
+    for (int i=0; i<(int)ELEMS[n].length(); i++) {
+        v[ELEMS[n][i]-'1']++;
+    }
+    return v;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    vector<vector<string>> w;
+    for (int i=0; i<92; i++) {
+        string S;
+        getline(cin,S);
+        vector<string> v = parse_by_symbol(S, ' ');
+        cout << v[1] << " " << v[v.size()-2] << endl;
+        ELEMS.push_back(v[v.size()-2]);
+        CHEMS[v[1]] = i;
+        v.erase(v.begin(), v.begin()+2);
+        v.pop_back(); v.pop_back();
+        w.push_back(v);
+    }
+    
+    // construct evolutions matrix
+    vector<vector<ll>> A;
+    for (int i=0; i<92; i++) A.push_back(vector<ll>(92));
+    for (int i=0; i<92; i++) {
+        for (int j=0; j<(int)w[i].size(); j++) {
+            int to = CHEMS[w[i][j]];
+            A[to][i]++;
+        }
+    }
+    Matrix E(A);
+    E.Q = Q;
+    
+    const ull N = power(10,12)-8;
+    E = matrix_power(E,N);
+    
+    vector<ll> V = {0,0,0};
+    for (int i=0; i<92; i++) {
+        ll cnt = E[i][49] + E[i][71];
+        vector<ll> a = values(i);
+        V[0] = (V[0] + cnt*a[0]) % Q;
+        V[1] = (V[1] + cnt*a[1]) % Q;
+        V[2] = (V[2] + cnt*a[2]) % Q;
+    }
+    
+    cout << V[0] << " " << V[1] << " " << V[2] << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
