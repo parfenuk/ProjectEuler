@@ -1062,6 +1062,31 @@ int main() {
     
     ull ans = 0;
     
+    const ull N = 100000000000000000;
+    
+    for (ull P=1; P*P*P*P<=N; P++) for (ull Q=1+P%2; (Q*Q+P*P)*(Q*Q+P*P)<=N; Q+=2) {
+        
+        if (GCD(P,Q) != 1) continue;
+        
+        ll k = Q*Q + 4*P*Q - P*P, m = 2*(P*P + P*Q - Q*Q), n = P*P + Q*Q;
+        if (k < 0) k = -k; if (m < 0) m = -m;
+        if (GCD(k,m) != 1 || GCD(k,n) != 1 || GCD(m,n) != 1) continue;
+        if (k < m) swap(k,m);
+        
+        if ((5*n*n - 2*m*m) % 3) continue;
+        ll p = (5*n*n - 2*m*m) / 3, q = n*n;
+        if (p <= 0 || p >= q) continue;
+        
+        // now b, c
+        if (k % 2 == 0) k /= 2;
+        if (m % 2 == 0) m /= 2;
+        
+        // LCM(k,m) == k*m
+        if (k <= N/m) {
+            ans += N/(k*m);
+        }
+    }
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
