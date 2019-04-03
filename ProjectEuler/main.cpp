@@ -1062,6 +1062,29 @@ int main() {
     
     ull ans = 0;
     
+    const ll X = 1000000, R = 100000;
+    ans += 2*R*X; // cases |b| == |c| == r
+    
+    for (ll p=2; p<=R && p<=X; p++) for (ll q=1+p%2; q<p; q+=2) {
+        
+        if (GCD(p,q) != 1) continue;
+        
+        // case 1
+        ll K = X/(p*p-q*q); // max k
+        ll L = R/(p*p-q*q); // max l
+        ll cnt_k = K*2;
+        ll cnt_L = L*2;
+        ans += cnt_k*cnt_L;
+        
+        // case 2
+        K = X/(p*q);
+        L = R/(p*q);
+        ll cnt_k_even = (K/2)*2, cnt_k_odd = ((K+1)/2)*2;
+        ll cnt_L_even = (L/2)*2, cnt_L_odd = ((L+1)/2)*2;
+        ans += cnt_k_even*cnt_L_even;
+        ans += cnt_k_odd*cnt_L_odd;
+    }
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
