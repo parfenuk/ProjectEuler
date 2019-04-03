@@ -1062,28 +1062,43 @@ int main() {
     
     ull ans = 0;
     
-    const ll X = 1000000, R = 100000;
+    const ll X = 1000000000, R = 100000000;
+    ll N = X; if (R < X) N = R;
     ans += 2*R*X; // cases |b| == |c| == r
     
-    for (ll p=2; p<=R && p<=X; p++) for (ll q=1+p%2; q<p; q+=2) {
+    // case 1
+    for (ll p=2; p<=N; p++) {
+        
+        ll minQ = 1+p%2;
+        if (p*p > X) {
+            ll s = integer_part_sqrt(p*p-X);
+            if (s > minQ) minQ = s;
+        }
+        if (minQ%2 == p%2) minQ++;
+        
+        for (ll q=minQ; q<p; q+=2) {
+        
+            if (GCD(p,q) != 1) continue;
+            
+            ll K = X/(p*p-q*q); // max k
+            ll L = R/(p*p-q*q); // max l
+            ans += K*L*4;
+        }
+    }
+    // case 2
+    for (ll p=2; p<=N; p++) for (ll q=1+p%2; q<p && p*q<=N; q+=2) {
         
         if (GCD(p,q) != 1) continue;
         
-        // case 1
-        ll K = X/(p*p-q*q); // max k
-        ll L = R/(p*p-q*q); // max l
-        ll cnt_k = K*2;
-        ll cnt_L = L*2;
-        ans += cnt_k*cnt_L;
-        
-        // case 2
-        K = X/(p*q);
-        L = R/(p*q);
+        ll K = X/(p*q);
+        ll L = R/(p*q);
         ll cnt_k_even = (K/2)*2, cnt_k_odd = ((K+1)/2)*2;
         ll cnt_L_even = (L/2)*2, cnt_L_odd = ((L+1)/2)*2;
         ans += cnt_k_even*cnt_L_even;
         ans += cnt_k_odd*cnt_L_odd;
     }
+    
+    ans *= 2; // F(R,X) == F(X,R)
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
