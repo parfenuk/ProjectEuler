@@ -1051,6 +1051,26 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<int> GCD_Table[2001]; // GCD(n^i+1,n^j+1) = n^GCD_Table[i][j]
+
+void fill_table()
+{
+    vector<vector<ull>> multiples(2001); // multiples[i] = list of k, so n^k + 1 is multiple of n^i + 1
+    for (ull n=1; n<=2000; n++) {
+        vector<ull> D = Divisors(n);
+        for (int i=0; i<(int)D.size(); i++) {
+            if (D[i]%2) multiples[n/D[i]].push_back(n);
+        }
+    }
+    
+    for (int n=2000; n>=1; n--) {
+        for (int i=0; i<(int)multiples[n].size(); i++) for (int j=0; j<(int)multiples[n].size(); j++) {
+            ull k = multiples[n][i], m = multiples[n][j];
+            if (GCD_Table[k][m] == 0) GCD_Table[k][m] = n;
+        }
+    }
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1081,30 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const ull N = 2000;
+    const int Q = 987898789;
+    
+    for (int i=0; i<2001; i++) GCD_Table[i] = vector<int>(2001);
+    fill_table();
+    
+    vector<ull> cnt(2001);
+    
+    for (int i=1; i<=N; i++) for (int j=1; j<=N; j++) {
+        cnt[GCD_Table[i][j]]++;
+    }
+    
+    ans = 10*N*N % Q;
+    for (ll c=2; c<=N; c++) {
+        ull n = c;
+        ull sum = c%2 ? 10*cnt[0] : cnt[0];
+        for (int i=1; i<=N; i++) {
+            sum += linear_recurrence_value({10,1}, {0,1}, n+1, Q)*cnt[i];
+            sum %= Q;
+            n = n*c % (Q-1);
+        }
+        ans = (ans+sum)%Q;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
