@@ -1062,6 +1062,22 @@ int main() {
     
     ull ans = 0;
     
+    const string S = "776666565767556675744666665543454365634353255753344254502";
+    ans = (int)S.length();
+    vector<int> a(8);
+    for (int i=0; i<(int)S.length(); i++) a[S[i]-'0']++;
+    int most_appeared = 0;
+    dd average = 0;
+    for (int i=7; i>=0; i--) {
+        cout << a[i];
+        if (i) cout << "-";
+        else cout << endl;
+        if (a[i] > a[most_appeared]) most_appeared = i;
+        average += i*a[i];
+    }
+    cout << "Most appeared: " << most_appeared << endl;
+    cout << "Average: " << fixed << average/S.length() << endl;
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
