@@ -1051,6 +1051,17 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+ull R (ull n, vector<pull> f)
+{
+    if (f.size() == 1) return 1;
+    
+    ull q = power(f.back().fs,(int)f.back().sc);
+    f.pop_back();
+    n /= q;
+    
+    return n + (q+1)*R(n,f);
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1072,16 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (ull n=1; n<=1024; n++) {
+        
+        ull N = power(n,4) + 4;
+        vector<pull> f = factorize(N);
+        ull r = R(N,f);
+        
+        cout << n << " " << r << endl;
+        ans += r;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
