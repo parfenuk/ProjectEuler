@@ -362,20 +362,28 @@ void fill_primePi (int n) // WARNING: call only after Eratosthenes_sieve with si
     }
 }
 
-vector<pull> factorize (ull n)
+vector<ull> F1,F2;
+
+vector<pull> factorize (ull n, vector<ull> &F)
 {
     vector<pull> a;
+    F.clear();
     
     if (!primes.empty()) {
         
         for (ull i=0; primes[i]*1ll*primes[i]<=n; i++) {
             
             int k = 0;
+            ull m = 1;
             while (n % primes[i] == 0) {
                 n /= primes[i];
                 k++;
+                m *= primes[i];
             }
-            if (k) a.push_back(make_pair(primes[i],k));
+            if (k) {
+                a.push_back(make_pair(primes[i],k));
+                F.push_back(m);
+            }
         }
         
         ull from = primes.back() + 2;
@@ -384,14 +392,19 @@ vector<pull> factorize (ull n)
         for (ull i=from; i*i<=n; i+=2) {
             
             int k = 0;
+            ull m = 1;
             while (n % i == 0) {
                 n /= i;
                 k++;
+                m *= i;
             }
-            if (k) a.push_back(make_pair(i,k));
+            if (k) {
+                a.push_back(make_pair(i,k));
+                F.push_back(m);
+            }
         }
         
-        if (n != 1) a.push_back(make_pair(n,1));
+        if (n != 1) { a.push_back(make_pair(n,1)); F.push_back(n); }
         return a;
     }
     
@@ -418,7 +431,7 @@ vector<pull> factorize (ull n)
 
 int MoebiusMu (ull n)
 {
-    vector<pull> v = factorize(n);
+    vector<pull> v = factorize(n,F1);
     for (int i=0; i<(int)v.size(); i++) if (v[i].sc > 1) return 0;
     return v.size() % 2 ? -1 : 1;
 }
@@ -437,7 +450,7 @@ vector<sint> MoebuisMuSieve (ull n)
 
 ull rad (ull n)
 {
-    vector<pull> v = factorize(n);
+    vector<pull> v = factorize(n,F1);
     
     ull s = 1;
     for (int i=0; i<(int)v.size(); i++) s *= v[i].fs;
@@ -452,7 +465,7 @@ ull EulerPhi (ull n)
     if (n < (int)eulerPhi.size()) return eulerPhi[n];
     
     ull s = 1;
-    vector<pull> a = factorize(n);
+    vector<pull> a = factorize(n,F1);
     
     for (int i=0; i<(int)a.size(); i++) {
         ull k = powmod(a[i].fs, a[i].sc) - powmod(a[i].fs, a[i].sc-1);
@@ -538,7 +551,7 @@ ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
 {
     vector<ll> prime_divs; // find the only p[i] is the divisor of divs[i]
     for (int i=0; i<(int)divs.size(); i++) {
-        vector<pull> f = factorize(divs[i]);
+        vector<pull> f = factorize(divs[i],F1);
         prime_divs.push_back(f[0].fs);
     }
     
@@ -604,7 +617,7 @@ ull Divisors_sum (ull n)
 
 ull Divisors_count (ull n)
 {
-    vector<pull> a = factorize(n);
+    vector<pull> a = factorize(n,F1);
     ull s = 1;
     for (int i=0; i<(int)a.size(); i++) s *= (a[i].sc+1);
     return s;
@@ -1051,15 +1064,38 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-ull R (ull n, vector<pull> f)
+vector<ull> merge (const vector<pull> &a, const vector<pull> &b)
+{
+    vector<ull> f;
+    int pa = 0, pb = 0;
+    
+    while (pa != (int)a.size() || pb != (int)b.size()) {
+        
+        if (pa == (int)a.size()) f.push_back(F2[pb++]);
+        else if (pb == (int)b.size()) f.push_back(F1[pa++]);
+        else if (a[pa].fs < b[pb].fs) f.push_back(F1[pa++]);
+        else if (a[pa].fs > b[pb].fs) f.push_back(F2[pb++]);
+        else {
+            f.push_back(F1[pa]*F2[pb]);
+            pa++;
+            pb++;
+        }
+    }
+    
+    return f;
+}
+
+const int Q = 1000000007;
+
+ull R (ull n, vector<ull> f)
 {
     if (f.size() == 1) return 1;
     
-    ull q = power(f.back().fs,(int)f.back().sc);
+    ull q = f.back();
     f.pop_back();
     n /= q;
     
-    return n + (q+1)*R(n,f);
+    return (n%Q + (q+1)%Q*R(n,f))%Q;
 }
 
 int main() {
@@ -1072,15 +1108,20 @@ int main() {
 #endif
     
     ull ans = 0;
+    Eratosthenes_sieve(50000000,true);
     
-    for (ull n=1; n<=1024; n++) {
+    for (ull n=2; n<=10000000; n++) {
         
-        ull N = power(n,4) + 4;
-        vector<pull> f = factorize(N);
-        ull r = R(N,f);
+        ull N1 = n*n - 2*n + 2;
+        ull N2 = n*n + 2*n + 2;
+        vector<pull> f1 = factorize(N1,F1);
+        vector<pull> f2 = factorize(N2,F2);
+        vector<ull> f = merge(f1,f2);
+        ull r = R(N1*N2,f);
         
-        cout << n << " " << r << endl;
+        //cout << n << " " << r << endl;
         ans += r;
+        if (ans >= Q) ans -= Q;
     }
     
     cout << endl << ans << endl;
