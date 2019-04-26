@@ -362,12 +362,9 @@ void fill_primePi (int n) // WARNING: call only after Eratosthenes_sieve with si
     }
 }
 
-vector<ull> F1,F2;
-
-vector<pull> factorize (ull n, vector<ull> &F)
+vector<pull> factorize (ull n)
 {
     vector<pull> a;
-    F.clear();
     
     if (!primes.empty()) {
         
@@ -382,7 +379,6 @@ vector<pull> factorize (ull n, vector<ull> &F)
             }
             if (k) {
                 a.push_back(make_pair(primes[i],k));
-                F.push_back(m);
             }
         }
         
@@ -400,11 +396,10 @@ vector<pull> factorize (ull n, vector<ull> &F)
             }
             if (k) {
                 a.push_back(make_pair(i,k));
-                F.push_back(m);
             }
         }
         
-        if (n != 1) { a.push_back(make_pair(n,1)); F.push_back(n); }
+        if (n != 1) a.push_back(make_pair(n,1));
         return a;
     }
     
@@ -431,7 +426,7 @@ vector<pull> factorize (ull n, vector<ull> &F)
 
 int MoebiusMu (ull n)
 {
-    vector<pull> v = factorize(n,F1);
+    vector<pull> v = factorize(n);
     for (int i=0; i<(int)v.size(); i++) if (v[i].sc > 1) return 0;
     return v.size() % 2 ? -1 : 1;
 }
@@ -450,7 +445,7 @@ vector<sint> MoebuisMuSieve (ull n)
 
 ull rad (ull n)
 {
-    vector<pull> v = factorize(n,F1);
+    vector<pull> v = factorize(n);
     
     ull s = 1;
     for (int i=0; i<(int)v.size(); i++) s *= v[i].fs;
@@ -465,7 +460,7 @@ ull EulerPhi (ull n)
     if (n < (int)eulerPhi.size()) return eulerPhi[n];
     
     ull s = 1;
-    vector<pull> a = factorize(n,F1);
+    vector<pull> a = factorize(n);
     
     for (int i=0; i<(int)a.size(); i++) {
         ull k = powmod(a[i].fs, a[i].sc) - powmod(a[i].fs, a[i].sc-1);
@@ -551,7 +546,7 @@ ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
 {
     vector<ll> prime_divs; // find the only p[i] is the divisor of divs[i]
     for (int i=0; i<(int)divs.size(); i++) {
-        vector<pull> f = factorize(divs[i],F1);
+        vector<pull> f = factorize(divs[i]);
         prime_divs.push_back(f[0].fs);
     }
     
@@ -617,7 +612,7 @@ ull Divisors_sum (ull n)
 
 ull Divisors_count (ull n)
 {
-    vector<pull> a = factorize(n,F1);
+    vector<pull> a = factorize(n);
     ull s = 1;
     for (int i=0; i<(int)a.size(); i++) s *= (a[i].sc+1);
     return s;
@@ -1064,39 +1059,6 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-vector<ull> merge (const vector<pull> &a, const vector<pull> &b)
-{
-    vector<ull> f;
-    int pa = 0, pb = 0;
-    
-    while (pa != (int)a.size() || pb != (int)b.size()) {
-        
-        if (pa == (int)a.size()) f.push_back(F2[pb++]);
-        else if (pb == (int)b.size()) f.push_back(F1[pa++]);
-        else if (a[pa].fs < b[pb].fs) f.push_back(F1[pa++]);
-        else if (a[pa].fs > b[pb].fs) f.push_back(F2[pb++]);
-        else {
-            f.push_back(F1[pa]*F2[pb]);
-            pa++;
-            pb++;
-        }
-    }
-    
-    return f;
-}
-
-const int Q = 1000000007;
-
-ull R (ull n, vector<ull> f)
-{
-    if (f.size() == 1) return 1;
-    
-    ull q = f.back();
-    f.pop_back();
-    n /= q;
-    
-    return (n%Q + (q+1)%Q*R(n,f))%Q;
-}
 
 int main() {
     clock_t Total_Time = clock();
@@ -1108,21 +1070,50 @@ int main() {
 #endif
     
     ull ans = 0;
-    Eratosthenes_sieve(50000000,true);
+    const int Q = 1000000007;
+    Eratosthenes_sieve(10000000);
     
-    for (ull n=2; n<=10000000; n++) {
+    const ull N = 10000000;
+    vector<vector<ll>> P(10000000), I(10000000);
+    for (ull n=2; n<10000000; n++) {
+        if (!isPrime[n]) continue;
         
-        ull N1 = n*n - 2*n + 2;
-        ull N2 = n*n + 2*n + 2;
-        vector<pull> f1 = factorize(N1,F1);
-        vector<pull> f2 = factorize(N2,F2);
-        vector<ull> f = merge(f1,f2);
-        ull r = R(N1*N2,f);
+        P[n].push_back(1);
+        I[n].push_back(1);
+        ll s = n;
+        for (int i=1; i<=23; i++) {
+            P[n].push_back(s+1);
+            I[n].push_back(inverse(s+1,Q));
+            s = s*n % Q;
+        }
+    }
+    
+    ans = 2; // case n = 0, N
+    vector<ll> F(10000000,0);
+    ll cur_value = 1;
+    for (ll n=1; n<N; n++) {
         
-        //cout << n << " " << r << endl;
-        ans += r;
+        vector<pull> f1 = factorize(N+1-n), f2 = factorize(n);
+        map<ull,ll> powers_offset;
+        for (int i=0; i<(int)f1.size(); i++) powers_offset[f1[i].fs] = f1[i].sc;
+        for (int i=0; i<(int)f2.size(); i++) {
+            if (powers_offset[f2[i].fs]) powers_offset[f2[i].fs] -= (ll)f2[i].sc;
+            else powers_offset[f2[i].fs] = ((ll)f2[i].sc)*(-1);
+        }
+        for (map<ull,ll>::iterator it = powers_offset.begin(); it != powers_offset.end(); it++) {
+            ll p = (*it).fs, powr = (*it).sc;
+            ll former_power = F[p], new_power = F[p] + powr;
+            F[p] = new_power;
+            cur_value = cur_value*I[p][former_power] % Q;
+            cur_value = cur_value*P[p][new_power] % Q;
+        }
+        
+        ans = ans + cur_value;
         if (ans >= Q) ans -= Q;
     }
+    
+    ans = ans + Q - powmod(2,N,Q);
+    ans %= Q;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
