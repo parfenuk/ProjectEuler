@@ -1051,6 +1051,38 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+int paths_count (int N)
+{
+    vector<pii> coords;
+    coords.push_back(mp(1,1));
+    for (int i=1; i<=2*N; i++) {
+        coords.push_back(mp(coords.back().fs*2%N, coords.back().sc*3%N));
+    }
+    sort(coords.begin(), coords.end());
+    vector<pii> v;
+    v.push_back(coords[0]);
+    for (int i=1; i<=2*N; i++) {
+        if (coords[i] != coords[i-1]) v.push_back(coords[i]);
+    }
+    coords.clear();
+    
+    vector<int> y;
+    y.push_back(N);
+    
+    for (int i=(int)v.size()-1; i>=0; i--) {
+        
+        for (int j=(int)y.size()-1; j>=0; j--) {
+            if (y[j] >= v[i].sc) {
+                if (j+1 == (int)y.size()) y.push_back(v[i].sc);
+                else if (y[j+1] < v[i].sc) y[j+1] = v[i].sc;
+                break;
+            }
+        }
+    }
+    
+    return (int)y.size()-1;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1093,14 @@ int main() {
 #endif
     
     ull ans = 0;
+    cout << paths_count(22) << " " << paths_count(123) << " " << paths_count(10000) << endl;
+    ans = 1; // for k = 1
+    for (int k=2; k<=30; k++) {
+        int N = (int)power(k,5);
+        int P = paths_count(N);
+        cout << k << " " << N << " " << P << endl;
+        ans += P;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
