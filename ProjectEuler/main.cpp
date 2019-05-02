@@ -1051,6 +1051,43 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+int B;
+
+ull next_iteration (ull n)
+{
+    vector<int> d1 = digits(n,B,5);
+    sort(d1.begin(), d1.end());
+    vector<int> d2 = d1;
+    reverse(d2.begin(), d2.end());
+    ull n1 = from_digits(d1,B), n2 = from_digits(d2,B);
+    return n2-n1;
+}
+
+map<ull,int> M;
+
+ull iter_cnt (ull n) // not naive
+{
+    if (M.find(n) != M.end()) return M[n];
+    
+    vector<ull> v(1,n);
+    int k = 0;
+    while (true) {
+        
+        ull m = next_iteration(v.back());
+        if (M.find(m) != M.end()) {
+            k = M[m];
+            for (int i=(int)v.size()-1; i>=0; i--) {
+                k++;
+                M[v[i]] = k;
+            }
+            break;
+        }
+        v.push_back(m);
+    }
+    
+    return k;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1098,53 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const ull Q = power(10,18);
+    
+    for (B=15; B<=1803; B+=6) {
+        
+        M.clear();
+        ull sum = 0;
+        int y = (B-3)/3;
+        ull C = from_digits({2*y+2,y,3*y+2,2*y+1,y+1},B);
+        M[C] = 0;
+        
+        // first case: d1 B-1 B-1 B-1 d5
+        for (int d1=0; d1<=B-2; d1++) {
+            
+            vector<int> v = {d1,B-1,B-1,B-1,B-1-d1};
+            ull n = from_digits(v,B);
+            ull Iter = iter_cnt(n);
+            ull incr = (Iter+1)*(B-d1-1)*(10+20*d1);
+            sum += incr;
+            if (sum >= Q) sum -= Q;
+        }
+        // second case: d1 d1-1 B-1 d4 d5
+        for (int d1=1; d1<=B-1; d1++) {
+            
+            vector<int> v = {d1,d1-1,B-1,B-1-d1,B-d1};
+            ull n = from_digits(v,B);
+            ull Iter = iter_cnt(n);
+            ull incr = (Iter+1)*(B-d1)*(20+30*(d1-1));
+            sum += incr;
+            if (sum >= Q) sum -= Q;
+        }
+        // third case: d1 d2 B-1 d4 d5
+        for (int d1=1; d1<=B-1; d1++) for (int d2=0; d2<d1-1; d2++) {
+            
+            vector<int> v = {d1,d2,B-1,B-2-d2,B-d1};
+            ull n = from_digits(v,B);
+            ull Iter = iter_cnt(n);
+            ull incr = (Iter+1)*(B-d1)*(100+120*d2+(d1-d2-2)*(120+120*d2));
+            sum += incr;
+            if (sum >= Q) sum -= Q;
+        }
+        
+        sum--; // number C converges with 0 iterations, not 1
+        cout << B << " " << sum << endl;
+        ans += sum;
+        if (ans >= Q) ans -= Q;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
