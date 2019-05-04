@@ -1051,6 +1051,107 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+struct vertex {
+    vector<int> next;
+    bool leaf;
+    int p;
+    char pch;
+    int sufflink;
+    vector<int> go;
+    vertex() { next = vector<int>(10,-1); go = vector<int>(10,-1); leaf = false; p = sufflink = -1; }
+};
+
+vector<vertex> T;
+
+void add_string (const string &s)
+{
+    int k = 0;
+    for (size_t i=0; i<s.length(); i++) {
+        char c = s[i]-'0';
+        if (T[k].next[c] == -1) {
+            vertex v;
+            v.p = k;
+            v.pch = c;
+            T[k].next[c] = (int)T.size();
+            T.push_back(v);
+        }
+        k = T[k].next[c];
+    }
+    T[k].leaf = true;
+}
+
+int go (int v, char c);
+
+int get_link (int v)
+{
+    if (T[v].sufflink == -1) {
+        if (v == 0 || T[v].p == 0) T[v].sufflink = 0;
+        else T[v].sufflink = go(get_link(T[v].p),T[v].pch);
+    }
+    return T[v].sufflink;
+}
+
+int go (int v, char c)
+{
+    if (T[v].go[c] == -1) {
+        if (T[v].next[c] != -1) T[v].go[c] = T[v].next[c];
+        else T[v].go[c] = v==0 ? 0 : go(get_link(v),c);
+    }
+    return T[v].go[c];
+}
+
+vector<ull> C(19); // count of one-digit 11-free integers, 2-digit, ..., 18-digit
+
+ull count (ull K) // number of eleven-free integers in range 1..n
+{
+    ull res = 0;
+    vector<int> d = digits(K);
+    for (int i=1; i<(int)d.size(); i++) res += C[i];
+    
+    int N = (int)T.size();
+    vector<ull> dp[20]; for (int i=0; i<20; i++) dp[i] = vector<ull>(N);
+    int mv = go(0,d[0]); // max_vertice
+    for (int k=1; k<d[0]; k++) dp[1][go(0,k)]++;
+    
+    for (int n=2; n<=(int)d.size(); n++) {
+        
+        for (int i=0; i<N; i++) for (int k=0; k<10; k++) {
+            if (!T[go(i,k)].leaf) dp[n][go(i,k)] += dp[n-1][i];
+        }
+        // max case
+        if (mv == 2019) continue;
+        for (int k=0; k<d[n-1]; k++) {
+            if (!T[go(mv,k)].leaf) dp[n][go(mv,k)]++;
+        }
+        mv = go(mv,d[n-1]);
+        if (T[mv].leaf) mv = 2019;
+    }
+    
+    for (int i=0; i<N; i++) res += dp[d.size()][i];
+    if (mv != 2019) res++;
+    
+    return res;
+}
+
+vector<string> FS;
+
+ull count_naive (ull n)
+{
+    // naive check
+    ull cnt = 0;
+    for (ull i=1; i<=n; i++) {
+        bool ok = true;
+        string S = to_string(i);
+        for (int i=0; i<(int)FS.size(); i++) {
+            if (FS[i].length() > S.length()) break;
+            if (S.find(FS[i]) != string::npos) { ok = false; break; }
+        }
+        if (ok) cnt++;
+    }
+    
+    return cnt;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1162,45 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    // build Aho-Corasick Tree
+    T.push_back(vertex());
+    ull K = 1;
+    for (int i=1; i<=17; i++) {
+        K *= 11;
+        if (i == 11 || i == 13) continue; // 285311670611 contains 11, 34522712143931 contains 121
+        string S = to_string(K);
+        FS.push_back(S);
+        add_string(S);
+    }
+
+    // fill C array
+    C[1] = 9; // each one-digit number is 11-free
+    int N = (int)T.size();
+    vector<ull> dp[19]; for (int i=0; i<19; i++) dp[i] = vector<ull>(N);
+    for (int k=1; k<10; k++) dp[1][go(0,k)]++;
+    for (int n=2; n<19; n++) {
+        
+        for (int i=0; i<N; i++) {
+            for (int k=0; k<10; k++) {
+                if (!T[go(i,k)].leaf) dp[n][go(i,k)] += dp[n-1][i];
+            }
+        }
+        
+        for (int i=0; i<N; i++) if (!T[i].leaf) C[n] += dp[n][i];
+    }
+    
+    ull lb = 1200000000000000000, ub = 1300000000000000000;
+    while (true) {
+        
+        //ull M; cin >> M; cout << count(M) << endl;
+        //if (M == 0) break;
+        ull M = (lb+ub)/2;
+        ull c = count(M);
+        if (c < power(10,18)) lb = M+1;
+        else if (c > power(10,18)) ub = M-1;
+        else { ans = M; break; }
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
