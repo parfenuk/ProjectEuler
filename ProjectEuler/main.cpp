@@ -1051,6 +1051,37 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+dd a, b;
+map<ull,dd> M;
+
+dd C (ull n)
+{
+    if (n < 2) return 0;
+    if (M[n]) return M[n];
+    
+    ull lb = 1, ub = n;
+    dd res = 1000000000;
+    while (lb <= ub) {
+        bool equal = (lb == ub);
+        ull m = (lb+ub)/2;
+        dd l = b+C(m-1), r = a+C(n-m);
+        if (m == 1) l = 0;
+        if (m == n) r = 0;
+        if (l == r) { M[n] = r; return r; }
+        if (l < r) {
+            if (r < res) res = r;
+            lb = m+1;
+        }
+        else {
+            if (l < res) res = l;
+            ub = m;
+        }
+        if (equal) break;
+    }
+    M[n] = res;
+    return res;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1092,9 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    a = sqrt(5.0); b = sqrt(7.0);
+    cout << fixed << C(1000000000000);
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
