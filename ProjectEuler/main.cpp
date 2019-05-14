@@ -1051,6 +1051,40 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+bool is_multiple (int a, int b, int c, int n)
+{
+    for (int x=1; x<n; x++) {
+        int A = x*x*x*x + a*x*x*x + b*x*x + c*x;
+        if (A % n) return false;
+    }
+    
+    return true;
+}
+
+int M (int a, int b, int c)
+{
+    int ret = 1;
+    for (int n=2; n<=100; n++) {
+        if (is_multiple(a,b,c,n)) ret = n;
+    }
+    return ret;
+}
+
+ull cnt (ull N, ull r)
+{
+    if (r == 0) return N/24;
+    return (N+24-r)/24;
+}
+
+ull S (ull N)
+{
+    ull res = 0;
+    for (int a=0; a<24; a++) for (int b=0; b<24; b++) for (int c=0; c<24; c++) {
+        res += M(a,b,c)*cnt(N,a)*cnt(N,b)*cnt(N,c);
+    }
+    return res;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1095,14 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    ull A[24][24][24];
+    
+    for (int a=0; a<24; a++) for (int b=0; b<24; b++) for (int c=0; c<24; c++) {
+        A[a][b][c] = M(a,b,c);
+    }
+    
+    for (int n=2; n<=200; n+=24) cout << S(n) << ",";
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
