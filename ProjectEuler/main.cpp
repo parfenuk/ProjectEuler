@@ -1062,18 +1062,32 @@ int main() {
     
     ull ans = 0;
     
-    const string S = "776666565767556675744666665543454365634353255753344254502";
+    const int MAX = 14;
+    const string S = "B97CAA8C99888879987656C92AA87655675533a2b3f";
     ans = (int)S.length();
-    vector<int> a(8);
-    for (int i=0; i<(int)S.length(); i++) a[S[i]-'0']++;
+    vector<int> a(MAX+1);
+    vector<int> negative_values;
+    for (int i=0; i<(int)S.length(); i++) {
+        if (S[i] >= '0' && S[i] <= '9') a[S[i]-'0']++; // 0-9
+        else if (S[i] >= 'A' && S[i] <= 'Z') a[S[i]-'A'+10]++; // A-Z, 10-35
+        else negative_values.push_back(S[i]-'a'+1); // a-z, -1..-26
+    }
     int most_appeared = 0;
     dd average = 0;
-    for (int i=7; i>=0; i--) {
+    for (int i=MAX; i>=0; i--) {
         cout << a[i];
         if (i) cout << "-";
         else cout << endl;
         if (a[i] > a[most_appeared]) most_appeared = i;
         average += i*a[i];
+    }
+    if (!negative_values.empty()) {
+        cout << "Negative values: ";
+        for (int i=0; i<(int)negative_values.size(); i++) {
+            cout << -negative_values[i] << " ";
+            average -= negative_values[i];
+        }
+        cout << endl;
     }
     cout << "Most appeared: " << most_appeared << endl;
     cout << "Average: " << fixed << average/S.length() << endl;
