@@ -1051,16 +1051,82 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const ull L = 389959201397735424;
+const ull U = 394444512000000000;
+
+ull num_from_vector (const vector<int> &v)
+{
+    ull n = 1;
+    for (int i=0; i<(int)v.size(); i++) {
+        for (int j=0; j<v[i]; j++) {
+            n *= primes[i];
+            if (n > U) return 1394444512000000000;
+        }
+    }
+    return n;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    Eratosthenes_sieve(50,true);
+    vector<ull> D;
+    
+    vector<int> matches = {39,19,9,6,3,3,2,2,1,1,1,1,1,1};
+    const ll DIV_COUNT = 516096000;
+    const int PRIMES_COUNT = 14;
+    
+    // was used for initial divisors generation. Too slow though :(
+//    for (ll n=1; n<DIV_COUNT; n++) {
+//        vector<int> v = v_from_code(n,matches);
+//        ull m = num_from_vector(v);
+//        if (m > L && m < U) D.push_back(m);
+//    }
+//    sort(D.begin(), D.end());
+//    ans = (ull)D.size();
+//    for (int i=0; i<(int)D.size(); i++) cout << D[i] << endl;
+    
+    for (int i=0; i<3420; i++) {
+        ull d; cin >> d; D.push_back(d);
+    }
+    
+    dd ratio = 1.02;
+    for (int da=0; da<(int)D.size(); da++) for (int db=da+1; db<(int)D.size(); db++) {
+        
+        ull A = D[da], B = D[db];
+        ull a = A, b = B;
+        vector<int> ac = matches;
+        vector<int> fc(PRIMES_COUNT);
+        for (int i=0; i<PRIMES_COUNT; i++) while (a % primes[i] == 0) { a /= primes[i]; ac[i]--; }
+        for (int i=0; i<PRIMES_COUNT; i++) while (b % primes[i] == 0) { b /= primes[i]; ac[i]--; }
+        bool ok = true;
+        for (int i=0; i<PRIMES_COUNT; i++) {
+            if (ac[i] < 0) { ok = false; break; }
+        }
+        if (!ok) continue;
+        ull C = 1;
+        for (int i=0; i<PRIMES_COUNT; i++) {
+            for (int j=0; j<ac[i]; j++) C *= primes[i];
+        }
+        
+        if (B <= C) {
+            dd new_ratio = (dd)C / (dd)A;
+            if (new_ratio > 1 && new_ratio < ratio) {
+                ratio = new_ratio;
+                cout << "Update answer: " << A << " " << B << " " << C << " " << A+B+C << endl;
+                cout << fixed << ratio << endl;
+                ans = A+B+C;
+            }
+        }
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
