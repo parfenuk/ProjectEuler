@@ -1062,6 +1062,37 @@ int main() {
     
     ull ans = 0;
     
+    const int Q = 1000000007;
+    const int N = 10000000;
+    
+    vector<ll> inv(N+1);
+    vector<ll> C(N+1); // C[i] = Binomial(2^N,i)
+    vector<ll> L(N+1), W1(N+1), W2(N+1); // L - losing positions, W1 - xor in the set, W2 - xor out of the set
+    
+    ll p2n = powmod(2,N,Q);
+    ll P = p2n-1;
+    C[1] = P;
+    inv[1] = 1;
+    for (ll n=2; n<=N; n++) {
+        inv[n] = inverse(n,Q);
+        P--;
+        C[n] = C[n-1]*P % Q;
+        C[n] = C[n]*inv[n] % Q;
+    }
+    
+    L[1] = W2[1] = 0;
+    W1[1] = P;
+    
+    for (ll k=2; k<=N; k++) {
+        L[k] = W2[k-1]*inv[k] % Q;
+        W1[k] = (p2n-k)*L[k-1] % Q;
+        W2[k] = (C[k] - W1[k] - L[k]) % Q;
+        if (W2[k] < 0) W2[k] += Q;
+    }
+    
+    ans = W1[N]+W2[N];
+    for (ll n=2; n<=N; n++) ans = ans*n % Q;
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
