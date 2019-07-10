@@ -1062,6 +1062,27 @@ int main() {
     
     ull ans = 0;
     
+    const int N = 1000;
+    map<pair<pii,pii>,int> M;
+    ll cnt = 0;
+    
+    for (int a=1; a*a+3<N; a++) for (int d=1; a*a+d*d+2<N; d++) for (int b=1; a*a+d*d+2*b*b<N; b++) for (int c=b; a*a+d*d+2*b*c<N; c++) {
+        
+        if (a*a+b*c == 33 && b*(a+d) == 24 && c*(a+d) == 48) cout << a << " " << b << " " << c << " " << d << endl;
+        M[mp(mp(a*a+b*c,b*(a+d)),mp(c*(a+d),d*d+b*c))]++;
+        cnt++;
+    }
+    
+    for (map<pair<pii,pii>,int>::iterator it=M.begin(); it!=M.end(); it++) {
+        if ((*it).sc >= 2) {
+            cout << (*it).sc << " -- ";
+            cout << (*it).fs.fs.fs << " " << (*it).fs.fs.sc << " " << (*it).fs.sc.fs << " " << (*it).fs.sc.sc << endl;
+            ans++;
+            if ((*it).fs.fs.sc != (*it).fs.sc.fs) ans++;
+        }
+    }
+    cout << cnt << endl;
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
