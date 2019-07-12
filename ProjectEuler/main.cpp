@@ -1062,26 +1062,34 @@ int main() {
     
     ull ans = 0;
     
-    const int N = 1000;
-    map<pair<pii,pii>,int> M;
-    ll cnt = 0;
+    const int N = 10000000;
     
-    for (int a=1; a*a+3<N; a++) for (int d=1; a*a+d*d+2<N; d++) for (int b=1; a*a+d*d+2*b*b<N; b++) for (int c=b; a*a+d*d+2*b*c<N; c++) {
-        
-        if (a*a+b*c == 33 && b*(a+d) == 24 && c*(a+d) == 48) cout << a << " " << b << " " << c << " " << d << endl;
-        M[mp(mp(a*a+b*c,b*(a+d)),mp(c*(a+d),d*d+b*c))]++;
-        cnt++;
-    }
+    vector<ull> DC(N/10); // size was checked experimentally :)
+    for (int i=1; i<N/10; i++) for (int d=i; d<N/10; d+=i) DC[d]++;
     
-    for (map<pair<pii,pii>,int>::iterator it=M.begin(); it!=M.end(); it++) {
-        if ((*it).sc >= 2) {
-            cout << (*it).sc << " -- ";
-            cout << (*it).fs.fs.fs << " " << (*it).fs.fs.sc << " " << (*it).fs.sc.fs << " " << (*it).fs.sc.sc << endl;
-            ans++;
-            if ((*it).fs.fs.sc != (*it).fs.sc.fs) ans++;
+    for (ll k=1; k*k<N; k++) for (ll m=k+1; m*m<2*N; m++) {
+
+        if ((m*m-k*k)%4) continue;
+        ll n = (m*m-k*k)/4;
+        ll sum = k*k + 2*n;
+        if (sum >= N) break;
+
+        ll k4 =  k*k*k*k;
+        ll kn4 = k*k*n*4;
+        ll s = LCM(k,m);
+        for (ll c=1; k4+kn4>=4*c*s*s; c++) {
+
+            if (c*s*s <= kn4/4) continue;
+            
+            if (k4+kn4 == 4*c*s*s) {
+                ans += DC[c];
+                break;
+            }
+            if (integer_sqrt(k4+kn4-4*c*s*s)) {
+                ans += 2*DC[c];
+            }
         }
     }
-    cout << cnt << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
@@ -1089,3 +1097,11 @@ int main() {
     
     return 0;
 }
+
+// AG-BF = n^2
+// A+G+2n = m^2
+// A+G-2n = k^2
+// then we have two solutions:
+// a=(A+n)/m, b = B/m, c = F/m, d = (G+n)/m
+// a=(A-n)/k, b = B/k, c = F/k, d = (G-n)/k
+// n < N/2, m^2 < 2N, k^2 < N
