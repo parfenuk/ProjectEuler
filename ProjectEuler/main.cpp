@@ -1051,6 +1051,25 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+ull Sp (ull N) // sum of f(x,y), where y < x <= N, GCD(x,y) = 1
+{
+    if (N == 1) return 0;
+    ull sum = N-1; // first column, since f(x,1) = 1
+    
+    for (ull k=2; k<N; k++) {
+        
+        ull x = k+1, y = k, cnt = 2;
+        while (x <= N) {
+            sum += cnt*count_divisible_by(y, x%y, x, N);
+            x = x+y;
+            y = x-y;
+            cnt++;
+        }
+    }
+    
+    return sum;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1080,12 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const ull N = 5000000;
+    ull s1 = Sp(N);
+    for (ull d=2; d<=N; d++) s1 += Sp(N/d);
+    ull s2 = s1 + N*(N-1)/2;
+    ans = s1+s2+N;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
