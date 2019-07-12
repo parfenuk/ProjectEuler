@@ -1079,13 +1079,14 @@ int main() {
         ll s = LCM(k,m);
         for (ll c=1; k4+kn4>=4*c*s*s; c++) {
 
-            if (c*s*s <= kn4/4) continue;
+            ll css4 = c*s*s*4;
+            if (c*s*s <= k*k*n) continue;
             
-            if (k4+kn4 == 4*c*s*s) {
+            if (k4+kn4 == css4) {
                 ans += DC[c];
                 break;
             }
-            if (integer_sqrt(k4+kn4-4*c*s*s)) {
+            if (integer_sqrt(k4+kn4-css4)) {
                 ans += 2*DC[c];
             }
         }
