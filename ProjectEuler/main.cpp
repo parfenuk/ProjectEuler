@@ -1051,37 +1051,46 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-bool is_multiple (int a, int b, int c, int n)
-{
-    for (int x=1; x<n; x++) {
-        int A = x*x*x*x + a*x*x*x + b*x*x + c*x;
-        if (A % n) return false;
-    }
-    
-    return true;
-}
+const vector<ll> COEFFS[24] = {
+    {0,0,0,27984},
+    {-24970,77820,-80832,27984},
+    {-21388,70176,-76752,27984},
+    {-18819,64452,-73560,27984},
+    {-16378,58748,-70232,27984},
+    {-13878,52600,-66440,27984},
+    {-11782,47172,-62936,27984},
+    {-10073,42504,-59744,27984},
+    {-8240,37152,-55840,27984},
+    {-6930,33108,-52720,27984},
+    {-5636,28840,-49216,27984},
+    {-4393,24468,-45304,27984},
+    {-3484,20988,-41976,27984},
+    {-2756,17976,-38856,27984},
+    {-1986,14412,-34776,27984},
+    {-1483,11880,-31584,27984},
+    {-1062,9504,-28256,27984},
+    {-688,7148,-24464,27984},
+    {-432,5224,-20960,27984},
+    {-257,3748,-17768,27984},
+    {-124,2300,-13864,27984},
+    {-56,1376,-10744,27984},
+    {-22,612,-7240,27984},
+    {-1,152,-3328,27984}
+};
 
-int M (int a, int b, int c)
-{
-    int ret = 1;
-    for (int n=2; n<=100; n++) {
-        if (is_multiple(a,b,c,n)) ret = n;
-    }
-    return ret;
-}
-
-ull cnt (ull N, ull r)
-{
-    if (r == 0) return N/24;
-    return (N+24-r)/24;
-}
+const int Q = 1000000000;
 
 ull S (ull N)
 {
-    ull res = 0;
-    for (int a=0; a<24; a++) for (int b=0; b<24; b++) for (int c=0; c<24; c++) {
-        res += M(a,b,c)*cnt(N,a)*cnt(N,b)*cnt(N,c);
+    ll d = N/24, m = N%24;
+    if (m) d++;
+    ll res = 0;
+    for (int i=0; i<=3; i++) {
+        res += COEFFS[m][i]*powmod(d,i,Q);
+        res %= Q;
+        if (res < 0) res += Q;
     }
+    
     return res;
 }
 
@@ -1096,13 +1105,28 @@ int main() {
     
     ull ans = 0;
     
-    ull A[24][24][24];
+//    ull f1 = 1, f2 = 1;
+//    bool should_show = false;
+//    for (ull n=3; n<=2000000000; n++) {
+//        ull f = f1 + f2;
+//        if (f >= Q) f -= Q;
+//        if (f == 1) should_show = true;
+//        if (should_show) cout << n << " " << f << endl;
+//        f1 = f2;
+//        f2 = f;
+//    }
     
-    for (int a=0; a<24; a++) for (int b=0; b<24; b++) for (int c=0; c<24; c++) {
-        A[a][b][c] = M(a,b,c);
+    const ull P = 1500000000; // F[n] = F[n+P] mod 10^9
+    const ull K = 1234567890123;
+    ull f1 = Q-1, f2 = 1;
+    for (ull n=0; n<P; n++) {
+        ull f = f1+f2;
+        if (f >= Q) f -= Q;
+        ull add = S(f);
+        ans += count_divisible_by(P,n,2,K)*add;
+        ans %= Q;
+        f1 = f2; f2 = f;
     }
-    
-    for (int n=2; n<=200; n+=24) cout << S(n) << ",";
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
