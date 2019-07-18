@@ -1078,9 +1078,7 @@ const vector<ll> COEFFS[24] = {
     {-1,152,-3328,27984}
 };
 
-const int Q = 1000000000;
-
-ull S (ull N)
+ull S (ull N, int Q)
 {
     ll d = N/24+1, m = N%24;
     ll res = 0, p = 1;
@@ -1089,6 +1087,39 @@ ull S (ull N)
         p = p*d % Q;
         res %= Q;
         if (res < 0) res += Q;
+    }
+    
+    return res;
+}
+
+ull Pisano_period (int Q)
+{
+    ull f1 = 1, f2 = 1;
+    const ll mod = 24*Q;
+    for (ull n=3;;n++) {
+        ull f = f1 + f2;
+        if (f >= mod) f -= mod;
+        f1 = f2;
+        f2 = f;
+        if (f1 == 1 && f2 == 0) return n;
+    }
+}
+
+ull calculate (int Q)
+{
+    ull res = 0;
+    
+    const ull P = Pisano_period(Q); // F[n] = F[n+P] mod MOD
+    const ull K = 1234567890123;
+    const ull MOD = 24*Q;
+    ull f1 = MOD-1, f2 = 1;
+    for (ull n=0; n<P; n++) {
+        ull f = f1+f2;
+        if (f >= MOD) f -= MOD;
+        ull add = S(f,Q);
+        res += count_divisible_by(P,n,2,K)*add;
+        res %= Q;
+        f1 = f2; f2 = f;
     }
     
     return res;
@@ -1105,18 +1136,9 @@ int main() {
     
     ull ans = 0;
     
-    const ull P = 12000000000; // F[n] = F[n+P] mod MOD
-    const ull K = 1234567890123;
-    const ull MOD = 24000000000;
-    ull f1 = MOD-1, f2 = 1;
-    for (ull n=0; n<P; n++) {
-        ull f = f1+f2;
-        if (f >= MOD) f -= MOD;
-        ull add = S(f);
-        ans += count_divisible_by(P,n,2,K)*add;
-        ans %= Q;
-        f1 = f2; f2 = f;
-    }
+    ll r2 = calculate((int)power(2,9)), r5 = calculate((int)power(5,9));
+    cout << r2 << " " << r5;
+    ans = Chinese_theorem({(ll)power(2,9), (ll)power(5,9)}, {r2,r5});
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
