@@ -1052,7 +1052,7 @@ int random_integer (int from, int to)
 }
 
 const vector<ll> COEFFS[24] = {
-    {0,0,0,27984},
+    {-27984,83952,-83952,27984},
     {-24970,77820,-80832,27984},
     {-21388,70176,-76752,27984},
     {-18819,64452,-73560,27984},
@@ -1082,11 +1082,11 @@ const int Q = 1000000000;
 
 ull S (ull N)
 {
-    ll d = N/24, m = N%24;
-    if (m) d++;
-    ll res = 0;
+    ll d = N/24+1, m = N%24;
+    ll res = 0, p = 1;
     for (int i=0; i<=3; i++) {
-        res += COEFFS[m][i]*powmod(d,i,Q);
+        res += COEFFS[m][i]*p;
+        p = p*d % Q;
         res %= Q;
         if (res < 0) res += Q;
     }
@@ -1105,23 +1105,13 @@ int main() {
     
     ull ans = 0;
     
-//    ull f1 = 1, f2 = 1;
-//    bool should_show = false;
-//    for (ull n=3; n<=2000000000; n++) {
-//        ull f = f1 + f2;
-//        if (f >= Q) f -= Q;
-//        if (f == 1) should_show = true;
-//        if (should_show) cout << n << " " << f << endl;
-//        f1 = f2;
-//        f2 = f;
-//    }
-    
-    const ull P = 1500000000; // F[n] = F[n+P] mod 10^9
+    const ull P = 12000000000; // F[n] = F[n+P] mod MOD
     const ull K = 1234567890123;
-    ull f1 = Q-1, f2 = 1;
+    const ull MOD = 24000000000;
+    ull f1 = MOD-1, f2 = 1;
     for (ull n=0; n<P; n++) {
         ull f = f1+f2;
-        if (f >= Q) f -= Q;
+        if (f >= MOD) f -= MOD;
         ull add = S(f);
         ans += count_divisible_by(P,n,2,K)*add;
         ans %= Q;
