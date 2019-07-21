@@ -1051,6 +1051,101 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+string code (const vector<ll> &a)
+{
+    string S = to_string(a[0]);
+    for (int i=1; i<(int)a.size(); i++) {
+        S += ",";
+        S += to_string(a[i]);
+    }
+    return S;
+}
+
+#define DEG 4
+
+#if DEG == 4
+const vector<vector<ll>> BOUNDING_BOX = {
+    {24,120},   // a[0]
+    {-154,-50}, // a[1]
+    {35,71},    // a[2]
+    {-14,-10}   // a[3]
+};
+
+const vector<vector<ll>> COEFFS = { // plane coefficients, from a[0] to a[DEG-1] and free
+    {1,1,1,1,1},      // P(1)
+    {1,2,4,8,16},     // P(2)
+    {1,3,9,27,81},    // P(3)
+    {1,4,16,64,256},  // P(4)
+    {1,5,25,125,625}  // P(5)
+};
+
+const vector<ll> SUM_OF_SQUARES = {4,85,820,4369,16276};
+#endif
+
+ll value_at (const vector<ll> &a, ll x) // P(x) = a[0]+a[1]x+a[2]x^2+a[3]x^3+x^4
+{
+    ll res = a[0], s = 1;
+    for (int i=1; i<DEG; i++) {
+        s *= x;
+        res += a[i]*s;
+    }
+    
+    return res + s*x; // add x^DEG
+}
+
+ll derivative_at (const vector<ll> &a, ll x)
+{
+    ll res = a[1], s = 1;
+    for (int i=2; i<DEG; i++) {
+        s *= x;
+        res += a[i]*s*i;
+    }
+    
+    return res + s*x*DEG; // add DEG*x^(DEG-1)
+}
+
+bool condition (const vector<ll> &a)
+{
+#if DEG == 4
+    if (value_at(a,1) < 0) return false; // P(1) >= 0
+    ll v = value_at(a,2); // P(2) < 0 or (P(2) == 0 and P'(2) > 0)
+    if (v > 0 || (v == 0 && derivative_at(a,2) <= 0)) return false;
+    v = value_at(a,3); // P(3) > 0 or (P(3) == 0 and P'(3) < 0)
+    if (v < 0 || (v == 0 && derivative_at(a,3) >= 0)) return false;
+    v = value_at(a,4); // P(4) < 0 or (P(4) == 0 and P'(4) > 0)
+    if (v > 0 || (v == 0 && derivative_at(a,4) <= 0)) return false;
+    if (value_at(a,5) <= 0) return false; // P(5) > 0
+    return true;
+#elif DEG == 7
+    // TODO
+    return true;
+#else
+     return false;
+#endif
+    return false; // weird bug, had to add this string of code
+}
+
+bool out_of_box (const vector<ll> &a)
+{
+    for (int i=0; i<(int)a.size(); i++) {
+        if (a[i] < BOUNDING_BOX[i][0] || a[i] > BOUNDING_BOX[i][1]) return true;
+    }
+    return false;
+}
+
+bool close_enough (const vector<ll> &a) // a - candidate point
+{
+    if (out_of_box(a)) return false;
+    
+    for (int i=0; i<=DEG; i++) {
+        ll v = 0;
+        for (int j=0; j<DEG; j++) v += a[j]*COEFFS[i][j];
+        v += COEFFS[i][DEG];
+        if (abs(v) <= SUM_OF_SQUARES[i]) return true;
+    }
+    return false;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1156,58 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    vector<vector<ll>> DIRS(2*DEG,{0,0,0,0});
+    for (int i=0; i<DEG; i++) {
+        DIRS[2*i][i]++;
+        DIRS[2*i+1][i]--;
+    }
+    
+    vector<vector<ll>> points;
+    set<string> used;
+    points.push_back({46,-84,50,-12});
+    used.insert(code({46,-84,50,-12}));
+    
+    queue<vector<ll>> q;
+    q.push({46,-84,50,-12});
+    
+    while (!q.empty()) {
+        
+        vector<ll> a = q.front();
+        q.pop();
+        
+        for (int i=0; i<DEG; i++) {
+            a[i]++;
+            if (used.find(code(a)) == used.end()) {
+                used.insert(code(a));
+                if (condition(a)) {
+                    q.push(a);
+                    points.push_back(a);
+                }
+                else if (close_enough(a)) q.push(a);
+            }
+            a[i] -= 2;
+            if (used.find(code(a)) == used.end()) {
+                used.insert(code(a));
+                if (condition(a)) {
+                    q.push(a);
+                    points.push_back(a);
+                }
+                else if (close_enough(a)) q.push(a);
+            }
+            a[i]++;
+        }
+    }
+    
+    cout << points.size() << endl;
+    for (int i=0; i<(int)points.size(); i++) {
+        for (int j=0; j<4; j++) {
+            cout << points[i][j] << " ";
+            ans += abs(points[i][j]);
+        }
+        cout << endl;
+        
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
