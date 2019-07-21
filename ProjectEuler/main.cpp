@@ -1065,10 +1065,10 @@ string code (const vector<ll> &a)
 
 #if DEG == 4
 const vector<vector<ll>> BOUNDING_BOX = {
-    {24,120},   // a[0]
-    {-154,-50}, // a[1]
-    {35,71},    // a[2]
-    {-14,-10}   // a[3]
+    {24,58},   // a[0]
+    {-91,-50}, // a[1]
+    {35,51},    // a[2]
+    {-12,-10}   // a[3]
 };
 
 const vector<vector<ll>> COEFFS = { // plane coefficients, from a[0] to a[DEG-1] and free
@@ -1080,6 +1080,31 @@ const vector<vector<ll>> COEFFS = { // plane coefficients, from a[0] to a[DEG-1]
 };
 
 const vector<ll> SUM_OF_SQUARES = {4,85,820,4369,16276};
+#endif
+
+#if DEG == 7
+const vector<vector<ll>> BOUNDING_BOX = {
+    {-40320,-5040},   // a[0]
+    {13068,69264},    // a[1]
+    {-48860,-13132},  // a[2]
+    {6769,18424},     // a[3]
+    {-4025,-1960},    // a[4]
+    {367,511},        // a[5]
+    {-34,-29}         // a[6]
+};
+
+const vector<vector<ll>> COEFFS = { // plane coefficients, from a[0] to a[DEG-1] and free
+    {1,1,1,1,1,1,1,1},      // P(1)
+    {1,2,4,8,16,32,64,128},     // P(2)
+    {1,3,9,27,81,243,729,2187},    // P(3)
+    {1,4,16,64,256,1024,4096,16384},  // P(4)
+    {1,5,25,125,625,3125,15625,78125},  // P(5)
+    {1,6,36,216,1296,7776,46656,279936}, // P(6)
+    {1,7,49,343,2401,16807,117649,823543}, // P(7)
+    {1,8,64,512,4096,32768,262144,2097152} // P(8)
+};
+
+const vector<ll> SUM_OF_SQUARES = {7,254,3279,21844,97655,335922,960799,2396744};
 #endif
 
 ll value_at (const vector<ll> &a, ll x) // P(x) = a[0]+a[1]x+a[2]x^2+a[3]x^3+x^4
@@ -1157,16 +1182,19 @@ int main() {
     
     ull ans = 0;
     
-    vector<vector<ll>> DIRS(2*DEG,{0,0,0,0});
-    for (int i=0; i<DEG; i++) {
-        DIRS[2*i][i]++;
-        DIRS[2*i+1][i]--;
-    }
+//    vector<vector<ll>> DIRS(2*DEG,{0,0,0,0});
+//    for (int i=0; i<DEG; i++) {
+//        DIRS[2*i][i]++;
+//        DIRS[2*i+1][i]--;
+//    }
     
-    vector<vector<ll>> points;
+    //vector<vector<ll>> points;
+    //points.push_back({46,-84,50,-12});
+    vector<ll> initial = {46,-84,50,-12};
+    for (int i=0; i<DEG; i++) ans += abs(initial[i]);
+    int K = 1;
     set<string> used;
-    points.push_back({46,-84,50,-12});
-    used.insert(code({46,-84,50,-12}));
+    used.insert(code(initial));
     
     queue<vector<ll>> q;
     q.push({46,-84,50,-12});
@@ -1182,7 +1210,8 @@ int main() {
                 used.insert(code(a));
                 if (condition(a)) {
                     q.push(a);
-                    points.push_back(a);
+                    //points.push_back(a);
+                    K++; for (int j=0; j<(int)a.size(); j++) ans += abs(a[j]);
                 }
                 else if (close_enough(a)) q.push(a);
             }
@@ -1191,7 +1220,8 @@ int main() {
                 used.insert(code(a));
                 if (condition(a)) {
                     q.push(a);
-                    points.push_back(a);
+                    //points.push_back(a);
+                    K++; for (int j=0; j<(int)a.size(); j++) ans += abs(a[j]);
                 }
                 else if (close_enough(a)) q.push(a);
             }
@@ -1199,15 +1229,16 @@ int main() {
         }
     }
     
-    cout << points.size() << endl;
-    for (int i=0; i<(int)points.size(); i++) {
-        for (int j=0; j<4; j++) {
-            cout << points[i][j] << " ";
-            ans += abs(points[i][j]);
-        }
-        cout << endl;
-        
-    }
+    cout << K << endl;
+//    cout << points.size() << endl;
+//    for (int i=0; i<(int)points.size(); i++) {
+//        for (int j=0; j<4; j++) {
+//            cout << points[i][j] << " ";
+//            ans += abs(points[i][j]);
+//        }
+//        cout << endl;
+//
+//    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
