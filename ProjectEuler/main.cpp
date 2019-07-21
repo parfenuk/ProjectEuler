@@ -1177,68 +1177,35 @@ int main() {
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     //freopen("input.txt","rt",stdin);
-    //freopen("output.txt","wt",stdout);
+    freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
     
-//    vector<vector<ll>> DIRS(2*DEG,{0,0,0,0});
-//    for (int i=0; i<DEG; i++) {
-//        DIRS[2*i][i]++;
-//        DIRS[2*i+1][i]--;
-//    }
+    int k = 1;
     
-    //vector<vector<ll>> points;
-    //points.push_back({46,-84,50,-12});
-    vector<ll> initial = {46,-84,50,-12};
-    for (int i=0; i<DEG; i++) ans += abs(initial[i]);
-    int K = 1;
-    set<string> used;
-    used.insert(code(initial));
-    
-    queue<vector<ll>> q;
-    q.push({46,-84,50,-12});
-    
-    while (!q.empty()) {
-        
-        vector<ll> a = q.front();
-        q.pop();
-        
-        for (int i=0; i<DEG; i++) {
-            a[i]++;
-            if (used.find(code(a)) == used.end()) {
-                used.insert(code(a));
-                if (condition(a)) {
-                    q.push(a);
-                    //points.push_back(a);
-                    K++; for (int j=0; j<(int)a.size(); j++) ans += abs(a[j]);
-                }
-                else if (close_enough(a)) q.push(a);
-            }
-            a[i] -= 2;
-            if (used.find(code(a)) == used.end()) {
-                used.insert(code(a));
-                if (condition(a)) {
-                    q.push(a);
-                    //points.push_back(a);
-                    K++; for (int j=0; j<(int)a.size(); j++) ans += abs(a[j]);
-                }
-                else if (close_enough(a)) q.push(a);
-            }
-            a[i]++;
-        }
+    for (int n=1; n<567; n++) {
+        cout << "condition[" << k << "]:=Reduce[P[1]<=0&&P[2]==" << n << "&&P[3]<0&&P[4]>0&&P[5]<0&&P[6]>0&&P[7]<0&&P[8]>0,Table[a[i],{i,0,6}],Integers]\n";
+        k++;
     }
     
-    cout << K << endl;
-//    cout << points.size() << endl;
-//    for (int i=0; i<(int)points.size(); i++) {
-//        for (int j=0; j<4; j++) {
-//            cout << points[i][j] << " ";
-//            ans += abs(points[i][j]);
-//        }
-//        cout << endl;
-//
-//    }
+    for (ull n=1; n<64; n++) {
+        cout << "condition[" << k << "]:=Reduce[P[1]<=0&&";
+        k++;
+        vector<int> d = digits(n,2,6);
+        for (int i=0; i<6; i++) {
+            if (d[i] == 0) {
+                cout << "P[" << i+2 << "]";
+                if (i%2) cout << "<0"; else cout << ">0";
+            }
+            else {
+                cout << "P[" << i+2 << "]==0&&P'[" << i+2 << "]";
+                if (i%2) cout << ">0"; else cout << "<0";
+            }
+            cout << "&&";
+        }
+        cout << "P[8]>0,Table[a[i],{i,0,6}],Integers]\n";
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
