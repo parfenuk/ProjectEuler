@@ -1062,6 +1062,66 @@ int main() {
     
     ull ans = 0;
     
+    set<ull> s;
+//    for (ull p=1; p<=10; p++) for (ull q=p+1; q<3*p; q++) {
+//
+//        if (GCD(p,q) != 1) continue;
+//        ull a = 3*(q*q - p*p);
+//        ull b = 10*p*p - 6*p*q;
+//        ull c = 30*p*q - 9*p*p - 9*q*q;
+//
+//        ull D = GCD(a,GCD(b,c));
+//        a /= D; b /= D; c/= D;
+//        for (ull k=1; c*k < 300; k++) { ans++; cout << k*a << " " << k*b << " " << k*c << endl; }
+//        s.insert(D);
+//
+//        ull B = 4*p*q - 3*p*p - q*q;
+//        cout << p << " " << q << " " << B << endl;
+//    }
+    
+    //for (set<ull>::iterator it = s.begin(); it!=s.end(); it++) cout << *it << " ";
+    
+    const ull N = 3000;
+    const ull FROM = 1;
+    const ull LIM = 37000;
+    ull cnt3 = 0, cnt4 = 0, cnt6 = 0;
+    for (ull p=FROM; p<=LIM; p++) for (ull q=p+1; q<3*p; q++) {
+        
+        if (GCD(p,q) != 1) continue;
+        ull a = 1*(q*q - p*p);
+        ull b = 6*p*p - 2*p*q;
+        ull B = 4*p*q - 3*p*p - q*q;
+        
+        ull D = GCD(a,b);
+        B /= D;
+        cnt4 += N/B;
+    }
+    for (ull p=FROM; p<=LIM; p++) for (ull q=p+1; q<7*p; q++) {
+        
+        if (GCD(p,q) != 1) continue;
+        ull a = 1*(q*q - p*p);
+        ull b = 14*p*p - 2*p*q;
+        ull B = 8*p*q - 7*p*p - q*q;
+        
+        ull D = GCD(a,b);
+        B /= D;
+        cnt6 += N/B;
+    }
+    for (ull p=FROM; p<=LIM; p++) for (ull q=p+1; 3*q<5*p; q++) {
+        
+        if (GCD(p,q) != 1) continue;
+        ull a = 3*(q*q - p*p);
+        ull b = 10*p*p - 6*p*q;
+        ull B = 8*p*q - 5*p*p - 3*q*q;
+        
+        ull D = GCD(a,b);
+        B /= D;
+        cnt3 += N/B;
+    }
+    
+    cout << cnt4 << " " << cnt6 << " " << cnt3 << endl;
+    ans = cnt3 + cnt4 + cnt6;
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
