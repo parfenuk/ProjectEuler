@@ -1051,39 +1051,15 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-int main() {
-    clock_t Total_Time = clock();
-    cout.precision(12);
-    ios_base::sync_with_stdio(false);
-#ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
-    //freopen("output.txt","wt",stdout);
-#endif
+int g3[24][24], g4[24][24], g6[24][24];
+
+void fill_g346()
+{
+    for (int i=0; i<24; i++) for (int j=0; j<24; j++) g3[i][j] = g4[i][j] = g6[i][j] = -1;
     
-    ull ans = 0;
-    
-    set<ull> s;
-//    for (ull p=1; p<=10; p++) for (ull q=p+1; q<3*p; q++) {
-//
-//        if (GCD(p,q) != 1) continue;
-//        ull a = 3*(q*q - p*p);
-//        ull b = 10*p*p - 6*p*q;
-//        ull c = 30*p*q - 9*p*p - 9*q*q;
-//
-//        ull D = GCD(a,GCD(b,c));
-//        a /= D; b /= D; c/= D;
-//        for (ull k=1; c*k < 300; k++) { ans++; cout << k*a << " " << k*b << " " << k*c << endl; }
-//        s.insert(D);
-//
-//        ull B = 4*p*q - 3*p*p - q*q;
-//        cout << p << " " << q << " " << B << endl;
-//    }
-    
-    //for (set<ull>::iterator it = s.begin(); it!=s.end(); it++) cout << *it << " ";
-    
-    const ull N = 3000;
+    const ull N = 20;
     const ull FROM = 1;
-    const ull LIM = 37000;
+    const ull LIM = 100;
     ull cnt3 = 0, cnt4 = 0, cnt6 = 0;
     for (ull p=FROM; p<=LIM; p++) for (ull q=p+1; q<3*p; q++) {
         
@@ -1095,6 +1071,9 @@ int main() {
         ull D = GCD(a,b);
         B /= D;
         cnt4 += N/B;
+        
+        int k = p%24, m = q%24;
+        if (g4[k][m] == -1) g4[k][m] = (int)D;
     }
     for (ull p=FROM; p<=LIM; p++) for (ull q=p+1; q<7*p; q++) {
         
@@ -1106,6 +1085,9 @@ int main() {
         ull D = GCD(a,b);
         B /= D;
         cnt6 += N/B;
+        
+        int k = p%24, m = q%24;
+        if (g6[k][m] == -1) g6[k][m] = (int)D;
     }
     for (ull p=FROM; p<=LIM; p++) for (ull q=p+1; 3*q<5*p; q++) {
         
@@ -1117,10 +1099,114 @@ int main() {
         ull D = GCD(a,b);
         B /= D;
         cnt3 += N/B;
+        
+        int k = p%24, m = q%24;
+        if (g3[k][m] == -1) g3[k][m] = (int)D;
+    }
+}
+
+int main() {
+    clock_t Total_Time = clock();
+    cout.precision(12);
+    ios_base::sync_with_stdio(false);
+#ifndef ONLINE_JUDGE
+    //freopen("input.txt","rt",stdin);
+    //freopen("output.txt","wt",stdout);
+#endif
+    
+    ull ans = 0;
+    
+    fill_g346();
+    
+    const ull N = 1000000000;
+    const ull FROM = 1;
+    const ull LIM4 = 8*N, LIM6 = 4*N, LIM3 = 24*N+1;
+    ull cnt3 = 0, cnt4 = 0, cnt6 = 0;
+    for (ll p=FROM; p<=LIM4; p++) {
+        
+        for (ll s=p+1; s<=p+24; s++) { // increasing
+            
+            int D = g4[p%24][s%24];
+            if (D == -1) continue;
+            
+            for (ll q=s; q<=2*p; q+=24) {
+                if (GCD(p,q) != 1) continue;
+                ll B = (4*p*q - 3*p*p - q*q)/D;
+                if (B > N) break;
+                cnt4 += N/B;
+            }
+        }
+        for (ll s=3*p-1; s>=3*p-24; s--) { // decreasing
+            
+            int D = g4[p%24][s%24];
+            if (D == -1) continue;
+            
+            for (ll q=s; q>2*p; q-=24) {
+                if (GCD(p,q) != 1) continue;
+                ull B = (4*p*q - 3*p*p - q*q)/D;
+                if (B > N) break;
+                cnt4 += N/B;
+            }
+        }
+    }
+    
+    for (ll p=FROM; p<=LIM6; p++) {
+        
+        for (ll s=p+1; s<=p+24; s++) { // increasing
+            
+            int D = g6[p%24][s%24];
+            if (D == -1) continue;
+            
+            for (ll q=s; q<=4*p; q+=24) {
+                if (GCD(p,q) != 1) continue;
+                ull B = (8*p*q - 7*p*p - q*q)/D;
+                if (B > N) break;
+                cnt6 += N/B;
+            }
+        }
+        for (ll s=7*p-1; s>=7*p-24; s--) { // decreasing
+            
+            int D = g6[p%24][s%24];
+            if (D == -1) continue;
+            
+            for (ll q=s; q>4*p; q-=24) {
+                if (GCD(p,q) != 1) continue;
+                ull B = (8*p*q - 7*p*p - q*q)/D;
+                if (B > N) break;
+                cnt6 += N/B;
+            }
+        }
+    }
+    for (ll p=FROM; p<=LIM3; p++) {
+        
+        for (ll s=p+1; s<=p+24; s++) { // increasing
+            
+            int D = g3[p%24][s%24];
+            if (D == -1) continue;
+            
+            for (ll q=s; q*3<=p*4; q+=24) {
+                if (GCD(p,q) != 1) continue;
+                ull B = (8*p*q - 5*p*p - 3*q*q)/D;
+                if (B > N) break;
+                cnt3 += N/B;
+            }
+        }
+        for (ll s=(5*p-1)/3; s>(5*p-1)/3-24; s--) { // decreasing
+            
+            int D = g3[p%24][s%24];
+            if (D == -1) continue;
+            
+            for (ll q=s; q*3>p*4; q-=24) {
+                if (GCD(p,q) != 1) continue;
+                ull B = (8*p*q - 5*p*p - 3*q*q)/D;
+                if (B > N) break;
+                cnt3 += N/B;
+            }
+        }
     }
     
     cout << cnt4 << " " << cnt6 << " " << cnt3 << endl;
-    ans = cnt3 + cnt4 + cnt6;
+    ans = cnt4 + cnt6 + cnt3;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
