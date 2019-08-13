@@ -258,7 +258,7 @@ vector<int> digits (ull n, int base = 10, int min_size = 1)
         n /= base;
     }
     while (a.size() < min_size) a.push_back(0);
-    reverse(a.begin(), a.end());
+    //reverse(a.begin(), a.end());
     
     return a;
 }
@@ -670,7 +670,7 @@ ull coprime_count_in_range (ull N, ull from, ull to)
 bool isPalindrom (const vector<int> &a)
 {
     int n = (int)a.size();
-    for (int i=0; i<n; i++) {
+    for (int i=0; i<n/2; i++) {
         if (a[i] != a[n-1-i]) return false;
     }
     return true;
@@ -1051,6 +1051,34 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<dd> alSums(10000001);
+
+dd T (int M)
+{
+    dd res = 0;
+    for (int p=1; p<M; p++) {
+        int from = p+1;
+        if (M-p > from) from = M-p;
+        int to = M;
+        res += (alSums[to]-alSums[from-1])/p;
+    }
+    return res;
+}
+
+dd R_naive (int M)
+{
+    dd res = 0;
+    for (int p=1; p<M; p++) {
+        for (int q=p+1; q<=M; q++) {
+            if (p+q < M) continue;
+            if (GCD(p,q) != 1) continue;
+            res += 1.0/(p*q);
+        }
+    }
+    
+    return res;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1062,9 +1090,36 @@ int main() {
     
     ull ans = 0;
     
+    dd res = 0.5;
+    for (int k=1; k<=10000000; k++) alSums[k] = alSums[k-1] + 1.0/k;
+    
+    const int N = 50000;
+    vector<dd> R(N+1);
+    R[2] = 0.5;
+    dd mean = 0;
+    
+    for (int n=3; n<=N; n++) {
+        
+        
+        //dd t = T(n);
+        //for (int k=2; k<=n/2; k++) t -= (R[n/k]/(k*k));
+        //R[n] = t;
+        //res += t;
+        //cout << n << " " << fixed << t <<  " " << endl;
+        
+        dd m = R_naive(n);
+        res += m;
+        if (n > 1000) mean += m;
+        cout << n << " " << fixed << res << " " << R_naive(n);
+        if (n > 1000) cout << " mean = " << fixed << mean/(n-1000);
+        cout << endl;
+    }
+    cout << fixed << res << endl;
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
     
     return 0;
 }
+// S(1000) = 517.954717412667
