@@ -1053,18 +1053,6 @@ int random_integer (int from, int to)
 
 vector<dd> alSums(10000001);
 
-dd T (int M)
-{
-    dd res = 0;
-    for (int p=1; p<M; p++) {
-        int from = p+1;
-        if (M-p > from) from = M-p;
-        int to = M;
-        res += (alSums[to]-alSums[from-1])/p;
-    }
-    return res;
-}
-
 dd R_naive (int M)
 {
     dd res = 0;
@@ -1089,33 +1077,66 @@ int main() {
 #endif
     
     ull ans = 0;
+    dd res = 0;
     
-    dd res = 0.5;
-    for (int k=1; k<=10000000; k++) alSums[k] = alSums[k-1] + 1.0/k;
+    const int N = 10000000;
     
-    const int N = 50000;
-    vector<dd> R(N+1);
-    R[2] = 0.5;
-    dd mean = 0;
+    Eratosthenes_sieve(N,true);
+    vector<sint> mu = MoebuisMuSieve(N);
+    for (int k=1; k<=N; k++) alSums[k] = alSums[k-1] + 1.0/k;
+    vector<vector<int>> D(256); for (ull n=0; n<256; n++) D[n] = digits(n,2,8);
+    vector<vector<int>> prime_divisors(N+1);
+    for (int i=0; i<(int)primes.size(); i++) for (int j=primes[i]; j<=N; j+=primes[i]) prime_divisors[j].push_back(primes[i]);
     
-    for (int n=3; n<=N; n++) {
+    // first case: p+q <= N
+    for (int p=1; p<N/2; p++) {
         
+        dd cnt = p+1;
+        int q1 = p+1, q2 = N-p;
         
-        //dd t = T(n);
-        //for (int k=2; k<=n/2; k++) t -= (R[n/k]/(k*k));
-        //R[n] = t;
-        //res += t;
-        //cout << n << " " << fixed << t <<  " " << endl;
+        dd sum = (alSums[q2]-alSums[q1-1]);
         
-        dd m = R_naive(n);
-        res += m;
-        if (n > 1000) mean += m;
-        cout << n << " " << fixed << res << " " << R_naive(n);
-        if (n > 1000) cout << " mean = " << fixed << mean/(n-1000);
-        cout << endl;
+        // iterate all divisors
+        for (int i=1; i<(int)power(2,(int)prime_divisors[p].size()); i++) {
+            int d = 1;
+            for (int j=0; j<(int)prime_divisors[p].size(); j++) if (D[i][j]) d *= prime_divisors[p][j];
+            int m1 = (q1%d == 0) ? q1 : q1+d-q1%d;
+            int m2 = q2 - q2%d;
+            if (m1 > m2) continue;
+            m1 /= d; m2 /= d;
+            dd add = (alSums[m2]-alSums[m1-1])/d;
+            if (mu[d] == -1) sum -= add;
+            else sum += add;
+        }
+        
+        res += cnt*sum/p;
     }
-    cout << fixed << res << endl;
     
+    // second case: p+q > N
+    for (int q=N/2+1; q<=N; q++) {
+        
+        dd cnt = N-q+1;
+        int p1 = N-q+1, p2 = q-1;
+        
+        dd sum = (alSums[p2]-alSums[p1-1]);
+        
+        // iterate all divisors
+        for (int i=1; i<(int)power(2,(int)prime_divisors[q].size()); i++) {
+            int d = 1;
+            for (int j=0; j<(int)prime_divisors[q].size(); j++) if (D[i][j]) d *= prime_divisors[q][j];
+            int m1 = (p1%d == 0) ? p1 : p1+d-p1%d;
+            int m2 = p2 - p2%d;
+            if (m1 > m2) continue;
+            m1 /= d; m2 /= d;
+            dd add = (alSums[m2]-alSums[m1-1])/d;
+            if (mu[d] == -1) sum -= add;
+            else sum += add;
+        }
+        
+        res += cnt*sum/q;
+    }
+    
+    cout << fixed << res << endl;
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
