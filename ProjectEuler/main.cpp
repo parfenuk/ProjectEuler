@@ -1051,16 +1051,162 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<ll> f[5];
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    const int Q = 999999937;
+    
+    int N; cin >> N;
+    vector<int> desk_partner(N,-1), bed_partner(N,-1), type(N);
+    vector<int> G12, G1, G2, G0;
+    int B; cin >> B;
+    for (int i=0; i<B; i++) {
+        string S; cin >> S; if (S[0] == '(') { S.erase(0,1); S.pop_back(); }
+        vector<string> v = parse_by_symbol(S, ',');
+        int a = atoi(v[0].c_str()), b = atoi(v[1].c_str());
+        a--; b--;
+        bed_partner[a] = b;
+        bed_partner[b] = a;
+    }
+    int D; cin >> D;
+    for (int i=0; i<D; i++) {
+        string S; cin >> S; if (S[0] == '(') { S.erase(0,1); S.pop_back(); }
+        vector<string> v = parse_by_symbol(S, ',');
+        int a = atoi(v[0].c_str()), b = atoi(v[1].c_str());
+        a--; b--;
+        desk_partner[a] = b;
+        desk_partner[b] = a;
+    }
+    
+    for (int i=0; i<N; i++) {
+        if (desk_partner[i] == -1 && bed_partner[i] == -1) { type[i] = 0; G0.push_back(i); }
+        if (desk_partner[i] == -1 && bed_partner[i] != -1) { type[i] = 1; G1.push_back(i); }
+        if (desk_partner[i] != -1 && bed_partner[i] == -1) { type[i] = 2; G2.push_back(i); }
+        if (desk_partner[i] != -1 && bed_partner[i] != -1) { type[i] = 3; G12.push_back(i); }
+    }
+    
+    cout << "Single " << (int)G0.size() << endl;
+    vector<bool> used(N); for (int i=0; i<(int)G0.size(); i++) used[G0[i]] = true;
+    
+    vector<int> g11(1,2019), g22(1,2019), g12(1,2019), loops(1,2019);
+    
+    for (int id=0; id<(int)G1.size(); id++) {
+        
+        int s = G1[id];
+        if (used[s]) continue;
+        vector<int> path(1,s);
+        s = bed_partner[s];
+        path.push_back(s);
+        used[s] = true;
+        while (type[s] == 3) {
+            if (bed_partner[s] != path[path.size()-2]) s = bed_partner[s];
+            else s = desk_partner[s];
+            path.push_back(s);
+            used[s] = true;
+        }
+        
+        if (type[path.back()] == 1) g11.push_back((int)path.size());
+        else g12.push_back((int)path.size());
+    }
+    for (int id=0; id<(int)G2.size(); id++) {
+        
+        int s = G2[id];
+        if (used[s]) continue;
+        vector<int> path(1,s);
+        s = desk_partner[s];
+        path.push_back(s);
+        used[s] = true;
+        while (type[s] == 3) {
+            if (bed_partner[s] != path[path.size()-2]) s = bed_partner[s];
+            else s = desk_partner[s];
+            path.push_back(s);
+            used[s] = true;
+        }
+        
+        if (type[path.back()] == 2) g22.push_back((int)path.size());
+        else g12.push_back((int)path.size());
+    }
+    for (int id=0; id<(int)G12.size(); id++) {
+        
+        int s = G12[id];
+        if (used[s]) continue;
+        vector<int> path(1,s);
+        s = desk_partner[s];
+        path.push_back(s);
+        used[s] = true;
+        while (true) {
+            if (bed_partner[s] != path[path.size()-2]) s = bed_partner[s];
+            else s = desk_partner[s];
+            if (s == path[0]) break;
+            path.push_back(s);
+            used[s] = true;
+        }
+        
+        loops.push_back((int)path.size());
+    }
+    
+    sort(g11.begin(), g11.end());
+    sort(g12.begin(), g12.end());
+    sort(g22.begin(), g22.end());
+    sort(loops.begin(), loops.end());
+    
+    cout << "g1-g1 paths: "; for (int i=0; i<(int)g11.size(); i++) cout << g11[i] << " "; cout << endl;
+    cout << "g2-g2 paths: "; for (int i=0; i<(int)g22.size(); i++) cout << g22[i] << " "; cout << endl;
+    cout << "g1-g2 paths: "; for (int i=0; i<(int)g12.size(); i++) cout << g12[i] << " "; cout << endl;
+    cout << "loops: ";   for (int i=0; i<(int)loops.size(); i++) cout << loops[i] << " "; cout << endl;
+    
+    vector<ull> F(N+1); F[0] = 1; for (ull n=1; n<=N; n++) F[n] = F[n-1]*n % Q;
+    
+    ans = F[G0.size()];
+    ull cur = 1, cnt = 0;
+    for (int i=0; i<(int)g11.size(); i++) {
+        if (g11[i] != cur) {
+            ans *= F[cnt]; ans %= Q;
+            ans *= powmod(2,cnt,Q); ans %= Q;
+            cur = g11[i];
+            cnt = 1;
+        }
+        else cnt++;
+    }
+    cur = 1, cnt = 0;
+    for (int i=0; i<(int)g22.size(); i++) {
+        if (g22[i] != cur) {
+            ans *= F[cnt]; ans %= Q;
+            ans *= powmod(2,cnt,Q); ans %= Q;
+            cur = g22[i];
+            cnt = 1;
+        }
+        else cnt++;
+    }
+    cur = 1, cnt = 0;
+    for (int i=0; i<(int)g12.size(); i++) {
+        if (g12[i] != cur) {
+            ans *= F[cnt]; ans %= Q;
+            cur = g12[i];
+            cnt = 1;
+        }
+        else cnt++;
+    }
+    cur = 1, cnt = 0;
+    for (int i=0; i<(int)loops.size(); i++) {
+        if (loops[i] != cur) {
+            ans *= F[cnt]; ans %= Q;
+            ans *= powmod(cur,cnt,Q); ans %= Q;
+            cur = loops[i];
+            cnt = 1;
+        }
+        else cnt++;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
