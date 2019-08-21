@@ -1051,65 +1051,72 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-vector<ull> Fact(15);
-vector<vector<int>> D;
+vector<ll> Fact(21);
 
-ull mult (const vector<int> &a)
+ll BB (int n, int k)
 {
-    ull m = Fact[(int)a.size()], cnt = 1;
-    for (int i=1; i<(int)a.size(); i++) {
-        if (a[i] == a[i-1]) cnt++;
-        else {
-            m /= Fact[cnt];
-            cnt = 1;
-        }
-    }
-    return m / Fact[cnt];
+    return Fact[n]/(Fact[k]*Fact[n-k]);
 }
 
-ull unite_bits (ull n, ull m)
+vector<pair<bool,pii>> groups; // true = G (no skip allowed), false = F (one skip allowed)
+vector<vector<ll>> A; // transition matrix
+vector<ll> G_coeffs, F_coeffs;
+const int M = 20;
+const int Q = 1000000000;
+int N;
+
+void prepare()
 {
-    vector<int> d((int)D[0].size());
-    for (int i=0; i<(int)D[n].size(); i++) {
-        if (D[n][i] + D[m][i]) d[i] = 1;
+    Fact[0] = 1; for (ull n=1; n<=20; n++) Fact[n] = Fact[n-1]*n;
+    // fill G subgroups
+    for (int n1=1; n1<=M; n1++) for (int n2=0; n1+n2<=M; n2++) {
+        int n3 = M-n1-n2;
+        groups.push_back(mp(true,mp(n1,n2)));
+        G_coeffs.push_back(Fact[M]/(Fact[n1]*Fact[n2]*Fact[n3]) % Q);
+        F_coeffs.push_back(0);
     }
-    return from_digits(d,2);
+    // fill F subgroups
+    for (int n1=0; n1<=M; n1++) for (int n2=0; n1+n2<=M; n2++) {
+        if (n1+n2 == 0) continue;
+        int n3 = M-n1-n2;
+        groups.push_back(mp(false,mp(n1,n2)));
+        G_coeffs.push_back(0);
+        F_coeffs.push_back(Fact[M]/(Fact[n1]*Fact[n2]*Fact[n3]) % Q);
+    }
+    N = (int)groups.size();
+    cout << "Groups size: " << N << endl;
+//    for (int i=0; i<N; i++) {
+//        cout << (groups[i].fs ? "G " : "F ") << groups[i].sc.fs << " " << groups[i].sc.sc << endl;
+//    }
 }
 
-vector<vector<int>> paths[25];
-
-ull F (int n, int m)
+int group_id (pair<bool,pii> p)
 {
-    const ull N = power(2,n);
-    D = vector<vector<int>>(N);
-    for (ull i=0; i<N; i++) D[i] = digits(i,2,n);
-    
-    vector<ull> p(paths[n].size());
-    vector<vector<ull>> dp(2*m+1);
-    for (int i=1; i<=2*m; i++) dp[i] = vector<ull>(N);
-    
-    for (int i=0; i<(int)paths[n].size(); i++) {
-        vector<int> d(n);
-        for (int j=0; j<(int)paths[n][i].size(); j++) d[paths[n][i][j]] = true;
-        dp[1][from_digits(d,2)] = 1;
-        p[i] = from_digits(d,2);
-    }
-    
-    for (int k=1; k<2*m; k++) {
-        for (ull i=0; i<N; i++) {
-            
-            if (dp[k][i] == 0) continue;
-            for (int j=0; j<(int)paths[n].size(); j++) {
-                ull s = unite_bits(i,p[j]);
-                dp[k+1][s] += dp[k][i];
-            }
+    for (int i=0; i<N; i++) if (p == groups[i]) return i;
+    cout << "FATAL ERROR\n";
+    return -1;
+}
+
+void fill_matrix()
+{
+    for (int g=0; g<N; g++) {
+        A.push_back(vector<ll>(N));
+        int n1 = groups[g].sc.fs, n2 = groups[g].sc.sc, n3 = M-n1-n2;
+        bool isG = groups[g].fs;
+        if (n1 == 0) { // must be F type
+            A[g][group_id(mp(true,mp(n2,n3)))] = 1;
+            continue;
+        }
+        for (int k1=0; k1<=n1; k1++) for (int k2=0; k1+k2<=n1; k2++) {
+            int k3 = n1-k1-k2;
+            int new_n1 = n2+k1, new_n2 = n3+k2; // new_n3 = k3
+            if (new_n1 + new_n2 == 0) continue;
+            if (new_n1 == 0 && isG) continue;
+            A[g][group_id(mp(isG,mp(new_n1,new_n2)))] = Fact[n1]/(Fact[k1]*Fact[k2]*Fact[k3]) % Q;
         }
     }
-    
-    ull res = dp[2*m][N-1];
-    for (ull s=1; s<N; s*=2) res += dp[2*m][N-1-s];
-    
-    return res;
+    //for (int g=0; g<N; g++) show(A[g]);
+    //show(F_coeffs);
 }
 
 int main() {
@@ -1123,25 +1130,14 @@ int main() {
     
     ull ans = 0;
     
-    Fact[0] = 1; for (ull n=1; n<15; n++) Fact[n] = Fact[n-1]*n;
+    prepare();
+    fill_matrix();
     
-    paths[1].push_back({0});
-    paths[2].push_back({0,1});
-    paths[3].push_back({0,2}); paths[3].push_back({0,1,2});
-    
-    cout << 3 << " " << F(3,2) << endl;
-    
-    for (int n=4; n<19; n++) {
-        
-        for (int k=n-3; k<n; k++) for (int i=0; i<(int)paths[k].size(); i++) {
-            vector<int> p = paths[k][i];
-            p.push_back(n-1);
-            paths[n].push_back(p);
-            if (n == 4) show(p);
-        }
-        
-        cout << n << " " << F(n,2) << endl;
-    }
+    Matrix a(A);
+    a.Q = Q;
+    a = matrix_power(a,power(10,12)-1);
+    int g = group_id(mp(true,mp(M,0)));
+    ans = (a[N-1][g] + a[N-1][N-1]) % Q;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
