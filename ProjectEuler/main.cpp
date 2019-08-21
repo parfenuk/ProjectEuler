@@ -1052,12 +1052,6 @@ int random_integer (int from, int to)
 }
 
 vector<ll> Fact(21);
-
-ll BB (int n, int k)
-{
-    return Fact[n]/(Fact[k]*Fact[n-k]);
-}
-
 vector<pair<bool,pii>> groups; // true = G (no skip allowed), false = F (one skip allowed)
 vector<vector<ll>> A; // transition matrix
 vector<ll> G_coeffs, F_coeffs;
