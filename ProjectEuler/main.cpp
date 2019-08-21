@@ -1051,6 +1051,67 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<ull> Fact(15);
+vector<vector<int>> D;
+
+ull mult (const vector<int> &a)
+{
+    ull m = Fact[(int)a.size()], cnt = 1;
+    for (int i=1; i<(int)a.size(); i++) {
+        if (a[i] == a[i-1]) cnt++;
+        else {
+            m /= Fact[cnt];
+            cnt = 1;
+        }
+    }
+    return m / Fact[cnt];
+}
+
+ull unite_bits (ull n, ull m)
+{
+    vector<int> d((int)D[0].size());
+    for (int i=0; i<(int)D[n].size(); i++) {
+        if (D[n][i] + D[m][i]) d[i] = 1;
+    }
+    return from_digits(d,2);
+}
+
+vector<vector<int>> paths[25];
+
+ull F (int n, int m)
+{
+    const ull N = power(2,n);
+    D = vector<vector<int>>(N);
+    for (ull i=0; i<N; i++) D[i] = digits(i,2,n);
+    
+    vector<ull> p(paths[n].size());
+    vector<vector<ull>> dp(2*m+1);
+    for (int i=1; i<=2*m; i++) dp[i] = vector<ull>(N);
+    
+    for (int i=0; i<(int)paths[n].size(); i++) {
+        vector<int> d(n);
+        for (int j=0; j<(int)paths[n][i].size(); j++) d[paths[n][i][j]] = true;
+        dp[1][from_digits(d,2)] = 1;
+        p[i] = from_digits(d,2);
+    }
+    
+    for (int k=1; k<2*m; k++) {
+        for (ull i=0; i<N; i++) {
+            
+            if (dp[k][i] == 0) continue;
+            for (int j=0; j<(int)paths[n].size(); j++) {
+                ull s = unite_bits(i,p[j]);
+                dp[k+1][s] += dp[k][i];
+            }
+        }
+    }
+    
+    ull res = dp[2*m][N-1];
+    for (ull s=1; s<N; s*=2) res += dp[2*m][N-1-s];
+    
+    return res;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1122,26 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    Fact[0] = 1; for (ull n=1; n<15; n++) Fact[n] = Fact[n-1]*n;
+    
+    paths[1].push_back({0});
+    paths[2].push_back({0,1});
+    paths[3].push_back({0,2}); paths[3].push_back({0,1,2});
+    
+    cout << 3 << " " << F(3,2) << endl;
+    
+    for (int n=4; n<19; n++) {
+        
+        for (int k=n-3; k<n; k++) for (int i=0; i<(int)paths[k].size(); i++) {
+            vector<int> p = paths[k][i];
+            p.push_back(n-1);
+            paths[n].push_back(p);
+            if (n == 4) show(p);
+        }
+        
+        cout << n << " " << F(n,2) << endl;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
