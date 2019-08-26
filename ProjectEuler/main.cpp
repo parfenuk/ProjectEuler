@@ -1051,35 +1051,39 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-dd a, b;
-map<ull,dd> M;
-
-dd C (ull n)
+dd value (ll N, dd a, dd b)
 {
-    if (n < 2) return 0;
-    if (M[n]) return M[n];
+    if (a > b) return value(N,b,a);
     
-    ull lb = 1, ub = n;
-    dd res = 1000000000;
-    while (lb <= ub) {
-        bool equal = (lb == ub);
-        ull m = (lb+ub)/2;
-        dd l = b+C(m-1), r = a+C(n-m);
-        if (m == 1) l = 0;
-        if (m == n) r = 0;
-        if (l == r) { M[n] = r; return r; }
-        if (l < r) {
-            if (r < res) res = r;
-            lb = m+1;
+    vector<pair<dd,pll>> dp;
+    dp.push_back(mp(0,mp(0,1)));
+    
+    while (dp.back().sc.sc < N) {
+        
+        dd D = 1000000000, d = D; // INF
+        ll n = dp.back().sc.sc + 1;
+        pll p;
+        int up = (int)dp.size()-1;
+        for (int i=0; i<(int)dp.size(); i++) {
+            
+            ll k = dp[i].sc.sc + 1; // guessed number: k-1 numbers to the left, n-k numbers to the right
+            if (k == n) d = a + dp[i].fs;
+            else {
+                while (dp[up].sc.fs > n-k) up--;
+                d = max(a+dp[i].fs, b+dp[up].fs);
+            }
+            if (d < D) {
+                D = d;
+                if (k == n) p = mp(n,n);
+                else p = mp(n,dp[i].sc.sc+dp[up].sc.sc+1);
+            }
         }
-        else {
-            if (l < res) res = l;
-            ub = m;
-        }
-        if (equal) break;
+        if (fabs(D-dp.back().fs) < 0.00000001) dp[dp.size()-1].sc.sc = p.sc;
+        else dp.push_back(mp(D,p));
     }
-    M[n] = res;
-    return res;
+    
+    cout << dp.size() << " ";
+    return dp.back().fs;
 }
 
 int main() {
@@ -1092,10 +1096,20 @@ int main() {
 #endif
     
     ull ans = 0;
+    dd res = 0;
+
+    const ll N = power(10,12);
+    vector<dd> F(3,1);
+    for (int i=3; i<=30; i++) F.push_back(F[i-1]+F[i-2]);
     
-    a = sqrt(5.0); b = sqrt(7.0);
-    cout << fixed << C(1000000000000);
+    for (int n=1; n<=30; n++) {
+        dd a = sqrt((dd)n), b = sqrt(F[n]);
+        dd f = value(N,a,b);
+        cout << " F(" << n << ") = " << fixed << f << endl;
+        res += f;
+    }
     
+    cout << fixed << res;
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
