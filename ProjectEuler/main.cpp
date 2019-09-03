@@ -1051,6 +1051,57 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const int Q = 1000000000;
+vector<ll> small_phi;
+map<ll,ll> Euler_sum;
+
+ll PHI (ll n)
+{
+    if (n < (ll)small_phi.size()) return small_phi[n];
+    if (Euler_sum.find(n) != Euler_sum.end()) return Euler_sum[n];
+    
+    ll res;
+    if (n % 2) { res = (n+1)/2 % Q; res = res*(n%Q) % Q; }
+    else { res = n/2 % Q; res = res*((n+1)%Q) % Q; }
+    ll m = integer_part_sqrt(n);
+    for (ll i=2; i<=m; i++) { res -= PHI(n/i); if (res < 0) res += Q; }
+    ll ub = m; if (m == n/m) ub--;
+    for (ll i=1; i<=ub; i++) {
+        ll range = (n/i - n/(i+1)) % Q;
+        res -= PHI(i)*range;
+        res %= Q; if (res < 0) res += Q;
+    }
+    
+    Euler_sum[n] = res;
+    return res;
+}
+
+void fill_naive_PHI (ll n)
+{
+    EulerPhiSieve(n);
+    ll res = 0;
+    small_phi.push_back(0);
+    for (int i=1; i<=n; i++) { res += eulerPhi[i]; if (res >= Q) res -= Q; small_phi.push_back(res); }
+}
+
+map<ll,ll> M[18];
+vector<ll> next_prime(18);
+
+ll S (ll N, ll prime)
+{
+    if (N == 0) return 0;
+    if (prime == 0) return PHI(N);
+    if (M[prime].find(N) != M[prime].end()) return M[prime][N];
+    
+    ll np = next_prime[prime];
+    ll res = (prime-1)*S(N,np) % Q;
+    res += S(N/prime,prime);
+    if (res >= Q) res -= Q;
+    M[prime][N] = res;
+    
+    return res;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1061,6 +1112,16 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    fill_naive_PHI(8000000);
+    next_prime[2] = 3;
+    next_prime[3] = 5;
+    next_prime[5] = 7;
+    next_prime[7] = 11;
+    next_prime[11] = 13;
+    next_prime[13] = 17;
+    const ll N = 100000000000;
+    cout << S(N,2) << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
