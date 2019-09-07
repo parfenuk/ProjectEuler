@@ -1076,19 +1076,7 @@ int main() {
             while (true) { cx += vx; cy += vy; if (cx > N || cy > N) break; cnt++; }
             if (cnt >= 3) {
                 ll sum = (powmod(2,cnt,Q) - 1 - cnt*(cnt-1)/2 - cnt) % Q;
-                non_titanic += sum;
-                non_titanic %= Q;
-                if (non_titanic < 0) non_titanic += Q;
-            }
-        }
-        if (!vx || !vy) continue;
-        // iterate (vx,-vy)
-        for (int x=0; x<=N; x++) for (int y=0; y<=N; y++) {
-            if (x-vx >= 0 && y+vy <= N) continue;
-            int cnt = 1, cx = x, cy = y;
-            while (true) { cx += vx; cy -= vy; if (cx > N || cy < 0) break; cnt++; }
-            if (cnt >= 3) {
-                ll sum = (powmod(2,cnt,Q) - 1 - cnt*(cnt-1)/2 - cnt) % Q;
+                if (vx && vy) sum *= 2;
                 non_titanic += sum;
                 non_titanic %= Q;
                 if (non_titanic < 0) non_titanic += Q;
