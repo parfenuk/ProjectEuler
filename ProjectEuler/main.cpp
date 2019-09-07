@@ -625,6 +625,21 @@ ull power_fact (ull n, ull p) // n! = S * p^x, returns x, p is prime
     return cnt;
 }
 
+ull square_representations_count (ull n) // n = a^2 + b^2, 0 < a <= b
+{
+    vector<pull> f = factorize(n);
+    int B = 1, a0 = 0;
+    for (int i=0; i<(int)f.size(); i++) {
+        if (f[i].fs == 2) a0 = (int)f[i].sc;
+        else if (f[i].fs % 4 == 1) B *= (f[i].sc+1);
+        else if (f[i].fs % 4 == 3 && f[i].sc % 2) return 0;
+    }
+    if (B % 2 == 0) return B/2;
+    if (a0 % 2 == 0) B--;
+    else B++;
+    return B/2;
+}
+
 bool isPractical (ull n)
 {
     vector<ull> d = Divisors(n);
