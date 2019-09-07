@@ -1054,13 +1054,49 @@ int random_integer (int from, int to)
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
-    ios_base::sync_with_stdio(false);
+    //ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     //freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    const int N = 111;
+    const int Q = 100000000;
+    
+    ll non_titanic = 1 + (N+1)*(N+1);
+    
+    for (int vx=0; vx<=N/2; vx++) for (int vy=0; vy<=N/2; vy++) {
+        if (GCD(vx,vy) != 1) continue;
+        // iterate (vx,vy)
+        for (int x=0; x<=N; x++) for (int y=0; y<=N; y++) {
+            if (x-vx >= 0 && y-vy >= 0) continue;
+            int cnt = 1, cx = x, cy = y;
+            while (true) { cx += vx; cy += vy; if (cx > N || cy > N) break; cnt++; }
+            if (cnt >= 3) {
+                ll sum = (powmod(2,cnt,Q) - 1 - cnt*(cnt-1)/2 - cnt) % Q;
+                non_titanic += sum;
+                non_titanic %= Q;
+                if (non_titanic < 0) non_titanic += Q;
+            }
+        }
+        if (!vx || !vy) continue;
+        // iterate (vx,-vy)
+        for (int x=0; x<=N; x++) for (int y=0; y<=N; y++) {
+            if (x-vx >= 0 && y+vy <= N) continue;
+            int cnt = 1, cx = x, cy = y;
+            while (true) { cx += vx; cy -= vy; if (cx > N || cy < 0) break; cnt++; }
+            if (cnt >= 3) {
+                ll sum = (powmod(2,cnt,Q) - 1 - cnt*(cnt-1)/2 - cnt) % Q;
+                non_titanic += sum;
+                non_titanic %= Q;
+                if (non_titanic < 0) non_titanic += Q;
+            }
+        }
+    }
+    
+    ans = (powmod(2,(N+1)*(N+1),Q) + Q - non_titanic) % Q;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
