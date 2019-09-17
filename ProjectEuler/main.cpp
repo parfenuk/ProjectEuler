@@ -1112,7 +1112,7 @@ struct expression
     ll get_value() { // assuming all variables are known
         if (is_unit()) return M[S].fs;
         ll a = left().get_value(), b = right().get_value();
-        return ((1+a+b)*(1+a+b)+b-a);
+        return ((1+a+b)*(1+a+b)+b-a) % Q;
     }
 };
 
