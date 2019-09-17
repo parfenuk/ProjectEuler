@@ -49,6 +49,7 @@ using namespace std;
 #define pll pair<ll,ll>
 #define pull pair<ull,ull>
 #define pdd pair<dd, dd>
+#define pss pair<string,string>
 #define ppii pair<pair<int,int>, pair<int,int>>
 #define ppll pair<pair<ll,ll>, pair<ll,ll>>
 #define mp make_pair
@@ -1066,16 +1067,127 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const int Q = 1000000000;
+map<string,pair<ll,bool>> M; // true = dependent, false = free
+
+struct expression
+{
+    string S;
+    expression() {}
+    expression(string s) { S = s; }
+    bool is_unit() { return S[0] != 'I'; }
+    pss split() {
+        if (is_unit()) return mp(S,S);
+        int balance = 0, comma = -1;
+        for (int i=0; i<(int)S.length(); i++) {
+            if (S[i] == '(') balance++;
+            if (S[i] == ')') balance--;
+            if (S[i] == ',' && balance == 1) { comma = i; break; }
+        }
+        return mp(S.substr(2,comma-2),S.substr(comma+1,S.length()-comma-2));
+    }
+    expression left() { return expression(split().fs); }
+    expression right() { return expression(split().sc); }
+    set<string> get_all_variables() {
+        set<string> s;
+        queue<string> q;
+        q.push(S);
+        while (!q.empty()) {
+            expression E(q.front());
+            q.pop();
+            if (E.is_unit()) { s.insert(E.S); continue; }
+            pss p = E.split();
+            q.push(p.fs);
+            q.push(p.sc);
+        }
+        return s;
+    }
+    bool can_be_calculated() { // check if all variables are known
+        set<string> s = get_all_variables();
+        for (set<string>::iterator it=s.begin(); it!=s.end(); it++) {
+            if (M[*it].sc && M[*it].fs == -1) return false;
+        }
+        return true;
+    }
+    ll get_value() { // assuming all variables are known
+        if (is_unit()) return M[S].fs;
+        ll a = left().get_value(), b = right().get_value();
+        return ((1+a+b)*(1+a+b)+b-a);
+    }
+};
+
+ll min_value (expression e1, expression e2)
+{
+    M.clear();
+    vector<pss> equations; // <variable, expression>
+    set<string> s = e1.get_all_variables(); for (set<string>::iterator it=s.begin(); it!=s.end(); it++) M[*it] = mp(0,false);
+    s = e2.get_all_variables();             for (set<string>::iterator it=s.begin(); it!=s.end(); it++) M[*it] = mp(0,false);
+    
+    queue<pss> q;
+    q.push(mp(e1.S,e2.S));
+    while (!q.empty()) {
+        
+        pss p = q.front();
+        q.pop();
+        expression E1(p.fs), E2(p.sc);
+        if      (E1.is_unit()) { if (E1.S != E2.S) { equations.push_back(mp(E1.S,E2.S)); M[E1.S] = mp(-1,true); }}
+        else if (E2.is_unit()) { if (E1.S != E2.S) { equations.push_back(mp(E2.S,E1.S)); M[E2.S] = mp(-1,true); }}
+        else {
+            pss p1 = E1.split(), p2 = E2.split();
+            q.push(mp(p1.fs,p2.fs));
+            q.push(mp(p1.sc,p2.sc));
+        }
+    }
+    
+    int n = (int)equations.size();
+    int solved_equations = 0;
+    vector<bool> solved(n);
+    while (solved_equations != n) {
+        
+        int current_solved = 0;
+        for (int i=0; i<n; i++) {
+            if (solved[i]) continue;
+            expression E(equations[i].sc);
+            string var = equations[i].fs;
+            if (!E.can_be_calculated()) continue;
+            ll val = E.get_value();
+            if (M[var].fs != -1 && M[var].fs != val) return 0;
+            M[var].fs = val;
+            current_solved++;
+            solved[i] = true;
+        }
+        
+        if (current_solved == 0) return 0;
+        solved_equations += current_solved;
+    }
+    
+    if (e1.get_value() != e2.get_value()) cout << "ALARM!\n";
+    return e1.get_value();
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    vector<expression> E;
+    for (int i=0; i<149; i++) {
+        string S; cin >> S;
+        E.push_back(expression(S));
+    }
+    
+    for (int i=0; i<149; i++) for (int j=i+1; j<149; j++) {
+        ll d = min_value(E[i],E[j]);
+        cout << i << " " << j << " " << d << endl;
+        ans += d;
+        if (ans >= Q) ans -= Q;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
