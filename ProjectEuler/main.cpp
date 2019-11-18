@@ -1062,35 +1062,47 @@ int main() {
     
     ull ans = 0;
     
-    const int MAX = 14;
-    const string S = "B97CAA8C99888879987656C92AA87655675533a2b3f";
-    ans = (int)S.length();
-    vector<int> a(MAX+1);
-    vector<int> negative_values;
-    for (int i=0; i<(int)S.length(); i++) {
-        if (S[i] >= '0' && S[i] <= '9') a[S[i]-'0']++; // 0-9
-        else if (S[i] >= 'A' && S[i] <= 'Z') a[S[i]-'A'+10]++; // A-Z, 10-35
-        else negative_values.push_back(S[i]-'a'+1); // a-z, -1..-26
-    }
-    int most_appeared = 0;
-    dd average = 0;
-    for (int i=MAX; i>=0; i--) {
-        cout << a[i];
-        if (i) cout << "-";
-        else cout << endl;
-        if (a[i] > a[most_appeared]) most_appeared = i;
-        average += i*a[i];
-    }
-    if (!negative_values.empty()) {
-        cout << "Negative values: ";
-        for (int i=0; i<(int)negative_values.size(); i++) {
-            cout << -negative_values[i] << " ";
-            average -= negative_values[i];
+//    for (int M=1; M<=30; M++) {
+//
+//        ull N = power(2,M);
+//        vector<int> d(M);
+//        dd cnt_good = 0;
+//        for (ull n=0; n<N; n++) {
+//            dd a = 0;
+//            for (int i=0; i<M; i++) a += (dd)d[i]/power(i+1,2);
+//            if (a > 0.5) cnt_good++;
+//            // get next d
+//            for (int i=M-1; i>=0; i--) {
+//                if (d[i]) continue;
+//                d[i] = 1; for (int j=i+1; j<M; j++) d[j] = 0; break;
+//            }
+//        }
+//        cout << fixed << cnt_good/N << " ";
+//        cout << (int)cnt_good << " " << N << endl;
+//    }
+    
+    vector<pdd> a;
+    a.push_back(mp(0,PI*PI/6));
+    dd res = 0, p = 1;
+    
+    for (int M=1; M<=120; M++) {
+        
+        p /= 2;
+        vector<pdd> b;
+        for (int i=0; i<(int)a.size(); i++) {
+            // at this point value < 0.5, value + rest > 0.5
+            dd value = a[i].fs, rest = a[i].sc;
+            dd add = 1.0/(M*M);
+            // add 0
+            if (value + rest - add > 0.5) b.push_back(mp(value,rest-add));
+            // add 1
+            if (value + add > 0.5) res += p;
+            else b.push_back(mp(value+add,rest-add));
         }
-        cout << endl;
+        cout << M << " " << fixed << res << " ";
+        cout << b.size() << endl;
+        a.swap(b);
     }
-    cout << "Most appeared: " << most_appeared << endl;
-    cout << "Average: " << fixed << average/S.length() << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
