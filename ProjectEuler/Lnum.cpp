@@ -70,7 +70,6 @@ Lnum::Lnum (unsigned long long n)
     }
 }
 
-
 Lnum::Lnum (string S)
 {
     if (S.empty()) { z[0] = 0; minus = false; size = 1; return; }
@@ -80,19 +79,17 @@ Lnum::Lnum (string S)
     }
     else minus = false;
     size = 0;
-    for (int i=(int)S.length(); i>0; i-=9)
-        if (i < 9)
-            z[size++] = (atoi ( S.substr(0, i).c_str() ) );
-        else
-            z[size++] = (atoi ( S.substr(i-9, 9).c_str() ) );
+    for (int i=(int)S.length(); i>0; i-=9) {
+        if (i < 9) z[size++] = (atoi(S.substr(0,i).c_str()));
+        else z[size++] = (atoi(S.substr(i-9,9).c_str()));
+    }
 }
 
 void Lnum::show()
 {
     if (minus) cout << "-";
-    printf ("%d", !size ? 0 : z[size-1]);
-    for (int i=size-2; i>=0; --i)
-        printf ("%09d", z[i]);
+    printf("%d", !size ? 0 : z[size-1]);
+    for (int i=size-2; i>=0; i--) printf("%09d", z[i]);
 }
 
 int Lnum::digits_count() // warning - only with BASE == 10^9 works!
@@ -100,7 +97,6 @@ int Lnum::digits_count() // warning - only with BASE == 10^9 works!
     int d = 9*(size-1);
     int n = z[size-1];
     while (n) {
-        
         n /= 10;
         d++;
     }

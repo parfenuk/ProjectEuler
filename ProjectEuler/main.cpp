@@ -138,11 +138,11 @@ ull power (ull n, int k)
     return s;
 }
 
-ull powmod(ull a, ull k, int mod = 0)
+ll powmod (ll a, ll k, int mod = 0)
 {
-    ull b = 1;
+    ll b = 1;
     while (k) {
-        if (k%2==0) {
+        if (k%2 == 0) {
             k /= 2;
             a = a*a;
             if (mod) a %= mod;
@@ -156,7 +156,7 @@ ull powmod(ull a, ull k, int mod = 0)
     return b;
 }
 
-ull inverse (ull a, ull mod, ull p = 0) // returns x: a*x % mod == 1. mod = p^n, GCD(a,mod) = 1
+ll inverse (ll a, ll mod, ll p = 0) // returns x: a*x % mod == 1. mod = p^n, GCD(a,mod) = 1
 {
     if (p == 0) p = mod;
     return powmod(a,mod-mod/p-1,(int)mod);
