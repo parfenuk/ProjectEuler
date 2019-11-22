@@ -1066,16 +1066,240 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+struct figure {
+
+    int id;   // 0-11
+    int ornt; // 0-7, orientation
+
+    int W, H;
+    bool A[5][5];
+    vector<pii> points;
+
+    figure(){}
+    figure(const string &s, int _id);
+    bool *operator[] (int k) { return A[k]; }
+    void show();
+    void rotate();
+    void reflect();
+    void fill_points() { points.clear(); for (int i=0; i<W; i++) for (int j=0; j<H; j++) if (A[i][j]) points.push_back(mp(i,j)); }
+};
+
+figure::figure (const string &s, int _id)
+{
+    id = _id;
+    for (int i=0; i<5; i++) for (int j=0; j<5; j++) A[i][j] = false;
+
+    int r = s[0] - '0', c = s[1] - '0';
+    W = r+1, H = c+1;
+    A[r][c] = true;
+    for (int i=2; i<(int)s.length(); i++) {
+
+        if (s[i] == 'l') c--;
+        if (s[i] == 'r') { c++; if (c == H) H++; }
+        if (s[i] == 'u') r--;
+        if (s[i] == 'd') { r++; if (r == W) W++; }
+
+        A[r][c] = true;
+    }
+}
+
+void figure::show()
+{
+    for (int i=0; i<W; i++) {
+        for (int j=0; j<H; j++) cout << (A[i][j] ? '*' : 'o');
+        cout << endl;
+    }
+}
+
+void figure::rotate()
+{
+    bool B[5][5];
+    for (int i=0; i<5; i++) for (int j=0; j<5; j++) B[i][j] = false;
+    for (int i=0; i<W; i++) for (int j=0; j<H; j++) B[j][W-i-1] = A[i][j];
+    for (int i=0; i<5; i++) for (int j=0; j<5; j++) A[i][j] = B[i][j];
+    swap(W,H);
+}
+
+void figure::reflect()
+{
+    bool B[5][5];
+    for (int i=0; i<5; i++) for (int j=0; j<5; j++) B[i][j] = false;
+    for (int i=0; i<W; i++) for (int j=0; j<H; j++) B[i][j] = A[i][H-1-j];
+    for (int i=0; i<5; i++) for (int j=0; j<5; j++) A[i][j] = B[i][j];
+}
+
+vector<figure> F[12]; // F I L N P T U V W X Y Z
+
+void create_8_figure (const string &s, int id)
+{
+    F[id].push_back(figure(s,id)); F[id][0].ornt = 0;
+    for (int i=1; i<8; i++) {
+        F[id].push_back(F[id].back());
+        if (i == 4) F[id].back().reflect();
+        else F[id].back().rotate();
+        F[id].back().ornt = i;
+    }
+}
+
+void create_4_figure (const string &s, int id)
+{
+    F[id].push_back(figure(s,id)); F[id][0].ornt = 0;
+    for (int i=1; i<4; i++) {
+        F[id].push_back(F[id].back());
+        F[id].back().rotate();
+        F[id].back().ornt = i;
+    }
+}
+
+void create_figures()
+{
+    create_8_figure("00rdrld",0); // F creation
+    
+    // I creation
+    F[1].push_back(figure("00dddd",1)); F[1][0].ornt = 0;
+    F[1].push_back(F[1].back()); F[1][1].rotate(); F[1][1].ornt = 1;
+    
+    create_8_figure("00dddr",2);   // L creation
+    create_8_figure("00ddrd",3);   // N creation
+    create_8_figure("00rdld",4);   // P creation
+    create_4_figure("00rrldd",5);  // T creation
+    create_4_figure("00drru",6);   // U creation
+    create_4_figure("00ddrr",7);   // V creation
+    create_4_figure("00drdr",8);   // W creation
+    F[9].push_back(figure("01drllrd",9)); F[9][0].ornt = 0; // X creation
+    create_8_figure("00drldd",10); // Y creation
+    
+    // Z creation
+    F[11].push_back(figure("00rddr",11)); F[11][0].ornt = 0;
+    F[11].push_back(F[11].back()); F[11][1].rotate();  F[11][1].ornt = 1;
+    F[11].push_back(F[11].back()); F[11][2].reflect(); F[11][2].ornt = 2;
+    F[11].push_back(F[11].back()); F[11][3].rotate();  F[11][3].ornt = 3;
+    
+    for (int i=0; i<12; i++) for (int j=0; j<(int)F[i].size(); j++) F[i][j].fill_points();
+}
+
+int N, M;
+vector<string> Board;
+vector<pair<pii,pii>> solution; // <<type,orientation>,cell>
+vector<bool> used(12);
+pii cur_cell;
+pii cur_figure = mp(0,-1);
+
+void get_next_cell()
+{
+    for (int i=cur_cell.fs; i<N; i++) {
+        int s = (i == cur_cell.fs ? cur_cell.sc+1 : 0);
+        for (int j=s; j<M; j++) if (Board[i][j] == 'o') { cur_cell = mp(i,j); return; }
+    }
+    cur_cell = mp(-1,-1);
+}
+
+bool try_put_figure (int id, int ornt)
+{
+    // offset
+    int x = cur_cell.fs - F[id][ornt].points[0].fs;
+    int y = cur_cell.sc - F[id][ornt].points[0].sc;
+    
+    for (int i=0; i<5; i++) {
+        int r = F[id][ornt].points[i].fs + x;
+        int c = F[id][ornt].points[i].sc + y;
+        if (r < 0 || r >= N || c < 0 || c >= M || Board[r][c] == '*') return false;
+    }
+    
+    // put it!
+    for (int i=0; i<5; i++) {
+        int r = F[id][ornt].points[i].fs + x;
+        int c = F[id][ornt].points[i].sc + y;
+        Board[r][c] = '*';
+    }
+    
+    return true;
+}
+
+bool put_figure()
+{
+    for (int i=cur_figure.fs; i<12; i++) {
+        if (used[i]) continue;
+        int s = (i == cur_figure.fs ? cur_figure.sc+1 : 0);
+        for (int j=s; j<(int)F[i].size(); j++) {
+            if (try_put_figure(i,j)) {
+                used[i] = true;
+                solution.push_back(mp(mp(i,j),cur_cell));
+                get_next_cell();
+                cur_figure = mp(0,-1);
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+bool remove_figure()
+{
+    if (solution.empty()) return false;
+    
+    int id = solution.back().fs.fs, ornt = solution.back().fs.sc;
+    used[id] = false;
+    cur_figure = mp(id,ornt);
+    cur_cell = solution.back().sc; solution.pop_back();
+    
+    int x = cur_cell.fs - F[id][ornt].points[0].fs;
+    int y = cur_cell.sc - F[id][ornt].points[0].sc;
+    
+    // remove it!
+    for (int i=0; i<5; i++) {
+        int r = F[id][ornt].points[i].fs + x;
+        int c = F[id][ornt].points[i].sc + y;
+        Board[r][c] = 'o';
+    }
+    
+    return true;
+}
+
+bool backtrack()
+{
+    while (cur_cell.fs != -1) {
+        bool q = put_figure();
+        if (!q && !remove_figure()) return false;
+    }
+    return true;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+
+    // create Board
+    string S; while (cin >> S) Board.push_back(S);
+    N = (int)Board.size(); M = (int)Board[0].length();
+    for (int i=0; i<N; i++) {
+        bool found = false;
+        for (int j=0; j<M; j++) if (Board[i][j] == 'o') { cur_cell = mp(i,j); found = true; break; }
+        if (found) break;
+    }
+    
+    create_figures();
+//    for (int i=0; i<12; i++) {
+//        cout << "FIGURE #" << i << endl;
+//        for (int j=0; j<(int)F[i].size(); j++) { F[i][j].show(); cout << endl; }
+//    }
+    if (!backtrack()) cout << "No solution";
+    else {
+        cout << "Found solution:\n";
+        for (int i=0; i<(int)solution.size(); i++) {
+            cout << solution[i].sc.fs << " " << solution[i].sc.sc << endl;
+            F[solution[i].fs.fs][solution[i].fs.sc].show(); cout << endl;
+        }
+    }
+    
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
