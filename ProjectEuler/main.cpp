@@ -1257,12 +1257,33 @@ bool remove_figure()
     return true;
 }
 
+ull cnt = 0;
+
+void print_solution()
+{
+//    for (int i=0; i<(int)solution.size(); i++) {
+//        if (solution[i].sc.sc < 6) cout << solution[i].fs.fs << " ";
+//    }
+//    cout << endl;
+}
+
 bool backtrack()
 {
+    // find any solution
     while (cur_cell.fs != -1) {
-        bool q = put_figure();
-        if (!q && !remove_figure()) return false;
+        if (!put_figure() && !remove_figure()) return false;
     }
+    // find all solutions and print its count
+//    while (true) {
+//        bool q = put_figure();
+//        if (q) {
+//            if (cur_cell.fs == -1) { cnt++; print_solution(); remove_figure(); }
+//        }
+//        else {
+//            if (!remove_figure()) break;
+//        }
+//    }
+//    cout << "solutions count: " << cnt << endl;
     return true;
 }
 
