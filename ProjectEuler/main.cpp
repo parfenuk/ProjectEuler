@@ -1265,6 +1265,12 @@ void print_solution()
 //        if (solution[i].sc.sc < 6) cout << solution[i].fs.fs << " ";
 //    }
 //    cout << endl;
+    // STANDARD OUTPUT
+//    cout << "Found solution:\n";
+//    for (int i=0; i<(int)solution.size(); i++) {
+//        cout << solution[i].sc.fs << " " << solution[i].sc.sc << endl;
+//        F[solution[i].fs.fs][solution[i].fs.sc].show(); cout << endl;
+//    }
 }
 
 bool backtrack()
