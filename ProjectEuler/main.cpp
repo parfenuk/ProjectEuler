@@ -1066,6 +1066,235 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const int Q = 1000000007;
+const int N = 10000;
+const ll I2 = inverse(2,Q);
+const ll I6 = inverse(6,Q);
+const ll I24 = inverse(24,Q);
+vector<ll> T[3]; // 0 - red, 1 - green, 2 - blue
+
+ll binom2 (ll n)
+{
+    ll s = n*(n+1) % Q;
+    s = s*I2 % Q;
+    return s;
+}
+
+ll binom3 (ll n)
+{
+    ll s = n*(n+1) % Q;
+    s = s*(n+2) % Q;
+    s = s*I6 % Q;
+    return s;
+}
+
+ll binom4 (ll n)
+{
+    ll s = n*(n+1) % Q;
+    s = s*(n+2) % Q;
+    s = s*(n+3) % Q;
+    s = s*I24 % Q;
+    return s;
+}
+
+ll enumerate_2 (ll n, ll k) // n - count, k - colour
+{
+    ll res = 0;
+    for (ll a=1; a<n; a++) {
+        ll b = n-a;
+        if (b < a) break;
+        ll add = 0;
+        if (a != b) add = T[k][a]*T[k][b] % Q;
+        else add = binom2(T[k][a]);
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_11 (ll n, ll k1, ll k2)
+{
+    ll res = 0;
+    for (ll a=1; a<n; a++) {
+        ll b = n-a;
+        res += T[k1][a]*T[k2][b];
+        res %= Q;
+    }
+    return res;
+}
+
+ll enumerate_3 (ll n, ll k)
+{
+    ll res = 0;
+    for (ll a=1; a<n; a++) for (ll b=a; a+b<n; b++) {
+        ll c = n-a-b;
+        if (c < b) break;
+        ll add = 0;
+        if (a == c) add = binom3(T[k][a]);
+        else if (a == b) add = binom2(T[k][a])*T[k][c];
+        else if (b == c) add = binom2(T[k][b])*T[k][a];
+        else { add = T[k][a]*T[k][b]%Q; add *= T[k][c]; }
+        add %= Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_21 (ll n, ll k1, ll k2) // k1,k1,k2 group
+{
+    ll res = 0;
+    for (ll a=1; a<n; a++) for (ll b=a; a+b<n; b++) {
+        ll c = n-a-b;
+        ll add = 0;
+        if (a == b) add = binom2(T[k1][a])*T[k2][c];
+        else { add = T[k1][a]*T[k1][b]%Q; add *= T[k2][c]; }
+        add %= Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_111 (ll n) // 0,1,2 group
+{
+    ll res = 0;
+    for (ll a=1; a<n; a++) for (ll b=1; a+b<n; b++) {
+        ll c = n-a-b;
+        ll add = T[0][a]*T[1][b] % Q;
+        add = add*T[2][c] % Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_4 (ll n, ll k) // here we require each subgroup being < n/2
+{
+    ll res = 0;
+    for (ll a=1; a<N/2; a++) for (ll b=a; b<N/2 && a+b<n; b++) for (ll c=b; c<N/2 && a+b+c<n; c++) {
+        ll d = n-a-b-c;
+        if (d < c) break;
+        if (d >= N/2) continue;
+        ll add = 0;
+        if (a == d) add = binom4(T[k][a]);
+        else if (a == c) add = binom3(T[k][a])*T[k][d];
+        else if (b == d) add = binom3(T[k][b])*T[k][a];
+        else if (a == b && c == d) add = binom2(T[k][a])*binom2(T[k][c]);
+        else if (a == b) { add = T[k][c]*binom2(T[k][a]) % Q; add *= T[k][d]; }
+        else if (b == c) { add = T[k][a]*binom2(T[k][b]) % Q; add *= T[k][d]; }
+        else if (c == d) { add = T[k][a]*binom2(T[k][c]) % Q; add *= T[k][b]; }
+        else { add = T[k][a]*T[k][b]%Q; add = add*(T[k][c]*T[k][d]%Q); }
+        add %= Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_31 (ll n, ll k1, ll k2) // here we require each subgroup being < n/2
+{
+    ll res = 0;
+    for (ll a=1; a<N/2; a++) for (ll b=a; b<N/2 && a+b<n; b++) for (ll c=b; c<N/2 && a+b+c<n; c++) {
+        ll d = n-a-b-c;
+        if (d >= N/2) continue;
+        ll add = 0;
+        if (a == c) add = binom3(T[k1][a])*T[k2][d];
+        else if (a == b) { add = binom2(T[k1][a])*T[k1][c] % Q; add *= T[k2][d]; }
+        else if (b == c) { add = binom2(T[k1][b])*T[k1][a] % Q; add *= T[k2][d]; }
+        else { add = T[k1][a]*T[k1][b]%Q; add = add*(T[k1][c]*T[k2][d]%Q); }
+        add %= Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_22 (ll n, ll k1, ll k2) // here we require each subgroup being < n/2
+{
+    ll res = 0;
+    for (ll a=1; a<N/2; a++) for (ll b=a; b<N/2 && a+b<n; b++) for (ll c=1; c<N/2 && a+b+c<n; c++) {
+        ll d = n-a-b-c;
+        if (d < c) break;
+        if (d >= N/2) continue;
+        ll add = 0;
+        if (a == b) add = binom2(T[k1][a]);
+        else add = T[k1][a]*T[k1][b] % Q;
+        if (c == d) add *= binom2(T[k2][c]);
+        else add *= (T[k2][c]*T[k2][d]%Q);
+        add %= Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_211 (ll n, ll k1, ll k2, ll k3) // here we require each subgroup being < n/2
+{
+    ll res = 0;
+    for (ll a=1; a<N/2; a++) for (ll b=a; b<N/2 && a+b<n; b++) for (ll c=1; c<N/2 && a+b+c<n; c++) {
+        ll d = n-a-b-c;
+        if (d >= N/2) continue;
+        ll add = 0;
+        if (a == b) add = binom2(T[k1][a]);
+        else add = T[k1][a]*T[k1][b] % Q;
+        add *= (T[k2][c]*T[k3][d]%Q);
+        add %= Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_3r (ll n, ll k)
+{
+    ll res = 0;
+    for (ll a=1; a<N/2 && a<n; a++) for (ll b=a; b<N/2 && a+b<n; b++) {
+        ll c = n-a-b;
+        if (c < b) break;
+        if (c >= N/2) continue;
+        ll add = 0;
+        if (a == c) add = binom3(T[k][a]);
+        else if (a == b) add = binom2(T[k][a])*T[k][c];
+        else if (b == c) add = binom2(T[k][b])*T[k][a];
+        else { add = T[k][a]*T[k][b]%Q; add *= T[k][c]; }
+        add %= Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_21r (ll n, ll k1, ll k2) // k1,k1,k2 group
+{
+    ll res = 0;
+    for (ll a=1; a<N/2 && a<n; a++) for (ll b=a; b<N/2 && a+b<n; b++) {
+        ll c = n-a-b;
+        if (c >= N/2) continue;
+        ll add = 0;
+        if (a == b) add = binom2(T[k1][a])*T[k2][c];
+        else { add = T[k1][a]*T[k1][b]%Q; add *= T[k2][c]; }
+        add %= Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
+ll enumerate_111r (ll n) // 0,1,2 group
+{
+    ll res = 0;
+    for (ll a=1; a<N/2 && a<n; a++) for (ll b=1; b<N/2 && a+b<n; b++) {
+        ll c = n-a-b;
+        if (c >= N/2) continue;
+        ll add = T[0][a]*T[1][b] % Q;
+        add = add*T[2][c] % Q;
+        res += add;
+        if (res >= Q) res -= Q;
+    }
+    return res;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1076,6 +1305,108 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    T[0] = T[1] = T[2] = vector<ll>(5001);
+    T[0][1] = T[1][1] = T[2][1] = 1;
+    
+    // FIRST CALCULATE ROOTED TREES COUNT
+    for (ll n=2; n<=N/2; n++) {
+        
+        // red root
+        T[0][n] += T[0][n-1];
+        T[0][n] += T[1][n-1];
+        T[0][n] += T[2][n-1];
+        T[0][n] += enumerate_2(n-1,0);
+        T[0][n] += enumerate_2(n-1,1);
+        T[0][n] += enumerate_2(n-1,2);
+        T[0][n] += enumerate_11(n-1,0,1);
+        T[0][n] += enumerate_11(n-1,0,2);
+        T[0][n] += enumerate_11(n-1,1,2);
+        T[0][n] += enumerate_3(n-1,0);
+        T[0][n] += enumerate_3(n-1,1);
+        T[0][n] += enumerate_3(n-1,2);
+        T[0][n] += enumerate_21(n-1,0,1);
+        T[0][n] += enumerate_21(n-1,0,2);
+        T[0][n] += enumerate_21(n-1,1,0);
+        T[0][n] += enumerate_21(n-1,1,2);
+        T[0][n] += enumerate_21(n-1,2,0);
+        T[0][n] += enumerate_21(n-1,2,1);
+        T[0][n] += enumerate_111(n-1);
+        
+        // green root
+        T[1][n] += T[0][n-1];
+        T[1][n] += T[1][n-1];
+        T[1][n] += T[2][n-1];
+        T[1][n] += enumerate_2(n-1,0);
+        T[1][n] += enumerate_2(n-1,1);
+        T[1][n] += enumerate_2(n-1,2);
+        T[1][n] += enumerate_11(n-1,0,1);
+        T[1][n] += enumerate_11(n-1,0,2);
+        T[1][n] += enumerate_11(n-1,1,2);
+        
+        // blue root
+        T[2][n] += T[0][n-1];
+        T[2][n] += T[1][n-1];
+        T[2][n] += enumerate_2(n-1,0);
+        T[2][n] += enumerate_2(n-1,1);
+        T[2][n] += enumerate_11(n-1,0,1);
+        
+        T[0][n] %= Q; T[1][n] %= Q; T[2][n] %= Q;
+    }
+    
+    // NOW CALCULATE UNROOTED TREES COUNT
+    
+    // centroid edge case
+    ans += binom2(T[0][N/2]) + binom2(T[1][N/2]); ans %= Q;
+    ans += T[0][N/2]*T[1][N/2]; ans %= Q;
+    ans += T[0][N/2]*T[2][N/2]; ans %= Q;
+    ans += T[1][N/2]*T[2][N/2]; ans %= Q;
+    
+    // centroid vertice case
+    // red root
+    ans += enumerate_4(N-1,0); ans %= Q;
+    ans += enumerate_4(N-1,1); ans %= Q;
+    ans += enumerate_4(N-1,2); ans %= Q;
+    ans += enumerate_31(N-1,0,1); ans %= Q;
+    ans += enumerate_31(N-1,0,2); ans %= Q;
+    ans += enumerate_31(N-1,1,0); ans %= Q;
+    ans += enumerate_31(N-1,1,2); ans %= Q;
+    ans += enumerate_31(N-1,2,0); ans %= Q;
+    ans += enumerate_31(N-1,2,1); ans %= Q;
+    ans += enumerate_22(N-1,0,1); ans %= Q;
+    ans += enumerate_22(N-1,0,2); ans %= Q;
+    ans += enumerate_22(N-1,1,2); ans %= Q;
+    ans += enumerate_211(N-1,0,1,2); ans %= Q;
+    ans += enumerate_211(N-1,1,0,2); ans %= Q;
+    ans += enumerate_211(N-1,2,0,1); ans %= Q;
+    ans += enumerate_3r(N-1,0); ans %= Q;
+    ans += enumerate_3r(N-1,1); ans %= Q;
+    ans += enumerate_3r(N-1,2); ans %= Q;
+    ans += enumerate_21r(N-1,0,1); ans %= Q;
+    ans += enumerate_21r(N-1,0,2); ans %= Q;
+    ans += enumerate_21r(N-1,1,0); ans %= Q;
+    ans += enumerate_21r(N-1,1,2); ans %= Q;
+    ans += enumerate_21r(N-1,2,0); ans %= Q;
+    ans += enumerate_21r(N-1,2,1); ans %= Q;
+    ans += enumerate_111r(N-1); ans %= Q;
+    
+    // green root
+    ans += enumerate_3r(N-1,0); ans %= Q;
+    ans += enumerate_3r(N-1,1); ans %= Q;
+    ans += enumerate_3r(N-1,2); ans %= Q;
+    ans += enumerate_21r(N-1,0,1); ans %= Q;
+    ans += enumerate_21r(N-1,0,2); ans %= Q;
+    ans += enumerate_21r(N-1,1,0); ans %= Q;
+    ans += enumerate_21r(N-1,1,2); ans %= Q;
+    ans += enumerate_21r(N-1,2,0); ans %= Q;
+    ans += enumerate_21r(N-1,2,1); ans %= Q;
+    ans += enumerate_111r(N-1); ans %= Q;
+    
+    // blue root
+    ans += enumerate_3r(N-1,0); ans %= Q;
+    ans += enumerate_3r(N-1,1); ans %= Q;
+    ans += enumerate_21r(N-1,0,1); ans %= Q;
+    ans += enumerate_21r(N-1,1,0); ans %= Q;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
