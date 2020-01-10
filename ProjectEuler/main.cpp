@@ -1066,6 +1066,20 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<vector<int>> states(387600); // n4+n3+n21+n22+n11+n12+n01+n02+last_card
+map<string,int> Mstates; // last_card = -/n3/n2/n1/n0
+
+int stateID (const vector<int> &a)
+{
+    string S;
+    for (int k=0; k<9; k++) {
+        S += to_string(a[k]);
+        S += ",";
+    }
+    S.pop_back();
+    return Mstates[S];
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1076,6 +1090,147 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    int cnt_state = 0;
+    vector<vector<int>> v = sum_partitions(13);
+    cout << (int)v.size() << endl;
+    for (int i=0; i<(int)v.size(); i++) {
+        vector<int> a = v[i];
+        if (a.size() > 8) continue;
+        while (a.size() < 8) a.push_back(0);
+        do {
+            for (int j=0; j<5; j++) {
+                states[cnt_state+j] = a;
+                states[cnt_state+j].push_back(j);
+                string S;
+                for (int k=0; k<9; k++) {
+                    S += to_string(states[cnt_state+j][k]);
+                    S += ",";
+                }
+                S.pop_back();
+                Mstates[S] = cnt_state+j;
+                cnt_state++;
+            }
+        } while (prev_permutation(a.begin(), a.end()));
+    }
+    
+    vector<Lnum> dp(387600);
+    int initial = Mstates["12,1,0,0,0,0,0,0,1"];
+    cout << initial << endl;
+    dp[initial] = 52;
+    
+    for (int n=2; n<=52; n++) {
+        
+        vector<Lnum> dp_next(387600);
+        for (int state=0; state<387600; state++) {
+            if (dp[state] == 0) continue;
+            
+            vector<int> a = states[state];
+            int n4   = a[0];
+            int n3   = a[1];
+            int n21  = a[2]; // perfect
+            int n22  = a[3]; // not perfect
+            int n11  = a[4];
+            int n12  = a[5];
+            //int n01  = a[6];
+            //int n02  = a[7];
+            int last = a[8];
+            
+            if (n4) {
+                int mult = 4*n4;
+                a[0]--; a[1]++; a[8] = 1;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[0]++; a[1]--; a[8] = last;
+            }
+            if (n3 && last != 1) {
+                int mult = 3*n3;
+                a[1]--; a[2]++; a[8] = 2;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[1]++; a[2]--; a[8] = last;
+            }
+            if (n3 && last == 1) {
+                int mult = 3*(n3-1);
+                a[1]--; a[2]++; a[8] = 2;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[1]++; a[2]--; a[8] = last;
+                
+                mult = 3;
+                a[1]--; a[3]++; a[8] = 0;
+                id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[1]++; a[3]--; a[8] = last;
+            }
+            if (n21 && last != 2) {
+                int mult = 2*n21;
+                a[2]--; a[4]++; a[8] = 3;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[2]++; a[4]--; a[8] = last;
+            }
+            if (n21 && last == 2) {
+                int mult = 2*(n21-1);
+                a[2]--; a[4]++; a[8] = 3;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[2]++; a[4]--; a[8] = last;
+                
+                mult = 2;
+                a[2]--; a[5]++; a[8] = 0;
+                id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[2]++; a[5]--; a[8] = last;
+            }
+            if (n22) {
+                int mult = 2*n22;
+                a[3]--; a[5]++; a[8] = 0;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[3]++; a[5]--; a[8] = last;
+            }
+            if (n11 && last != 3) {
+                int mult = n11;
+                a[4]--; a[6]++; a[8] = 4;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[4]++; a[6]--; a[8] = last;
+            }
+            if (n11 && last == 3) {
+                int mult = n11-1;
+                a[4]--; a[6]++; a[8] = 4;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[4]++; a[6]--; a[8] = last;
+                
+                mult = 1;
+                a[4]--; a[7]++; a[8] = 0;
+                id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[4]++; a[7]--; a[8] = last;
+            }
+            if (n12) {
+                int mult = n12;
+                a[5]--; a[7]++; a[8] = 0;
+                int id = stateID(a);
+                dp_next[id] = dp_next[id] + dp[state]*mult;
+                a[5]++; a[7]--; a[8] = last;
+            }
+        }
+        
+        dp.swap(dp_next);
+    }
+    
+    for (int n=0; n<=13; n++) {
+        Lnum A;
+        for (int i=0; i<5; i++) {
+            vector<int> state = {0,0,0,0,0,0,n,13-n,i};
+            int id = stateID(state);
+            A = A + dp[id];
+        }
+        cout << "perfect ranks = " << n << ", "; A.show(); cout << endl;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
