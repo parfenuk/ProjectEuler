@@ -197,7 +197,7 @@ ull Binomial (ull n, ull k, int p = 0) // C(n,k) mod p. p must be prime and grea
     ull s = 1;
     for (ull i=0; i<k; i++) {
         s *= (n-i); s %= p;
-        s *= inverse((i+1),p); s %= p;
+        s *= inverse(i+1,p); s %= p;
     }
     return s;
 }
@@ -1066,6 +1066,36 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+bool is_123_number (ull n)
+{
+    if (n == 0) return true;
+    vector<int> d = digits(n);
+    for (int i=0; i<(int)d.size(); i++) if (d[i] == 0 || d[i] > 3) return false;
+    return true;
+}
+
+ull count_with_begin (int n, const vector<int> &a)
+{
+    ull cnt = 0;
+    int c1 = 0, c2 = 0, c3 = 0;
+    for (int i=0; i<(int)a.size(); i++) {
+        if (a[i] == 1) c1++;
+        if (a[i] == 2) c2++;
+        if (a[i] == 3) c3++;
+    }
+    
+    for (int i=0; i<=n; i++) for (int j=0; j<=n; j++) {
+        int k = n-i-j;
+        if (!is_123_number(i) || !is_123_number(j) || !is_123_number(k)) continue;
+        int r1 = i-c1, r2 = j-c2, r3 = k-c3;
+        if (r1 < 0 || r2 < 0 || r3 < 0) continue;
+        
+        cnt += Binomial(n-(int)a.size(),r1)*Binomial(n-(int)a.size()-r1,r2);
+    }
+    
+    return cnt;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1076,6 +1106,48 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    ull N = 111111111111222333;
+    vector<ull> cnt_size;
+    
+    for (int n=1;;n++) {
+        
+        bool over = false;
+        for (int i=0; i<=n; i++) {
+            
+            for (int j=0; j+i<=n; j++) {
+                
+                int k = n-i-j;
+                if (!is_123_number(i) || !is_123_number(j) || !is_123_number(k)) continue;
+                ans += Binomial(n,i)*Binomial(n-i,j);
+                if (ans >= N) { over = true; break; }
+            }
+            if (over) break;
+        }
+        cout << n << " " << ans << endl;
+        if (over) break;
+        cnt_size.push_back(ans);
+    }
+    
+    const int n = (int)cnt_size.size() + 1;
+    N -= cnt_size.back();
+    for (int i=0; i<=n; i++) for (int j=0; j<=n; j++) {
+        int k = n-i-j;
+        if (!is_123_number(i) || !is_123_number(j) || !is_123_number(k)) continue;
+    }
+    
+    vector<int> a;
+    for (int i=0; i<n; i++) {
+        for (int d=1; d<=3; d++) {
+            a.push_back(d);
+            ull cnt = count_with_begin(n,a);
+            if (cnt >= N) break;
+            N -= cnt;
+            a.pop_back();
+        }
+    }
+
+    for (int i=0; i<(int)a.size(); i++) cout << a[i]; // this is the answer! =)
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
