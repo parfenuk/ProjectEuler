@@ -1077,6 +1077,13 @@ int main() {
     
     ull ans = 0;
     
+    const ll N = 1000000;
+    for (ll d=1; d<=N; d++) {
+        ans += (N-N%d)*EulerPhi(d);
+    }
+    
+    ans = (ans + N)/2;
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
