@@ -95,6 +95,15 @@ void show (const vector<pull> &a, bool show_endl = true, bool show_size = false)
     if (show_endl) cout << endl;
 }
 
+void show (const set<string> &s)
+{
+    cout << "{ ";
+    for (set<string>::iterator it = s.begin(); it != s.end(); it++) {
+        cout << *it << " ";
+    }
+    cout << " }\n";
+}
+
 int total_vector_sum (const vector<int> &a)
 {
     int s = 0;
@@ -1068,7 +1077,7 @@ int random_integer (int from, int to)
 }
 
 const int Q = 1000000000;
-map<string,pair<ll,bool>> M; // true = dependent, false = free
+map<string,ll> M;
 
 struct expression
 {
@@ -1102,27 +1111,64 @@ struct expression
         }
         return s;
     }
-    bool can_be_calculated() { // check if all variables are known
-        set<string> s = get_all_variables();
-        for (set<string>::iterator it=s.begin(); it!=s.end(); it++) {
-            if (M[*it].sc && M[*it].fs == -1) return false;
-        }
-        return true;
-    }
     ll get_value() { // assuming all variables are known
-        if (is_unit()) return M[S].fs;
+        if (is_unit()) return M[S];
         ll a = left().get_value(), b = right().get_value();
         return ((1+a+b)*(1+a+b)+b-a) % Q;
     }
 };
 
-ll min_value (expression e1, expression e2)
+ll min_value (expression e1, expression e2, const map<string,set<string>> &Deps)
 {
     M.clear();
-    vector<pss> equations; // <variable, expression>
-    set<string> s = e1.get_all_variables(); for (set<string>::iterator it=s.begin(); it!=s.end(); it++) M[*it] = mp(0,false);
-    s = e2.get_all_variables();             for (set<string>::iterator it=s.begin(); it!=s.end(); it++) M[*it] = mp(0,false);
+    int n = (int)Deps.size();
+    vector<pss> deps;
+    for (map<string,set<string>>::const_iterator it = Deps.begin(); it != Deps.end(); it++) {
+        deps.push_back(mp((*it).fs,*(*it).sc.begin()));
+    }
+    vector<bool> calculated(n);
+    vector<expression> E(n);
+    vector<set<string>> S(n);
+    for (int i=0; i<n; i++) {
+        E[i] = expression(deps[i].sc);
+        S[i] = E[i].get_all_variables();
+    }
     
+    bool changed = false;
+    int solved = 0;
+    while (solved != n) {
+        changed = false;
+        for (int i=0; i<n; i++) {
+            if (calculated[i]) continue;
+            bool can_be_calculated = true;
+            for (set<string>::iterator it=S[i].begin(); it!=S[i].end(); it++) {
+                string var = *it;
+                if (Deps.find(var) != Deps.end() && M.find(var) == M.end()) {
+                    can_be_calculated = false;
+                    break;
+                }
+            }
+            if (can_be_calculated) {
+                for (set<string>::iterator it=S[i].begin(); it!=S[i].end(); it++) {
+                    string var = *it;
+                    if (Deps.find(var) == Deps.end()) M[var] = 0;
+                }
+                changed = true;
+                calculated[i] = true;
+                solved++;
+                M[deps[i].fs] = E[i].get_value();
+            }
+        }
+        if (!changed) break;
+    }
+    
+    if (solved != n) return 0;
+    return e1.get_value();
+}
+
+map<string,set<string>> get_dependencies (expression e1, expression e2)
+{
+    map<string,set<string>> Deps;
     queue<pss> q;
     q.push(mp(e1.S,e2.S));
     while (!q.empty()) {
@@ -1130,39 +1176,27 @@ ll min_value (expression e1, expression e2)
         pss p = q.front();
         q.pop();
         expression E1(p.fs), E2(p.sc);
-        if      (E1.is_unit()) { if (E1.S != E2.S) { equations.push_back(mp(E1.S,E2.S)); M[E1.S] = mp(-1,true); }}
-        else if (E2.is_unit()) { if (E1.S != E2.S) { equations.push_back(mp(E2.S,E1.S)); M[E2.S] = mp(-1,true); }}
+        string variable, expr; // expr can possibly be a variable too
+        if      (E1.is_unit()) { variable = E1.S; expr = E2.S; }
+        else if (E2.is_unit()) { variable = E2.S; expr = E1.S; }
         else {
             pss p1 = E1.split(), p2 = E2.split();
             q.push(mp(p1.fs,p2.fs));
             q.push(mp(p1.sc,p2.sc));
         }
-    }
-    
-    int n = (int)equations.size();
-    int solved_equations = 0;
-    vector<bool> solved(n);
-    while (solved_equations != n) {
         
-        int current_solved = 0;
-        for (int i=0; i<n; i++) {
-            if (solved[i]) continue;
-            expression E(equations[i].sc);
-            string var = equations[i].fs;
-            if (!E.can_be_calculated()) continue;
-            ll val = E.get_value();
-            if (M[var].fs != -1 && M[var].fs != val) return 0;
-            M[var].fs = val;
-            current_solved++;
-            solved[i] = true;
+        if (!variable.empty()) {
+            if (variable == expr) continue;
+            if (expr[0] != 'I' && expr < variable) swap(expr,variable);
+            if (Deps.find(variable) == Deps.end()) Deps[variable].insert(expr);
+            else {
+                if (Deps[variable].find(expr) != Deps[variable].end()) continue;
+                else { q.push(mp(*Deps[variable].begin(),expr)); Deps[variable].insert(expr); }
+            }
         }
-        
-        if (current_solved == 0) return 0;
-        solved_equations += current_solved;
     }
     
-    if (e1.get_value() != e2.get_value()) cout << "ALARM!\n";
-    return e1.get_value();
+    return Deps;
 }
 
 int main() {
@@ -1183,9 +1217,11 @@ int main() {
     }
     
     for (int i=0; i<149; i++) for (int j=i+1; j<149; j++) {
-        ll d = min_value(E[i],E[j]);
-        cout << i << " " << j << " " << d << endl;
-        ans += d;
+
+        map<string,set<string>> D = get_dependencies(E[i],E[j]);
+        ll val = min_value(E[i],E[j],D);
+        cout << i << " " << j << " " << val << endl;
+        ans += val;
         if (ans >= Q) ans -= Q;
     }
     
