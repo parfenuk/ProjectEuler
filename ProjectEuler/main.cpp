@@ -59,51 +59,26 @@ using namespace std;
 //const ull POWER[12] = {1,3,9,27,81,243,729,2187,6561,19683,59049,177147};
 //const ull FACT[12] = {1,1,2,6,24,120,720,5040,40320,362880,3628800,39916800};
 
-void show (const vector<int> &a, bool show_endl = true, bool show_size = false)
+template <class Trzx>
+void show (const vector<Trzx> &a, bool show_endl = true, bool show_size = false)
 {
     if (show_size) cout << a.size() << endl;
     for (int i=0; i<(int)a.size(); i++) cout << a[i] << " ";
     if (show_endl) cout << endl;
 }
 
-void show (const vector<ll> &a, bool show_endl = true, bool show_size = false)
-{
-    if (show_size) cout << a.size() << endl;
-    for (int i=0; i<(int)a.size(); i++) cout << a[i] << " ";
-    if (show_endl) cout << endl;
-}
-
-void show (const vector<ull> &a, bool show_endl = true, bool show_size = false)
-{
-    if (show_size) cout << a.size() << endl;
-    for (int i=0; i<(int)a.size(); i++) cout << a[i] << " ";
-    if (show_endl) cout << endl;
-}
-
-void show (const vector<pii> &a, bool show_endl = true, bool show_size = false)
+template <class Trp>
+void show_pair (const vector<Trp> &a, bool show_endl = true, bool show_size = false)
 {
     if (show_size) cout << a.size() << endl;
     for (int i=0; i<(int)a.size(); i++) cout << "(" << a[i].fs << " " << a[i].sc << ") ";
     if (show_endl) cout << endl;
 }
 
-void show (const vector<pull> &a, bool show_endl = true, bool show_size = false)
+template <class Trzx>
+Trzx total_vector_sum (const vector<Trzx> &a)
 {
-    if (show_size) cout << a.size() << endl;
-    for (int i=0; i<(int)a.size(); i++) cout << "(" << a[i].fs << " " << a[i].sc << ") ";
-    if (show_endl) cout << endl;
-}
-
-int total_vector_sum (const vector<int> &a)
-{
-    int s = 0;
-    for (int i=0; i<(int)a.size(); i++) s += a[i];
-    return s;
-}
-
-ull total_vector_sum (const vector<ull> &a)
-{
-    ull s = 0;
+    Trzx s = 0;
     for (int i=0; i<(int)a.size(); i++) s += a[i];
     return s;
 }
@@ -131,6 +106,8 @@ ull LCM (ull a, ull b)
     return a*b/GCD(a,b);
 }
 
+// returns a*b % mod.
+// Useful if direct calculations are impossible in int64
 ull productmod (ull a, ull n, ull mod)
 {
     ull b = 0;
@@ -309,27 +286,6 @@ Lnum from_digits_lnum (vector<int> a)
         s = s * 10;
         s = s + Lnum(a[i]);
     }
-    return s;
-}
-
-// returns a*b % mod.
-// Useful if direct calculations are impossible in int64
-// mod*81 should fit in int64
-ull product_mod (ull a, ull b, ull mod)
-{
-    ull s = 0;
-    vector<int> da = digits(a); int n = (int)da.size();
-    vector<int> db = digits(b); int m = (int)db.size();
-    vector<ull> mods;
-    mods.push_back(1);
-    for (int i=1; i<n+m; i++) mods.push_back(mods.back()*10 % mod);
-    
-    for (int i=0; i<n; i++) for (int j=0; j<m; j++) {
-        int deg10 = n-1-i+m-1-j;
-        s += mods[deg10]*da[i]*db[j];
-        s %= mod;
-    }
-    
     return s;
 }
 
