@@ -131,6 +131,24 @@ ull LCM (ull a, ull b)
     return a*b/GCD(a,b);
 }
 
+ull productmod (ull a, ull n, ull mod)
+{
+    ull b = 0;
+    while (n) {
+        if (n%2 == 0) {
+            n /= 2;
+            a = a + a;
+            if (a >= mod) a -= mod;
+        }
+        else {
+            n--;
+            b = b + a;
+            if (b >= mod) b -= mod;
+        }
+    }
+    return b;
+}
+
 ull power (ull n, int k)
 {
     ull s = 1;
@@ -138,7 +156,7 @@ ull power (ull n, int k)
     return s;
 }
 
-ll powmod (ll a, ll k, int mod = 0)
+ll powmod (ll a, ll k, ll mod = 0)
 {
     ll b = 1;
     while (k) {
@@ -159,10 +177,10 @@ ll powmod (ll a, ll k, int mod = 0)
 ll inverse (ll a, ll mod, ll p = 0) // returns x: a*x % mod == 1. mod = p^n, GCD(a,mod) = 1
 {
     if (p == 0) p = mod;
-    return powmod(a,mod-mod/p-1,(int)mod);
+    return powmod(a,mod-mod/p-1,mod);
 }
 
-ull ones_mod (ull k, int mod) // 11...1 k times % mod
+ull ones_mod (ull k, ull mod) // 11...1 k times % mod
 {
     ull b = 0, n = 1, a = 1;
     while (k) {
@@ -197,7 +215,7 @@ ull Binomial (ull n, ull k, int p = 0) // C(n,k) mod p. p must be prime and grea
     ull s = 1;
     for (ull i=0; i<k; i++) {
         s *= (n-i); s %= p;
-        s *= inverse((i+1),p); s %= p;
+        s *= inverse(i+1,p); s %= p;
     }
     return s;
 }

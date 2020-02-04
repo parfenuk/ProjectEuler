@@ -402,7 +402,7 @@ pair<Lnum,Lnum> divmod (Lnum A, Lnum B) // div and mod
     return make_pair(M,res);
 }
 
-Lnum power(Lnum A, int k)
+Lnum power (Lnum A, ull k)
 {
     Lnum B(1);
     
