@@ -1051,6 +1051,35 @@ int main() {
     
     ull ans = 0;
     
+    const int N = 100;
+    
+    const int Q = 1000000033;
+    vector<ll> p2(10001,1); for (int i=1; i<=10000; i++) p2[i] = p2[i-1]*2 % Q;
+    vector<ll> fact(101,1); for (int i=2; i<=100; i++) fact[i] = fact[i-1]*i % Q;
+    vector<ll> ifact(101,1); for (int i=2; i<=100; i++) ifact[i] = inverse(fact[i],Q);
+    ll C[101][101]; for (int n=1; n<=100; n++) for (int m=0; m<=n; m++) C[n][m] = fact[n]*ifact[m] % Q * ifact[n-m] % Q;
+    
+    ll F[101][101];
+    for (int i=0; i<=100; i++) F[i][0] = F[0][i] = 0;
+    for (int i=0; i<=100; i++) F[i][1] = F[1][i] = 1;
+    ans += 2*N-1;
+                                                     
+    for (int n=2; n<=N; n++) for (int m=2; m<=n; m++) {
+        F[n][m] = p2[n*m];
+        for (int a=1; a<=n; a++) for (int b=0; b<=m; b++) {
+            if (a == n && b == m) continue;
+            ll sum = C[n-1][a-1]*C[m][b] % Q;
+            sum = sum*p2[(n-a)*(m-b)] % Q;
+            sum = sum*F[a][b] % Q;
+            F[n][m] -= sum;
+            if (F[n][m] < 0) F[n][m] += Q;
+        }
+        F[m][n] = F[n][m];
+        if (n != m) ans += 2*F[n][m];
+        else ans += F[n][m];
+        ans %= Q;
+    }
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
