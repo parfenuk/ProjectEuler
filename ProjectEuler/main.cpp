@@ -1040,6 +1040,34 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const ll N = 123;
+
+const vector<pll> TR = {mp(0,-N),mp(0,N),mp(-N,0),mp(-N,N),mp(N,0),mp(N,-N)};
+
+int moves_count (ll x0, ll y0)
+{
+    queue<pair<ll,pii>> q;
+    q.push(mp(1,mp(x0,y0)));
+    int k = 0; ll last_size = 1;
+    while (true) {
+        pair<ll,pii> p = q.front();
+        q.pop();
+        ll size = p.fs;
+        if (size != last_size) { last_size = size; k++; }
+        ll x = p.sc.fs, y = p.sc.sc;
+        if (x < 0 && y < 0 && size+x+y > 0) break;
+        
+        for (int i=0; i<6; i++) {
+            ll X = x*2 + TR[i].fs;
+            ll Y = y*2 + TR[i].sc;
+            if (X >= N || Y >= N) continue;
+            q.push(mp(size*2,mp(X,Y)));
+        }
+    }
+    
+    return k;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1050,6 +1078,12 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (ll y=0; y<=N-1; y++) for (ll x=-N; x<=N-1-y; x++) {
+        ll cnt = moves_count(x,y);
+        cout << "(" << x << " " << y << "): " << cnt << endl;
+        ans += cnt;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
