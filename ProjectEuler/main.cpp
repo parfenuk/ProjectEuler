@@ -1099,16 +1099,10 @@ int main() {
             if (res_list[n] >= N) res_list[n] -= N;
         }
         
-        vector<int> a;
-        if (s-2 >= N) a = vector<int>(N,1);
-        else {
-            a = vector<int>(N);
-            for (int i=0; i<s-2; i++) a[res_list[i]] = 1;
-        }
-        
         FenwickTree F;
-        F.init(a);
-        
+        F.init(N);
+        for (int i=0; i<s-2 && i<N; i++) F.inc(res_list[i],1);
+                
         ll cur_count = 0;
         for (int p=0; p<s-2 && p<N; p++) {
             ll res = res_list[p];
