@@ -1040,33 +1040,38 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-const ll N = 123;
-
-const vector<pll> TR = {mp(0,-N),mp(0,N),mp(-N,0),mp(-N,N),mp(N,0),mp(N,-N)};
-
-int moves_count (ll x0, ll y0)
-{
-    queue<pair<ll,pii>> q;
-    q.push(mp(1,mp(x0,y0)));
-    int k = 0; ll last_size = 1;
-    while (true) {
-        pair<ll,pii> p = q.front();
-        q.pop();
-        ll size = p.fs;
-        if (size != last_size) { last_size = size; k++; }
-        ll x = p.sc.fs, y = p.sc.sc;
-        if (x < 0 && y < 0 && size+x+y > 0) break;
-        
-        for (int i=0; i<6; i++) {
-            ll X = x*2 + TR[i].fs;
-            ll Y = y*2 + TR[i].sc;
-            if (X >= N || Y >= N) continue;
-            q.push(mp(size*2,mp(X,Y)));
-        }
-    }
+struct FenwickTree {
     
-    return k;
-}
+    int n;
+    vector<int> t;
+    void init (int m) { n = m; t = vector<int>(m); }
+    
+    int sum (int r)
+    {
+        int result = 0;
+        for (; r>=0; r = (r & (r+1)) - 1) result += t[r];
+        return result;
+    }
+
+    void inc (int i, int delta)
+    {
+        for (; i<n; i = (i | (i+1))) t[i] += delta;
+    }
+
+    int sum (int l, int r)
+    {
+        if (l == 0) return sum(r);
+        return sum(r) - sum(l-1);
+    }
+
+    void init (const vector<int> &a)
+    {
+        int s = (int)a.size(); init(s);
+        for (int i=0; i<s; i++) inc(i,a[i]);
+    }
+};
+
+const ll N = 123456789;
 
 int main() {
     clock_t Total_Time = clock();
@@ -1079,12 +1084,81 @@ int main() {
     
     ull ans = 0;
     
-    for (ll y=0; y<=N-1; y++) for (ll x=-N; x<=N-1-y; x++) {
-        ll cnt = moves_count(x,y);
-        cout << "(" << x << " " << y << "): " << cnt << endl;
-        ans += cnt;
+    ll phiN = EulerPhi(N);
+    ll used_count = 0, total_count = N*(3*N+1)/2;
+    ll steps = 1;
+    
+    for (ll s=4;;s*=2) {
+        
+        steps++;
+        int k = (int)powmod(s,phiN-1,N); k = N-k;
+        vector<int> res_list(N);
+        res_list[0] = k;
+        for (int n=1; n<N; n++) {
+            res_list[n] = res_list[n-1] + k;
+            if (res_list[n] >= N) res_list[n] -= N;
+        }
+        
+        vector<int> a;
+        if (s-2 >= N) a = vector<int>(N,1);
+        else {
+            a = vector<int>(N);
+            for (int i=0; i<s-2; i++) a[res_list[i]] = 1;
+        }
+        
+        FenwickTree F;
+        F.init(a);
+        
+        ll cur_count = 0;
+        for (int p=0; p<s-2 && p<N; p++) {
+            ll res = res_list[p];
+            cur_count += min(s-2-p,N);
+            int index = (int)s-3-p; // to erase
+            if (index >= N) cur_count += N-res;
+            else {
+                cur_count += F.sum((int)(N-res-1));
+                F.inc(res_list[index],-1);
+            }
+        }
+        cout << steps << ": " << cur_count - used_count << endl;
+        ans += steps*(cur_count - used_count);
+        used_count = cur_count;
+        
+        if (s > N) break;
     }
     
+    cout << steps+1 << ": " << total_count - used_count << endl;
+    ans += (steps+1)*(total_count - used_count);
+    
+    // *** NAIVE ALGORITHM ***
+//    ans = 0;
+//
+//    for (ll x=0; x<=N-1; x++) for (ll y=-N; y<=N-1-x; y++) {
+//        ll p = 1;
+//        int s;
+//        bool found = false;
+//        for (s=1;;s++) {
+//
+//            p *= 2;
+//            ll K = p-1;
+//
+//            for (ll c1=-K; c1<=K; c1++) {
+//                ll X = p*x + c1*N;
+//                if (X <= -p) continue;
+//                if (X >= 0) break;
+//                for (ll c2=max(-K,-K-c1); c2<=min(K,K-c1); c2++) {
+//                    ll Y = p*y + c2*N;
+//                    if (Y >= 0) break;
+//                    if (X+Y+p > 0) { found = true; break; }
+//                }
+//                if (found) break;
+//            }
+//            if (found) break;
+//        }
+//        cout << "(" << x << " " << y << "): " << s << endl;
+//        ans += s;
+//    }
+
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
