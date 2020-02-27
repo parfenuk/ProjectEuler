@@ -1040,6 +1040,28 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const int Q = 1000000009;
+const ll N = 7500000;
+
+vector<ll> F(N+1), FI(N+1), PN(N+1), PN1(N+1);
+
+ll C (ll n, ll m)
+{
+    return F[n]*FI[m] % Q * FI[n-m] % Q;
+}
+
+ll cnt (int n, int k)
+{
+    ll s = 0;
+    for (int i=0; i<=n/k; i++) {
+        ll add = PN[n-i*k]*PN1[i] % Q;
+        add = add*C(n-i*k+i,i) % Q;
+        if (i%2) add = Q-add;
+        s += add; if (s >= Q) s -= Q;
+    }
+    return s;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1050,6 +1072,22 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    F[0] = FI[0] = 1;
+    for (int i=1; i<=N; i++) F[i] = F[i-1]*i % Q;
+    for (int i=1; i<=N; i++) FI[i] = inverse(F[i],Q);
+    PN[0] = PN1[0] = 1;
+    for (int i=1; i<=N; i++) { PN[i] = PN[i-1]*N % Q, PN1[i] = PN1[i-1]*(N-1) % Q; }
+
+    ll res = 0;
+    ll NN = powmod(N,N,Q);
+    for (int k=1; k<=N; k++) {
+        ll add = cnt(N,k) - cnt(N-k,k); // count of sequences of length N with no subsequence of length >= k
+        add = (NN - add) % Q;
+        if (add < 0) add += Q;
+        res += add; if (res >= Q) res -= Q;
+    }
+    cout << res << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
