@@ -22,6 +22,8 @@ typedef short int sint;
 
 ll f_GCD (ll a, ll b)
 {
+    if (a < 0) a = -a;
+    if (b < 0) b = -b;
     while (a && b) {
         
         if (a > b) a %= b;
