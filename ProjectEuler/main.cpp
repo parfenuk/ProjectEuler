@@ -1040,6 +1040,62 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const ll N = 1000000; // max R
+
+ll process_sum (ll n, ll m, ll a, ll b, ll c) // R/r = n/m > 2, cos(u) = a/c, sin(u) = b/c, u is base, all irreducible,
+{
+    ll test = 1; for (int i=0; i<n; i++) { test *= c; if (test > 10*N) return 0; }
+    
+    vector<fraction> Cos(n+1), Sin(n+1);
+    Cos[1] = fraction(a,c); Sin[1] = fraction(b,c);
+    for (int i=2; i<=n-m; i++) {
+        Sin[i] = Sin[i-1]*Cos[1] + Cos[i-1]*Sin[1];
+        Cos[i] = Cos[i-1]*Cos[1] - Sin[i-1]*Sin[1];
+    }
+    
+    fraction x = Cos[m]*(n-m)/m + Cos[n-m];
+    fraction y = Sin[m]*(n-m)/m - Sin[n-m];
+    if (x.num < 0) x.num = -x.num;
+    if (x.den < 0) x.den = -x.den;
+    if (y.num < 0) y.num = -y.num;
+    if (y.den < 0) y.den = -y.den;
+    
+    ll r = LCM(LCM(x.den,y.den),m), R = r*n/m;
+    if (R > N) return 0;
+    ll Rmax = N - N%R;
+    ll k = Rmax/R;
+    
+    return (x.num*r/x.den + y.num*r/y.den)*k*(k+1)/2;
+}
+
+const vector<ll> c2 = {1,0,-1,0};
+const vector<ll> s2 = {0,1,0,-1};
+const vector<ll> c3 = {1,-1};
+const vector<ll> c4 = {1,0,-1,0};
+const vector<ll> s4 = {0,-1,0,1};
+
+ll single_process (ll R, ll r) // a speciale case, u = pi*k/2, sin(u), cos(u) are in {-1,0,1}
+{
+    ll d = GCD(R,r), n = R/d, m = r/d;
+    ll res = 0;
+    
+    // case u = 0, cos(u) = 1, sin(u) = 0
+    res += R;
+    
+    // case u = pi/2, cos(u) = 0, sin(u) = 1
+    res += abs((R-r)*c2[m%4] + r*c2[(n-m)%4]);
+    res += abs((R-r)*s2[m%4] - r*s2[(n-m)%4]);
+    
+    // case u = pi, cos(u) = -1, sin(u) = 0
+    res += abs((R-r)*c3[m%2] + r*c3[(n-m)%2]);
+    
+    // case u = 3*pi/2, cos(u) = 0, sin(u) = -1
+    res += abs((R-r)*c4[m%4] + r*c4[(n-m)%4]);
+    res += abs((R-r)*s4[m%4] - r*s4[(n-m)%4]);
+    
+    return res;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1050,6 +1106,30 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    fill_pythagorean_triples(1000);
+    for (int i=0; i<(int)pits.size(); i++) {
+        for (int j=0; j<(int)pits[i].size(); j++) cout << pits[i][j].fs << " " << pits[i][j].sc << " " << i << endl;
+    }
+    
+    for (ll m=1; m<7; m++) for (ll n=2*m+1; n-m<=7; n++) {
+        if (GCD(n,m) != 1) continue;
+        for (int i=0; i<(int)pits.size(); i++) for (int j=0; j<(int)pits[i].size(); j++) {
+            ll a = pits[i][j].fs, b = pits[i][j].sc, c = i;
+            ans += process_sum(n, m, a, b, c);
+            ans += process_sum(n, m,-a, b, c);
+            ans += process_sum(n, m, a,-b, c);
+            ans += process_sum(n, m,-a,-b, c);
+            ans += process_sum(n, m, b, a, c);
+            ans += process_sum(n, m, b,-a, c);
+            ans += process_sum(n, m,-b, a, c);
+            ans += process_sum(n, m,-b,-a, c);
+        }
+    }
+    
+    for (ll r=1; r<=N; r++) for (ll R = 2*r+1; R<=N; R++) {
+        ans += single_process(R,r);
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
