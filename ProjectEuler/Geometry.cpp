@@ -230,7 +230,6 @@ point projection (point a, line p)
 point intersection_point (line p, line q)
 {
     if (is_parallel_lines(p,q)) {
-        
         return p.A*q.C == p.C*q.A ? INFINITELY_MANY : NOT_FOUND;
     }
     point a;
