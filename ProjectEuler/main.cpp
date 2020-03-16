@@ -1044,7 +1044,7 @@ const ll N = 1000000; // max R
 
 ll process_sum (ll n, ll m, ll a, ll b, ll c) // R/r = n/m > 2, cos(u) = a/c, sin(u) = b/c, u is base, all irreducible,
 {
-    ll test = 1; for (int i=0; i<n; i++) { test *= c; if (test > 10*N) return 0; }
+    ll test = 1; for (int i=0; i<n-m; i++) { test *= c; if (test > N) return 0; }
     
     vector<fraction> Cos(n+1), Sin(n+1);
     Cos[1] = fraction(a,c); Sin[1] = fraction(b,c);
@@ -1070,28 +1070,41 @@ ll process_sum (ll n, ll m, ll a, ll b, ll c) // R/r = n/m > 2, cos(u) = a/c, si
 
 const vector<ll> c2 = {1,0,-1,0};
 const vector<ll> s2 = {0,1,0,-1};
-const vector<ll> c3 = {1,-1};
+const vector<ll> c3 = {1,-1,1,-1};
 const vector<ll> c4 = {1,0,-1,0};
 const vector<ll> s4 = {0,-1,0,1};
 
+vector<ll> f[1000000];
+
 ll single_process (ll R, ll r) // a speciale case, u = pi*k/2, sin(u), cos(u) are in {-1,0,1}
 {
-    ll d = GCD(R,r), n = R/d, m = r/d;
+    //if (GCD(R,r) != 1) return 0;
+    int n = 0, m = 0;
+    while (n != (int)f[R].size() && m != (int)f[r].size()) {
+        if (f[R][n] == f[r][m]) return 0;
+        if (f[R][n] < f[r][m]) n++;
+        else m++;
+    }
     ll res = 0;
+    n = r%4, m = (R-r)%4;
     
     // case u = 0, cos(u) = 1, sin(u) = 0
     res += R;
     
     // case u = pi/2, cos(u) = 0, sin(u) = 1
-    res += abs((R-r)*c2[m%4] + r*c2[(n-m)%4]);
-    res += abs((R-r)*s2[m%4] - r*s2[(n-m)%4]);
+    res += abs((R-r)*c2[n] + r*c2[m]);
+    res += abs((R-r)*s2[n] - r*s2[m]);
     
     // case u = pi, cos(u) = -1, sin(u) = 0
-    res += abs((R-r)*c3[m%2] + r*c3[(n-m)%2]);
+    res += abs((R-r)*c3[n] + r*c3[m]);
     
     // case u = 3*pi/2, cos(u) = 0, sin(u) = -1
-    res += abs((R-r)*c4[m%4] + r*c4[(n-m)%4]);
-    res += abs((R-r)*s4[m%4] - r*s4[(n-m)%4]);
+    res += abs((R-r)*c4[n] + r*c4[m]);
+    res += abs((R-r)*s4[n] - r*s4[m]);
+    
+    ll Rmax = N - N%R;
+    ll k = Rmax/R;
+    res = res*k*(k+1)/2;
     
     return res;
 }
@@ -1107,7 +1120,12 @@ int main() {
     
     ull ans = 0;
     
-    fill_pythagorean_triples(1000);
+    for (ll n=2; n<=N; n++) {
+        vector<pull> a = factorize(n);
+        for (int i=0; i<(int)a.size(); i++) f[n].push_back(a[i].fs);
+    }
+        
+    fill_pythagorean_triples(700);
     for (int i=0; i<(int)pits.size(); i++) {
         for (int j=0; j<(int)pits[i].size(); j++) cout << pits[i][j].fs << " " << pits[i][j].sc << " " << i << endl;
     }
@@ -1127,8 +1145,13 @@ int main() {
         }
     }
     
-    for (ll r=1; r<=N; r++) for (ll R = 2*r+1; R<=N; R++) {
-        ans += single_process(R,r);
+    cout << ans << endl;
+    
+    for (ll r=1; r<=N; r++) {
+        int step = 1; if (r%2 == 0) step++;
+        for (ll R = 2*r+1; R<=N; R+=step) {
+            ans += single_process(R,r);
+        }
     }
     
     cout << endl << ans << endl;
