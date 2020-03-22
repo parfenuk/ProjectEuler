@@ -1040,6 +1040,13 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+vector<vector<int>> gcd_sum(12346);
+
+ll D (int n1, int n2, int m1, int m2)
+{
+    return gcd_sum[n2][m2]-gcd_sum[n2][m1-1]-gcd_sum[n1-1][m2]+gcd_sum[n1-1][m1-1];
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1050,6 +1057,14 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    const ll N = 12345, M = 6789;
+    for (int i=0; i<=N; i++) gcd_sum[i] = vector<int>(M+1);
+    
+    for (int n=1; n<=N; n++) for (int m=1; m<=M; m++) {
+        int d = (int)GCD(n,m);
+        gcd_sum[n][m] = gcd_sum[n-1][m] + gcd_sum[n][m-1] - gcd_sum[n-1][m-1] + d;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
