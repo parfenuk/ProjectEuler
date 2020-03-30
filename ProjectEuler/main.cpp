@@ -1040,11 +1040,73 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+const int Q = 135707531;
 vector<vector<int>> gcd_sum(12346);
 
-ll D (int n1, int n2, int m1, int m2)
+ll D (ll n1, ll n2, ll m1, ll m2)
 {
     return gcd_sum[n2][m2]-gcd_sum[n2][m1-1]-gcd_sum[n1-1][m2]+gcd_sum[n1-1][m1-1];
+}
+
+ll S (ll n, ll m) // n >= m
+{
+    const ll d = D(n,n,m,m);
+    const ll d1 = (n == 1) ? 0 : D(1,n-1,m,m);
+    const ll d2 = (m == 1) ? 0 : D(n,n,1,m-1);
+    const ll d3 = (m == 1) ? 0 : D(1,n-1,1,m-1);
+    
+    // S(4)
+    ll res = 1;
+    
+    // S(0)
+    res += (n-1)*(n-1)*(m-1)*(m-1);
+    
+    // S(3)
+    res += 8*n*m-4*n-4*m-8*d+8;
+    
+    // S(1)
+    if (m != 1) {
+        ll s = (n-1)*(m-1)*(3*n+3*m-8)/2;
+        s += (n-1)*(m-1)*(n*m-m-n+6);
+        s += (m-1)*(m*n*(n-1)/2 - 2*d1);
+        s += (n-1)*(n*m*(m-1)/2 - 2*d2);
+        s -= (n*m*(n-1)*(m-1)/4 + 2*d3);
+        res += 4*s;
+    }
+    
+    // S(2), same side case
+    res += (n-1)*(4*n*m-3*n+2*m+4);
+    res += (m-1)*(4*n*m-3*m+2*n+4);
+    res -= 8*(d1+d2);
+    
+    // S(2), opposite side case
+    if (m == 1) {
+        res += 2*(n-1)*(n-1);
+        return res % Q;
+    }
+    
+    ll twosides = power(((n+1)*(m+1)-d-3)/2,2);
+    ll total = ((n-1)*(m-1)-d+1)/2;
+    ll oneside = (n-1)*(m-1);
+    oneside += ((n-1)*(n*m-n-m-3*d+8) + n*(n-1)*(m-1) - 4*d1)/2;
+    oneside += ((m-1)*(n*m-n-m-3*d+8) + m*(n-1)*(m-1) - 4*d2)/2;
+    
+    ll irregular = d3 - (n-1)*(m-1) - (d-1)*(d-2)/2;
+    ll nonconvex = 0;
+    for (ll p=1+(n==m); p<m; p++) {
+        ll t = (n*p-1)/m;
+        ll nc = (t*(n*p+2-d) - m*t*(t+1)/2);
+        nc -= D(1,t,p,p);
+        nc -= D(n-t,n-1,m-p,m-p);
+        nonconvex += nc/2;
+    }
+    
+    ll convex = total*(total-1)/2 - irregular - nonconvex;
+    oneside += (3*nonconvex + convex);
+    ll s = 2*(twosides + 2*oneside);
+    res += s;
+    
+    return res % Q;
 }
 
 int main() {
@@ -1059,11 +1121,23 @@ int main() {
     ull ans = 0;
     
     const ll N = 12345, M = 6789;
+    
     for (int i=0; i<=N; i++) gcd_sum[i] = vector<int>(M+1);
     
     for (int n=1; n<=N; n++) for (int m=1; m<=M; m++) {
         int d = (int)GCD(n,m);
         gcd_sum[n][m] = gcd_sum[n-1][m] + gcd_sum[n][m-1] - gcd_sum[n-1][m-1] + d;
+    }
+    
+    for (ll n=1; n<=N; n++) for (ll m=1; m<=n && m<=M; m++) {
+        
+        ll s = S(n,m);
+        ans += s*(N-n+1)*(M-m+1);
+        ans %= Q;
+        if (n <= M && n != m) {
+            ans += s*(N-m+1)*(M-n+1);
+            ans %= Q;
+        }
     }
     
     cout << endl << ans << endl;
