@@ -1065,14 +1065,12 @@ ll S (ll n, ll m) // n >= m
     res += 8*n*m-4*n-4*m-8*d+8;
     
     // S(1)
-    if (m != 1) {
-        ll s = (n-1)*(m-1)*(3*n+3*m-8)/2;
-        s += (n-1)*(m-1)*(n*m-m-n+6);
-        s += (m-1)*(m*n*(n-1)/2 - 2*d1);
-        s += (n-1)*(n*m*(m-1)/2 - 2*d2);
-        s -= (n*m*(n-1)*(m-1)/4 + 2*d3);
-        res += 4*s;
-    }
+    ll s = (n-1)*(m-1)*(3*n+3*m-8)/2;
+    s += (n-1)*(m-1)*(n*m-m-n+6);
+    s += (m-1)*(m*n*(n-1)/2 - 2*d1);
+    s += (n-1)*(n*m*(m-1)/2 - 2*d2);
+    s -= (n*m*(n-1)*(m-1)/4 + 2*d3);
+    res += 4*s;
     
     // S(2), same side case
     res += (n-1)*(4*n*m-3*n+2*m+4);
@@ -1092,19 +1090,11 @@ ll S (ll n, ll m) // n >= m
     oneside += ((m-1)*(n*m-n-m-3*d+8) + m*(n-1)*(m-1) - 4*d2)/2;
     
     ll irregular = d3 - (n-1)*(m-1) - (d-1)*(d-2)/2;
-    ll nonconvex = 0;
-    for (ll p=1+(n==m); p<m; p++) {
-        ll t = (n*p-1)/m;
-        ll nc = (t*(n*p+2-d) - m*t*(t+1)/2);
-        nc -= D(1,t,p,p);
-        nc -= D(n-t,n-1,m-p,m-p);
-        nonconvex += nc/2;
-    }
-    
+    ll nonconvex = (24+11*d*d-6*d*(5+m*n-m-n)-12*d3-12*m+m*m-12*n+n*n+m*n*(15-3*m-3*n+2*m*n))/24;
     ll convex = total*(total-1)/2 - irregular - nonconvex;
+    
     oneside += (3*nonconvex + convex);
-    ll s = 2*(twosides + 2*oneside);
-    res += s;
+    res += 2*(twosides + 2*oneside);
     
     return res % Q;
 }
