@@ -1051,6 +1051,18 @@ int main() {
     
     ull ans = 0;
     
+    string S; cin >> S;
+    Lnum A(S);
+    
+    for (int n=1;;n++) {
+        if (A[0]%2) A = A*3 + 1;
+        else A = A/2;
+        if (A == one) {
+            cout << "Reached 1 in " << n << " steps";
+            break;
+        }
+    }
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
