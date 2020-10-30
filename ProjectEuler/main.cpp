@@ -1040,20 +1040,265 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-int main() {
-    clock_t Total_Time = clock();
-    cout.precision(12);
-    ios_base::sync_with_stdio(false);
-#ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
-    //freopen("output.txt","wt",stdout);
-#endif
+class Sudoku {
+   
+    struct matrix
+    {
+        int A[9][9];
+        int *operator[] (int k) { return A[k]; }
+        void read() {
+            for (int i=0; i<9; i++) {
+                string s;
+                cin >> s;
+                for (int j=0; j<9; j++) A[i][j] = s[j]-'0';
+            }
+        }
+        void show() {
+            for (int i=0; i<9; i++) {
+                for (int j=0; j<9; j++) cout << A[i][j];
+                cout << endl;
+            }
+        }
+    };
     
-    ull ans = 0;
+    matrix v, solution;
+    vector<matrix> g;
+    vector<int> guesses;
+    int last_guess;
     
-    cout << endl << ans << endl;
-    Total_Time = clock() - Total_Time;
-    cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+    int index_of_object (const vector<int> &a, int n)
+    {
+        for (int i=0; i<(int)a.size(); i++) if (a[i] == n) return i;
+        return -1;
+    }
+    
+    void save_sudoku()
+    {
+        matrix a;
+        for (int i=0; i<9; i++) for (int j=0; j<9; j++) a.A[i][j] = v[i][j];
+        g.push_back(a);
+    }
+    
+    void restore_sudoku()
+    {
+        for (int i=0; i<9; i++) for (int j=0; j<9; j++) v[i][j] = g.back()[i][j];
+    }
+    
+    void add_guess(pair<pii, int> guess)
+    {
+        v[guess.fs.fs][guess.fs.sc] = guess.sc;
+        guesses.push_back(guess.sc);
+        last_guess = 0;
+    }
+    
+    void remove_guess()
+    {
+        last_guess = guesses.back();
+        guesses.pop_back();
+    }
+
+    int possible_number (int r, int c) // 1-9 : number, 0 : ambiguity, -1 : no solution
+    {
+        vector<bool> used(10,false);
+        
+        // row search
+        for (int i=0; i<9; i++) used[v[i][c]] = true;
+        
+        // col search
+        for (int i=0; i<9; i++) used[v[r][i]] = true;
+        
+        // square search
+        int r1 = 3*(r/3), c1 = 3*(c/3);
+        for (int i=r1; i<r1+3; i++) for (int j=c1; j<c1+3; j++) used[v[i][j]] = true;
+        
+        int res = -1;
+        for (int i=1; i<10; i++) {
+            if (used[i]) continue;
+            if (res == -1) res = i;
+            else return 0;
+        }
+        
+        return res;
+    }
+    
+    vector<int> possible_numbers (int r, int c) // 1-9 : number, 0 : ambiguity, -1 : no solution
+    {
+        vector<bool> used(10,false);
+        
+        // row search
+        for (int i=0; i<9; i++) used[v[i][c]] = true;
+        
+        // col search
+        for (int i=0; i<9; i++) used[v[r][i]] = true;
+        
+        // square search
+        int r1 = 3*(r/3), c1 = 3*(c/3);
+        for (int i=r1; i<r1+3; i++) for (int j=c1; j<c1+3; j++) used[v[i][j]] = true;
+        
+        vector<int> res;
+        for (int i=1; i<10; i++) {
+            if (used[i]) continue;
+            res.push_back(i);
+        }
+        
+        return res;
+    }
+    
+    pii closer_cell()
+    {
+        pii p; int cnt = 9;
+        for (int i=0; i<9; i++) for (int j=0; j<9; j++) {
+            if (v[i][j]) continue;
+            vector<int> a = possible_numbers(i,j);
+            if ((int)a.size() < cnt) { cnt = (int)a.size(); p = make_pair(i,j); }
+        }
+        return p;
+    }
+    
+    int try_set_number()
+    {
+        for (int i=0; i<9; i++) for (int j=0; j<9; j++) {
+            if (v[i][j]) continue;
+            int n = possible_number(i,j);
+            if (n == -1) return -1;
+            if (n > 0) { v[i][j] = n; return n; }
+        }
+        
+        return 0;
+    }
+    
+    int try_solve() // 1 : solved, 0 : ambiguity, -1 : no solution
+    {
+        int cnt = 0;
+        for (int i=0; i<9; i++) for (int j=0; j<9; j++) if (v[i][j] == 0) cnt++;
+        
+        while (cnt) {
+            
+            int n = try_set_number();
+            if (n == -1) return -1;
+            if (n == 0) return 0;
+            cnt--;
+        }
+        
+        return 1;
+    }
+    
+public:
+    void load_from_console() { v.read(); }
+    void load_from_matrix(int **a) { for (int i=0; i<9; i++) for (int j=0; j<9; j++) v.A[i][j] = a[i][j]; }
+    bool solve() {
+        // returns false if no solution exists. Otherwise returns true with some solution found
+        
+        bool should_save = true;
+        
+        while (true) {
+            
+            int n = try_solve();
+            
+            if (n == 1) {
+                g.clear();
+                guesses.clear();
+                solution = v;
+                return true;
+            }
+            
+            if (n == 0) {
+                
+                if (should_save) save_sudoku();
+                should_save = true;
+                
+                pii cell = closer_cell();
+                vector<int> val = possible_numbers(cell.fs, cell.sc);
+                
+                int k;
+                if (last_guess == 0) k = val[0];
+                else {
+                    if (val.back() == last_guess) k = 0;
+                    else { int pos = index_of_object(val,last_guess); k = val[pos+1]; }
+                }
+                if (k == 0) {
+                    if (guesses.empty()) return false;
+                    g.pop_back();
+                    restore_sudoku();
+                    remove_guess();
+                    should_save = false;
+                }
+                else add_guess(make_pair(cell,k));
+            }
+            if (n == -1) {
+                
+                restore_sudoku();
+                remove_guess();
+                
+                pii cell = closer_cell();
+                vector<int> val = possible_numbers(cell.fs, cell.sc);
+                
+                int k;
+                if (val.back() == last_guess) k = 0;
+                else { int pos = index_of_object(val,last_guess); k = val[pos+1]; }
+                if (k == 0) {
+                    if (guesses.empty()) return false;
+                    g.pop_back();
+                    restore_sudoku();
+                    remove_guess();
+                    should_save = false;
+                }
+                else add_guess(make_pair(cell,k));
+            }
+        }
+    }
+    
+    void show_solution() {
+        solution.show();
+    }
+    
+    vector<vector<int>> get_solution() {
+        
+        vector<vector<int>> a;
+        for (int i=0; i<9; i++) {
+            vector<int> b;
+            for (int j=0; j<9; j++) b.push_back(solution[i][j]);
+            a.push_back(b);
+        }
+        return a;
+    }
+};
+
+int main()
+{
+    // Usage:
+    // input:
+    /*
+     200170603
+     050000100
+     000006079
+     000040700
+     000801000
+     009050000
+     310400000
+     005000060
+     906037002
+     */
+    // output:
+    /*
+     298175643
+     657394128
+     134286579
+     821649735
+     573821496
+     469753281
+     312468957
+     785912364
+     946537812
+     */
+    
+    freopen("input.txt","rt",stdin);
+    
+    Sudoku S;
+    S.load_from_console();
+    bool success = S.solve();
+    if (success) S.show_solution();
+    else cout << "No solution for this puzzle";
     
     return 0;
 }
