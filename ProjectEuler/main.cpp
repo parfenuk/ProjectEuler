@@ -1040,6 +1040,24 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+void make_experiment (int N)
+{
+    int success = 0;
+    for (int T=0; T<N; T++) {
+        vector<int> v = {1,2,3};
+        vector<int> a = {1,1,2,2,3,3};
+        int i = 0;
+        while (a.size() > 2) {
+            int k = random_integer(0, (int)a.size()-1);
+            if (a[k] == v[i]) continue;
+            a.erase(a.begin()+k);
+            if (a.size() % 2 == 0) i++;
+        }
+        if (a[0] != 3 && a[1] != 3) success++;
+    }
+    cout << N << " " << success << endl;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -1050,6 +1068,107 @@ int main() {
 #endif
     
     ull ans = 0;
+    dd res = 0;
+    
+    //make_experiment(1000);
+    
+    const int N = 100;
+    map<ppii,dd> Prob; // <index of person, pairs, singles, lesses>
+    Prob[mp(mp(0,N-1),mp(0,0))] = 1.0;
+    
+    queue<pair<ppii,pair<bool,dd>>> q; // pair.second - if player already made a move
+    q.push(mp(mp(mp(0,N-1),mp(0,0)),mp(false,1.0)));
+    
+    while (!q.empty()) {
+        
+        pair<ppii,pair<bool,dd>> p = q.front();
+        q.pop();
+        
+        int id = p.fs.fs.fs;
+        int pairs = p.fs.fs.sc;
+        int singles = p.fs.sc.fs;
+        int lesses = p.fs.sc.sc;
+        dd prob = Prob[p.fs];
+        dd P = p.sc.sc; // local probability only
+        
+        if (p.sc.fs) { // we just create new states before next player to move
+            
+            int cards = 2*(N-id-1); // total number of cards at this moment
+            int equals = cards - 2*pairs - singles - lesses;
+            lesses += equals;
+            
+            int players = N-id-1; // next player candidates
+            dd prob_pairs = (dd)pairs/players; // next player comes from pairs
+            dd prob_singles = (dd)singles/players; // next player comes from singles
+            dd prob_used = (dd)(players-pairs-singles)/players; // next player has no cards in deck
+            
+            ppii p1 = mp(mp(id+1,pairs-1),mp(singles,lesses));
+            ppii p2 = mp(mp(id+1,pairs),mp(singles-1,lesses));
+            ppii p3 = mp(mp(id+1,pairs),mp(singles,lesses));
+            
+            // here we don't care about correct probability in q, since it is contained in Prob
+            if (Prob[p1] == 0) { Prob[p1] = P*prob_pairs; q.push(mp(p1,mp(false,0))); }
+            else Prob[p1] += P*prob_pairs;
+            if (Prob[p2] == 0) { Prob[p2] = P*prob_singles; q.push(mp(p2,mp(false,0))); }
+            else Prob[p2] += P*prob_singles;
+            if (Prob[p3] == 0) { Prob[p3] = P*prob_used; q.push(mp(p3,mp(false,0))); }
+            else Prob[p3] += P*prob_used;
+            
+            continue;
+        }
+        
+        // before last move check the state
+        if (id == N-1) {
+            if (lesses < 2) res += Prob[p.fs];
+            continue;
+        }
+            
+        // and here we perform a move
+        int cards = 2*(N-id); // total number of cards at this moment
+        int equals = cards - 2*pairs - singles - lesses;
+        int n = cards - equals; // number of valid cards to take
+        dd d = n*(n-1)/2; // number of valid pairs of cards
+        dd Q = 0; // local probability variable
+        vector<pair<ppii,pair<bool,dd>>> v;
+        
+        // one pair
+        if (pairs) {
+            Q = pairs/d; // numerator is number of ways to choose. Same for other cases
+            q.push(mp(mp(mp(id,pairs-1),mp(singles,lesses)),mp(true,prob*Q)));
+        }
+        // two different pairs
+        if (pairs > 1) {
+            Q = 2*pairs*(pairs-1)/d;
+            q.push(mp(mp(mp(id,pairs-2),mp(singles+2,lesses)),mp(true,prob*Q)));
+        }
+        // pair + single
+        if (pairs && singles) {
+            Q = 2*pairs*singles/d;
+            q.push(mp(mp(mp(id,pairs-1),mp(singles,lesses)),mp(true,prob*Q)));
+        }
+        // pair + less
+        if (pairs && lesses) {
+            Q = 2*pairs*lesses/d;
+            q.push(mp(mp(mp(id,pairs-1),mp(singles+1,lesses-1)),mp(true,prob*Q)));
+        }
+        // two singles
+        if (singles > 1) {
+            Q = singles*(singles-1)/(2*d);
+            q.push(mp(mp(mp(id,pairs),mp(singles-2,lesses)),mp(true,prob*Q)));
+        }
+        // single + less
+        if (singles && lesses) {
+            Q = singles*lesses/d;
+            q.push(mp(mp(mp(id,pairs),mp(singles-1,lesses-1)),mp(true,prob*Q)));
+        }
+        // two lesses
+        if (lesses > 1) {
+            Q = lesses*(lesses-1)/(2*d);
+            q.push(mp(mp(mp(id,pairs),mp(singles,lesses-2)),mp(true,prob*Q)));
+        }
+    }
+    
+    cout << fixed << res << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
