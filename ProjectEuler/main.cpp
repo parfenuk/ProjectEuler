@@ -45,11 +45,11 @@ typedef int ltype;
 
 using namespace std;
 
-#define pii pair<int,int>
+#define pii pair<short int, short int>
 #define pll pair<ll,ll>
 #define pull pair<ull,ull>
 #define pdd pair<dd, dd>
-#define ppii pair<pair<int,int>, pair<int,int>>
+#define ppii pair<pair<short int, short int>, pair<short int, short int>>
 #define ppll pair<pair<ll,ll>, pair<ll,ll>>
 #define mp make_pair
 #define fs first
@@ -1076,28 +1076,83 @@ int main() {
     map<ppii,dd> Prob; // <index of person, pairs, singles, lesses>
     Prob[mp(mp(0,N-1),mp(0,0))] = 1.0;
     
-    queue<pair<ppii,pair<bool,dd>>> q; // pair.second - if player already made a move
-    q.push(mp(mp(mp(0,N-1),mp(0,0)),mp(false,1.0)));
+    queue<ppii> q; // pair.second - if player already made a move
+    q.push(mp(mp(0,N-1),mp(0,0)));
     
     while (!q.empty()) {
         
-        pair<ppii,pair<bool,dd>> p = q.front();
+        ppii p = q.front();
         q.pop();
         
-        int id = p.fs.fs.fs;
-        int pairs = p.fs.fs.sc;
-        int singles = p.fs.sc.fs;
-        int lesses = p.fs.sc.sc;
-        dd prob = Prob[p.fs];
-        dd P = p.sc.sc; // local probability only
+        sint id = p.fs.fs;
+        sint pairs = p.fs.sc;
+        sint singles = p.sc.fs;
+        sint lesses = p.sc.sc;
+        dd prob = Prob[p];
         
-        if (p.sc.fs) { // we just create new states before next player to move
+        // before last move check the state
+        if (id == N-1) {
+            if (lesses < 2) res += Prob[p];
+            continue;
+        }
             
-            int cards = 2*(N-id-1); // total number of cards at this moment
-            int equals = cards - 2*pairs - singles - lesses;
+        // here we perform a move
+        sint cards = 2*(N-id); // total number of cards at this moment
+        sint equals = cards - 2*pairs - singles - lesses;
+        sint n = cards - equals; // number of valid cards to take
+        dd d = n*(n-1)/2; // number of valid pairs of cards
+        dd Q = 0; // local probability variable
+        vector<pair<pii,pair<sint,dd>>> v;
+        
+        // one pair
+        if (pairs) {
+            Q = pairs/d; // numerator is number of ways to choose. Same for other cases
+            v.push_back(mp(mp(pairs-1,singles),mp(lesses,prob*Q)));
+        }
+        // two different pairs
+        if (pairs > 1) {
+            Q = 2*pairs*(pairs-1)/d;
+            v.push_back(mp(mp(pairs-2,singles+2),mp(lesses,prob*Q)));
+        }
+        // pair + single
+        if (pairs && singles) {
+            Q = 2*pairs*singles/d;
+            v.push_back(mp(mp(pairs-1,singles),mp(lesses,prob*Q)));
+        }
+        // pair + less
+        if (pairs && lesses) {
+            Q = 2*pairs*lesses/d;
+            v.push_back(mp(mp(pairs-1,singles+1),mp(lesses-1,prob*Q)));
+        }
+        // two singles
+        if (singles > 1) {
+            Q = singles*(singles-1)/(2*d);
+            v.push_back(mp(mp(pairs,singles-2),mp(lesses,prob*Q)));
+        }
+        // single + less
+        if (singles && lesses) {
+            Q = singles*lesses/d;
+            v.push_back(mp(mp(pairs,singles-1),mp(lesses-1,prob*Q)));
+        }
+        // two lesses
+        if (lesses > 1) {
+            Q = lesses*(lesses-1)/(2*d);
+            v.push_back(mp(mp(pairs,singles),mp(lesses-2,prob*Q)));
+        }
+        
+        // and now create new states before next player to move
+        for (int i=0; i<(int)v.size(); i++) {
+            
+            pairs = v[i].fs.fs;
+            singles = v[i].fs.sc;
+            lesses = v[i].sc.fs;
+            dd P = v[i].sc.sc; // local probability only
+            
+            cards = 2*(N-id-1); // total number of cards at this moment
+            equals = cards - 2*pairs - singles - lesses;
             lesses += equals;
             
-            int players = N-id-1; // next player candidates
+            sint players = N-id-1; // next player candidates
             dd prob_pairs = (dd)pairs/players; // next player comes from pairs
             dd prob_singles = (dd)singles/players; // next player comes from singles
             dd prob_used = (dd)(players-pairs-singles)/players; // next player has no cards in deck
@@ -1106,65 +1161,14 @@ int main() {
             ppii p2 = mp(mp(id+1,pairs),mp(singles-1,lesses));
             ppii p3 = mp(mp(id+1,pairs),mp(singles,lesses));
             
-            // here we don't care about correct probability in q, since it is contained in Prob
-            if (Prob[p1] == 0) { Prob[p1] = P*prob_pairs; q.push(mp(p1,mp(false,0))); }
+            if (Prob[p1] == 0) { Prob[p1] = P*prob_pairs; q.push(p1); }
             else Prob[p1] += P*prob_pairs;
-            if (Prob[p2] == 0) { Prob[p2] = P*prob_singles; q.push(mp(p2,mp(false,0))); }
+            if (Prob[p2] == 0) { Prob[p2] = P*prob_singles; q.push(p2); }
             else Prob[p2] += P*prob_singles;
-            if (Prob[p3] == 0) { Prob[p3] = P*prob_used; q.push(mp(p3,mp(false,0))); }
+            if (Prob[p3] == 0) { Prob[p3] = P*prob_used; q.push(p3); }
             else Prob[p3] += P*prob_used;
             
             continue;
-        }
-        
-        // before last move check the state
-        if (id == N-1) {
-            if (lesses < 2) res += Prob[p.fs];
-            continue;
-        }
-            
-        // and here we perform a move
-        int cards = 2*(N-id); // total number of cards at this moment
-        int equals = cards - 2*pairs - singles - lesses;
-        int n = cards - equals; // number of valid cards to take
-        dd d = n*(n-1)/2; // number of valid pairs of cards
-        dd Q = 0; // local probability variable
-        vector<pair<ppii,pair<bool,dd>>> v;
-        
-        // one pair
-        if (pairs) {
-            Q = pairs/d; // numerator is number of ways to choose. Same for other cases
-            q.push(mp(mp(mp(id,pairs-1),mp(singles,lesses)),mp(true,prob*Q)));
-        }
-        // two different pairs
-        if (pairs > 1) {
-            Q = 2*pairs*(pairs-1)/d;
-            q.push(mp(mp(mp(id,pairs-2),mp(singles+2,lesses)),mp(true,prob*Q)));
-        }
-        // pair + single
-        if (pairs && singles) {
-            Q = 2*pairs*singles/d;
-            q.push(mp(mp(mp(id,pairs-1),mp(singles,lesses)),mp(true,prob*Q)));
-        }
-        // pair + less
-        if (pairs && lesses) {
-            Q = 2*pairs*lesses/d;
-            q.push(mp(mp(mp(id,pairs-1),mp(singles+1,lesses-1)),mp(true,prob*Q)));
-        }
-        // two singles
-        if (singles > 1) {
-            Q = singles*(singles-1)/(2*d);
-            q.push(mp(mp(mp(id,pairs),mp(singles-2,lesses)),mp(true,prob*Q)));
-        }
-        // single + less
-        if (singles && lesses) {
-            Q = singles*lesses/d;
-            q.push(mp(mp(mp(id,pairs),mp(singles-1,lesses-1)),mp(true,prob*Q)));
-        }
-        // two lesses
-        if (lesses > 1) {
-            Q = lesses*(lesses-1)/(2*d);
-            q.push(mp(mp(mp(id,pairs),mp(singles,lesses-2)),mp(true,prob*Q)));
         }
     }
     
