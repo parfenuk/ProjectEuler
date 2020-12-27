@@ -1040,23 +1040,6 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
-void make_experiment (int N)
-{
-    int success = 0;
-    for (int T=0; T<N; T++) {
-        vector<int> v = {1,2,3};
-        vector<int> a = {1,1,2,2,3,3};
-        int i = 0;
-        while (a.size() > 2) {
-            int k = random_integer(0, (int)a.size()-1);
-            if (a[k] == v[i]) continue;
-            a.erase(a.begin()+k);
-            if (a.size() % 2 == 0) i++;
-        }
-        if (a[0] != 3 && a[1] != 3) success++;
-    }
-    cout << N << " " << success << endl;
-}
 
 int main() {
     clock_t Total_Time = clock();
@@ -1069,106 +1052,105 @@ int main() {
     
     ull ans = 0;
     dd res = 0;
-    
-    //make_experiment(1000);
-    
+        
     const int N = 100;
-    map<ppii,dd> Prob; // <index of person, pairs, singles, lesses>
-    Prob[mp(mp(0,N-1),mp(0,0))] = 1.0;
+    vector<vector<dd>> Prob[100], ProbNew[100];
+    for (int i=0; i<N; i++) {
+        Prob[i] = vector<vector<dd>>(N);
+        ProbNew[i] = vector<vector<dd>>(N);
+        for (int j=0; j<N; j++) {
+            Prob[i][j] = vector<dd>(2*N);
+            ProbNew[i][j] = vector<dd>(2*N);
+        }
+    }
+    Prob[N-1][0][0] = 1.0;
     
-    queue<ppii> q; // pair.second - if player already made a move
-    q.push(mp(mp(0,N-1),mp(0,0)));
+    for (sint id=0; id<N; id++) {
+        
+        for (sint pairs=0; pairs<N; pairs++)
+        for (sint singles=0; singles<N; singles++)
+        for (sint lesses=0; lesses<2*N; lesses++) {
+            
+            if (Prob[pairs][singles][lesses] == 0) continue;
+            dd P = Prob[pairs][singles][lesses];
+            
+            // before the last move check the state
+            if (id == N-1) {
+                if (lesses < 2) res += P;
+                continue;
+            }
+            
+            // here we perform a move
+            sint cards = 2*(N-id); // total number of cards at this moment
+            sint equals = cards - 2*pairs - singles - lesses; // playes' own cards
+            sint n = cards - equals; // number of valid cards to take
+            dd d = n*(n-1)/2; // number of valid pairs of cards
+            dd Q = 0; // local probability variable
+            vector<pair<pii,pair<sint,dd>>> v;
     
-    while (!q.empty()) {
-        
-        ppii p = q.front();
-        q.pop();
-        
-        sint id = p.fs.fs;
-        sint pairs = p.fs.sc;
-        sint singles = p.sc.fs;
-        sint lesses = p.sc.sc;
-        dd prob = Prob[p];
-        
-        // before last move check the state
-        if (id == N-1) {
-            if (lesses < 2) res += Prob[p];
-            continue;
-        }
-            
-        // here we perform a move
-        sint cards = 2*(N-id); // total number of cards at this moment
-        sint equals = cards - 2*pairs - singles - lesses;
-        sint n = cards - equals; // number of valid cards to take
-        dd d = n*(n-1)/2; // number of valid pairs of cards
-        dd Q = 0; // local probability variable
-        vector<pair<pii,pair<sint,dd>>> v;
-        
-        // one pair
-        if (pairs) {
-            Q = pairs/d; // numerator is number of ways to choose. Same for other cases
-            v.push_back(mp(mp(pairs-1,singles),mp(lesses,prob*Q)));
-        }
-        // two different pairs
-        if (pairs > 1) {
-            Q = 2*pairs*(pairs-1)/d;
-            v.push_back(mp(mp(pairs-2,singles+2),mp(lesses,prob*Q)));
-        }
-        // pair + single
-        if (pairs && singles) {
-            Q = 2*pairs*singles/d;
-            v.push_back(mp(mp(pairs-1,singles),mp(lesses,prob*Q)));
-        }
-        // pair + less
-        if (pairs && lesses) {
-            Q = 2*pairs*lesses/d;
-            v.push_back(mp(mp(pairs-1,singles+1),mp(lesses-1,prob*Q)));
-        }
-        // two singles
-        if (singles > 1) {
-            Q = singles*(singles-1)/(2*d);
-            v.push_back(mp(mp(pairs,singles-2),mp(lesses,prob*Q)));
-        }
-        // single + less
-        if (singles && lesses) {
-            Q = singles*lesses/d;
-            v.push_back(mp(mp(pairs,singles-1),mp(lesses-1,prob*Q)));
-        }
-        // two lesses
-        if (lesses > 1) {
-            Q = lesses*(lesses-1)/(2*d);
-            v.push_back(mp(mp(pairs,singles),mp(lesses-2,prob*Q)));
+            // one pair
+            if (pairs) {
+                Q = pairs/d; // numerator is number of ways to choose. Same for other cases
+                v.push_back(mp(mp(pairs-1,singles),mp(lesses,P*Q)));
+            }
+            // two different pairs
+            if (pairs > 1) {
+                Q = 2*pairs*(pairs-1)/d;
+                v.push_back(mp(mp(pairs-2,singles+2),mp(lesses,P*Q)));
+            }
+            // pair + single
+            if (pairs && singles) {
+                Q = 2*pairs*singles/d;
+                v.push_back(mp(mp(pairs-1,singles),mp(lesses,P*Q)));
+            }
+            // pair + less
+            if (pairs && lesses) {
+                Q = 2*pairs*lesses/d;
+                v.push_back(mp(mp(pairs-1,singles+1),mp(lesses-1,P*Q)));
+            }
+            // two singles
+            if (singles > 1) {
+                Q = singles*(singles-1)/(2*d);
+                v.push_back(mp(mp(pairs,singles-2),mp(lesses,P*Q)));
+            }
+            // single + less
+            if (singles && lesses) {
+                Q = singles*lesses/d;
+                v.push_back(mp(mp(pairs,singles-1),mp(lesses-1,P*Q)));
+            }
+            // two lesses
+            if (lesses > 1) {
+                Q = lesses*(lesses-1)/(2*d);
+                v.push_back(mp(mp(pairs,singles),mp(lesses-2,P*Q)));
+            }
+    
+            // and now create new states before next player to move
+            for (int i=0; i<(int)v.size(); i++) {
+    
+                sint p = v[i].fs.fs;
+                sint s = v[i].fs.sc;
+                sint l = v[i].sc.fs;
+                dd prob = v[i].sc.sc; // local probability only
+    
+                cards = 2*(N-id-1); // total number of cards at this moment
+                sint e = cards-2*p-s-l;
+                l += e;
+    
+                sint players = N-id-1; // next player candidates
+                dd prob_pairs = (dd)p/players; // next player comes from pairs
+                dd prob_singles = (dd)s/players; // next player comes from singles
+                dd prob_used = (dd)(players-p-s)/players; // next player has no cards in deck
+    
+                if (p) ProbNew[p-1][s][l] += prob*prob_pairs;
+                if (s) ProbNew[p][s-1][l] += prob*prob_singles;
+                ProbNew[p][s][l] += prob*prob_used;
+            }
         }
         
-        // and now create new states before next player to move
-        for (int i=0; i<(int)v.size(); i++) {
-            
-            pairs = v[i].fs.fs;
-            singles = v[i].fs.sc;
-            lesses = v[i].sc.fs;
-            dd P = v[i].sc.sc; // local probability only
-            
-            cards = 2*(N-id-1); // total number of cards at this moment
-            equals = cards - 2*pairs - singles - lesses;
-            lesses += equals;
-            
-            sint players = N-id-1; // next player candidates
-            dd prob_pairs = (dd)pairs/players; // next player comes from pairs
-            dd prob_singles = (dd)singles/players; // next player comes from singles
-            dd prob_used = (dd)(players-pairs-singles)/players; // next player has no cards in deck
-            
-            ppii p1 = mp(mp(id+1,pairs-1),mp(singles,lesses));
-            ppii p2 = mp(mp(id+1,pairs),mp(singles-1,lesses));
-            ppii p3 = mp(mp(id+1,pairs),mp(singles,lesses));
-            
-            if (Prob[p1] == 0) { Prob[p1] = P*prob_pairs; q.push(p1); }
-            else Prob[p1] += P*prob_pairs;
-            if (Prob[p2] == 0) { Prob[p2] = P*prob_singles; q.push(p2); }
-            else Prob[p2] += P*prob_singles;
-            if (Prob[p3] == 0) { Prob[p3] = P*prob_used; q.push(p3); }
-            else Prob[p3] += P*prob_used;
-            
-            continue;
+        // update vectors
+        for (int i=0; i<N; i++) for (int j=0; j<N; j++) {
+            Prob[i][j].swap(ProbNew[i][j]);
+            for (int k=0; k<2*N; k++) ProbNew[i][j][k] = 0;
         }
     }
     
