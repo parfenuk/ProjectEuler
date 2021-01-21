@@ -614,17 +614,6 @@ ull square_representations_count (ull n) // n = a^2 + b^2, 0 < a <= b
     return B/2;
 }
 
-bool isPractical (ull n)
-{
-    vector<ull> d = Divisors(n);
-    ull sum = 0;
-    for (int i=0; i<(int)d.size(); i++) {
-        if (sum < d[i]-1) return false;
-        sum += d[i];
-    }
-    return true;
-}
-
 ull count_divisible_by (ull n, ull mod, ull lb, ull ub) // returns count of numbers a in range [lb,ub] that a%n == mod
 {
     ull add = n - mod;
@@ -920,26 +909,24 @@ vector<vector<int>> find_connected_components (vector<int> g[], int N)
     vector<bool> used(N);
     for (int v=0; v<N; v++) {
         
-        if (!used[v]) {
+        if (used[v]) continue;
             
-            vector<int> q;
-            int h=0, t=0;
-            q.push_back(v);
-            t++;
-            used[v] = true;
-            while (h < t)
-            {
-                int cur = q[h++];
-                for (vector<int>::iterator i=g[cur].begin(); i!=g[cur].end(); ++i)
-                    if (!used[*i])
-                    {
-                        used[*i] = true;
-                        q.push_back(*i);
-                        t++;
-                    }
+        vector<int> component;
+        int h = 0, t = 0;
+        component.push_back(v);
+        t++;
+        used[v] = true;
+        while (h < t) {
+            int cur = component[h++];
+            for (int i=0; i<(int)g[cur].size(); i++) {
+                int to = g[cur][i];
+                if (used[to]) continue;
+                used[to] = true;
+                component.push_back(to);
+                t++;
             }
-            w.push_back(q);
         }
+        w.push_back(component);
     }
     
     return w;
