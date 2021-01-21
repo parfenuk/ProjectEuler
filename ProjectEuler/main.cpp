@@ -45,10 +45,11 @@ typedef int ltype;
 
 using namespace std;
 
+#define psii pair<sint,sint>
 #define pii pair<int,int>
 #define pll pair<ll,ll>
 #define pull pair<ull,ull>
-#define pdd pair<dd, dd>
+#define pdd pair<dd,dd>
 #define ppii pair<pair<int,int>, pair<int,int>>
 #define ppll pair<pair<ll,ll>, pair<ll,ll>>
 #define mp make_pair
@@ -1027,16 +1028,117 @@ int random_integer (int from, int to)
     return uni(rng);
 }
 
+#define Hash pair<ull,sint> // first - boxes bitmask, second - player's position (ID)
+
+const vector<ull> TWO = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, \
+    16384, 32768, 65536, 131072, 262144, 524288, 1048576, 2097152, \
+    4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, \
+    536870912, 1073741824, 2147483648, 4294967296, 8589934592, \
+    17179869184, 34359738368};
+
+// TODO: It seems Field is needed for init only, then one-dimensional array is enough
+sint Field[8][8]; // 0 - Free, 1 - Box, 2 - Target, 3 - Box&Target, 4 - Wall
+sint ID[8][8];
+psii fromID[36]; // There're no more than 36 non-wall cells on the board
+sint player; // ID of the cell
+vector<sint> G[36]; // graph of directions (LURD), -1 if wall is in front of the direction
+ull initial_position; // Hash value
+ull final_position; // Hash value
+map<Hash,ull> HashMap; // value is previous bitmask
+
+void initiate()
+{
+    // Read field
+    string S;
+    int K = 0;
+    psii initial_player_position;
+    while (getline(cin,S)) {
+        for (sint i=0; i<(sint)S.length(); i++) {
+            if (S[i] == ' ') Field[K][i] = 0;
+            if (S[i] == '$') Field[K][i] = 1;
+            if (S[i] == '.') Field[K][i] = 2;
+            if (S[i] == '*') Field[K][i] = 3;
+            if (S[i] == '#') Field[K][i] = 4;
+            if (S[i] == '@') { Field[K][i] = 0; initial_player_position = mp(K,i); }
+            if (S[i] == '+') { Field[K][i] = 2; initial_player_position = mp(K,i); }
+        }
+        K++;
+    }
+    
+    // Build ID data
+    bool used[8][8];
+    for (int i=0; i<8; i++) for (int j=0; j<8; j++) used[i][j] = false;
+    queue<psii> q;
+    q.push(initial_player_position);
+    used[initial_player_position.fs][initial_player_position.sc] = true;
+    while (!q.empty()) {
+        
+        int r = q.front().fs;
+        int c = q.front().sc;
+        q.pop();
+        
+        vector<psii> cells = { mp(r-1,c),mp(r,c-1),mp(r+1,c),mp(r,c+1) };
+        for (int i=0; i<4; i++) {
+            if (Field[cells[i].fs][cells[i].sc] == 4) continue;
+            if (used[cells[i].fs][cells[i].sc]) continue;
+            used[cells[i].fs][cells[i].sc] = true;
+            q.push(cells[i]);
+        }
+    }
+    K = 0;
+    initial_position = 0;
+    final_position = 0;
+    for (int i=0; i<8; i++) for (int j=0; j<8; j++) {
+        ID[i][j] = -1;
+        if (!used[i][j]) continue;
+        ID[i][j] = K;
+        fromID[K] = mp(i,j);
+        if (Field[i][j] & 1) initial_position += TWO[K]; // box check
+        if (Field[i][j] & 2) final_position += TWO[K]; // target check
+        K++;
+    }
+    player = ID[initial_player_position.fs][initial_player_position.sc];
+    
+    // Build graph data
+    for (int i=0; i<K; i++) {
+        G[i].resize(4,-1);
+        sint r = fromID[i].fs, c = fromID[i].sc;
+        // IDs are -1 if wall is there
+        G[i][0] = ID[r][c-1]; // left
+        G[i][1] = ID[r-1][c]; // up
+        G[i][2] = ID[r][c+1]; // right
+        G[i][3] = ID[r+1][c]; // down;
+    }
+}
+
+bool isReachable (sint from, sint to) // IDs
+{
+    return true;
+}
+
+void getAllHashes (Hash initial_hash)
+{
+    
+}
+
+bool isDeadMove (sint boxID, sint push_direction)
+{
+    // to be done :)
+    return true;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    initiate();
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
