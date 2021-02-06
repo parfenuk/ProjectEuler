@@ -770,23 +770,22 @@ bool same_letters (string s, string u)
     return true;
 }
 
-bool next_combination (vector<int> & a, int n, int k)
+bool next_combination (vector<char> &a, char n, char k)
 {
-    for (int i=k-1; i>=0; --i)
+    for (char i=k-1; i>=0; i--)
         if (a[i] < n-k+i+1) {
-            ++a[i];
-            for (int j=i+1; j<k; ++j)
-                a[j] = a[j-1]+1;
+            a[i]++;
+            for (char j=i+1; j<k; j++) a[j] = a[j-1] + 1;
             return true;
         }
     return false;
 }
 
-vector<vector<int>> get_combinations (int n, int k)
+vector<vector<char>> get_combinations (char n, char k)
 {
-    vector<int>a;
-    vector<vector<int>>b;
-    for (int i=1; i<=k; i++) a.push_back(i);
+    vector<char> a;
+    vector<vector<char>> b;
+    for (char i=1; i<=k; i++) a.push_back(i);
     b.push_back(a);
     while (next_combination(a,n,k)) b.push_back(a);
     return b;
@@ -1132,13 +1131,15 @@ int main() {
     cout.precision(12);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    freopen("input.txt","rt",stdin);
+    //freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
     
-    initiate();
+    vector<vector<char>> a = get_combinations(6,3);
+    cout << a.size() << endl;
+    //initiate();
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;

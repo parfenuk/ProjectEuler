@@ -206,7 +206,7 @@ line::line(point a, point b)
 {
     A = b.y - a.y;
     B = a.x - b.x;
-    C = a.y*(b.x-a.x) - a.x*(b.y-a.y);
+    C = a.y*b.x - a.x*b.y;
 }
 
 bool is_parallel_lines (line p, line q)
