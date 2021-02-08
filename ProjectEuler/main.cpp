@@ -155,12 +155,12 @@ ll powmod (ll a, ll k, ll mod = 0)
     while (k) {
         if (k%2 == 0) {
             k /= 2;
-            a = a*a;
+            a *= a;
             if (mod) a %= mod;
         }
         else {
             k--;
-            b = b*a;
+            b *= a;
             if (mod) b %= mod;
         }
     }
@@ -647,7 +647,7 @@ bool is_disjoint (const vector<int> &a, const vector<int> &b)
 vector<int> subvector (const vector<int> &a, int from, int to)
 {
     vector<int> b;
-    for (int i=from; i<=to; i++) b.push_back(a[i]);
+    for (int i=max(0,from); i<=min((int)a.size()-1,to); i++) b.push_back(a[i]);
     return b;
 }
 
@@ -661,6 +661,13 @@ vector<int> join_vectors (vector<int> a, const vector<int> &b)
 void append_to (vector<int> &a, const vector<int> &b)
 {
     for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
+}
+
+vector<int> flatten (const vector<vector<int>> &a)
+{
+    vector<int> b;
+    for (int i=0; i<(int)a.size(); i++) for (int j=0; j<(int)a[i].size(); j++) b.push_back(a[i][j]);
+    return b;
 }
 
 int count_greater_than (const vector<int> &a, int value) // a - sorted, returns count of elements in vector that are greater than given value
@@ -988,6 +995,7 @@ int random_integer (int from, int to)
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
+    cout.setf(ios::fixed);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     //freopen("input.txt","rt",stdin);
