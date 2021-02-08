@@ -25,14 +25,13 @@ ll f_GCD (ll a, ll b)
     if (a < 0) a = -a;
     if (b < 0) b = -b;
     while (a && b) {
-        
         if (a > b) a %= b;
         else b %= a;
     }
     return a + b;
 }
 
-struct fraction { // unsigned only
+struct fraction {
     
     ll num, den;
     fraction() { num = 0; den = 1; }

@@ -15,7 +15,7 @@ typedef short int sint;
 
 struct Matrix
 {
-    int N, Q;
+    int N, Q; // all calculations are mod Q if it is set
     ll **A;
     Matrix (int n) {
         N = n; Q = 0;
@@ -105,14 +105,13 @@ Matrix matrix_power (Matrix A, ull k)
     Matrix B(N);
     B.Q = A.Q;
     while (k) {
-        //cout << k << endl;
         if (k%2==0) {
             k /= 2;
-            A = A*A; // [ a = (a*a)%n; ]
+            A = A*A;
         }
         else {
             k--;
-            B = B*A; // [ b = (b*a)%n; ]
+            B = B*A;
         }
     }
     return B;
@@ -124,14 +123,13 @@ Matrix matrix_power (Matrix A, Lnum k)
     Matrix B(N);
     B.Q = A.Q;
     while (k != O) {
-        //cout << k << endl;
         if (k%2 == 0) {
             k = k/2;
-            A = A*A; // [ a = (a*a)%n; ]
+            A = A*A;
         }
         else {
             k = k - one;
-            B = B*A; // [ b = (b*a)%n; ]
+            B = B*A;
         }
     }
     return B;

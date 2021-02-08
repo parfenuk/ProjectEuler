@@ -27,11 +27,17 @@ struct complex {
     void show() {
         
         if (y == 0) cout << x;
-        else if (x == 0) cout << y << "i";
+        else if (x == 0) {
+            if (y == -1) cout << "-i";
+            else if (y == 1) cout << "i";
+            else cout << y << "i";
+        }
         else {
             cout << x;
             if (y > 0) cout << "+";
-            cout << y << "i";
+            if (y == -1) cout << "-i";
+            else if (y == 1) cout << "i";
+            else cout << y << "i";
         }
         cout << endl;
     }
@@ -39,18 +45,12 @@ struct complex {
 
 complex operator+ (complex a, complex b)
 {
-    complex c;
-    c.x = a.x + b.x;
-    c.y = a.y + b.y;
-    return c;
+    return complex(a.x+b.x,a.y+b.y);
 }
 
 complex operator- (complex a, complex b)
 {
-    complex c;
-    c.x = a.x - b.x;
-    c.y = a.y - b.y;
-    return c;
+    return complex(a.x-b.x,a.y-b.y);
 }
 
 complex operator* (complex a, ll k)
@@ -60,10 +60,7 @@ complex operator* (complex a, ll k)
 
 complex operator* (complex a, complex b)
 {
-    complex c;
-    c.x = a.x*b.x - a.y*b.y;
-    c.y = a.y*b.x + a.x*b.y;
-    return c;
+    return complex(a.x*b.x-a.y*b.y, a.y*b.x+a.x*b.y);
 }
 
 complex operator/ (complex a, complex b) // integer-valued division with remainder!!!

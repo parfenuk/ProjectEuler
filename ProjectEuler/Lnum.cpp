@@ -195,25 +195,10 @@ bool operator== (Lnum A, Lnum B) // A == B ? 1 : 0
     return true;
 }
 
-bool operator<= (Lnum A, Lnum B)
-{
-    return A < B || A == B;
-}
-
-bool operator> (Lnum A, Lnum B) // A > B ? 1 : 0
-{
-    return B < A;
-}
-
-bool operator>= (Lnum A, Lnum B)
-{
-    return !(A < B);
-}
-
-bool operator!= (Lnum A, Lnum B)
-{
-    return !(A == B);
-}
+bool operator<= (Lnum A, Lnum B) { return A < B || A == B; }
+bool operator> (Lnum A, Lnum B) { return B < A; }
+bool operator>= (Lnum A, Lnum B) { return !(A < B); }
+bool operator!= (Lnum A, Lnum B) { return !(A == B); }
 
 Lnum operator+ (Lnum A, Lnum B)
 {
