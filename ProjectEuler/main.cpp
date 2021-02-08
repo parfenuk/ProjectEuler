@@ -11,13 +11,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
-#include <math.h>
 #include <ctime>
 #include <cstring>
-#include <string>
 #include <cassert>
 
+#include <math.h>
 #include <vector>
+#include <string>
 #include <list>
 #include <map>
 #include <unordered_map>
@@ -32,9 +32,9 @@
 //#include "Geometry3D.cpp"
 #include "Fractions.cpp"
 #include "Matrix.cpp"
-#include "Complex.cpp"
+//#include "Complex.cpp"
 //#include "Pell_Equation.cpp"
-#pragma comment(linker, "/STACK:416777216")
+#pragma comment(linker, "/STACK:16777216")
 
 typedef long long ll;
 typedef unsigned long long ull;
@@ -45,12 +45,16 @@ typedef int ltype;
 
 using namespace std;
 
+#define pbb pair<bool,bool>
+#define pcc pair<char,char>
+#define psii pair<sint,sint>
 #define pii pair<int,int>
 #define pll pair<ll,ll>
 #define pull pair<ull,ull>
-#define pdd pair<dd, dd>
+#define pdd pair<dd,dd>
 #define ppii pair<pair<int,int>, pair<int,int>>
 #define ppll pair<pair<ll,ll>, pair<ll,ll>>
+#define pss pair<string,string>
 #define mp make_pair
 #define fs first
 #define sc second
@@ -83,10 +87,29 @@ Trzx total_vector_sum (const vector<Trzx> &a)
     return s;
 }
 
+// TODO: use templates
+void show_matrix (const vector<vector<int>> &a)
+{
+    for (int i=0; i<(int)a.size(); i++) {
+        for (int j=0; j<(int)a[i].size(); j++) cout << a[i][j] << " ";
+        cout << endl;
+    }
+}
+
+void show_tensor (const vector<vector<vector<int>>> &a)
+{
+    for (int i=0; i<(int)a.size(); i++) {
+        for (int j=0; j<(int)a[i].size(); j++) {
+            for (int k=0; k<(int)a[i][j].size(); k++) cout << a[i][j][k] << " ";
+            cout << endl;
+        }
+        cout << "------------------------------\n";
+    }
+}
+
 ull GCD (ull a, ull b)
 {
     while (a && b) {
-        
         if (a > b) a %= b;
         else b %= a;
     }
@@ -126,13 +149,6 @@ ull productmod (ull a, ull n, ull mod)
     return b;
 }
 
-ull power (ull n, int k)
-{
-    ull s = 1;
-    for (int i=0; i<k; i++) s *= n;
-    return s;
-}
-
 ll powmod (ll a, ll k, ll mod = 0)
 {
     ll b = 1;
@@ -154,7 +170,7 @@ ll powmod (ll a, ll k, ll mod = 0)
 ll inverse (ll a, ll mod, ll p = 0) // returns x: a*x % mod == 1. mod = p^n, GCD(a,mod) = 1
 {
     if (p == 0) p = mod;
-    return powmod(a,mod-mod/p-1,mod);
+    return powmod(a, mod-1-mod/p, mod);
 }
 
 ull ones_mod (ull k, ull mod) // 11...1 k times % mod
@@ -224,18 +240,18 @@ ull integer_part_sqrt (ull n) // returns greatest x such that x*x <= n
 
 ull modular_sqrt (ull a, ull p) // finds r, r^2 == a mod p (prime), returns 0 if doesn't exist
 {
-    if (powmod(a,(p-1)/2,(int)p) == p-1) return 0;
+    if (powmod(a,(p-1)/2,p) == p-1) return 0;
     ll b = 2;
-    while (powmod(b,(p-1)/2,(int)p) != p-1) b++;
+    while (powmod(b,(p-1)/2,p) != p-1) b++;
     ull t = p-1, s = 0;
     while (t % 2 == 0) { t /= 2; s++; }
     ll ai = inverse(a,p);
-    ll c = powmod(b,t,(int)p), r = powmod(a,(t+1)/2, (int)p), e = powmod(2,s-1,(int)p);
+    ll c = powmod(b,t,p), r = powmod(a,(t+1)/2,p), e = powmod(2,s-1,p);
     
     for (int i=1; i<s; i++) {
         
         e = e*(p+1)/2 % p;
-        ll d = powmod((r*r % p)*ai % p, e, (int)p);
+        ll d = powmod((r*r % p)*ai % p, e, p);
         if (d == p-1) r = r*c % p;
         c = c*c % p;
     }
@@ -248,7 +264,6 @@ vector<int> digits (ull n, int base = 10, int min_size = 1)
 {
     vector<int> a;
     while (n) {
-        
         a.push_back(n%base);
         n /= base;
     }
@@ -268,32 +283,11 @@ ull from_digits (vector<int> a, int base = 10)
     return s;
 }
 
-vector<int> digits (Lnum A)
-{
-    vector<int> a;
-    for (int i=A.get_size()-1; i>=0; i--) {
-        vector<int> b = digits(A[i]);
-        if (i != A.get_size()-1) while (b.size() < 9) b.insert(b.begin(),0);
-        for (int j=0; j<(int)b.size(); j++) a.push_back(b[j]);
-    }
-    return a;
-}
-
-Lnum from_digits_lnum (vector<int> a)
-{
-    Lnum s;
-    for (int i=0; i<(int)a.size(); i++) {
-        s = s * 10;
-        s = s + Lnum(a[i]);
-    }
-    return s;
-}
-
 vector<bool> isPrime;
-vector<int> primes;
+vector<int> primes = {2}; // this is a special prime number, which is always here
 vector<int> primePi;
 
-void Eratosthenes_sieve (int n, bool fill_primes = false)
+void Eratosthenes_sieve (int n, bool fill_primes = false, bool fill_pi = false)
 {
     isPrime = vector<bool> (n+1, true);
     isPrime[0] = isPrime[1] = false;
@@ -303,15 +297,17 @@ void Eratosthenes_sieve (int n, bool fill_primes = false)
         }
     }
     
-    if (fill_primes) for (int i=2; i<=n; i++) if (isPrime[i]) primes.push_back(i);
+    if (fill_primes) for (int i=3; i<=n; i++) if (isPrime[i]) primes.push_back(i);
+    if (fill_pi) {
+        primePi = vector<int>(n+1);
+        for (int i=2; i<=n; i++) primePi[i] = primePi[i-1] + isPrime[i];
+    }
 }
 
 bool primeQ (ull n)
 {
     if (n < (int)isPrime.size()) return isPrime[n];
-    
     if (n%2 == 0 && n != 2) return false;
-    
     for (ull i=3; i*i<=n; i+=2) if (n % i == 0) return false;
     return true;
 }
@@ -321,62 +317,26 @@ bool isProbablePrime (ull n)
     for (int i=0; i<(int)primes.size(); i++) {
         if (primes[i]*1ll*primes[i] > n) break;
         if (n % primes[i] == 0) return false;
-    }
-    
-    return true;
-}
-
-void fill_primePi (int n) // WARNING: call only after Eratosthenes_sieve with size greater than or equal to this n
-{
-    primePi = vector<int>(n+1);
-    int s = 0;
-    for (int i=0; i<=n; i++) {
-        s += isPrime[i];
-        primePi[i] = s;
-    }
+    } return true;
 }
 
 vector<pull> factorize (ull n)
 {
     vector<pull> a;
-    
-    if (!primes.empty()) {
-        
-        for (ull i=0; primes[i]*1ll*primes[i]<=n; i++) {
             
-            int k = 0;
-            while (n % primes[i] == 0) {
-                n /= primes[i];
-                k++;
-            }
-            if (k) a.push_back(make_pair(primes[i],k));
+    for (int i=0; i<(int)primes.size() && primes[i]*1ll*primes[i]<=n; i++) {
+        
+        int k = 0;
+        while (n % primes[i] == 0) {
+            n /= primes[i];
+            k++;
         }
-        
-        ull from = primes.back() + 2;
-        if (from == 4) from--; // just in the case primes == {2}, which is almost impossible :)
-        
-        for (ull i=from; i*i<=n; i+=2) {
-            
-            int k = 0;
-            while (n % i == 0) {
-                n /= i;
-                k++;
-            }
-            if (k) a.push_back(make_pair(i,k));
-        }
-        
-        if (n != 1) a.push_back(make_pair(n,1));
-        return a;
+        if (k) a.push_back(make_pair(primes[i],k));
     }
     
-    int p2 = 0;
-    while (n % 2 == 0) {
-        n /= 2;
-        p2++;
-    }
-    if (p2) a.push_back(make_pair(2,p2));
+    ull from = primes.back() == 2 ? 3 : primes.back() + 2;
     
-    for (ull i=3; i*i<=n; i+=2) {
+    for (ull i=from; i*i<=n; i+=2) {
         
         int k = 0;
         while (n % i == 0) {
@@ -397,9 +357,9 @@ int MoebiusMu (ull n)
     return v.size() % 2 ? -1 : 1;
 }
 
-vector<sint> MoebuisMuSieve (ull n)
+vector<char> MoebuisMuSieve (ull n)
 {
-    vector<sint> mu = vector<sint>(n+1,1);
+    vector<char> mu(n+1,1);
     for (ull i=2; i<=n; i++) {
         if (primeQ(i)) {
             for (ull j=i; j<=n; j+=i) mu[j] = -mu[j];
@@ -412,18 +372,16 @@ vector<sint> MoebuisMuSieve (ull n)
 ull rad (ull n)
 {
     vector<pull> v = factorize(n);
-    
     ull s = 1;
     for (int i=0; i<(int)v.size(); i++) s *= v[i].fs;
-    
     return s;
 }
 
-vector<ull> eulerPhi;
+vector<int> eulerPhi;
 
 ull EulerPhi (ull n)
 {
-    if (n < (int)eulerPhi.size()) return eulerPhi[n];
+    if (n < (int)eulerPhi.size()) return (ull)eulerPhi[n];
     
     ull s = 1;
     vector<pull> a = factorize(n);
@@ -438,7 +396,7 @@ ull EulerPhi (ull n)
 
 void EulerPhiSieve (ull n)
 {
-    eulerPhi = vector<ull>(n+1);
+    eulerPhi = vector<int>(n+1);
     vector<bool> sieve(n+1);
     for (int i=1; i<=n; i++) eulerPhi[i] = i;
     for (int i=2; i<=n; i++) {
@@ -483,62 +441,18 @@ ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPh
 
 ll primitiveRoot (ll p) // p is prime
 {
-    vector<ll> fact;
-    ll phi = p-1, n = phi;
-    for (int i=0;;i++) {
-        ll p = primes[i];
-        if (p*p > n) break;
-        if (n % p == 0) {
-            fact.push_back(p);
-            while (n % p == 0) n /= p;
-        }
-    }
-    if (n > 1) fact.push_back(n);
+    vector<pull> f = factorize(p-1);
     
-    for (ll res=2; res<=p; ++res) {
+    for (ll res=2; res<p; res++) {
         bool ok = true;
-        for (int i=0; i<(int)fact.size() && ok; i++) {
-            ll d = powmod(res, phi/fact[i], (int)p);
-            if (d == 1) ok = false;
-        }
+        for (int i=0; i<(int)f.size() && ok; i++) ok &= powmod(res, (p-1)/f[i].fs, p) != 1;
         if (ok) return res;
     }
     
     return -1;
 }
 
-// all divs must be coprime and in the form p^n
-ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
-{
-    vector<ll> prime_divs; // find the only p[i] is the divisor of divs[i]
-    for (int i=0; i<(int)divs.size(); i++) {
-        vector<pull> f = factorize(divs[i]);
-        prime_divs.push_back(f[0].fs);
-    }
-    
-    int k = (int)rests.size();
-    vector<ll> x(k);
-    for (int i=0; i<k; i++) {
-        x[i] = rests[i];
-        for (int j=0; j<i; j++) {
-            x[i] = (x[i] - x[j]) * (ll)inverse(divs[j],divs[i],prime_divs[i]);
-            x[i] %= divs[i];
-            if (x[i] < 0) x[i] += divs[i];
-        }
-    }
-    
-    ull a = 0;
-    for (int i=0; i<k; i++) {
-        ull b = x[i], s = 1;
-        for (int j=0; j<i; j++) s *= divs[j];
-        b *= s;
-        a += b;
-    }
-    
-    return a;
-}
-
-vector<ull> Divisors (ull n) // returns in sorted order!
+vector<ull> Divisors (ull n) // returns in sorted order
 {
     vector<ull> a, b;
     for (ull i=1; i*i<=n; i++) {
@@ -584,6 +498,47 @@ ull Divisors_count (ull n)
     return s;
 }
 
+ull least_prime_divisor (ull n)
+{
+    for (int i=0; i<(int)primes.size() && primes[i]*1ll*primes[i]<=n; i++) {
+        if (n % primes[i] == 0) return primes[i];
+    }
+    ull from = primes.back() == 2 ? 3 : primes.back() + 2;
+    for (ull i=from; i*i<=n; i+=2) {
+        if (n%i == 0) return i;
+    } return n;
+}
+
+// all divs must be coprime and in the form p^n
+ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
+{
+    vector<ll> prime_divs; // find the only p[i] is the divisor of divs[i]
+    for (int i=0; i<(int)divs.size(); i++) {
+        prime_divs.push_back(least_prime_divisor(divs[i]));
+    }
+    
+    int k = (int)rests.size();
+    vector<ll> x(k);
+    for (int i=0; i<k; i++) {
+        x[i] = rests[i];
+        for (int j=0; j<i; j++) {
+            x[i] = (x[i] - x[j]) * (ll)inverse(divs[j], divs[i], prime_divs[i]);
+            x[i] %= divs[i];
+            if (x[i] < 0) x[i] += divs[i];
+        }
+    }
+    
+    ull a = 0;
+    for (int i=0; i<k; i++) {
+        ull b = x[i], s = 1;
+        for (int j=0; j<i; j++) s *= divs[j];
+        b *= s;
+        a += b;
+    }
+    
+    return a;
+}
+
 ull power_fact (ull n, ull p) // n! = S * p^x, returns x, p is prime
 {
     // TODO: investigate https://proofwiki.org/wiki/Factorial_Divisible_by_Prime_Power
@@ -614,6 +569,7 @@ ull square_representations_count (ull n) // n = a^2 + b^2, 0 < a <= b
     return B/2;
 }
 
+// TODO: add functions least_divisible_by and greatest_divisible_by
 ull count_divisible_by (ull n, ull mod, ull lb, ull ub) // returns count of numbers a in range [lb,ub] that a%n == mod
 {
     ull add = n - mod;
@@ -648,9 +604,7 @@ ull coprime_count_in_range (ull N, ull from, ull to)
 bool isPalindrom (const vector<int> &a)
 {
     int n = (int)a.size();
-    for (int i=0; i<n; i++) {
-        if (a[i] != a[n-1-i]) return false;
-    }
+    for (int i=0; i<n-1-i; i++) if (a[i] != a[n-1-i]) return false;
     return true;
 }
 
@@ -659,6 +613,7 @@ bool is_palindromic_number (ull n)
     return isPalindrom(digits(n));
 }
 
+// TODO: OMG, so many functions that MUST be put in vectors section and with templates
 int index_of_object (const vector<ull> &a, ull n)
 {
     for (int i=0; i<(int)a.size(); i++) if (a[i] == n) return i;
@@ -696,13 +651,14 @@ vector<int> subvector (const vector<int> &a, int from, int to)
     return b;
 }
 
+// TODO: think about operator+ here
 vector<int> join_vectors (vector<int> a, const vector<int> &b)
 {
     for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
     return a;
 }
 
-void join_vectors (vector<int> &a, const vector<int> &b, bool flag = true)
+void append_to (vector<int> &a, const vector<int> &b)
 {
     for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
 }
@@ -742,6 +698,7 @@ ull join_numbers (ull n, ull m)
     return from_digits(join_vectors(digits(n), digits(m)));
 }
 
+// TODO: test if operator== works here
 bool same_digits (ull n, ull m)
 {
     vector<int> a = digits(n), b = digits(m);
@@ -759,32 +716,29 @@ bool same_digits (ull n, ull m)
 bool same_letters (string s, string u)
 {
     if (s.length() != u.length()) return false;
-    vector<char> p, q;
-    for (int i=0; i<(int)s.length(); i++) { p.push_back(s[i]); q.push_back(u[i]); }
     
-    sort(p.begin(),p.end());
-    sort(q.begin(),q.end());
+    sort(s.begin(), s.end());
+    sort(u.begin(), u.end());
     
-    for (int i=0; i<(int)s.length(); i++) if (p[i] != q[i]) return false;
+    for (int i=0; i<(int)s.length(); i++) if (s[i] != u[i]) return false;
     return true;
 }
 
-bool next_combination (vector<int> & a, int n, int k)
+bool next_combination (vector<int> &a, int n, int k)
 {
-    for (int i=k-1; i>=0; --i)
+    for (int i=k-1; i>=0; i++) {
         if (a[i] < n-k+i+1) {
-            ++a[i];
-            for (int j=i+1; j<k; ++j)
-                a[j] = a[j-1]+1;
+            a[i]++;
+            for (int j=i+1; j<k; j++) a[j] = a[j-1] + 1;
             return true;
         }
-    return false;
+    } return false;
 }
 
-vector<vector<int>> get_combinations (int n, int k)
+vector<vector<int>> get_combinations (int n, int k) // numeration starts from 1
 {
-    vector<int>a;
-    vector<vector<int>>b;
+    vector<int> a;
+    vector<vector<int>> b;
     for (int i=1; i<=k; i++) a.push_back(i);
     b.push_back(a);
     while (next_combination(a,n,k)) b.push_back(a);
@@ -823,20 +777,24 @@ vector<vector<int>> sum_partitions (int n)
     return ret;
 }
 
-vector<vector<vector<int>>> fill_partitions (int k)
+// size is k-th Bell number
+// total number of elements is k*Bell[k]
+// TODO: rewrite or write an additional function that doesn't keep all partitions in memory
+vector<vector<vector<char>>> fill_partitions (int k)
 {
-    vector<vector<vector<int>>> partitions[10];
+    const int MAXK = 10;
+    vector<vector<vector<char>>> partitions[MAXK+1];
     
-    vector<int> s1(1,1);
-    vector<vector<int>> p1(1,s1);
+    vector<char> s1(1,1);
+    vector<vector<char>> p1(1,s1);
     partitions[1].push_back(p1);
     
-    for (int n=2; n<=9; n++) {
+    for (int n=2; n<=MAXK; n++) {
         
         for (int i=0; i<(int)partitions[n-1].size(); i++) {
             
-            vector<vector<int>> p = partitions[n-1][i];
-            p.push_back(vector<int>(1,n));
+            vector<vector<char>> p = partitions[n-1][i];
+            p.push_back(vector<char>(1,n));
             partitions[n].push_back(p);
             p.pop_back();
             
@@ -852,9 +810,7 @@ vector<vector<vector<int>>> fill_partitions (int k)
     return partitions[k];
 }
 
-vector<vector<pull>> pits;
-
-void fill_pythagorean_triples (ull n, bool primitive_only = true) // a^2 + b^2 = c^2, c <= n
+void fill_pythagorean_triples (ull n, vector<vector<pull>> &pits, bool primitive_only = true) // a^2 + b^2 = c^2, c <= n
 {
     pits = vector<vector<pull>>(n+1);
     for (ull p=2; p*p<=n; p++) for (ull q=1+p%2; q<p; q+=2) {
@@ -895,7 +851,7 @@ vector<int> v_from_code (ll n, const vector<int> &matches)
     
     for (int i=(int)matches.size()-1; i>=0; i--) {
         v.push_back(n % (matches[i]+1));
-        n /= (matches[i] + 1);
+        n /= matches[i] + 1;
     }
     
     reverse(v.begin(), v.end());
@@ -941,7 +897,7 @@ vector<string> parse_by_symbol (const string &S, char p)
     
     while (true) {
         
-        found = S.find(p, first);
+        found = S.find(p,first);
         if (found == string::npos) { v.push_back(S.substr(first, S.length()-first)); break; }
         v.push_back(S.substr(first, found-first));
         while (found != S.length() && S[found] == p) found++;
@@ -951,7 +907,8 @@ vector<string> parse_by_symbol (const string &S, char p)
     return v;
 }
 
-int Gauss (vector<vector<dd>> a, vector<dd> &ans) // 0 - no solutions, 1 - one solution, 2 - infinitely many solutions
+// 0 - no solutions, 1 - one solution, 2 - infinitely many solutions
+char Gauss (vector<vector<dd>> a, vector<dd> &ans)
 {
     int n = (int)a.size();
     int m = (int)a[0].size() - 1;
@@ -1019,6 +976,7 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+// TODO: use templates
 int random_integer (int from, int to)
 {
     random_device rd;     // only used once to initialise (seed) engine
@@ -1037,7 +995,7 @@ int main() {
 #endif
     
     ull ans = 0;
-    
+        
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
