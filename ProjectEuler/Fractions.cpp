@@ -11,15 +11,6 @@ typedef unsigned long long ull;
 typedef long double dd;
 typedef short int sint;
 
-#define pii pair<int,int>
-#define pll pair<ll,ll>
-#define puu pair<ull,ull>
-#define pdd pair<dd, dd>
-#define ppii pair<pair<int,int>, pair<int,int>>
-#define ppll pair<pair<ll,ll>, pair<ll,ll>>
-#define fs first
-#define sc second
-
 ll f_GCD (ll a, ll b)
 {
     if (a < 0) a = -a;

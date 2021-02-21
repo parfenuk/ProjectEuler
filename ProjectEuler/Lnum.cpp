@@ -15,7 +15,7 @@ typedef int ltype;
 
 using namespace std;
 
-#define LSIZE 7
+#define LSIZE 10
 const ltype BASE = 1000000000; // MUST be power of ten
 const sint BASE_POWER = 9;
 
@@ -48,12 +48,13 @@ public:
     bool isNegative() const { return minus; }
     
     void set_value (int pos, ltype k) { z[pos] = k; }
-    void push_back(ltype n)           { z[size++] = n; }
-    void pop_back()                   { z[size--] = 0; }
+    void push_back (ltype n)          { z[size++] = n; }
+    void pop_back()                   { z[--size] = 0; if (!size) size++; }
     void change_sign()                { if (size != 1 || z[0]) minus = !minus; }
     void set_sign (bool sign)         { if (size == 1 && z[0] == 0) minus = false; else minus = sign; }
-    Lnum abs()                        { set_sign(false); return *this; }
-    Lnum sqrt (const Lnum &A);
+    
+    static Lnum abs (Lnum A)  { A.set_sign(false); return A; }
+    static Lnum sqrt (const Lnum &A);
     
     friend bool operator== (const Lnum &A, const Lnum &B);
     friend bool operator<  (const Lnum &A, const Lnum &B);
@@ -64,6 +65,7 @@ public:
     
     friend ostream& operator<< (ostream &os, const Lnum &A);
     friend Lnum operator+ (Lnum A, Lnum B);
+    friend Lnum operator- (Lnum A);
     friend Lnum operator- (Lnum A, Lnum B);
     friend Lnum operator* (Lnum A, ltype b);
     friend Lnum operator* (Lnum A, ll b);
@@ -71,7 +73,7 @@ public:
     friend Lnum operator/ (Lnum A, ltype b);
     friend ltype operator% (Lnum A, ltype b);
     
-    ltype operator[] (int k) const { return z[k]; }
+    ltype operator[] (int k)   const { return z[k]; }
     Lnum& operator+= (Lnum B)  { *this = *this + B; return *this; }
     Lnum& operator-= (Lnum B)  { *this = *this - B; return *this; }
     Lnum& operator*= (ltype b) { *this = *this * b; return *this; }
@@ -86,20 +88,20 @@ Lnum::Lnum (ll n)
     if (n < 0) { minus = true; n = -n; }
     else minus = false;
     size = 0;
-    while (n) {
+    do {
         z[size++] = (n % BASE);
         n /= BASE;
-    }
+    } while (n);
 }
 
 Lnum::Lnum (ull n)
 {
     minus = false;
     size = 0;
-    while (n) {
+    do {
         z[size++] = (n % BASE);
         n /= BASE;
-    }
+    } while (n);
 }
 
 Lnum::Lnum (string S)
@@ -270,6 +272,12 @@ Lnum operator+ (Lnum A, Lnum B)
     }
     
     A.set_sign(minus);
+    return A;
+}
+
+Lnum operator- (Lnum A)
+{
+    A.change_sign();
     return A;
 }
 

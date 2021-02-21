@@ -15,11 +15,6 @@ typedef unsigned int uint;
 using namespace std;
 
 #define pii pair<int,int>
-#define pll pair<ll,ll>
-#define puu pair<ull,ull>
-#define pdd pair<dd, dd>
-#define ppii pair<pair<int,int>, pair<int,int>>
-#define ppll pair<pair<ll,ll>, pair<ll,ll>>
 #define fs first
 #define sc second
 
@@ -120,12 +115,12 @@ bool is_collinear (point a, point b)
 
 dd dist (point a, point b)
 {
-    return sqrt(pow(a.x-b.x,2)+pow(a.y-b.y,2));
+    return sqrt(pow(a.x-b.x,2) + pow(a.y-b.y,2));
 }
 
 dd dist_2 (point a, point b)
 {
-    return pow(a.x-b.x,2)+pow(a.y-b.y,2);
+    return pow(a.x-b.x,2) + pow(a.y-b.y,2);
 }
 
 point symmetric_point (point a, point b)
@@ -152,13 +147,13 @@ bool triangle_contains_point (point a, point b, point c, point d) // abc contain
 }
 
 bool geom_cw (point a, point b, point c, bool q = false) {
-    if (q) return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) < 0;
-    return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) <= 0;
+    dd expr = a.x*(b.y-c.y) + b.x*(c.y-a.y) + c.x*(a.y-b.y);
+    if (q) return expr < 0;
+    return expr <= 0;
 }
 
 bool geom_ccw (point a, point b, point c, bool q = false) {
-    if (q) return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) > 0;
-    return a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y) >= 0;
+    return !geom_cw(a,b,c,!q);
 }
 
 vector<point> convex_hull (vector<point> a, bool should_skip_border_points = true)
@@ -166,25 +161,23 @@ vector<point> convex_hull (vector<point> a, bool should_skip_border_points = tru
     if (a.size() <= 1) return vector<point>();
     
     sort (a.begin(), a.end());
-    point p1 = a[0],  p2 = a.back();
+    point p1 = a[0], p2 = a.back();
     vector<point> up, down;
-    up.push_back (p1);
-    down.push_back (p1);
-    for (size_t i=1; i<a.size(); ++i) {
-        if (i==a.size()-1 || geom_cw(p1, a[i], p2, should_skip_border_points)) {
-            while (up.size()>=2 && !geom_cw(up[up.size()-2], up[up.size()-1], a[i], should_skip_border_points))
-                up.pop_back();
-            up.push_back (a[i]);
+    up.push_back(p1);
+    down.push_back(p1);
+    for (size_t i=1; i<a.size(); i++) {
+        if (i == a.size()-1 || geom_cw(p1, a[i], p2, should_skip_border_points)) {
+            while (up.size()>=2 && !geom_cw(up[up.size()-2], up[up.size()-1], a[i], should_skip_border_points)) up.pop_back();
+            up.push_back(a[i]);
         }
         if (i==a.size()-1 || geom_ccw(p1, a[i], p2, !should_skip_border_points)) {
-            while (down.size()>=2 && !geom_ccw(down[down.size()-2], down[down.size()-1], a[i], should_skip_border_points))
-                down.pop_back();
-            down.push_back (a[i]);
+            while (down.size()>=2 && !geom_ccw(down[down.size()-2], down[down.size()-1], a[i], should_skip_border_points)) down.pop_back();
+            down.push_back(a[i]);
         }
     }
-    vector<point>b;
-    for (size_t i=0; i<up.size(); ++i) b.push_back (up[i]);
-    for (size_t i=down.size()-2; i>0; --i) b.push_back (down[i]);
+    vector<point> b;
+    for (size_t i=0; i<up.size(); i++)     b.push_back(up[i]);
+    for (size_t i=down.size()-2; i>0; i--) b.push_back(down[i]);
     return b;
 }
 
@@ -202,11 +195,11 @@ struct line
     point n() { return point(A,B); }
 };
 
-line::line(point a, point b)
+line::line (point a, point b)
 {
     A = b.y - a.y;
     B = a.x - b.x;
-    C = a.y*(b.x-a.x) - a.x*(b.y-a.y);
+    C = a.y*b.x - a.x*b.y;
 }
 
 bool is_parallel_lines (line p, line q)

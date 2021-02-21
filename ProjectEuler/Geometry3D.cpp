@@ -14,15 +14,6 @@ typedef unsigned int uint;
 
 using namespace std;
 
-#define pii pair<int,int>
-#define pll pair<ll,ll>
-#define puu pair<ull,ull>
-#define pdd pair<dd, dd>
-#define ppii pair<pair<int,int>, pair<int,int>>
-#define ppll pair<pair<ll,ll>, pair<ll,ll>>
-#define fs first
-#define sc second
-
 const dd PI = acos(-1.0);
 const dd EPS = 0.000000001;
 
@@ -108,12 +99,12 @@ point operator^ (point a, point b)
 
 dd dist (point a, point b)
 {
-    return sqrt(pow(a.x-b.x,2)+pow(a.y-b.y,2)+pow(a.z-b.z,2));
+    return sqrt(pow(a.x-b.x,2) + pow(a.y-b.y,2) + pow(a.z-b.z,2));
 }
 
 dd dist_2 (point a, point b)
 {
-    return pow(a.x-b.x,2)+pow(a.y-b.y,2)+pow(a.z-b.z,2);
+    return pow(a.x-b.x,2) + pow(a.y-b.y,2) + pow(a.z-b.z,2);
 }
 
 point symmetric_point (point a, point b)
@@ -137,7 +128,7 @@ struct plane
     bool contains_point (point a) { return fabs(A*a.x + B*a.y + C*a.z + D) < EPS; }
 };
 
-plane::plane(point a, point b, point c)
+plane::plane (point a, point b, point c)
 {
     A = a.y*b.z + a.z*c.y + b.y*c.z - a.z*b.y - b.z*c.y - a.y*c.z;
     B = a.z*b.x + b.z*c.x + a.x*c.z - b.x*c.z - a.x*b.z - a.z*c.x;
