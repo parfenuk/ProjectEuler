@@ -59,6 +59,7 @@ using namespace std;
 #define fs first
 #define sc second
 
+// TODO: make generator function of all this stuff
 //const ull POWER[21] = {1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576};
 //const ull POWER[12] = {1,3,9,27,81,243,729,2187,6561,19683,59049,177147};
 //const ull FACT[12] = {1,1,2,6,24,120,720,5040,40320,362880,3628800,39916800};

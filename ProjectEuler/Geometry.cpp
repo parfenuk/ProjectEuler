@@ -6,11 +6,7 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
-typedef long long ll;
-typedef unsigned long long ull;
 typedef long double dd;
-typedef short int sint;
-typedef unsigned int uint;
 
 using namespace std;
 
@@ -190,8 +186,8 @@ struct line
     line(dd a, dd b, dd c) { A = a; B = b; C = c; }
     line(point a, point b);
     
-    void shift_by_vector(point v) { C -= (A*v.x + B*v.y); }
-    point any_point(dd y = 0) { return A == 0 ? point(0,-C/B) : point((C + B*y)/A, y); }
+    void shift_by_vector (point v) { C -= (A*v.x + B*v.y); }
+    point any_point (dd y = 0) { return A == 0 ? point(0,-C/B) : point((C + B*y)/A, y); }
     point n() { return point(A,B); }
 };
 
