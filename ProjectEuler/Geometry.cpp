@@ -24,7 +24,7 @@ struct point
     point() { x = y = 0; }
     point(dd xx, dd yy) { x = xx; y = yy; }
     point(pii p) { x = p.fs; y = p.sc; }
-    void read() { std::cin >> x >> y; }
+    void read() { cin >> x >> y; }
     void show() { cout << fixed << x << " " << y << endl; }
     dd len() { return sqrt(x*x + y*y); }
     point orthogonal() { return point(-y,x); }

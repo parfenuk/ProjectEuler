@@ -19,7 +19,7 @@ struct point
     
     point() { x = y = z = 0; }
     point(dd xx, dd yy, dd zz) { x = xx; y = yy; z = zz; }
-    void read() { std::cin >> x >> y >> z; }
+    void read() { cin >> x >> y >> z; }
     dd len() { return sqrt(x*x + y*y + z*z); }
     void set_length (dd L) {
         dd l = len();
