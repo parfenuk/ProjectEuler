@@ -8,16 +8,13 @@
 
 // ********** BASIC STL CONTAINERS FUNCTIONS **********
 
-#include <iostream>
-#include <vector>
-
-using namespace std;
+#include "Containers.hpp"
 
 namespace Containers
 {
 
 template <class Trzx>
-void show (const vector<Trzx> &a, bool show_endl = true, bool show_size = false)
+void show (const vector<Trzx> &a, bool show_endl/*=true*/, bool show_size/*=false*/)
 {
     if (show_size) cout << a.size() << endl;
     for (int i=0; i<(int)a.size(); i++) cout << a[i] << " ";
@@ -25,19 +22,11 @@ void show (const vector<Trzx> &a, bool show_endl = true, bool show_size = false)
 }
 
 template <class Trp>
-void show_pair (const vector<Trp> &a, bool show_endl = true, bool show_size = false)
+void show_pair (const vector<Trp> &a, bool show_endl/*=true*/, bool show_size/*=false*/)
 {
     if (show_size) cout << a.size() << endl;
     for (int i=0; i<(int)a.size(); i++) cout << "(" << a[i].fs << " " << a[i].sc << ") ";
     if (show_endl) cout << endl;
-}
-
-template <class Trzx>
-Trzx total_vector_sum (const vector<Trzx> &a)
-{
-    Trzx s = 0;
-    for (int i=0; i<(int)a.size(); i++) s += a[i];
-    return s;
 }
 
 template <class Trzx>
@@ -59,6 +48,14 @@ void show_tensor (const vector<vector<vector<Trzx>>> &a)
         }
         cout << "------------------------------\n";
     }
+}
+
+template <class Trzx>
+Trzx total_vector_sum (const vector<Trzx> &a)
+{
+    Trzx s = 0;
+    for (int i=0; i<(int)a.size(); i++) s += a[i];
+    return s;
 }
 
 template <class Trzx>
@@ -113,35 +110,37 @@ vector<Trzx> flatten (const vector<vector<Trzx>> &a)
     return b;
 }
 
+// a - sorted, returns count of elements in vector that are greater than given value
 template <class Trzx>
-int count_greater_than (const vector<Trzx> &a, Trzx value) // a - sorted, returns count of elements in vector that are greater than given value
+int count_greater_than (const vector<Trzx> &a, Trzx value)
 {
     if (a[0] > value) return (int)a.size();
     if (a.back() <= value) return 0;
-    
+
     int lb = 0, ub = (int)a.size()-1;
     while (lb < ub) {
         int M = (lb+ub)/2;
         if (a[M] <= value) lb = M+1;
         else ub = M;
     }
-    
+
     return (int)a.size() - lb;
 }
 
+// a - sorted, returns count of elements in vector that are less than given value
 template <class Trzx>
-int count_less_than (const vector<Trzx> &a, Trzx value) // a - sorted, returns count of elements in vector that are less than given value
+int count_less_than (const vector<Trzx> &a, Trzx value)
 {
     if (a[0] >= value) return 0;
     if (a.back() < value) return (int)a.size();
-    
+
     int lb = 0, ub = (int)a.size()-1;
     while (lb < ub) {
         int M = (lb+ub+1)/2;
         if (a[M] >= value) ub = M-1;
         else lb = M;
     }
-    
+
     return lb+1;
 }
 

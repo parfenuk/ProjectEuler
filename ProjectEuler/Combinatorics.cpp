@@ -8,7 +8,7 @@
 
 // ********** VARIOUS COMBINATIONS AND GENERATIONS **********
 
-#include "Algebra.cpp"
+#include "Algebra.hpp"
 
 typedef long long ll;
 typedef unsigned long long ull;
@@ -47,7 +47,8 @@ bool next_combination (vector<sint> &a, int n, int k)
         return true;
     } return false;
 }
-
+// TODO: write function that counts i-th combination and reversly return number of combination
+// TODO: same for permutations
 vector<vector<sint>> get_combinations (int n, int k) // numeration starts from 1
 {
     vector<sint> a;

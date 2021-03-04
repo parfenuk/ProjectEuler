@@ -8,6 +8,7 @@
 
 #include <math.h>
 
+// TODO: Move to Definitions
 namespace Globals
 {
 const long double EPS = 0.000001;

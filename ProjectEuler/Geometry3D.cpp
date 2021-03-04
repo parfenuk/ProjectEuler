@@ -10,6 +10,9 @@ typedef long double dd;
 
 using namespace std;
 
+namespace Geometry3D
+{
+
 const dd PI = acos(-1.0);
 const dd EPS = 0.000000001;
 
@@ -176,4 +179,6 @@ dd dihedral_angle (plane P, plane Q, point a, point b)
     if (cosa > 1) cosa = 1;
     
     return acos(cosa);
+}
+
 }

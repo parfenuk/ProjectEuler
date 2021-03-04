@@ -11,24 +11,27 @@
 typedef long long ll;
 typedef unsigned long long ull;
 
-struct Matrix
+namespace Matrix
+{
+
+struct matrix
 {
     int N, Q; // all calculations are mod Q if it is set
     ll **A;
-    Matrix (int n) {
+    matrix (int n) {
         N = n; Q = 0;
         A = new ll *[n];
         for (int i=0; i<N; i++) A[i] = new ll [n];
         for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = 0;
         for (int i=0; i<N; i++) A[i][i] = 1;
     }
-    Matrix (ll **B, int n) {
+    matrix (ll **B, int n) {
         N = n; Q = 0;
         A = new ll *[n];
         for (int i=0; i<N; i++) A[i] = new ll [n];
         for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = B[i][j];
     }
-    Matrix (vector<vector<ll>> a) {
+    matrix (vector<vector<ll>> a) {
         int n = (int)a.size();
         N = n;
         A = new ll *[n];
@@ -44,10 +47,10 @@ struct Matrix
     }
 };
 
-Matrix operator+ (Matrix a, Matrix b)
+matrix operator+ (matrix a, matrix b)
 {
     int N = a.N;
-    Matrix c(N);
+    matrix c(N);
     for (int i=0; i<N; i++) for (int j=0; j<N; j++) {
         c.A[i][j] = a[i][j] + b[i][j];
         if (a.Q) {
@@ -60,10 +63,10 @@ Matrix operator+ (Matrix a, Matrix b)
     return c;
 }
 
-Matrix operator- (Matrix a, Matrix b)
+matrix operator- (matrix a, matrix b)
 {
     int N = a.N;
-    Matrix c(N);
+    matrix c(N);
     for (int i=0; i<N; i++) for (int j=0; j<N; j++) {
         c.A[i][j] = a[i][j] - b[i][j];
         if (a.Q) {
@@ -76,10 +79,10 @@ Matrix operator- (Matrix a, Matrix b)
     return c;
 }
 
-Matrix operator* (Matrix a, Matrix b)
+matrix operator* (matrix a, matrix b)
 {
     int N = a.N;
-    Matrix c(N);
+    matrix c(N);
     for (int i=0; i<N; i++) for (int j=0; j<N; j++) {
         
         ll s = 0;
@@ -97,10 +100,10 @@ Matrix operator* (Matrix a, Matrix b)
     return c;
 }
 
-Matrix matrix_power (Matrix A, ull k)
+matrix operator^ (matrix A, ull k)
 {
     int N = A.N;
-    Matrix B(N);
+    matrix B(N);
     B.Q = A.Q;
     while (k) {
         if (k%2==0) {
@@ -115,10 +118,10 @@ Matrix matrix_power (Matrix A, ull k)
     return B;
 }
 
-Matrix matrix_power (Matrix A, Lnum k)
+matrix operator^ (matrix A, Lnum k)
 {
     int N = A.N;
-    Matrix B(N);
+    matrix B(N);
     B.Q = A.Q;
     while (k != O) {
         if (k%2 == 0) {
@@ -146,7 +149,7 @@ ll linear_recurrence_value (vector<ll> coeffs, vector<ll> initial_values, Lnum N
     }
     
     int m = (int)coeffs.size();
-    Matrix M(m);
+    matrix M(m);
     M.Q = Q;
     for (int i=0; i<m; i++) M.A[i][i] = 0;
     for (int i=1; i<m; i++) M.A[i][i-1] = 1;
@@ -155,7 +158,7 @@ ll linear_recurrence_value (vector<ll> coeffs, vector<ll> initial_values, Lnum N
         if (M.A[0][j] < 0) M.A[0][j] += Q;
     }
     
-    M = matrix_power(M, N-Lnum(m)+1);
+    M = M^(N-Lnum(m)+1);
     ll ans = 0;
     for (int j=0; j<m; j++) {
         ans += M[0][j]*initial_values[m-j-1];
@@ -163,4 +166,6 @@ ll linear_recurrence_value (vector<ll> coeffs, vector<ll> initial_values, Lnum N
     }
     
     return ans;
+}
+
 }

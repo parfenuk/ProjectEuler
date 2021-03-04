@@ -10,6 +10,9 @@ typedef long long ll;
 
 using namespace std;
 
+namespace Complex
+{
+
 struct complex {
     
     ll x, y;
@@ -103,4 +106,6 @@ complex power (complex a, int k)
     complex s(1);
     for (int i=0; i<k; i++) s = s*a;
     return s;
+}
+
 }

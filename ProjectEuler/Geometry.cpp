@@ -14,6 +14,9 @@ using namespace std;
 #define fs first
 #define sc second
 
+namespace Geometry
+{
+
 const dd PI = acos(-1.0);
 const dd EPS = 0.00000001;
 
@@ -321,3 +324,4 @@ struct Polygon {
     }
 };
 
+}

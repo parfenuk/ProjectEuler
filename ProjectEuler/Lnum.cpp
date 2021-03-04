@@ -427,6 +427,7 @@ pair<Lnum,Lnum> divmod (Lnum A, Lnum B) // < A/B, A%B >
     return make_pair(M,res);
 }
 
+// TODO: make operator^
 Lnum power (Lnum A, ull k)
 {
     Lnum B(1);

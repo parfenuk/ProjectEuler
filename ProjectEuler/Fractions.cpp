@@ -8,7 +8,10 @@
 
 typedef long long ll;
 
-ll f_GCD (ll a, ll b)
+namespace Fractions
+{
+
+ll GCD (ll a, ll b)
 {
     if (a < 0) a = -a;
     if (b < 0) b = -b;
@@ -26,7 +29,7 @@ struct fraction {
     fraction(ll n) { num = n; den = 1; }
     fraction(ll n, ll d) { num = n; den = d; }
     void reduce() {
-        ll p = f_GCD(num, den);
+        ll p = GCD(num, den);
         num /= p;
         den /= p;
     }
@@ -44,13 +47,13 @@ bool operator< (fraction a, fraction b)
 }
 
 bool operator<= (fraction A, fraction B) { return A < B || A == B; }
-bool operator> (fraction A, fraction B) { return !(A <= B); }
+bool operator>  (fraction A, fraction B) { return !(A <= B); }
 bool operator>= (fraction A, fraction B) { return !(A < B); }
 bool operator!= (fraction A, fraction B) { return !(A == B); }
 
 fraction operator+ (fraction a, fraction b)
 {
-    ll d = f_GCD(a.den, b.den);
+    ll d = GCD(a.den, b.den);
     ll a_mult = b.den/d, b_mult = a.den/d;
     fraction c (a.num*a_mult + b.num*b_mult, a.den*a_mult);
     c.reduce();
@@ -59,7 +62,7 @@ fraction operator+ (fraction a, fraction b)
 
 fraction operator- (fraction a, fraction b)
 {
-    ll d = f_GCD(a.den, b.den);
+    ll d = GCD(a.den, b.den);
     ll a_mult = b.den/d, b_mult = a.den/d;
     fraction c (a.num*a_mult - b.num*b_mult, a.den*a_mult);
     c.reduce();
@@ -92,4 +95,6 @@ fraction operator/ (fraction a, fraction b)
     fraction c (a.num*b.den, a.den*b.num);
     c.reduce();
     return c;
+}
+
 }

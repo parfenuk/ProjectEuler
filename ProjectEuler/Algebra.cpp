@@ -8,26 +8,17 @@
 
 // ********** ALGEBRAIC AND NUMERIC FUNCTIONS **********
 
-#include <math.h>
-#include <set>
-#include <map>
-#include <vector>
-#include "Globals.cpp"
-#include "NumberUtils.cpp"
-
-typedef long long ll;
-typedef unsigned long long ull;
-
-using namespace std;
-
-#define pll pair<ll,ll>
-#define pull pair<ull,ull>
-#define mp make_pair
-#define fs first
-#define sc second
+#include "Algebra.hpp"
 
 namespace Algebra
 {
+
+vector<bool> isPrime;
+vector<int> primes = {2}; // this is a special prime number, which is always here
+vector<int> primePi;
+vector<int> eulerPhi;
+map<ll,ll> eulerCache;
+vector<ll> eulerPhiSum; // prefill small values for function
 
 ull GCD (ull a, ull b)
 {
@@ -109,7 +100,7 @@ ull productmod (ull a, ull n, ull mod)
     return b;
 }
 
-ll powmod (ll a, ll k, ll mod = 0)
+ll powmod (ll a, ll k, ll mod/*=0*/)
 {
     ll b = 1;
     while (k) {
@@ -127,7 +118,7 @@ ll powmod (ll a, ll k, ll mod = 0)
     return b;
 }
 
-ll inverse (ll a, ll mod, ll p = 0) // returns x: a*x % mod == 1. mod = p^n, GCD(a,mod) = 1
+ll inverse (ll a, ll mod, ll p/*=0*/) // returns x: a*x % mod == 1. mod = p^n, GCD(a,mod) = 1
 {
     if (p == 0) p = mod;
     return powmod(a, mod-1-mod/p, mod);
@@ -154,11 +145,7 @@ ull modular_sqrt (ull a, ull p) // finds r, r^2 == a mod p (prime), returns 0 if
     return r;
 }
 
-vector<bool> isPrime;
-vector<int> primes = {2}; // this is a special prime number, which is always here
-vector<int> primePi;
-
-void Eratosthenes_sieve (int n, bool fill_primes = false, bool fill_pi = false)
+void Eratosthenes_sieve (int n, bool fill_primes/*=false*/, bool fill_pi/*=false*/)
 {
     isPrime = vector<bool> (n+1, true);
     isPrime[0] = isPrime[1] = false;
@@ -172,7 +159,7 @@ void Eratosthenes_sieve (int n, bool fill_primes = false, bool fill_pi = false)
     if (fill_pi) {
         primePi = vector<int>(n+1);
         for (int i=2; i<=n; i++) primePi[i] = primePi[i-1] + isPrime[i];
-    }
+    }    
 }
 
 bool primeQ (ull n)
@@ -325,7 +312,6 @@ vector<char> MoebuisMuSieve (ull n)
     return mu;
 }
 
-vector<int> eulerPhi;
 ull EulerPhi (ull n)
 {
     if (n < (int)eulerPhi.size()) return (ull)eulerPhi[n];
@@ -357,8 +343,6 @@ void EulerPhiSieve (ull n)
     }
 }
 
-map<ll,ll> eulerCache;
-vector<ll> eulerPhiSum; // prefill small values for function
 ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPhi(n) modulo Q
 {
     if (n < (ll)eulerPhiSum.size()) return eulerPhiSum[n];
@@ -415,7 +399,8 @@ ull power_fact (ull n, ull p) // n! = S * p^x, returns x, p is prime
 }
 
 // TODO: add functions least_divisible_by and greatest_divisible_by
-ull count_divisible_by (ull n, ull lb, ull ub, ull mod = 0) // returns count of numbers a in range [lb,ub] that a%n == mod
+// returns count of numbers a in range [lb,ub] that a%n == mod
+ull count_divisible_by (ull n, ull lb, ull ub, ull mod/*=0*/)
 {
     ull add = n - mod;
     if (lb == 0) return (ub+add)/n;
@@ -423,7 +408,8 @@ ull count_divisible_by (ull n, ull lb, ull ub, ull mod = 0) // returns count of 
 }
 
 // TODO: add mod parameter
-ull sum_divisible_by (ull n, ull lb, ull ub) // sum of all numbers in range [lb,ub] that are divisible by n
+// sum of all numbers in range [lb,ub] that are divisible by n
+ull sum_divisible_by (ull n, ull lb, ull ub)
 {
     ull cnt = ub/n - (lb-1)/n;
     if (cnt == 0) return 0;
