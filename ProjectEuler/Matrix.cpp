@@ -6,11 +6,6 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
-#include "Lnum.cpp"
-
-typedef long long ll;
-typedef unsigned long long ull;
-
 namespace Matrix
 {
 
@@ -123,13 +118,13 @@ matrix operator^ (matrix A, Lnum k)
     int N = A.N;
     matrix B(N);
     B.Q = A.Q;
-    while (k != O) {
+    while (k != Lnum::O) {
         if (k%2 == 0) {
             k = k/2;
             A = A*A;
         }
         else {
-            k = k - one;
+            k = k - Lnum::one;
             B = B*A;
         }
     }

@@ -6,81 +6,13 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
-typedef long long ll;
-typedef unsigned long long ull;
-typedef long double dd;
-typedef short int sint;
-typedef int ltype;
+#include "Lnum.hpp"
 
-using namespace std;
-
-#define LSIZE 10
 const ltype BASE = 1000000000; // MUST be power of ten
 const sint BASE_POWER = 9;
 
-class Lnum
-{
-    int size;
-    bool minus;
-    ltype z[LSIZE];
-    
-public:
-    
-    Lnum() { z[0] = 0; minus = false; size = 1;}
-    Lnum(ltype n) { if (n < 0) { minus = true; n = -n; } else minus = false; z[0] = n; size = 1; }
-    Lnum(ll n);
-    Lnum(ull n);
-    Lnum(string S);
-    Lnum(const vector<int> &a);
-    Lnum(int a[], int s) { size = s; for (int i=0; i<s; i++) z[i] = a[i]; minus = false; }
-    
-    string to_string();
-    int to_int();
-    ll to_long_long();
-    dd to_double();
-    int digits_count();
-    vector<int> digits();
-    
-    int get_size()    const { return size; }
-    ltype back()      const { return z[size-1]; }
-    bool isPositive() const { return !minus; } // 0 is considered to be positive
-    bool isNegative() const { return minus; }
-    
-    void set_value (int pos, ltype k) { z[pos] = k; }
-    void push_back (ltype n)          { z[size++] = n; }
-    void pop_back()                   { z[--size] = 0; if (!size) size++; }
-    void change_sign()                { if (size != 1 || z[0]) minus = !minus; }
-    void set_sign (bool sign)         { if (size == 1 && z[0] == 0) minus = false; else minus = sign; }
-    
-    static Lnum abs (Lnum A)  { A.set_sign(false); return A; }
-    static Lnum sqrt (const Lnum &A);
-    
-    friend bool operator== (const Lnum &A, const Lnum &B);
-    friend bool operator<  (const Lnum &A, const Lnum &B);
-    friend bool operator<= (const Lnum &A, const Lnum &B) { return A < B || A == B; }
-    friend bool operator>  (const Lnum &A, const Lnum &B) { return B < A; }
-    friend bool operator>= (const Lnum &A, const Lnum &B) { return !(A < B); }
-    friend bool operator!= (const Lnum &A, const Lnum &B) { return !(A == B); }
-    
-    friend ostream& operator<< (ostream &os, const Lnum &A);
-    friend Lnum operator+ (Lnum A, Lnum B);
-    friend Lnum operator- (Lnum A);
-    friend Lnum operator- (Lnum A, Lnum B);
-    friend Lnum operator* (Lnum A, ltype b);
-    friend Lnum operator* (Lnum A, ll b);
-    friend Lnum operator* (Lnum A, Lnum B);
-    friend Lnum operator/ (Lnum A, ltype b);
-    friend ltype operator% (Lnum A, ltype b);
-    
-    ltype operator[] (int k)   const { return z[k]; }
-    Lnum& operator+= (Lnum B)  { *this = *this + B; return *this; }
-    Lnum& operator-= (Lnum B)  { *this = *this - B; return *this; }
-    Lnum& operator*= (ltype b) { *this = *this * b; return *this; }
-    Lnum& operator*= (ll b)    { *this = *this * b; return *this; }
-    Lnum& operator*= (Lnum B)  { *this = *this * B; return *this; }
-    Lnum& operator/= (ltype b) { *this = *this / b; return *this; }
-    
-}O,one(1);
+Lnum Lnum::O; // for some reasons I can't just use O instead of Lnum::O below
+Lnum Lnum::one(1);
 
 Lnum::Lnum (ll n)
 {
@@ -129,6 +61,7 @@ Lnum::Lnum (const vector<int> &a)
     }
 }
 
+// TODO: ostr << *this?
 string Lnum::to_string()
 {
     ostringstream ostr;
@@ -187,7 +120,7 @@ int Lnum::digits_count()
 vector<int> Lnum::digits()
 {
     vector<int> a;
-    // TBD
+    // TODO: TBD
 //    for (int i=size-1; i>=0; i--) {
 //        vector<int> b = digits(z[i]);
 //        if (i != size-1) while (b.size() < BASE_POWER) b.insert(b.begin(),0);
@@ -197,7 +130,7 @@ vector<int> Lnum::digits()
     return a;
 }
 
-Lnum Lnum::sqrt (const Lnum &A) // round(sqrt(A))
+Lnum Lnum::sqrt (const Lnum &A) // smallest x, that x*x <= A
 {
     Lnum lb(1), ub = A, ret;
     while (lb <= ub) {
@@ -288,7 +221,7 @@ Lnum operator- (Lnum A, Lnum B)
 
 Lnum operator* (Lnum A, ltype b) // b < BASE
 {
-    if (b == 0 || A == O) return O;
+    if (b == 0 || A == Lnum::O) return Lnum::O;
     
     ltype carry = 0;
     bool minus = A.isPositive() ^ (b > 0);
@@ -310,7 +243,7 @@ Lnum operator* (Lnum A, ltype b) // b < BASE
 // TODO: templates again?
 Lnum operator* (Lnum A, ll b)
 {
-    if (b == 0 || A == O) return O;
+    if (b == 0 || A == Lnum::O) return Lnum::O;
     
     ltype carry = 0;
     bool minus = A.isPositive() ^ (b > 0);
@@ -331,7 +264,7 @@ Lnum operator* (Lnum A, ll b)
 
 Lnum operator* (Lnum A, Lnum B)
 {
-    if (A == O || B == O) return O;
+    if (A == Lnum::O || B == Lnum::O) return Lnum::O;
     
     int size_c = A.get_size()+B.get_size();
     ltype *c = new ltype[size_c];
@@ -355,7 +288,7 @@ Lnum operator* (Lnum A, Lnum B)
 
 Lnum operator/ (Lnum A, ltype b)
 {
-    if (A == O) return O;
+    if (A == Lnum::O) return Lnum::O;
     
     ltype carry = 0;
     bool minus = A.isPositive() ^ (b > 0);
@@ -405,30 +338,29 @@ pair<Lnum,Lnum> divmod (Lnum A, Lnum B) // < A/B, A%B >
     Lnum lb(1), ub = A, M, res;
     while (true) {
         M = (lb + ub) / 2;
-        if (B*M > A) ub = M - one;
+        if (B*M > A) ub = M - Lnum::one;
         else { // B*M <= A
-            if (B*(M + one) > A) { res = A - B*M; break; }
-            lb = M + one;
+            if (B*(M + Lnum::one) > A) { res = A - B*M; break; }
+            lb = M + Lnum::one;
         }
     }
     
     if (neg_a) {
-        if (res == O) { if (!neg_b) M.change_sign(); }
+        if (res == Lnum::O) { if (!neg_b) M.change_sign(); }
         else {
-            M = M + one;
+            M = M + Lnum::one;
             res = B - res;
-            if (!neg_b && M != O) M.change_sign();
+            if (!neg_b && M != Lnum::O) M.change_sign();
         }
     }
     else {
-        if (neg_b && M != O) M.change_sign();
+        if (neg_b && M != Lnum::O) M.change_sign();
     }
     
     return make_pair(M,res);
 }
 
-// TODO: make operator^
-Lnum power (Lnum A, ull k)
+Lnum operator^ (Lnum A, ull k)
 {
     Lnum B(1);
     

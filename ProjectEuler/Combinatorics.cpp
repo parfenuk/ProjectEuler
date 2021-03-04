@@ -8,12 +8,6 @@
 
 // ********** VARIOUS COMBINATIONS AND GENERATIONS **********
 
-#include "Algebra.hpp"
-
-typedef long long ll;
-typedef unsigned long long ull;
-typedef short int sint;
-
 namespace Combinatorics
 {
 

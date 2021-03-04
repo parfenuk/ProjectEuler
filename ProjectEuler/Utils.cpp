@@ -8,11 +8,6 @@
 
 // ********** OTHER USEFUL AND USELESS FUNCTIONS **********
 
-typedef long long ll;
-typedef unsigned long long ull;
-
-using namespace std;
-
 namespace Utils
 {
 

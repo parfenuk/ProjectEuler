@@ -6,13 +6,10 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
-typedef long double dd;
-
-using namespace std;
-
 namespace Geometry3D
 {
 
+// TODO: move to constants
 const dd PI = acos(-1.0);
 const dd EPS = 0.000000001;
 

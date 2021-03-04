@@ -6,17 +6,10 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
-typedef long double dd;
-
-using namespace std;
-
-#define pii pair<int,int>
-#define fs first
-#define sc second
-
 namespace Geometry
 {
 
+// TODO: move to constants
 const dd PI = acos(-1.0);
 const dd EPS = 0.00000001;
 

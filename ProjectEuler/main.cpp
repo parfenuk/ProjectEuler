@@ -26,22 +26,6 @@
 #include <numeric>
 #include <random>
 #include <utility>
-
-#include "Algebra.hpp"
-#include "Combinatorics.cpp"
-#include "Complex.cpp"
-// That's why we include .cpp here despite of having header
-// https://www.codeproject.com/Articles/48575/How-to-Define-a-Template-Class-in-a-h-File-and-Imp
-#include "Containers.cpp"
-#include "Geometry.cpp"
-#include "Geometry3D.cpp"
-#include "Fractions.cpp"
-//#include "Lnum.cpp"
-#include "Matrix.cpp"
-#include "NumberUtils.hpp"
-//#include "Pell_Equation.cpp"
-#include "StringUtils.cpp"
-#include "Utils.cpp"
 #pragma comment(linker, "/STACK:16777216")
 
 typedef long long ll;
@@ -68,6 +52,22 @@ using namespace std;
 #define fs first
 #define sc second
 
+#include "Algebra.hpp"
+#include "Combinatorics.cpp"
+#include "Complex.cpp"
+// That's why we include .cpp here despite of having header
+// https://www.codeproject.com/Articles/48575/How-to-Define-a-Template-Class-in-a-h-File-and-Imp
+#include "Containers.cpp"
+#include "Geometry.cpp"
+#include "Geometry3D.cpp"
+#include "Fractions.cpp"
+#include "Lnum.hpp"
+#include "Matrix.cpp"
+#include "NumberUtils.hpp"
+//#include "Pell_Equation.cpp" TODO: fix this!
+#include "StringUtils.cpp"
+#include "Utils.cpp"
+
 // TODO: Add header files!!!
 // TODO: Add definitions file
 
@@ -93,6 +93,11 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    for (int i=0; i<30; i++) {
+        Lnum A(i);
+        cout << i << " " << Lnum::sqrt(A) << endl;
+    }
     
     cout << Matrix::linear_recurrence_value({1,1}, {0,1}, 5, 1000000007) << endl;
     cout << Matrix::linear_recurrence_value({1,1}, {0,1}, 10, 1000000007) << endl;

@@ -10,6 +10,7 @@
 		D15BA4CA1F0D983F00B64B78 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D15BA4C91F0D983F00B64B78 /* main.cpp */; };
 		D1DF344325F0F551009DF141 /* Algebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1DF344125F0F551009DF141 /* Algebra.cpp */; };
 		D1DF344925F0F933009DF141 /* NumberUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1DF344725F0F933009DF141 /* NumberUtils.cpp */; };
+		D1DF345C25F13888009DF141 /* Lnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1DF345625F137F0009DF141 /* Lnum.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,8 +44,9 @@
 		D1DF344825F0F933009DF141 /* NumberUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NumberUtils.hpp; sourceTree = "<group>"; };
 		D1DF344D25F107A8009DF141 /* Containers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Containers.cpp; sourceTree = "<group>"; };
 		D1DF344E25F107A8009DF141 /* Containers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Containers.hpp; sourceTree = "<group>"; };
+		D1DF345625F137F0009DF141 /* Lnum.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Lnum.cpp; sourceTree = "<group>"; };
+		D1DF345725F137F0009DF141 /* Lnum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Lnum.hpp; sourceTree = "<group>"; };
 		D1E55E851F24C7B600ADF93D /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry.cpp; sourceTree = "<group>"; };
-		D1E55E871F261C0F00ADF93D /* Lnum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lnum.cpp; sourceTree = "<group>"; };
 		D1F909651F51C2EC00A70540 /* Complex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Complex.cpp; sourceTree = "<group>"; };
 		FA120B0F20625D5200010E1F /* Geometry3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry3D.cpp; sourceTree = "<group>"; };
 		FA5901EE1FD9DF56003B1AF3 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
@@ -93,7 +95,8 @@
 				D1CDA74825F048BB00BE085D /* Globals.cpp */,
 				D1CDA74325F0320800BE085D /* Graphs.cpp */,
 				D17A22091F7443F5009BF742 /* Fractions.cpp */,
-				D1E55E871F261C0F00ADF93D /* Lnum.cpp */,
+				D1DF345725F137F0009DF141 /* Lnum.hpp */,
+				D1DF345625F137F0009DF141 /* Lnum.cpp */,
 				FA5901EE1FD9DF56003B1AF3 /* Matrix.cpp */,
 				D1DF344825F0F933009DF141 /* NumberUtils.hpp */,
 				D1DF344725F0F933009DF141 /* NumberUtils.cpp */,
@@ -165,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1DF344325F0F551009DF141 /* Algebra.cpp in Sources */,
+				D1DF345C25F13888009DF141 /* Lnum.cpp in Sources */,
 				D1DF344925F0F933009DF141 /* NumberUtils.cpp in Sources */,
 				D15BA4CA1F0D983F00B64B78 /* main.cpp in Sources */,
 			);

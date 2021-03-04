@@ -6,10 +6,6 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
-typedef long long ll;
-
-using namespace std;
-
 namespace Complex
 {
 

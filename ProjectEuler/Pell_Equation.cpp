@@ -7,7 +7,7 @@
 //
 
 #include <stdio.h>
-#include "Lnum.cpp"
+#include "Lnum.hpp"
 
 ull pell_integer_sqrt (ull n) // returns 0 if n != x*x
 {
