@@ -11,6 +11,8 @@
 namespace StringUtils
 {
 
+// TODO: z-function, KMP-function, some other stuff...
+
 // TODO: rewrite it using linear cycle, check correctness on Timus tasks
 vector<string> parse_by_symbol (const string &S, char p)
 {

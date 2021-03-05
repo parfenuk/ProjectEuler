@@ -11,7 +11,7 @@ namespace Complex
 
 struct complex {
     
-    ll x, y;
+    ll x,y;
     ll norm() { return x*x + y*y; }
     complex() { x = y = 0; }
     complex(ll _x) { x = _x; y = 0; }

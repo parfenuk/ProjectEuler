@@ -71,7 +71,7 @@ ull from_digits (vector<int> a, int base)
 
 bool is_palindromic_number (ull n)
 {
-    return Containers::isPalindrom(digits(n));
+    return Containers::isPalindrom(digits(n)); // TODO: think of how to apply template here...
 }
 
 ull join_numbers (ull n, ull m)
@@ -79,7 +79,6 @@ ull join_numbers (ull n, ull m)
     return 0;//from_digits(Containers::join_vectors(digits(n), digits(m)));
 }
 
-// TODO: test if operator== works here
 bool same_digits (ull n, ull m)
 {
     vector<int> a = digits(n), b = digits(m);

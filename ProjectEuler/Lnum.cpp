@@ -241,6 +241,7 @@ Lnum operator* (Lnum A, ltype b) // b < BASE
 }
 
 // TODO: templates again?
+// TODO: double-check if it works actually)
 Lnum operator* (Lnum A, ll b)
 {
     if (b == 0 || A == Lnum::O) return Lnum::O;
@@ -319,7 +320,7 @@ ltype operator% (Lnum A, ltype b) // assume that b > 0
     return carry;
 }
 
-pair<Lnum,Lnum> divmod (Lnum A, Lnum B) // < A/B, A%B >
+pair<Lnum,Lnum> Lnum::divmod (Lnum A, Lnum B) // < A/B, A%B >
 {
     if (B.get_size() == 1) {
         return make_pair(A/B[0], A%B[0]);

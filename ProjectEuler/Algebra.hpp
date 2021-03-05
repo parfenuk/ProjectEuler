@@ -42,6 +42,7 @@ namespace Algebra
     vector<ull> Divisors (ull n);
     vector<ull> Divisors_square (ull n);
     ull Divisors_sum (ull n);
+    ull Divisors_count (ull n);
     ull productmod (ull a, ull n, ull mod);
     ll powmod (ll a, ll k, ll mod = 0);
     ll inverse (ll a, ll mod, ll p = 0);
@@ -53,14 +54,13 @@ namespace Algebra
     vector<pull> factorize (ull n);
     ll primitiveRoot (ll p);
     ull rad (ull n);
-    ull Divisors_count (ull n); // TODO: can we replace upper? =)
-    ull square_representations_count (ull n);
     ull Chinese_theorem (vector<ll> divs, vector<ll> rests);
     int MoebiusMu (ull n);
     vector<char> MoebuisMuSieve (ull n);
     ull EulerPhi (ull n);
     void EulerPhiSieve (ull n);
     ll EulerPhiSum (ll n, int Q);
+    ull square_representations_count (ull n);
     ull coprime_count_in_range (ull N, ull from, ull to);
     ull power_fact (ull n, ull p);
     ull count_divisible_by (ull n, ull lb, ull ub, ull mod = 0);

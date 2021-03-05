@@ -6,18 +6,10 @@
 //  Copyright © 2018 Miraslau Parafeniuk. All rights reserved.
 //
 
-#include <stdio.h>
 #include "Lnum.hpp"
 
-ull pell_integer_sqrt (ull n) // returns 0 if n != x*x
+namespace PellEquation
 {
-    if (n == 0) return 0;
-    
-    ull x = (ull)sqrt((dd)(n-0.001));
-    while (x*x < n) x++;
-    if (x*x == n) return x;
-    return 0;
-}
 
 // a continued fraction expansion for (p0+sqrt(d))/q0
 // correctness is confirmed for p0 = 0 and q0 = 1 only :)
@@ -88,12 +80,12 @@ vector<pair<Lnum,Lnum>> pell_fundamentals (ull d, ull n)
     vector<pair<Lnum,Lnum>> funds;
     Lnum D(d), N(n);
     
-    for (Lnum y=Lnum(); y*y*2*D <= N*(tu.fs-one); y=y+one) {
+    for (Lnum y=Lnum(); y*y*2*D <= N*(tu.fs-Lnum::one); y=y+Lnum::one) {
         
-        Lnum x = lnum_sqrt(y*y*D + N);
-        if (x == O) continue;
+        Lnum x = Lnum::sqrt(y*y*D + N);
+        if (x == Lnum::O) continue;
         funds.push_back(make_pair(x,y));
-        if (divmod(x*x + D*y*y, N).sc != O || divmod(x*y*2, N).sc != O) funds.push_back(make_pair(x*Lnum(-1),y));
+        if (Lnum::divmod(x*x + D*y*y, N).sc != Lnum::O || Lnum::divmod(x*y*2, N).sc != Lnum::O) funds.push_back(make_pair(x*Lnum(-1),y));
     }
     return funds;
 }
@@ -125,8 +117,8 @@ vector<pair<Lnum,Lnum>> pell_bf (ull d, ull n, Lnum max_x)
                 Lnum r = funds[i].fs, s = funds[i].sc;
                 Lnum X = r*T + s*U*Lnum(d);
                 Lnum Y = r*U + s*T;
-                if (lnum_abs(X) <= max_x) {
-                    sols.insert(make_pair(lnum_abs(X), lnum_abs(Y)));
+                if (Lnum::abs(X) <= max_x) {
+                    sols.insert(make_pair(Lnum::abs(X), Lnum::abs(Y)));
                     added = true;
                 }
             }
@@ -156,9 +148,11 @@ vector<pair<Lnum,Lnum>> quad_s (ull a, ull b, ull c, Lnum max_x)
 //    }
     
     for (int i=0; i<(int)v.size(); i++) {
-        pair<Lnum,Lnum> xrem = divmod(v[i].fs,A);
-        if (xrem.sc == O) res.push_back(make_pair(xrem.fs,v[i].sc));
+        pair<Lnum,Lnum> xrem = Lnum::divmod(v[i].fs,A);
+        if (xrem.sc == Lnum::O) res.push_back(make_pair(xrem.fs,v[i].sc));
     }
     return res;
+}
+
 }
 

@@ -6,7 +6,7 @@
 //  Copyright © 2021 Miraslau Parafeniuk. All rights reserved.
 //
 
-// ********** BASIC STL CONTAINERS FUNCTIONS **********
+// ********** BASIC STL CONTAINERS AND SEARCH FUNCTIONALITY **********
 
 #include "Containers.hpp"
 

@@ -89,4 +89,6 @@ public:
     Lnum& operator*= (ll b)    { *this = *this * b; return *this; }
     Lnum& operator*= (Lnum B)  { *this = *this * B; return *this; }
     Lnum& operator/= (ltype b) { *this = *this / b; return *this; }
+    
+    static pair<Lnum,Lnum> divmod (Lnum A, Lnum B);
 };

@@ -80,6 +80,14 @@ ull Divisors_sum (ull n)
     return sum;
 }
 
+ull Divisors_count (ull n)
+{
+    vector<pull> a = factorize(n);
+    ull s = 1;
+    for (int i=0; i<(int)a.size(); i++) s *= (a[i].sc+1);
+    return s;
+}
+
 // returns a*b % mod.
 // Useful if direct calculations are impossible in int64
 ull productmod (ull a, ull n, ull mod)
@@ -240,29 +248,6 @@ ull rad (ull n)
     return s;
 }
 
-ull Divisors_count (ull n)
-{
-    vector<pull> a = factorize(n);
-    ull s = 1;
-    for (int i=0; i<(int)a.size(); i++) s *= (a[i].sc+1);
-    return s;
-}
-
-ull square_representations_count (ull n) // n = a^2 + b^2, 0 < a <= b
-{
-    vector<pull> f = factorize(n);
-    int B = 1, a0 = 0;
-    for (int i=0; i<(int)f.size(); i++) {
-        if (f[i].fs == 2) a0 = (int)f[i].sc;
-        else if (f[i].fs % 4 == 1) B *= (f[i].sc+1);
-        else if (f[i].fs % 4 == 3 && f[i].sc % 2) return 0;
-    }
-    if (B % 2 == 0) return B/2;
-    if (a0 % 2 == 0) B--;
-    else B++;
-    return B/2;
-}
-
 // all divs must be coprime and in the form p^n
 ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
 {
@@ -368,6 +353,21 @@ ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPh
     
     eulerCache[n] = res;
     return res;
+}
+
+ull square_representations_count (ull n) // n = a^2 + b^2, 0 < a <= b
+{
+    vector<pull> f = factorize(n);
+    int B = 1, a0 = 0;
+    for (int i=0; i<(int)f.size(); i++) {
+        if (f[i].fs == 2) a0 = (int)f[i].sc;
+        else if (f[i].fs % 4 == 1) B *= (f[i].sc+1);
+        else if (f[i].fs % 4 == 3 && f[i].sc % 2) return 0;
+    }
+    if (B % 2 == 0) return B/2;
+    if (a0 % 2 == 0) B--;
+    else B++;
+    return B/2;
 }
 
 // returns amount of numbers in range [from,to] that are coprime to N

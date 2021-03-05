@@ -10,7 +10,7 @@
 
 namespace Combinatorics
 {
-
+// TODO: write 2-dimensional binomials generator
 ull Binomial (ull n, ull k, int p = 0) // C(n,k) mod p. p must be prime and greater than n and k.
 {
     if (k > n) return 0;
@@ -139,6 +139,28 @@ void fill_pythagorean_triples (ull n, vector<vector<pull>> &pits, bool primitive
             if (primitive_only) break;
         }
     }
+}
+
+// returns { n^0, n^1, ... , n^(k-1) } % mod
+vector<ull> get_powers (ull n, int k, int mod = 0)
+{
+    vector<ull> a(k,1);
+    for (int i=1; i<k; i++) {
+        a[i] = a[i-1]*n;
+        if (mod) a[i] %= mod;
+    }
+    return a;
+}
+
+// returns { 0!, 1!, ... , (k-1)! } % mod
+vector<ull> get_factorials (int k, int mod = 0)
+{
+    vector<ull> a(k,1);
+    for (int i=2; i<k; i++) {
+        a[i] = a[i-1]*i;
+        if (mod) a[i] %= mod;
+    }
+    return a;
 }
 
 }
