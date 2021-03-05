@@ -7,7 +7,7 @@
 //
 
 typedef vector<vector<int>> graph; // represented by adjancecy matrix
-typedef vector<vector<pair<int,int>>> weightedGraph;
+typedef vector<vector<pii>> weightedGraph;
 
 namespace Graphs
 {

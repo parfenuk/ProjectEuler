@@ -1,58 +1,4 @@
-#include <set>
-#include <bitset>
-#include <queue>
-#include <deque>
-#include <stack>
-#include <sstream>
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-
-#include <cstdio>
-#include <cstdlib>
-#include <cmath>
-#include <ctime>
-#include <cstring>
-#include <cassert>
-
-#include <math.h>
-#include <vector>
-#include <string>
-#include <list>
-#include <map>
-#include <unordered_map>
-#include <algorithm>
-#include <functional>
-#include <numeric>
-#include <random>
-#include <utility>
-#pragma comment(linker, "/STACK:16777216")
-
-typedef long long ll;
-typedef unsigned long long ull;
-typedef long double dd;
-typedef short int sint;
-
-using namespace std;
-
-#define pbb pair<bool,bool>
-#define pcc pair<char,char>
-#define psii pair<sint,sint>
-#define pii pair<int,int>
-#define pll pair<ll,ll>
-#define pull pair<ull,ull>
-#define pdd pair<dd,dd>
-#define ppii pair<pair<int,int>, pair<int,int>>
-#define ppll pair<pair<ll,ll>, pair<ll,ll>>
-#define pss pair<string,string>
-#define vint vector<int>
-#define vll vector<ll>
-#define vull vector<ull>
-#define vvint vector<vector<int>>
-#define vpii vector<pair<int,int>>
-#define mp make_pair
-#define fs first
-#define sc second
+#include "Definitions.hpp"
 
 #include "Algebra.hpp"
 #include "Combinatorics.cpp"
@@ -76,6 +22,7 @@ using namespace std;
 // TODO: write map and set search: find minimum greater / maximum less
 
 using namespace Algebra;
+using namespace Containers;
 
 int main() {
     clock_t Total_Time = clock();
@@ -112,6 +59,14 @@ int main() {
     cout << Containers::count_less_than(P,19) << endl;
     cout << Containers::count_greater_than(P,23) << endl;
     cout << Containers::count_greater_than(P,7) << endl;
+    
+    vector<ull> a = Combinatorics::get_powers(3,6);
+    vector<ull> b = Combinatorics::get_factorials(6);
+    a = a + b;
+    Containers::show(a+b);
+    
+    Geometry::point p(1,2);
+    Geometry3D::point q(1,2,3);
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;

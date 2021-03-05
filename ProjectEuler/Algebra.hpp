@@ -8,24 +8,8 @@
 
 #pragma once
 
-#include <math.h>
-#include <set>
-#include <map>
-#include <vector>
-#include "Globals.cpp"
+#include "Definitions.hpp"
 #include "NumberUtils.hpp"
-
-typedef long long ll;
-typedef unsigned long long ull;
-typedef long double dd;
-
-using namespace std;
-
-#define pll pair<ll,ll>
-#define pull pair<ull,ull>
-#define mp make_pair
-#define fs first
-#define sc second
 
 namespace Algebra
 {

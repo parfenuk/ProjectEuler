@@ -8,19 +8,9 @@
 
 #pragma once
 
-#include <vector>
-#include <string>
-#include <sstream>
-#include <iostream>
-#include <iomanip>
+#include "Definitions.hpp"
 
-typedef long long ll;
-typedef unsigned long long ull;
-typedef long double dd;
-typedef short int sint;
 typedef int ltype;
-
-using namespace std;
 
 #define LSIZE 10
 

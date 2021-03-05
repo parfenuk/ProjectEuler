@@ -88,9 +88,8 @@ vector<Trzx> subvector (const vector<Trzx> &a, int from, int to)
     return b;
 }
 
-// TODO: think about operator+ here
 template <class Trzx>
-vector<Trzx> join_vectors (vector<Trzx> a, const vector<Trzx> &b)
+vector<Trzx> operator+ (vector<Trzx> a, const vector<Trzx> &b)
 {
     for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
     return a;

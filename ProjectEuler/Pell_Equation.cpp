@@ -6,8 +6,6 @@
 //  Copyright © 2018 Miraslau Parafeniuk. All rights reserved.
 //
 
-#include "Lnum.hpp"
-
 namespace PellEquation
 {
 
@@ -144,7 +142,7 @@ vector<pair<Lnum,Lnum>> quad_s (ull a, ull b, ull c, Lnum max_x)
     vector<pair<Lnum,Lnum>> res, v = pell_bf(a*b, a*c, max_x*A);
 //    cout << "PELL_BF:\n";
 //    for (int i=0; i<(int)v.size(); i++) {
-//        v[i].fs.show(); cout << " "; v[i].sc.show(); cout << endl;
+//        cout << v[i].fs << " " << v[i].sc << endl;
 //    }
     
     for (int i=0; i<(int)v.size(); i++) {

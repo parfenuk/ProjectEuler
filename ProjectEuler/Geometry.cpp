@@ -9,10 +9,6 @@
 namespace Geometry
 {
 
-// TODO: move to constants
-const dd PI = acos(-1.0);
-const dd EPS = 0.00000001;
-
 struct point
 {
     dd x,y;

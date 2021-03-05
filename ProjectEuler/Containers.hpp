@@ -8,11 +8,6 @@
 
 #pragma once
 
-#include <iostream>
-#include <vector>
-
-using namespace std;
-
 // TODO: Global think: if eventually all methods are templated - maybe, we should make a class instead in order to avoid linker errors and make use of Solution 1 from the link
 namespace Containers
 {
@@ -35,7 +30,7 @@ template <class Trzx>
 template <class Trzx>
     vector<Trzx> subvector (const vector<Trzx> &a, int from, int to);
 template <class Trzx>
-    vector<Trzx> join_vectors (vector<Trzx> a, const vector<Trzx> &b);
+    vector<Trzx> operator+ (vector<Trzx> a, const vector<Trzx> &b);
 template <class Trzx>
     void append_to (vector<Trzx> &a, const vector<Trzx> &b);
 template <class Trzx>

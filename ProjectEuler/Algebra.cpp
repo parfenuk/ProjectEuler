@@ -434,7 +434,7 @@ char Gauss (vector<vector<dd>> a, vector<dd> &ans)
         for (int i=row; i<n; i++) {
             if (abs(a[i][col]) > abs(a[sel][col])) sel = i;
         }
-        if (abs(a[sel][col]) < Globals::EPS) continue;
+        if (abs(a[sel][col]) < EPS) continue;
         for (int i=col; i<=m; i++) swap(a[sel][i],a[row][i]);
         where[col] = row;
         
@@ -454,7 +454,7 @@ char Gauss (vector<vector<dd>> a, vector<dd> &ans)
     for (int i=0; i<n; i++) {
         dd sum = 0;
         for (int j=0; j<m; ++j) sum += ans[j]*a[i][j];
-        if (abs(sum - a[i][m]) > Globals::EPS) return 0;
+        if (abs(sum - a[i][m]) > EPS) return 0;
     }
     
     for (int i=0; i<m; ++i) {
