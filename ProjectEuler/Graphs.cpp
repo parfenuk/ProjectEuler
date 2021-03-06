@@ -12,16 +12,16 @@ typedef vector<vector<pii>> weightedGraph;
 namespace Graphs
 {
 
-vector<vector<int>> find_connected_components (const graph &g, int N)
+vvint find_connected_components (const graph &g, int N)
 {
-    vector<vector<int>> w;
+    vvint w;
     
-    vector<bool> used(N);
+    vbool used(N);
     for (int v=0; v<N; v++) {
         
         if (used[v]) continue;
             
-        vector<int> component;
+        vint component;
         int h = 0, t = 0;
         component.push_back(v);
         t++;

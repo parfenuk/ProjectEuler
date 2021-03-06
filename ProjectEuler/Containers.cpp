@@ -143,7 +143,7 @@ int count_less_than (const vector<Trzx> &a, Trzx value)
     return lb+1;
 }
 
-bool isPalindrom (const vector<int> &a)
+bool isPalindrom (const vint &a)
 {
     int n = (int)a.size();
     for (int i=0; i<n-1-i; i++) if (a[i] != a[n-1-i]) return false;

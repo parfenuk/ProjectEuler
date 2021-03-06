@@ -45,9 +45,9 @@ ull upper_integer_sqrt (ull n) // returns greatest x such that x*x >= n
 }
 
 // n = 153 -> (1,5,3)
-vector<int> digits (ull n, int base, int min_size)
+vint digits (ull n, int base, int min_size)
 {
-    vector<int> a;
+    vint a;
     while (n) {
         a.push_back(n%base);
         n /= base;
@@ -59,7 +59,7 @@ vector<int> digits (ull n, int base, int min_size)
 }
 
 // (4,7,2) -> 472
-ull from_digits (vector<int> a, int base)
+ull from_digits (const vint &a, int base)
 {
     ull s = 0;
     for (int i=0; i<(int)a.size(); i++) {
@@ -76,7 +76,7 @@ bool is_palindromic_number (ull n)
 
 bool same_digits (ull n, ull m)
 {
-    vector<int> a = digits(n), b = digits(m);
+    vint a = digits(n), b = digits(m);
     
     sort(a.begin(), a.end());
     sort(b.begin(), b.end());
@@ -108,7 +108,7 @@ ull ones_mod (ull k, ull mod)
     return b;
 }
 
-ll code_from_v (const vector<int> &v, const vector<int> &matches) // returns number in dynamic base
+ll code_from_v (const vint &v, const vint &matches) // returns number in dynamic base
 {
     ll ret = v[0];
     
@@ -120,9 +120,9 @@ ll code_from_v (const vector<int> &v, const vector<int> &matches) // returns num
     return ret;
 }
 
-vector<int> v_from_code (ll n, const vector<int> &matches)
+vint v_from_code (ll n, const vint &matches)
 {
-    vector<int> v;
+    vint v;
     
     for (int i=(int)matches.size()-1; i>=0; i--) {
         v.push_back(n % (matches[i]+1));

@@ -11,12 +11,11 @@
 namespace Utils
 {
 
-vector<ull> Lagged_Fibonacci_Generator (int n)
+vull Lagged_Fibonacci_Generator (int n)
 {
-    vector<ull> s;
+    vull s;
     
     for (ull i=1; i<=n; i++) {
-        
         if (i <= 55) s.push_back((i*i*i*300007 - i*200003 + 100003) % 1000000);
         else s.push_back((s[i-56]+s[i-25]) % 1000000);
     }
@@ -24,9 +23,9 @@ vector<ull> Lagged_Fibonacci_Generator (int n)
     return s;
 }
 
-vector<ull> Blub_Blub_Shum_Generator (int n)
+vull Blub_Blub_Shum_Generator (int n)
 {
-    vector<ull> v;
+    vull v;
     ull a = 290797;
     
     for (int i=0; i<n; i++) {

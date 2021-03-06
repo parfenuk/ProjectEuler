@@ -11,7 +11,7 @@ namespace PellEquation
 
 // a continued fraction expansion for (p0+sqrt(d))/q0
 // correctness is confirmed for p0 = 0 and q0 = 1 only :)
-pair<vector<ull>, int> PQa (ll p0, ll q0, ull d) // d > 0, q0 != 0, (p0*p0 - d) % q0 == 0, d != n^2
+pair<vull,int> PQa (ll p0, ll q0, ull d) // d > 0, q0 != 0, (p0*p0 - d) % q0 == 0, d != n^2
 {
     dd sd = sqrt(d);
     ll ai = 1, aim = 0;
@@ -19,7 +19,7 @@ pair<vector<ull>, int> PQa (ll p0, ll q0, ull d) // d > 0, q0 != 0, (p0*p0 - d) 
     ll gi = q0, gim = -p0;
     ll pi = p0, qi = q0;
     int i = -1, ir = -1000000000;
-    vector<ull> alphas;
+    vull alphas;
     
     ll pir = -1000000000, qir = -1000000000;
     while (true) {
@@ -46,10 +46,10 @@ pair<vector<ull>, int> PQa (ll p0, ll q0, ull d) // d > 0, q0 != 0, (p0*p0 - d) 
 
 
 // Minimal solution of x^2 - d*y^2 = +-1
-pair<Lnum, Lnum> pell1_min (ull d, bool plus_one = true)
+pair<Lnum,Lnum> pell1_min (ull d, bool plus_one = true)
 {
-    pair<vector<ull>,int> pv = PQa(0,1,d);
-    vector<ull> alphas = pv.fs; int l = pv.sc;
+    pair<vull,int> pv = PQa(0,1,d);
+    vull alphas = pv.fs; int l = pv.sc;
     
     int index;
     if (l & 1) {

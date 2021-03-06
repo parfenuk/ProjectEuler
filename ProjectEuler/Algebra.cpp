@@ -13,12 +13,12 @@
 namespace Algebra
 {
 
-vector<bool> isPrime;
-vector<int> primes = {2}; // this is a special prime number, which is always here
-vector<int> primePi;
-vector<int> eulerPhi;
-map<ll,ll> eulerCache;
-vector<ll> eulerPhiSum; // prefill small values for function
+vbool isPrime;
+vint primes = {2}; // this is a special prime number, which is always here
+vint primePi;
+vint eulerPhi;
+mll eulerCache;
+vll eulerPhiSum; // prefill small values for function
 
 ull GCD (ull a, ull b)
 {
@@ -49,9 +49,9 @@ pll Extended_Euclid (ll a, ll b) // returns <k1,k2>: a*k1 + b*k2 == GCD(a,b)
     return mp(st.sc, st.fs - qr.fs*st.sc);
 }
 
-vector<ull> Divisors (ull n) // returns in sorted order
+vull Divisors (ull n) // returns in sorted order
 {
-    vector<ull> a, b;
+    vull a, b;
     for (ull i=1; i*i<=n; i++) {
         
         if (n%i == 0) {
@@ -63,9 +63,9 @@ vector<ull> Divisors (ull n) // returns in sorted order
     return a;
 }
 
-vector<ull> Divisors_square (ull n) // returns divisors of n^2
+vull Divisors_square (ull n) // returns divisors of n^2
 {
-    vector<ull> a = Divisors(n);
+    vull a = Divisors(n);
     
     set<ull> s;
     for (int i=0; i<(int)a.size(); i++) for (int j=0; j<(int)a.size(); j++) {
@@ -79,7 +79,7 @@ vector<ull> Divisors_square (ull n) // returns divisors of n^2
 
 ull Divisors_sum (ull n)
 {
-    vector<ull> a = Divisors(n);
+    vull a = Divisors(n);
     if (a.empty()) return 0;
     a.pop_back();
     ull sum = 0;
@@ -89,7 +89,7 @@ ull Divisors_sum (ull n)
 
 ull Divisors_count (ull n)
 {
-    vector<pull> a = factorize(n);
+    vpull a = factorize(n);
     ull s = 1;
     for (int i=0; i<(int)a.size(); i++) s *= (a[i].sc+1);
     return s;
@@ -162,7 +162,7 @@ ull modular_sqrt (ull a, ull p) // finds r, r^2 == a mod p (prime), returns 0 if
 
 void Eratosthenes_sieve (int n, bool fill_primes/*=false*/, bool fill_pi/*=false*/)
 {
-    isPrime = vector<bool> (n+1, true);
+    isPrime = vbool(n+1, true);
     isPrime[0] = isPrime[1] = false;
     for (int i=2; i<=n; i++) {
         if (isPrime[i] && i*1ll*i <= n) {
@@ -172,7 +172,7 @@ void Eratosthenes_sieve (int n, bool fill_primes/*=false*/, bool fill_pi/*=false
     
     if (fill_primes) for (int i=3; i<=n; i++) if (isPrime[i]) primes.push_back(i);
     if (fill_pi) {
-        primePi = vector<int>(n+1);
+        primePi = vint(n+1);
         for (int i=2; i<=n; i++) primePi[i] = primePi[i-1] + isPrime[i];
     }    
 }
@@ -204,9 +204,9 @@ ull least_prime_divisor (ull n)
     } return n;
 }
 
-vector<pull> factorize (ull n)
+vpull factorize (ull n)
 {
-    vector<pull> a;
+    vpull a;
             
     for (int i=0; i<(int)primes.size() && primes[i]*1ll*primes[i]<=n; i++) {
         
@@ -236,7 +236,7 @@ vector<pull> factorize (ull n)
 
 ll primitiveRoot (ll p) // p is prime
 {
-    vector<pull> f = factorize(p-1);
+    vpull f = factorize(p-1);
     
     for (ll res=2; res<p; res++) {
         bool ok = true;
@@ -249,22 +249,22 @@ ll primitiveRoot (ll p) // p is prime
 
 ull rad (ull n)
 {
-    vector<pull> v = factorize(n);
+    vpull v = factorize(n);
     ull s = 1;
     for (int i=0; i<(int)v.size(); i++) s *= v[i].fs;
     return s;
 }
 
 // all divs must be coprime and in the form p^n
-ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
+ull Chinese_theorem (vll divs, vll rests)
 {
-    vector<ll> prime_divs; // find the only p[i] is the divisor of divs[i]
+    vll prime_divs; // find the only p[i] is the divisor of divs[i]
     for (int i=0; i<(int)divs.size(); i++) {
         prime_divs.push_back(least_prime_divisor(divs[i]));
     }
     
     int k = (int)rests.size();
-    vector<ll> x(k);
+    vll x(k);
     for (int i=0; i<k; i++) {
         x[i] = rests[i];
         for (int j=0; j<i; j++) {
@@ -285,16 +285,16 @@ ull Chinese_theorem (vector<ll> divs, vector<ll> rests)
     return a;
 }
 
-int MoebiusMu (ull n)
+char MoebiusMu (ull n)
 {
-    vector<pull> v = factorize(n);
+    vpull v = factorize(n);
     for (int i=0; i<(int)v.size(); i++) if (v[i].sc > 1) return 0;
     return v.size() % 2 ? -1 : 1;
 }
 
-vector<char> MoebuisMuSieve (ull n)
+vchar MoebuisMuSieve (ull n)
 {
-    vector<char> mu(n+1,1);
+    vchar mu(n+1,1);
     for (ull i=2; i<=n; i++) {
         if (primeQ(i)) {
             for (ull j=i; j<=n; j+=i) mu[j] = -mu[j];
@@ -309,7 +309,7 @@ ull EulerPhi (ull n)
     if (n < (int)eulerPhi.size()) return (ull)eulerPhi[n];
     
     ull s = 1;
-    vector<pull> a = factorize(n);
+    vpull a = factorize(n);
     
     for (int i=0; i<(int)a.size(); i++) {
         ull k = powmod(a[i].fs, a[i].sc) - powmod(a[i].fs, a[i].sc-1);
@@ -321,8 +321,8 @@ ull EulerPhi (ull n)
 
 void EulerPhiSieve (ull n)
 {
-    eulerPhi = vector<int>(n+1);
-    vector<bool> sieve(n+1);
+    eulerPhi = vint(n+1);
+    vbool sieve(n+1);
     for (int i=1; i<=n; i++) eulerPhi[i] = i;
     for (int i=2; i<=n; i++) {
         if (!sieve[i]) {
@@ -364,7 +364,7 @@ ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPh
 
 ull square_representations_count (ull n) // n = a^2 + b^2, 0 < a <= b
 {
-    vector<pull> f = factorize(n);
+    vpull f = factorize(n);
     int B = 1, a0 = 0;
     for (int i=0; i<(int)f.size(); i++) {
         if (f[i].fs == 2) a0 = (int)f[i].sc;
@@ -384,7 +384,7 @@ ull coprime_count_in_range (ull N, ull from, ull to)
     if (from != 1) return coprime_count_in_range(N,1,to) - coprime_count_in_range(N,1,from-1);
     
     // now from == 1
-    vector<ull> D = Divisors(N);
+    vull D = Divisors(N);
     ll res = 0;
     for (int i=0; i<(int)D.size(); i++) res += MoebiusMu(D[i])*(to/D[i]);
     return res;
@@ -429,12 +429,12 @@ ull sum_divisible_by (ull n, ull lb, ull ub)
 
 // TODO: redesign so it can return a subspace of solutions
 // 0 - no solutions, 1 - one solution, 2 - infinitely many solutions
-char Gauss (vector<vector<dd>> a, vector<dd> &ans)
+char Gauss (vvdd a, vdd &ans)
 {
     int n = (int)a.size();
     int m = (int)a[0].size() - 1;
     
-    vector<int> where(m,-1);
+    vint where(m,-1);
     for (int col=0, row=0; col<m && row<n; col++) {
         
         int sel = row;

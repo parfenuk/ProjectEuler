@@ -40,5 +40,5 @@ template <class Trzx>
 template <class Trzx>
     int count_less_than (const vector<Trzx> &a, Trzx value);
 
-    bool isPalindrom (const vector<int> &a);
+    bool isPalindrom (const vint &a);
 }

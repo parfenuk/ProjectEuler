@@ -13,10 +13,10 @@ namespace StringUtils
 
 // TODO: z-function, KMP-function, some other stuff...
 
-// TODO: rewrite it using linear cycle, check correctness on Timus tasks
-vector<string> parse_by_symbol (const string &S, char p)
+// simpler version works 1.5 times slower...
+vstring parse_by_symbol (const string &S, char p)
 {
-    vector<string> v;
+    vstring v;
     size_t found = 0, first = 0;
     while (first != S.length() && S[first] == p) first++;
     if (first == S.length()) return v;
@@ -30,6 +30,22 @@ vector<string> parse_by_symbol (const string &S, char p)
         if (found == S.length()) break;
         first = found;
     }
+    return v;
+}
+
+vstring parse_by_symbol2 (const string &S, char p)
+{
+    vstring v;
+    string T;
+    
+    for (int i=0; i<(int)S.length(); i++) {
+        if (S[i] != p) T += S[i];
+        else {
+            if (!T.empty()) v.push_back(T);
+            T.clear();
+        }
+    } if (!T.empty()) v.push_back(T);
+    
     return v;
 }
 

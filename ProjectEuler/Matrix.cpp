@@ -26,7 +26,7 @@ struct matrix
         for (int i=0; i<N; i++) A[i] = new ll [n];
         for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = B[i][j];
     }
-    matrix (vector<vector<ll>> a) {
+    matrix (vvll a) {
         int n = (int)a.size();
         N = n;
         A = new ll *[n];
@@ -135,7 +135,7 @@ matrix operator^ (matrix A, Lnum k)
 // F[k] = coeffs[0]*F[k-1] + coeffs[1]*F[k-2] + ...  + coeffs[l-1]*F[k-l]
 // function finds F[N] mod Q in log(N)
 // !size of initial_values must be not less than size of coeffs!
-ll linear_recurrence_value (vector<ll> coeffs, vector<ll> initial_values, Lnum N, int Q)
+ll linear_recurrence_value (vll coeffs, vll initial_values, Lnum N, int Q)
 {
     if (N.get_size() == 1 && N[0] < initial_values.size()) {
         ll f = initial_values[N[0]] % Q;

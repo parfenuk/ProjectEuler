@@ -10,7 +10,7 @@
 
 namespace Combinatorics
 {
-// TODO: write 2-dimensional binomials generator
+
 ull Binomial (ull n, ull k, int p = 0) // C(n,k) mod p. p must be prime and greater than n and k.
 {
     if (k > n) return 0;
@@ -32,7 +32,7 @@ ull Binomial (ull n, ull k, int p = 0) // C(n,k) mod p. p must be prime and grea
     return s;
 }
 
-bool next_combination (vector<sint> &a, int n, int k)
+bool next_combination (vsint &a, int n, int k)
 {
     for (int i=k-1; i>=0; i++) {
         if (a[i] > n-k+i) continue;
@@ -43,10 +43,10 @@ bool next_combination (vector<sint> &a, int n, int k)
 }
 // TODO: write function that counts i-th combination and reversly return number of combination
 // TODO: same for permutations
-vector<vector<sint>> get_combinations (int n, int k) // numeration starts from 1
+vvsint get_combinations (int n, int k) // numeration starts from 1
 {
-    vector<sint> a;
-    vector<vector<sint>> b;
+    vsint a;
+    vvsint b;
     for (int i=1; i<=k; i++) a.push_back(i);
     b.push_back(a);
     while (next_combination(a,n,k)) b.push_back(a);
@@ -54,11 +54,11 @@ vector<vector<sint>> get_combinations (int n, int k) // numeration starts from 1
 }
 
 // returns all partitions of n into sums: 1+1+1+1 = 2+1+1 = 2+2 = 3+1 = 4
-vector<vector<sint>> sum_partitions (sint n)
+vvsint sum_partitions (sint n)
 {
-    vector<vector<sint>> ret;
+    vvsint ret;
     
-    vector<sint> a;
+    vsint a;
     for (sint i=0; i<n; i++) a.push_back(1);
     
     ret.push_back(a);
@@ -89,21 +89,21 @@ vector<vector<sint>> sum_partitions (sint n)
 // size is k-th Bell number
 // total number of elements is k*Bell[k]
 // TODO: rewrite or write an additional function that doesn't keep all partitions in memory
-vector<vector<vector<char>>> fill_partitions (int k)
+vector<vvchar> fill_partitions (int k)
 {
     const int MAXK = 10;
-    vector<vector<vector<char>>> partitions[MAXK+1];
+    vector<vvchar> partitions[MAXK+1];
     
-    vector<char> s1(1,1);
-    vector<vector<char>> p1(1,s1);
+    vchar s1(1,1);
+    vvchar p1(1,s1);
     partitions[1].push_back(p1);
     
     for (int n=2; n<=MAXK; n++) {
         
         for (int i=0; i<(int)partitions[n-1].size(); i++) {
             
-            vector<vector<char>> p = partitions[n-1][i];
-            p.push_back(vector<char>(1,n));
+            vvchar p = partitions[n-1][i];
+            p.push_back(vchar(1,n));
             partitions[n].push_back(p);
             p.pop_back();
             
@@ -119,9 +119,9 @@ vector<vector<vector<char>>> fill_partitions (int k)
     return partitions[k];
 }
 
-void fill_pythagorean_triples (ull n, vector<vector<pull>> &pits, bool primitive_only = true) // a^2 + b^2 = c^2, c <= n
+void fill_pythagorean_triples (ull n, vvpull &pits, bool primitive_only = true) // a^2 + b^2 = c^2, c <= n
 {
-    pits = vector<vector<pull>>(n+1);
+    pits = vvpull(n+1);
     for (ull p=2; p*p<=n; p++) for (ull q=1+p%2; q<p; q+=2) {
         
         if (Algebra::GCD(p,q) != 1) continue;
@@ -142,26 +142,56 @@ void fill_pythagorean_triples (ull n, vector<vector<pull>> &pits, bool primitive
     }
 }
 
-// returns { n^0, n^1, ... , n^(k-1) } % mod
-vector<ull> get_powers (ull n, int k, int mod = 0)
+// returns { n^0, n^1, ... , n^k } % mod
+vull get_powers (ull n, int k, int mod = 0)
 {
-    vector<ull> a(k,1);
-    for (int i=1; i<k; i++) {
+    vull a(k+1,1);
+    for (int i=1; i<=k; i++) {
         a[i] = a[i-1]*n;
         if (mod) a[i] %= mod;
     }
     return a;
 }
 
-// returns { 0!, 1!, ... , (k-1)! } % mod
-vector<ull> get_factorials (int k, int mod = 0)
+// returns { 0!, 1!, ... , k! } % mod
+vull get_factorials (int k, int mod = 0)
 {
-    vector<ull> a(k,1);
-    for (int i=2; i<k; i++) {
+    vull a(k+1,1);
+    for (int i=2; i<=k; i++) {
         a[i] = a[i-1]*i;
         if (mod) a[i] %= mod;
     }
     return a;
+}
+
+// returns { C(n,0), C(n,1), ... , C(n,n) }
+vull get_binomials (int n, int mod = 0)
+{
+    vull C(n+1);
+    C[0] = 1;
+    for (ull i=0; i<n; i++) {
+        C[i+1] = C[i]*(n-i);
+        if (mod) {
+            C[i+1] %= mod;
+            C[i+1] *= Algebra::inverse(i+1,mod);
+            C[i+1] %= mod;
+        }
+        else C[i+1] /= (i+1);
+    }
+    return C;
+}
+
+// returns { { C(0,0), C(0,1), ... , C(0,k) }, { C(1,0), ... }, ... , { C(n,0), ... , C(n,k) } }
+vvull get_binomials_matrix (int n, int k, int mod = 0)
+{
+    vvull C(n+1);
+    for (int i=0; i<=n; i++) C[i] = vull(k+1);
+    for (int i=0; i<=n; i++) C[i][0] = 1; // we assume C(0,0) = 0
+    for (int i=1; i<=n; i++) for (int j=1; j<=i && j<=k; j++) {
+        C[i][j] = C[i-1][j] + C[i-1][j-1];
+        if (mod && C[i][j] >= mod) C[i][j] -= mod;
+    }
+    return C;
 }
 
 }

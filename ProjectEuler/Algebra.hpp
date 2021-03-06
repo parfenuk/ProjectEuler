@@ -13,19 +13,19 @@
 
 namespace Algebra
 {
-    extern vector<bool> isPrime;
-    extern vector<int> primes;
-    extern vector<int> primePi;
-    extern vector<int> eulerPhi;
-    extern map<ll,ll> eulerCache;
-    extern vector<ll> eulerPhiSum;
+    extern vbool isPrime;
+    extern vint primes;
+    extern vint primePi;
+    extern vint eulerPhi;
+    extern mll eulerCache;
+    extern vll eulerPhiSum;
 
     ull GCD (ull a, ull b);
     ull LCM (ull a, ull b);
     ll signedGCD (ll a, ll b);
     pll Extended_Euclid (ll a, ll b);
-    vector<ull> Divisors (ull n);
-    vector<ull> Divisors_square (ull n);
+    vull Divisors (ull n);
+    vull Divisors_square (ull n);
     ull Divisors_sum (ull n);
     ull Divisors_count (ull n);
     ull productmod (ull a, ull n, ull mod);
@@ -36,12 +36,12 @@ namespace Algebra
     bool primeQ (ull n);
     bool isProbablePrime (ull n);
     ull least_prime_divisor (ull n);
-    vector<pull> factorize (ull n);
+    vpull factorize (ull n);
     ll primitiveRoot (ll p);
     ull rad (ull n);
-    ull Chinese_theorem (vector<ll> divs, vector<ll> rests);
-    int MoebiusMu (ull n);
-    vector<char> MoebuisMuSieve (ull n);
+    ull Chinese_theorem (vll divs, vll rests);
+    char MoebiusMu (ull n);
+    vchar MoebuisMuSieve (ull n);
     ull EulerPhi (ull n);
     void EulerPhiSieve (ull n);
     ll EulerPhiSum (ll n, int Q);
@@ -50,5 +50,5 @@ namespace Algebra
     ull power_fact (ull n, ull p);
     ull count_divisible_by (ull n, ull lb, ull ub, ull mod = 0);
     ull sum_divisible_by (ull n, ull lb, ull ub);
-    char Gauss (vector<vector<dd>> a, vector<dd> &ans);
+    char Gauss (vvdd a, vdd &ans);
 }

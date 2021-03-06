@@ -18,7 +18,6 @@
 
 // TODO: write operators for pairs (with templates ofc, in utils)
 // TODO: write map and set search: find minimum greater / maximum less
-// TODO: use goto label for every multidepth cycle exit
 
 using namespace Algebra;
 using namespace Containers;

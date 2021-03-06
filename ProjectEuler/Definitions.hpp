@@ -56,16 +56,26 @@ using namespace std;
 #define ppii pair<pair<int,int>, pair<int,int>>
 #define ppll pair<pair<ll,ll>, pair<ll,ll>>
 #define pss pair<string,string>
-#define vsint vector<sint>  // TODO: use vector macroses
+#define vbool vector<bool>
+#define vchar vector<char>
+#define vsint vector<sint>
 #define vint vector<int>
 #define vll vector<ll>
 #define vull vector<ull>
+#define vdd vector<dd>
+#define vstring vector<string>
 #define vpii vector<pair<int,int>>
 #define vpll vector<pair<ll,ll>>
 #define vpull vector<pair<ull,ull>>
+#define vvchar vector<vector<char>>
 #define vvsint vector<vector<sint>>
 #define vvint vector<vector<int>>
 #define vvll vector<vector<ll>>
+#define vvull vector<vector<ull>>
+#define vvdd vector<vector<dd>>
+#define vvpii vector<vector<pair<int,int>>>
+#define vvpll vector<vector<pair<ll,ll>>>
+#define vvpull vector<vector<pair<ull,ull>>>
 #define mii map<int,int>
 #define mll map<ll,ll>
 #define mull map<ull,ull>
