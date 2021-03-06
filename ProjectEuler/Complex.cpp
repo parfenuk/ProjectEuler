@@ -12,11 +12,14 @@ namespace Complex
 struct complex {
     
     ll x,y;
+    
     ll norm() { return x*x + y*y; }
     complex() { x = y = 0; }
     complex(ll _x) { x = _x; y = 0; }
     complex(ll _x, ll _y) { x = _x; y = _y; }
     complex conjugate() { complex z; z.x = x; z.y = -y; return z; }
+    
+    static complex O;
     
     void show() {
         
@@ -35,7 +38,9 @@ struct complex {
         }
         cout << endl;
     }
-}Oz;
+};
+
+complex complex::O;
 
 complex operator+ (complex a, complex b)
 {

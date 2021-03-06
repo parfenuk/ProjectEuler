@@ -37,12 +37,11 @@ vector<ull> Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
-// TODO: use templates
-int random_integer (int from, int to)
+ll random_integer (ll from, ll to)
 {
     random_device rd;     // only used once to initialise (seed) engine
     mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
-    uniform_int_distribution<int> uni(from,to); // guaranteed unbiased
+    uniform_int_distribution<ll> uni(from,to); // guaranteed unbiased
     return uni(rng);
 }
 

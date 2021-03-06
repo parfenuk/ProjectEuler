@@ -9,30 +9,27 @@
 namespace Fractions
 {
 
-ll GCD (ll a, ll b)
-{
-    if (a < 0) a = -a;
-    if (b < 0) b = -b;
-    while (a && b) {
-        if (a > b) a %= b;
-        else b %= a;
-    }
-    return a + b;
-}
-
 struct fraction {
     
     ll num, den;
+    
     fraction() { num = 0; den = 1; }
     fraction(ll n) { num = n; den = 1; }
     fraction(ll n, ll d) { num = n; den = d; }
+    
+    static fraction O;
+    static fraction one;
+    
     void reduce() {
-        ll p = GCD(num, den);
+        ll p = Algebra::signedGCD(num, den);
         num /= p;
         den /= p;
     }
     void show(bool show_endl = true) { cout << num << "/" << den; if (show_endl) cout << endl; }
-}f_O, f_one(1);
+};
+
+fraction fraction::O;
+fraction fraction::one(1);
 
 bool operator== (fraction a, fraction b)
 {
@@ -51,7 +48,7 @@ bool operator!= (fraction A, fraction B) { return !(A == B); }
 
 fraction operator+ (fraction a, fraction b)
 {
-    ll d = GCD(a.den, b.den);
+    ll d = Algebra::signedGCD(a.den, b.den);
     ll a_mult = b.den/d, b_mult = a.den/d;
     fraction c (a.num*a_mult + b.num*b_mult, a.den*a_mult);
     c.reduce();
@@ -60,7 +57,7 @@ fraction operator+ (fraction a, fraction b)
 
 fraction operator- (fraction a, fraction b)
 {
-    ll d = GCD(a.den, b.den);
+    ll d = Algebra::signedGCD(a.den, b.den);
     ll a_mult = b.den/d, b_mult = a.den/d;
     fraction c (a.num*a_mult - b.num*b_mult, a.den*a_mult);
     c.reduce();

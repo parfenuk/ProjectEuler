@@ -34,6 +34,13 @@ ull LCM (ull a, ull b)
     return a*b / GCD(a,b);
 }
 
+ll signedGCD (ll a, ll b)
+{
+    if (a < 0) a = -a;
+    if (b < 0) b = -b;
+    return GCD(a,b);
+}
+
 pll Extended_Euclid (ll a, ll b) // returns <k1,k2>: a*k1 + b*k2 == GCD(a,b)
 {
     if (b == 0) return mp(1,0);

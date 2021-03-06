@@ -14,14 +14,15 @@
 namespace Algebra
 {
     extern vector<bool> isPrime;
-    extern vector<int> primes; // this is a special prime number, which is always here
+    extern vector<int> primes;
     extern vector<int> primePi;
     extern vector<int> eulerPhi;
     extern map<ll,ll> eulerCache;
-    extern vector<ll> eulerPhiSum; // prefill small values for function
+    extern vector<ll> eulerPhiSum;
 
     ull GCD (ull a, ull b);
     ull LCM (ull a, ull b);
+    ll signedGCD (ll a, ll b);
     pll Extended_Euclid (ll a, ll b);
     vector<ull> Divisors (ull n);
     vector<ull> Divisors_square (ull n);

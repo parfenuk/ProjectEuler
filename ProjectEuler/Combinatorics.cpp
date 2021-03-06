@@ -53,30 +53,31 @@ vector<vector<sint>> get_combinations (int n, int k) // numeration starts from 1
     return b;
 }
 
-vector<vector<int>> sum_partitions (int n)
+// returns all partitions of n into sums: 1+1+1+1 = 2+1+1 = 2+2 = 3+1 = 4
+vector<vector<sint>> sum_partitions (sint n)
 {
-    vector<vector<int>> ret;
+    vector<vector<sint>> ret;
     
-    vector<int> a;
-    for (int i=0; i<n; i++) a.push_back(1);
+    vector<sint> a;
+    for (sint i=0; i<n; i++) a.push_back(1);
     
     ret.push_back(a);
     while (a[0] != n) {
-        for (int j=(int)a.size()-2; j>=0; j--) {
+        for (sint j=(sint)a.size()-2; j>=0; j--) {
             if (j && a[j] < a[j-1]) {
                 a[j]++;
                 int k = 0, p = (int)a.size();
-                for (int t=j+1; t<p; t++) k += a[t];
-                for (int t=j+1; t<p; t++) a.pop_back();
-                for (int t=0; t<k-1; t++) a.push_back(1);
+                for (sint t=j+1; t<p; t++) k += a[t];
+                for (sint t=j+1; t<p; t++) a.pop_back();
+                for (sint t=0; t<k-1; t++) a.push_back(1);
                 ret.push_back(a);
                 break;
             }
             if (j == 0) {
-                int k = a[0];
+                sint k = a[0];
                 a.clear();
                 a.push_back(k+1);
-                for (int t=0; t<n-a[j]; t++) a.push_back(1);
+                for (sint t=0; t<n-a[j]; t++) a.push_back(1);
                 ret.push_back(a);
             }
         }
