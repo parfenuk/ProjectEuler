@@ -16,9 +16,6 @@
 #include "StringUtils.cpp"
 #include "Utils.cpp"
 
-// TODO: write operators for pairs (with templates ofc, in utils)
-// TODO: write map and set search: find minimum greater / maximum less
-
 using namespace Algebra;
 using namespace Containers;
 

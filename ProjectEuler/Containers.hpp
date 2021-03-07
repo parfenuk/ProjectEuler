@@ -11,10 +11,12 @@
 // TODO: Global think: if eventually all methods are templated - maybe, we should make a class instead in order to avoid linker errors and make use of Solution 1 from the link
 namespace Containers
 {
+
+// VECTORS
 template <class Trzx>
     void show (const vector<Trzx> &a, bool show_endl = true, bool show_size = false);
-template <class Trp>
-    void show_pair (const vector<Trp> &a, bool show_endl = true, bool show_size = false);
+template <class Trzx>
+    void show_pair (const vector<Trzx> &a, bool show_endl = true, bool show_size = false);
 template <class Trzx>
     void show_matrix (const vector<vector<Trzx>> &a);
 template <class Trzx>
@@ -39,6 +41,36 @@ template <class Trzx>
     int count_greater_than (const vector<Trzx> &a, Trzx value);
 template <class Trzx>
     int count_less_than (const vector<Trzx> &a, Trzx value);
+
+// PAIRS
+template <class Trzx>
+    pair<Trzx,Trzx> operator+ (const pair<Trzx,Trzx> &p, const pair<Trzx,Trzx> &q);
+template <class Trzx>
+    pair<Trzx,Trzx> operator- (const pair<Trzx,Trzx> &p, const pair<Trzx,Trzx> &q);
+template <class Trzx>
+    pair<Trzx,Trzx> operator* (const pair<Trzx,Trzx> &p, const pair<Trzx,Trzx> &q);
+template <class Trzx>
+    ostream& operator<< (ostream &os, const pair<Trzx,Trzx> &p);
+
+// MAPS
+template <class Tkey, class Tval>
+    typename map<Tkey,Tval>::iterator max_less (map<Tkey,Tval> &M, Tkey k);
+template <class Tkey, class Tval>
+    typename map<Tkey,Tval>::iterator max_less_or_equal (map<Tkey,Tval> &M, Tkey k);
+template <class Tkey, class Tval>
+    typename map<Tkey,Tval>::iterator min_greater (map<Tkey,Tval> &M, Tkey k);
+template <class Tkey, class Tval>
+    typename map<Tkey,Tval>::iterator min_greater_or_equal (map<Tkey,Tval> &M, Tkey k);
+
+// SETS
+template <class Trzx>
+    typename set<Trzx>::iterator max_less (set<Trzx> &S, Trzx k);
+template <class Trzx>
+    typename set<Trzx>::iterator max_less_or_equal (set<Trzx> &S, Trzx k);
+template <class Trzx>
+    typename set<Trzx>::iterator min_greater (set<Trzx> &S, Trzx k);
+template <class Trzx>
+    typename set<Trzx>::iterator min_greater_or_equal (set<Trzx> &S, Trzx k);
 
     bool isPalindrom (const vint &a);
 }

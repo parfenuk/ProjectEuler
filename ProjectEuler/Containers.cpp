@@ -21,8 +21,8 @@ void show (const vector<Trzx> &a, bool show_endl/*=true*/, bool show_size/*=fals
     if (show_endl) cout << endl;
 }
 
-template <class Trp>
-void show_pair (const vector<Trp> &a, bool show_endl/*=true*/, bool show_size/*=false*/)
+template <class Trzx>
+void show_pair (const vector<Trzx> &a, bool show_endl/*=true*/, bool show_size/*=false*/)
 {
     if (show_size) cout << a.size() << endl;
     for (int i=0; i<(int)a.size(); i++) cout << "(" << a[i].fs << " " << a[i].sc << ") ";
@@ -141,6 +141,89 @@ int count_less_than (const vector<Trzx> &a, Trzx value)
     }
 
     return lb+1;
+}
+
+template <class Trzx>
+pair<Trzx,Trzx> operator+ (const pair<Trzx,Trzx> &p, const pair<Trzx,Trzx> &q)
+{
+    return mp(p.fs+q.fs, p.sc+q.sc);
+}
+
+template <class Trzx>
+pair<Trzx,Trzx> operator- (const pair<Trzx,Trzx> &p, const pair<Trzx,Trzx> &q)
+{
+    return mp(p.fs-q.fs, p.sc-q.sc);
+}
+
+template <class Trzx>
+pair<Trzx,Trzx> operator* (const pair<Trzx,Trzx> &p, const pair<Trzx,Trzx> &q)
+{
+    return mp(p.fs*q.fs, p.sc*q.sc);
+}
+
+template <class Trzx>
+ostream& operator<< (ostream &os, const pair<Trzx,Trzx> &p)
+{
+    os << "(" << p.fs << " " << p.sc << ")";
+    return os;
+}
+
+template <class Tkey, class Tval>
+typename map<Tkey,Tval>::iterator max_less (map<Tkey,Tval> &M, Tkey k)
+{
+    typename map<Tkey,Tval>::iterator it = M.lower_bound(k);
+    if (it == M.begin()) return M.end();
+    return --it;
+}
+
+template <class Tkey, class Tval>
+typename map<Tkey,Tval>::iterator max_less_or_equal (map<Tkey,Tval> &M, Tkey k)
+{
+    typename map<Tkey,Tval>::iterator it = M.lower_bound(k);
+    if (it != M.end() && it->fs == k) return it;
+    if (it == M.begin()) return M.end();
+    return --it;
+}
+
+template <class Tkey, class Tval>
+typename map<Tkey,Tval>::iterator min_greater (map<Tkey,Tval> &M, Tkey k)
+{
+    return M.upper_bound(k);
+}
+
+template <class Tkey, class Tval>
+typename map<Tkey,Tval>::iterator min_greater_or_equal (map<Tkey,Tval> &M, Tkey k)
+{
+    return M.lower_bound(k);
+}
+
+template <class Trzx>
+typename set<Trzx>::iterator max_less (set<Trzx> &S, Trzx k)
+{
+    typename set<Trzx>::iterator it = S.lower_bound(k);
+    if (it == S.begin()) return S.end();
+    return --it;
+}
+
+template <class Trzx>
+typename set<Trzx>::iterator max_less_or_equal (set<Trzx> &S, Trzx k)
+{
+    typename set<Trzx>::iterator it = S.lower_bound(k);
+    if (it != S.end() && *it == k) return it;
+    if (it == S.begin()) return S.end();
+    return --it;
+}
+
+template <class Trzx>
+typename set<Trzx>::iterator min_greater (set<Trzx> &S, Trzx k)
+{
+    return S.upper_bound(k);
+}
+
+template <class Trzx>
+typename set<Trzx>::iterator min_greater_or_equal (set<Trzx> &S, Trzx k)
+{
+    return S.lower_bound(k);
 }
 
 bool isPalindrom (const vint &a)
