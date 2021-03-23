@@ -9,28 +9,24 @@
 namespace Matrix
 {
 
+#define MSIZE 2
+
 struct matrix
 {
     int N, Q; // all calculations are mod Q if it is set
-    ll **A;
+    ll A[MSIZE][MSIZE];
     matrix (int n) {
         N = n; Q = 0;
-        A = new ll *[n];
-        for (int i=0; i<N; i++) A[i] = new ll [n];
         for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = 0;
         for (int i=0; i<N; i++) A[i][i] = 1;
     }
     matrix (ll **B, int n) {
         N = n; Q = 0;
-        A = new ll *[n];
-        for (int i=0; i<N; i++) A[i] = new ll [n];
         for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = B[i][j];
     }
     matrix (vvll a) {
         int n = (int)a.size();
         N = n;
-        A = new ll *[n];
-        for (int i=0; i<N; i++) A[i] = new ll [n];
         for (int i=0; i<N; i++) for (int j=0; j<N; j++) A[i][j] = a[i][j];
     }
     ll *operator[] (int k) { return A[k]; }
