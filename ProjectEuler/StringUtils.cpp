@@ -33,20 +33,31 @@ vstring parse_by_symbol (const string &S, char p)
     return v;
 }
 
-vstring parse_by_symbol2 (const string &S, char p)
-{
-    vstring v;
-    string T;
+void trimSymbol (string &S, char p) {
     
+    // remove trailing symbols
+    while (!S.empty() && S.back() == p) S.pop_back();
+    // remove leading symbols
+    int i = 0; while (i < (int)S.length() && S[i] == p) i++;
+    S.erase(0,i);
+}
+
+bool hasPrefix (const string &S, const string &prefix) {
+    return S.length() >= prefix.length() && S.substr(0,prefix.length()) == prefix;
+}
+
+bool hasSuffix (const string &S, const string &suffix) {
+    return S.length() >= suffix.length() && S.substr(S.length()-suffix.length(),suffix.length()) == suffix;
+}
+
+bool isNumericalString (const string &S) {
+    int dots = 0;
     for (int i=0; i<(int)S.length(); i++) {
-        if (S[i] != p) T += S[i];
-        else {
-            if (!T.empty()) v.push_back(T);
-            T.clear();
-        }
-    } if (!T.empty()) v.push_back(T);
-    
-    return v;
+        if (i == 0 && S[i] == '-') continue;
+        if (S[i] == '.') { dots++; if (dots > 1) return false; }
+        else if (S[i] < '0' || S[i] > '9') return false;
+    }
+    return true;
 }
 
 bool same_letters (string s, string u)
