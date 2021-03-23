@@ -17,6 +17,7 @@ struct point
     point(dd xx, dd yy, dd zz) { x = xx; y = yy; z = zz; }
     void read() { cin >> x >> y >> z; }
     dd len() { return sqrt(x*x + y*y + z*z); }
+    dd len2() { return x*x + y*y + z*z; }
     void set_length (dd L) {
         dd l = len();
         x *= (L/l);
@@ -91,12 +92,12 @@ point operator^ (point a, point b)
 
 dd dist (point a, point b)
 {
-    return sqrt(pow(a.x-b.x,2) + pow(a.y-b.y,2) + pow(a.z-b.z,2));
+    return (a-b).len();
 }
 
-dd dist_2 (point a, point b)
+dd dist2 (point a, point b)
 {
-    return pow(a.x-b.x,2) + pow(a.y-b.y,2) + pow(a.z-b.z,2);
+    return (a-b).len2();
 }
 
 point symmetric_point (point a, point b)

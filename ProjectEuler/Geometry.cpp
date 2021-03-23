@@ -19,6 +19,7 @@ struct point
     void read() { cin >> x >> y; }
     void show() { cout << fixed << x << " " << y << endl; }
     dd len() { return sqrt(x*x + y*y); }
+    dd len2() { return x*x + y*y; }
     point orthogonal() { return point(-y,x); }
     void set_length (dd L) {
         dd l = len();
@@ -103,12 +104,12 @@ bool is_collinear (point a, point b)
 
 dd dist (point a, point b)
 {
-    return sqrt(pow(a.x-b.x,2) + pow(a.y-b.y,2));
+    return (a-b).len();
 }
 
-dd dist_2 (point a, point b)
+dd dist2 (point a, point b)
 {
-    return pow(a.x-b.x,2) + pow(a.y-b.y,2);
+    return (a-b).len2();
 }
 
 point symmetric_point (point a, point b)
@@ -119,14 +120,14 @@ point symmetric_point (point a, point b)
     return c;
 }
 
-dd triangle_area (point a, point b, point c)
-{
-    return 0.5*fabs((a.x-c.x)*(b.y-c.y) - (a.y-c.y)*(b.x-c.x));
-}
-
 dd signed_area (point a, point b, point c)
 {
     return 0.5*((a.x-c.x)*(b.y-c.y) - (a.y-c.y)*(b.x-c.x));
+}
+
+dd triangle_area (point a, point b, point c)
+{
+    return fabs(signed_area(a,b,c));
 }
 
 bool triangle_contains_point (point a, point b, point c, point d) // abc contains d?
@@ -134,14 +135,16 @@ bool triangle_contains_point (point a, point b, point c, point d) // abc contain
     return triangle_area(a,b,c) == triangle_area(a,b,d) + triangle_area(b,c,d) + triangle_area(a,c,d);
 }
 
-bool geom_cw (point a, point b, point c, bool q = false) {
+bool cw (point a, point b, point c, bool q = false) // clockwise
+{
     dd expr = a.x*(b.y-c.y) + b.x*(c.y-a.y) + c.x*(a.y-b.y);
     if (q) return expr < 0;
     return expr <= 0;
 }
 
-bool geom_ccw (point a, point b, point c, bool q = false) {
-    return !geom_cw(a,b,c,!q);
+bool ccw (point a, point b, point c, bool q = false) // counterclockwise
+{
+    return !cw(a,b,c,!q);
 }
 
 vector<point> convex_hull (vector<point> a, bool should_skip_border_points = true)
@@ -154,12 +157,12 @@ vector<point> convex_hull (vector<point> a, bool should_skip_border_points = tru
     up.push_back(p1);
     down.push_back(p1);
     for (size_t i=1; i<a.size(); i++) {
-        if (i == a.size()-1 || geom_cw(p1, a[i], p2, should_skip_border_points)) {
-            while (up.size()>=2 && !geom_cw(up[up.size()-2], up[up.size()-1], a[i], should_skip_border_points)) up.pop_back();
+        if (i == a.size()-1 || cw(p1, a[i], p2, should_skip_border_points)) {
+            while (up.size()>=2 && !cw(up[up.size()-2], up[up.size()-1], a[i], should_skip_border_points)) up.pop_back();
             up.push_back(a[i]);
         }
-        if (i==a.size()-1 || geom_ccw(p1, a[i], p2, !should_skip_border_points)) {
-            while (down.size()>=2 && !geom_ccw(down[down.size()-2], down[down.size()-1], a[i], should_skip_border_points)) down.pop_back();
+        if (i==a.size()-1 || ccw(p1, a[i], p2, !should_skip_border_points)) {
+            while (down.size()>=2 && !ccw(down[down.size()-2], down[down.size()-1], a[i], should_skip_border_points)) down.pop_back();
             down.push_back(a[i]);
         }
     }
