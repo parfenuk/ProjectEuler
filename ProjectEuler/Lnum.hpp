@@ -55,6 +55,7 @@ public:
     static Lnum O;
     static Lnum one;
     
+    friend istream& operator>> (istream &is, Lnum &A);
     friend ostream& operator<< (ostream &os, const Lnum &A);
     
     friend bool operator== (const Lnum &A, const Lnum &B);

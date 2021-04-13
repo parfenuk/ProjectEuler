@@ -103,6 +103,14 @@ Lnum Lnum::sqrt (const Lnum &A) // smallest x, that x*x <= A
     return ret;
 }
 
+istream& operator>> (istream &is, Lnum &A)
+{
+    string S;
+    is >> S;
+    A = Lnum(S);
+    return is;
+}
+
 ostream& operator<< (ostream &os, const Lnum &A)
 {
     if (A.minus) os << "-";
