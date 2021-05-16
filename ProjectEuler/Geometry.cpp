@@ -56,7 +56,8 @@ bool operator== (point a, point b)
     return a.x == b.x && a.y == b.y;
 }
 
-bool operator< (point a, point b) {
+bool operator< (point a, point b)
+{
     return a.x < b.x || (a.x == b.x && a.y < b.y);
 }
 
@@ -151,7 +152,7 @@ vector<point> convex_hull (vector<point> a, bool should_skip_border_points = tru
 {
     if (a.size() <= 1) return vector<point>();
     
-    sort (a.begin(), a.end());
+    sort(a.begin(),a.end());
     point p1 = a[0], p2 = a.back();
     vector<point> up, down;
     up.push_back(p1);
@@ -184,6 +185,12 @@ struct line
     void shift_by_vector (point v) { C -= (A*v.x + B*v.y); }
     point any_point (dd y = 0) { return A == 0 ? point(0,-C/B) : point((C + B*y)/A, y); }
     point n() { return point(A,B); }
+    int relation (point a) {
+        dd d = A*a.x + B*a.y + C;
+        if (d == 0) return 0; // optionally can be changed to EPS
+        if (d < 0) return -1;
+        return 1;
+    }
 };
 
 line::line (point a, point b)
@@ -231,13 +238,6 @@ point symmetric_point (point a, line p)
 {
     point b = projection(a,p);
     return symmetric_point(a,b);
-}
-
-int Relation (point a, line p)
-{
-    if (fabs(a.x*p.A + a.y*p.B + p.C) < EPS) return 0;
-    if (a.x*p.A + a.y*p.B + p.C > 0) return 1;
-    return -1;
 }
 
 point reflection_vector (point v, line p, point a = NOT_FOUND)

@@ -9,6 +9,7 @@
 #pragma once
 
 // TODO: Global think: if eventually all methods are templated - maybe, we should make a class instead in order to avoid linker errors and make use of Solution 1 from the link
+// TODO: vector comparison operators
 namespace Containers
 {
 

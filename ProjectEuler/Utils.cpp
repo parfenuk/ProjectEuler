@@ -44,4 +44,6 @@ ll random_integer (ll from, ll to)
     return uni(rng);
 }
 
+inline void try_decrease (int &x, const int y) { x > y ? x = y : 0; }
+
 }

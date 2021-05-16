@@ -11,7 +11,7 @@
 #include "Algebra.hpp"
 
 namespace Algebra
-{
+{ // TODO: method of gathering divisors when factorization is known, factorization product will be needed
 
 vbool isPrime;
 vint primes = {2}; // this is a special prime number, which is always here
@@ -39,6 +39,33 @@ ll signedGCD (ll a, ll b)
     if (a < 0) a = -a;
     if (b < 0) b = -b;
     return GCD(a,b);
+}
+
+vpull factorized_GCD (const vpull &F, const vpull &G)
+{
+    vpull a;
+    int f = 0, g = 0;
+    while (f != (int)F.size() && g != (int)G.size()) {
+        if (F[f].fs < G[g].fs) f++;
+        else if (F[f].fs > G[g].fs) g++;
+        else {
+            a.push_back(mp(F[f].fs,min(F[f].sc,G[g].sc)));
+            f++;
+            g++;
+        }
+    }
+    return a;
+}
+
+vpull factorized_GCD (const vpull &F, ull n)
+{
+    vpull a;
+    for (int i=0; i<(int)F.size(); i++) {
+        int p = 0;
+        while (n % F[i].fs == 0 && p < F[i].sc) { p++; n /= F[i].fs; }
+        if (p) a.push_back(mp(F[i].fs,p));
+    }
+    return a;
 }
 
 pll Extended_Euclid (ll a, ll b) // returns <k1,k2>: a*k1 + b*k2 == GCD(a,b)
@@ -392,16 +419,15 @@ ull coprime_count_in_range (ull N, ull from, ull to)
 
 ull power_fact (ull n, ull p) // n! = S * p^x, returns x, p is prime
 {
-    // TODO: investigate https://proofwiki.org/wiki/Factorial_Divisible_by_Prime_Power
-    if (p > n) return 0;
-    
+    // an alternative way: https://proofwiki.org/wiki/Factorial_Divisible_by_Prime_Power
+    // cool, but it turned out to be 10% slower
     ull cnt = 0, s = p;
     while (true) {
         cnt += n/s;
         if (s > n/p) break;
         s *= p;
     }
-    
+
     return cnt;
 }
 

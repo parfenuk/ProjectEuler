@@ -45,7 +45,7 @@ ull upper_integer_sqrt (ull n) // returns greatest x such that x*x >= n
 }
 
 // n = 153 -> (1,5,3)
-vint digits (ull n, int base, int min_size)
+vint digits (ull n, int base/*=10*/, int min_size/*=1*/)
 {
     vint a;
     while (n) {

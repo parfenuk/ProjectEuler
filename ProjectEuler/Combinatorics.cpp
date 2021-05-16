@@ -143,7 +143,7 @@ void fill_pythagorean_triples (ull n, vvpull &pits, bool primitive_only = true) 
 }
 
 // returns { n^0, n^1, ... , n^k } % mod
-vull get_powers (ull n, int k, int mod = 0)
+vull generate_powers (ull n, int k, int mod = 0)
 {
     vull a(k+1,1);
     for (int i=1; i<=k; i++) {
@@ -153,8 +153,18 @@ vull get_powers (ull n, int k, int mod = 0)
     return a;
 }
 
+// returns { 1^k, 2^k, 3^k, ... , n^k } % mod
+vull generate_fixed_powers (ull n, int k, int mod = 0)
+{
+    vull a(n);
+    for (ull i=1; i<=n; i++) {
+        a[i-1] = Algebra::powmod(i,k,mod);
+    }
+    return a;
+}
+
 // returns { 0!, 1!, ... , k! } % mod
-vull get_factorials (int k, int mod = 0)
+vull generate_factorials (int k, int mod = 0)
 {
     vull a(k+1,1);
     for (int i=2; i<=k; i++) {
@@ -165,7 +175,7 @@ vull get_factorials (int k, int mod = 0)
 }
 
 // returns { C(n,0), C(n,1), ... , C(n,n) }
-vull get_binomials (int n, int mod = 0)
+vull generate_binomials (int n, int mod = 0)
 {
     vull C(n+1);
     C[0] = 1;

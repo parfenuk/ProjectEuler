@@ -23,6 +23,8 @@ namespace Algebra
     ull GCD (ull a, ull b);
     ull LCM (ull a, ull b);
     ll signedGCD (ll a, ll b);
+    vpull factorized_GCD (const vpull &F, const vpull &G);
+    vpull factorized_GCD (const vpull &F, ull n);
     pll Extended_Euclid (ll a, ll b);
     vull Divisors (ull n);
     vull Divisors_square (ull n);
