@@ -8,6 +8,14 @@
 
 typedef vector<vector<int>> graph; // represented by adjancecy matrix
 typedef vector<vector<pii>> weightedGraph;
+// TODO: algos
+// tree
+// bfs
+// dfs
+// grid graph
+// minimum dominating subset
+// strong connected components
+// topological sort
 
 namespace Graphs
 {

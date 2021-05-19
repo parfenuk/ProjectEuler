@@ -11,6 +11,7 @@
 #pragma once
 // TODO: comment what we use from each include, like in json.hpp
 #include <set>
+#include <unordered_set>
 #include <bitset>
 #include <queue>
 #include <deque>
