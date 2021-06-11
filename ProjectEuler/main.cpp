@@ -171,6 +171,7 @@ void extract_phone_numbers (const string &from_file, const string &to_file, int 
     }
     FinalPhoneNumbers.insert(phone_numbers.begin(),phone_numbers.end());
     
+    out << name << endl << endl;
     for (set<string>::iterator it=phone_numbers.begin(); it!=phone_numbers.end(); it++) {
         out << *it << endl;
         k++;
@@ -191,7 +192,7 @@ int main() {
     
     ull ans = 0;
         
-    for (int i=1; i<=27; i++) {
+    for (int i=1; i<=28; i++) {
         int k = 0;
         string file_input = "Enforcers/doc" + to_string(i) + ".txt";
         string file_output = "Enforcers/phone numbers " + to_string(i) + ".txt";
