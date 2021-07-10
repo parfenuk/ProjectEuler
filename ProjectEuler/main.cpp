@@ -180,38 +180,100 @@ void extract_phone_numbers (const string &from_file, const string &to_file, int 
     cout << "obtained " << k << " numbers\n";
 }
 
-int main() {
-    clock_t Total_Time = clock();
-    cout.precision(12);
-    cout.setf(ios::fixed);
-    ios_base::sync_with_stdio(false);
-#ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
-    //freopen("output.txt","wt",stdout);
-#endif
+void Extract_phone_numbers()
+{
+    ull count = 0;
     
-    ull ans = 0;
-        
     for (int i=1; i<=28; i++) {
         int k = 0;
-        string file_input = "Enforcers/doc" + to_string(i) + ".txt";
+        string file_input = "Enforcers/phone numbers " + to_string(i) + ".txt";
         string file_output = "Enforcers/phone numbers " + to_string(i) + ".txt";
         extract_phone_numbers(file_input, file_output, k);
-        ans += k;
+        count += k;
     }
     
-    cout << ans << endl;
+    cout << count << endl;
     
-    ans = (ull)FinalPhoneNumbers.size();
+    count = (ull)FinalPhoneNumbers.size();
     ofstream phoneOut("Enforcers/all phone numbers.txt");
     for (set<string>::iterator it=FinalPhoneNumbers.begin(); it!=FinalPhoneNumbers.end(); it++) {
-        //cout << *it << endl;
         phoneOut << *it << endl;
     }
     
-    cout << endl << ans << endl;
-    Total_Time = clock() - Total_Time;
-    cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+    cout << count << endl;
+}
+
+map<string,pss> M; // < phone number - <code name, area> > + append common ID at the end
+
+void get_structured_mobile (int n)
+{
+    const vector<pss> v = {
+        mp("Соколлл","Гомельскаяя"),
+        mp("Соколлл","Гродненская"),
+        mp("Соколлл","Брестскаяяя"),
+        mp("Вороннн","Брестскаяяя"),
+        mp("Соколлл","Минскаяяяяя"),
+        mp("Перепел","Генуяяяяяяя"),
+        mp("Перепел","Брестскаяяя"),
+        mp("Перепел","Витебскаяяя"),
+        mp("Перепел","Гомельскаяя"),
+        mp("Перепел","Гродненская"),
+        mp("Перепел","Минскаяяяяя"),
+        mp("Перепел","Минсккккккк"),
+        mp("Перепел","Могилёвская"),
+        mp("Синицаа","Минсккккккк"),
+        mp("Синицаа","Брестскаяяя"),
+        mp("Синицаа","Витебскаяяя"),
+        mp("Синицаа","Гомельскаяя"),
+        mp("Синицаа","Гродненская"),
+        mp("Синицаа","Минскаяяяяя"),
+        mp("Синицаа","Могилёвская"),
+        mp("Сазаннн","РББББББББББ"),
+        mp("Гагаааа","РББББББББББ"),
+        mp("Дрозддд","Гомельскаяя"),
+        mp("Соваааа","Гомельскаяя"),
+        mp("Соваааа","Минскаяяяяя"),
+        mp("Соваааа","Гродненская"),
+        mp("Соваааа","Могилёвская"),
+        mp("Скатттт","РББББББББББ"),
+    };
+    
+    string file_input = "Enforcers/phone numbers " + to_string(n) + ".txt";
+    ifstream in(file_input);
+    
+    string S;
+    while (getline(in,S)) {
+        if (S.empty() || S[0] != '+') continue;
+        M[S] = v[n-1];
+    }
+}
+
+void print_structured_mobile()
+{
+    ofstream out_city("Enforcers/All structured city.txt");
+    ofstream out_mobile("Enforcers/All structured mobile.txt");
+    
+    for (map<string,pss>::iterator it = M.begin(); it != M.end(); it++) {
+        string S = it->fs.substr(4,2);
+        if (S == "25" || S == "29" || S == "33" || S == "44") {
+            out_mobile << it->fs << " " << it->sc.fs << " " << it->sc.sc << " Global_ID\n";
+        }
+        else {
+            out_city << it->fs << " " << it->sc.fs << " " << it->sc.sc << " Global_ID\n";
+        }
+    }
+}
+
+void Get_structured_phone_base()
+{
+    for (int i=1; i<=28; i++) get_structured_mobile(i);
+    cout << M.size() << endl;
+    print_structured_mobile();
+}
+
+
+int main() {
+    
     
     return 0;
 }
