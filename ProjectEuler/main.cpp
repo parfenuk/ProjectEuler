@@ -64,7 +64,13 @@ int pouring_count (int from, int to) // returns how many cells we can pour, if i
     int d = depth(from), free = TUBE_SIZE - (int)A[to].size();
     if (d <= free) return d; // correct and meaningful move
     
-    // TODO: move from one tube to different two by one elem is also considered valid (can not find some solutions)
+    if (d == 2) { // still one complex move can make sense
+        for (int i=0; i<N; i++) {
+            if (i == from || i == to) continue;
+            if (A[i].size() != TUBE_SIZE && A[i].back() == cf) return 5;
+        }
+    }
+    
     return 0; // otherwise move makes no sense
 }
 
@@ -80,10 +86,25 @@ void dfs (int from, int to) // initial pouring is guaranteed to be valid
     int cnt = pouring_count(from,to);
     if (cnt == 0) return; // failed move
     char wt = A[from].back(); // water type
+    int to2 = -1;
     
     // perform pouring
-    for (int i=0; i<cnt; i++) { A[from].pop_back(); A[to].push_back(wt); }
-    moves.push_back(mp(mp(from,to),mp(cnt,wt)));
+    if (cnt == 5) {
+        for (int i=0; i<N; i++) { // set additional tube we pour to
+            if (i == from || i == to) continue;
+            if (A[i].size() != TUBE_SIZE && A[i].back() == wt) { to2 = i; break; }
+        }
+        A[from].pop_back();
+        A[from].pop_back();
+        A[to].push_back(wt);
+        A[to2].push_back(wt);
+        moves.push_back(mp(mp(from,to),mp(1,wt)));
+        moves.push_back(mp(mp(from,to2),mp(1,wt)));
+    }
+    else {
+        for (int i=0; i<cnt; i++) { A[from].pop_back(); A[to].push_back(wt); }
+        moves.push_back(mp(mp(from,to),mp(cnt,wt)));
+    }
     
     // update_values
     int oc_change = 0, emp_change = 0;
@@ -94,7 +115,7 @@ void dfs (int from, int to) // initial pouring is guaranteed to be valid
     else { // multi colored tube becomes one colored
         if (one_color(from)) { OC[from] = true; from_reverse = true; oc_change++; }
     }
-    // empty tube becomes one colored
+    // empty tube becomes one colored (case cnt == 5 is impossible here)
     if (A[to].size() == cnt) { OC[to] = true; to_reverse = true; oc_change++; emp_change--; }
     one_color_count += oc_change;
     empty_count += emp_change;
@@ -114,7 +135,18 @@ void dfs (int from, int to) // initial pouring is guaranteed to be valid
     if (to_reverse)   OC[to]   = !OC[to];
     one_color_count -= oc_change;
     empty_count -= emp_change;
+    for (int i=0; i<(int)moves.back().sc.fs; i++) {
+        A[from].push_back(wt);
+        A[to].pop_back();
+    }
     moves.pop_back();
+    if (cnt == 5) { // do it one more time
+        for (int i=0; i<(int)moves.back().sc.fs; i++) {
+            A[from].push_back(wt);
+            A[to].pop_back();
+        }
+        moves.pop_back();
+    }
 }
 
 int main() {
