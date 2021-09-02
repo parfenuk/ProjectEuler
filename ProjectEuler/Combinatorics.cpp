@@ -153,11 +153,30 @@ vull generate_powers (ull n, int k, int mod = 0)
     return a;
 }
 
+vll generate_powers (ll n, int k, int mod = 0)
+{
+    vll a(k+1,1);
+    for (int i=1; i<=k; i++) {
+        a[i] = a[i-1]*n;
+        if (mod) a[i] %= mod;
+    }
+    return a;
+}
+
 // returns { 1^k, 2^k, 3^k, ... , n^k } % mod
 vull generate_fixed_powers (ull n, int k, int mod = 0)
 {
     vull a(n);
     for (ull i=1; i<=n; i++) {
+        a[i-1] = Algebra::powmod(i,k,mod);
+    }
+    return a;
+}
+
+vll generate_fixed_powers (ll n, int k, int mod = 0)
+{
+    vll a(n);
+    for (ll i=1; i<=n; i++) {
         a[i-1] = Algebra::powmod(i,k,mod);
     }
     return a;
