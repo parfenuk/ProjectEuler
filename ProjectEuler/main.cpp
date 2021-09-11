@@ -19,12 +19,12 @@
 using namespace Algebra;
 using namespace Containers;
 
-#define N 14
+int N; // total amount of tubes, usually 14 or 11
 #define TUBE_SIZE 4
 #define EMPTY_TUBES 2
 #define pic pair<int,char>
 
-string A[N];
+string A[19], S[19]; // S is initial configuration, is never changed
 
 // TODO: can be calculated dynamically
 int depth (int k) // returns how many identical blocks of water from the top have the same type
@@ -72,6 +72,16 @@ vector<pair<pii,int>> moves; // < <from, to>, how many >
 int one_color_count = 0, empty_count = EMPTY_TUBES;
 vector<bool> OC(N); // one color tubes storage
 bool solution_found = false;
+
+void reset()
+{
+    moves.clear();
+    one_color_count = 0;
+    empty_count = EMPTY_TUBES;
+    OC = vector<bool>(N);
+    solution_found = false;
+    for (int i=0; i<N; i++) A[i] = S[i];
+}
 
 void move_back()
 {
@@ -157,7 +167,7 @@ int main() {
      o: orange
      y: yellow
      d: dark green
-     l: light green (salad)
+     c: cyan (light green)
      b: blue
      i: indigo
      v: violet
@@ -167,16 +177,21 @@ int main() {
      g: grey
      */
     
-    for (int i=0; i<N-EMPTY_TUBES; i++) cin >> A[i];
+    cin >> N;
+    for (int i=0; i<N-EMPTY_TUBES; i++) cin >> S[i];
+    vector<pair<pii,int>> final_moves; // optimal among all dfs start moves
     
     for (int k=0; k<N-EMPTY_TUBES; k++) {
+        reset();
         dfs(k,N-EMPTY_TUBES);
         if (solution_found) {
-            cout << "SOLUTION IN " << moves.size() << " MOVES:\n";
-            for (int i=0; i<(int)moves.size(); i++) cout << moves[i].fs.fs+1 << " -> " << moves[i].fs.sc+1 << endl;
-            break;
+            cout << k+1 << ": SOLUTION IN " << moves.size() << " MOVES\n";
+            if (final_moves.empty() || moves.size() < final_moves.size()) final_moves = moves;
         }
     }
+    
+    // print final answer
+    for (int i=0; i<(int)final_moves.size(); i++) cout << final_moves[i].fs.fs+1 << " -> " << final_moves[i].fs.sc+1 << endl;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
