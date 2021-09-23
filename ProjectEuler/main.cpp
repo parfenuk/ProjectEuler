@@ -188,6 +188,9 @@ int main() {
             cout << k+1 << ": SOLUTION IN " << moves.size() << " MOVES\n";
             if (final_moves.empty() || moves.size() < final_moves.size()) final_moves = moves;
         }
+        else {
+            cout << k+1 << ": NO SOLUTION\n";
+        }
     }
     
     // print final answer
