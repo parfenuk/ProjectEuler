@@ -93,8 +93,10 @@ void move_back()
     moves.pop_back();
 }
 
-void dfs (int from, int to) // initial pouring is guaranteed to be valid
+void dfs (int from, int to, int max_moves = 50) // initial pouring is guaranteed to be valid
 {
+    if (moves.size()+1 >= max_moves) return;
+    
     // check if pouring is valid
     int cnt = pouring_count(from,to);
     if (cnt == 0) return; // failed move
@@ -135,8 +137,11 @@ void dfs (int from, int to) // initial pouring is guaranteed to be valid
     // go deep
     for (int i=0; i<N; i++) {
         if (A[i].empty()) continue;
-        for (int j=0; j<N; j++) if (i != j) {
-            dfs(i,j);
+        if (i == to || i == to2) continue; // makes no sense
+        for (int j=0; j<N; j++) {
+            if (i == j) continue;
+            if (i < from && j != from) continue; // two independent pourings, wrong order
+            dfs(i,j,max_moves);
             if (solution_found) return;
         }
     }
@@ -183,7 +188,7 @@ int main() {
     
     for (int k=0; k<N-EMPTY_TUBES; k++) {
         reset();
-        dfs(k,N-EMPTY_TUBES);
+        dfs(k,N-EMPTY_TUBES,final_moves.empty() ? 50 : (int)final_moves.size());
         if (solution_found) {
             cout << k+1 << ": SOLUTION IN " << moves.size() << " MOVES\n";
             if (final_moves.empty() || moves.size() < final_moves.size()) final_moves = moves;
