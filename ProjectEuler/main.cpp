@@ -24,13 +24,26 @@ int N; // total amount of tubes, usually 14 or 11
 #define EMPTY_TUBES 2
 #define pic pair<int,char>
 
+map<string,sint> D; // dist from initial position
+map<string,pair<string,psii>> From; // < previous state, <from-to pouring> >
+
+string normalized_form (vector<string> w) {
+    
+    string ret;
+    sort(w.begin(), w.end());
+    for (int i=0; i<(int)w.size(); i++) {
+        ret += w[i];
+        if (w[i].length() < TUBE_SIZE) ret += '$';
+    }
+    return ret;
+}
+
 string A[19], S[19]; // S is initial configuration, is never changed
 
 // TODO: can be calculated dynamically
-int depth (int k) // returns how many identical blocks of water from the top have the same type
+sint depth (sint k) // returns how many identical blocks of water from the top have the same type
 {
-    //if (A[k].empty()) return 0; // it is never called for empty tubes only, so could be removed
-    int cnt = 1, id = (int)A[k].size()-2;
+    sint cnt = 1, id = (int)A[k].size()-2;
     while (id >= 0 && A[k][id] == A[k].back()) { cnt++; id--; }
     return cnt;
 }
@@ -38,6 +51,82 @@ int depth (int k) // returns how many identical blocks of water from the top hav
 bool one_color (int k) // checks if tube A[k] consists of only one water type
 {
     return depth(k) == (int)A[k].size();
+}
+
+// TODO: maybe, it's worth to use auxiliary arrays like for one_colored and empty like for dfs algo
+bool is_solved_position()
+{
+    sint empty = 0, one_colored = 0;
+    for (int i=0; i<N; i++) {
+        if (A[i].empty()) empty++;
+        else if (one_color(i)) one_colored++;
+        else return false;
+    }
+    return empty == EMPTY_TUBES;
+}
+
+sint bfs_pouring_count (sint from, sint to) // returns how many cells we can pour, if it makes any sense
+{
+    if (A[from].empty()) return 0; // nothing to pour
+    if (A[to].size() == TUBE_SIZE) return 0; // nowhere to pour
+    char cf = A[from].back(), ct = '#'; // color from, color to (is unknown yet)
+    if (!A[to].empty()) ct = A[to].back();
+    if (ct == '#') return depth(from); // pouring to empty tube
+    if (cf != ct) return 0; // we can't mix up different water types
+    int d = depth(from), free = TUBE_SIZE - (int)A[to].size();
+    return min(d,free);
+}
+
+vector<psii> bfs_answer (string f)
+{
+    vector<psii> bfs_moves;
+    do {
+        pair<string,psii> p = From[f];
+        bfs_moves.push_back(p.sc);
+        f = p.fs;
+    } while (!f.empty());
+    
+    bfs_moves.pop_back();
+    reverse(bfs_moves.begin(), bfs_moves.end());
+    return bfs_moves;
+}
+
+vector<psii> bfs()
+{
+    for (int i=0; i<N; i++) A[i] = S[i];
+    vector<string> w(A,A+N);
+    string NF = normalized_form(w);
+    D[NF] = 0;
+    From[NF] = mp("",mp(0,0));
+    queue<vector<string>> q;
+    q.push(w);
+    
+    while (!q.empty()) {
+        w = q.front();
+        q.pop();
+        for (int i=0; i<N; i++) A[i] = w[i];
+        string F = normalized_form(w);
+        sint d = D[F]+1;
+        
+        if (is_solved_position()) return bfs_answer(F);
+        
+        for (sint from=0; from<N; from++) for (sint to=0; to<N; to++) {
+            if (from == to) continue;
+            int cnt = bfs_pouring_count(from,to);
+            if (cnt == 0) continue;
+            char wt = w[from].back();
+            for (int i=0; i<cnt; i++) { w[from].pop_back(); w[to].push_back(wt); }
+            NF = normalized_form(w);
+            if (D.find(NF) == D.end()) {
+                D[NF] = d+1;
+                From[NF] = mp(F,mp(from,to));
+                q.push(w);
+            }
+            for (int i=0; i<cnt; i++) { w[from].push_back(wt); w[to].pop_back(); }
+        }
+    }
+            
+    return vector<psii>();
 }
 
 int pouring_count (int from, int to) // returns how many cells we can pour, if it makes any sense
@@ -93,9 +182,9 @@ void move_back()
     moves.pop_back();
 }
 
-void dfs (int from, int to, int max_moves = 50) // initial pouring is guaranteed to be valid
+void dfs (int from, int to, int max_moves = 60) // initial pouring is guaranteed to be valid
 {
-    if (moves.size()+1 >= max_moves) return;
+    if (moves.size() >= max_moves) return;
     
     // check if pouring is valid
     int cnt = pouring_count(from,to);
@@ -155,6 +244,33 @@ void dfs (int from, int to, int max_moves = 50) // initial pouring is guaranteed
     if (cnt > 4) move_back(); // one more time in this case
 }
 
+void print_dfs_solution()
+{
+    vector<pair<pii,int>> final_moves; // optimal among all dfs start moves
+    
+    for (int k=0; k<N-EMPTY_TUBES; k++) {
+        reset();
+        dfs(k,N-EMPTY_TUBES);
+        if (solution_found) {
+            cout << k+1 << ": SOLUTION IN " << moves.size() << " MOVES\n";
+            if (final_moves.empty() || moves.size() < final_moves.size()) final_moves = moves;
+        }
+        else {
+            cout << k+1 << ": NO SOLUTION\n";
+        }
+    }
+    
+    // print final answer
+    //for (int i=0; i<(int)final_moves.size(); i++) cout << final_moves[i].fs.fs+1 << " -> " << final_moves[i].fs.sc+1 << endl;
+}
+
+void print_bfs_solution()
+{
+    vector<psii> final_moves = bfs();
+    cout << "OPTIMAL SOLUTION IN " << final_moves.size() << " MOVES\n";
+    for (int i=0; i<(int)final_moves.size(); i++) cout << final_moves[i].fs+1 << " -> " << final_moves[i].sc+1 << endl;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -184,22 +300,9 @@ int main() {
     
     cin >> N;
     for (int i=0; i<N-EMPTY_TUBES; i++) cin >> S[i];
-    vector<pair<pii,int>> final_moves; // optimal among all dfs start moves
     
-    for (int k=0; k<N-EMPTY_TUBES; k++) {
-        reset();
-        dfs(k,N-EMPTY_TUBES,final_moves.empty() ? 50 : (int)final_moves.size());
-        if (solution_found) {
-            cout << k+1 << ": SOLUTION IN " << moves.size() << " MOVES\n";
-            if (final_moves.empty() || moves.size() < final_moves.size()) final_moves = moves;
-        }
-        else {
-            cout << k+1 << ": NO SOLUTION\n";
-        }
-    }
-    
-    // print final answer
-    for (int i=0; i<(int)final_moves.size(); i++) cout << final_moves[i].fs.fs+1 << " -> " << final_moves[i].fs.sc+1 << endl;
+    print_dfs_solution();
+    print_bfs_solution();
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
