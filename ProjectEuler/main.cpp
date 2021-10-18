@@ -31,26 +31,6 @@ int main() {
     
     ull ans = 0;
     
-    const ll P = 998244353;
-    const ll k = 749268343;
-    ll s = 1;
-    
-    vector<bool> used(900001);
-    used[s] = true;
-    int deg = 0;
-    do {
-        s = s*k % P;
-        deg++;
-        if (s < (ll)used.size()) {
-            used[s] = true;
-            //cout << "k^" << deg << " = " << s << endl;
-            ans++;
-        }
-    } while (s != 1);
-    cout << deg << endl;
-    
-    for (int i=0; i<1000; i++) if (used[i]) cout << i << " ";
-    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";

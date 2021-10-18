@@ -34,7 +34,7 @@ ull Binomial (ull n, ull k, int p = 0) // C(n,k) mod p. p must be prime and grea
 
 bool next_combination (vsint &a, int n, int k)
 {
-    for (int i=k-1; i>=0; i++) {
+    for (int i=k-1; i>=0; i--) {
         if (a[i] > n-k+i) continue;
         a[i]++;
         for (int j=i+1; j<k; j++) a[j] = a[j-1] + 1;
