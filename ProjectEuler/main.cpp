@@ -20,8 +20,8 @@ using namespace Algebra;
 using namespace Containers;
 
 int N; // total amount of tubes, usually 14 or 11
-#define TUBE_SIZE 4
 #define EMPTY_TUBES 2
+#define TUBE_SIZE 4
 #define pic pair<int,char>
 
 map<string,sint> D; // dist from initial position
@@ -299,9 +299,10 @@ int main() {
      */
     
     cin >> N;
-    for (int i=0; i<N-EMPTY_TUBES; i++) cin >> S[i];
+    int initial_empty_tubes; cin >> initial_empty_tubes;
+    for (int i=0; i<N-initial_empty_tubes; i++) cin >> S[i];
     
-    print_dfs_solution();
+    //print_dfs_solution();
     print_bfs_solution();
     
     cout << endl << ans << endl;
