@@ -31,6 +31,28 @@ int main() {
     
     ull ans = 0;
     
+    vector<dd> A = { 1.0 };
+    int k = 0;
+    int n = 1; // current length of A
+    
+    while (true) {
+        k++;
+        vector<dd> B(n+2);
+        B[0] = A[0] / 2;
+        B[n+1] = 1.0;
+        int mean = n/2 + 1;
+        for (int i=1; i<mean; i++) B[i] = (B[i-1]+A[i]) / 2;
+        for (int i=n; i>mean; i--) B[i] = (B[i+1]+A[i-2]) / 2;
+        B[mean] = (B[mean-1] + B[mean+1]) / 2;
+        if (B[mean] < 0.5000250012500626) {
+            cout << k << " " << fixed << B[mean] << " " << 1.0/B[mean];
+            break;
+        }
+        
+        n += 2;
+        A.swap(B);
+    }
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
