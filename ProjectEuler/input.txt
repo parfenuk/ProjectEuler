@@ -1,1 +1,914 @@
-000000000000000000000000010100100001001010000000001010000110100010101001101000100001
+2021-11-26 19:36:20.779094+0200 Sensely[51118:3019372] You've implemented -[<UIApplicationDelegate> application:didReceiveRemoteNotification:fetchCompletionHandler:], but you still need to add "remote-notification" to the list of your supported UIBackgroundModes in your Info.plist.
+2021-11-26 19:36:20.954107+0200 Sensely[51118:3019372] [Firebase/Crashlytics] Version 8.8.0
+2021-11-26 19:36:21.150600+0200 Sensely[51118:3019577] 8.8.0 - [Firebase/Messaging][I-FCM001000] FIRMessaging Remote Notifications proxy enabled, will swizzle remote notification receiver handlers. If you'd prefer to manually integrate Firebase Messaging, add "FirebaseAppDelegateProxyEnabled" to your Info.plist, and set it to NO. Follow the instructions at:
+https://firebase.google.com/docs/cloud-messaging/ios/client#method_swizzling_in_firebase_messaging
+to ensure proper integration.
+Utilizing stored token
+2021-11-26 19:36:21.379328+0200 Sensely[51118:3019576] 8.8.0 - [Firebase/Analytics][I-ACS023007] Analytics v.8.8.0 started
+2021-11-26 19:36:21.387818+0200 Sensely[51118:3019576] 8.8.0 - [Firebase/Analytics][I-ACS023008] To enable debug logging set the following application argument: -FIRAnalyticsDebugEnabled (see http://goo.gl/RfcP7r)
+FCM token: etkW2QWlukjdq4FvoLMl6B:APA91bEu3Glk8yGig6q1fwImN7aZ-TO0YeWmYmmR4oPStou34znKz3Wvv0Ans9DG6Nj2VZeOxpCniHbDFKvjHUaqBE2UCArZfPGy-9vxJ4Jp6U4ICyCUWlRhZpk5KsxFTK-E_9zIa_lo
+2021-11-26 19:36:21.530847+0200 Sensely[51118:3019583] 8.8.0 - [Firebase/Analytics][I-ACS800023] No pending snapshot to activate. SDK name: app_measurement
+2021-11-26 19:36:21.543694+0200 Sensely[51118:3019580] 8.8.0 - [Firebase/Analytics][I-ACS023012] Analytics collection enabled
+2021-11-26 19:36:21.544054+0200 Sensely[51118:3019580] 8.8.0 - [Firebase/Analytics][I-ACS023220] Analytics screen reporting is enabled. Call +[FIRAnalytics logEventWithName:FIREventScreenView parameters:] to log a screen view event. To disable automatic screen reporting, set the flag FirebaseAutomaticScreenReportingEnabled to NO (boolean) in the Info.plist
+2021-11-26 19:36:22.147799+0200 Sensely[51118:3019575] [connection] nw_endpoint_handler_set_adaptive_read_handler [C1.1 50.18.200.157:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for read_timeout failed
+2021-11-26 19:36:22.147894+0200 Sensely[51118:3019575] [connection] nw_endpoint_handler_set_adaptive_write_handler [C1.1 50.18.200.157:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for write_timeout failed
+Received redirection server: []
+Utilizing stored token
+Current system language: ru with script BY
+2021-11-26 19:36:23.072455+0200 Sensely[51118:3019575] [connection] nw_endpoint_handler_set_adaptive_read_handler [C2.1 52.84.109.66:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for read_timeout failed
+2021-11-26 19:36:23.072543+0200 Sensely[51118:3019575] [connection] nw_endpoint_handler_set_adaptive_write_handler [C2.1 52.84.109.66:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for write_timeout failed
+Localizations downloaded and parsed
+ThemeseManager: nothing to do. Theme sensely has been applied already before
+Utilizing stored token
+Received redirection server: []
+iOS_3.11.1_1
+2021-11-26 19:36:25.761490+0200 Sensely[51118:3019583] [connection] nw_endpoint_handler_set_adaptive_read_handler [C3.1 50.18.200.157:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for read_timeout failed
+2021-11-26 19:36:25.761649+0200 Sensely[51118:3019583] [connection] nw_endpoint_handler_set_adaptive_write_handler [C3.1 50.18.200.157:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for write_timeout failed
+2021-11-26 19:36:26.079177+0200 Sensely[51118:3019372] WF: === Starting WebFilter logging for process Sensely
+2021-11-26 19:36:26.079221+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:36:26.079258+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+STATE_MACHINE::getAssessmentIcons::WARNING : failed to obtain string object for 'icon' key
+STATE_MACHINE::getAssessmentIcons::WARNING : failed to obtain string object for 'icon' key
+STATE_MACHINE::getAssessmentIcons::WARNING : failed to obtain string object for 'icon' key
+2021-11-26 19:36:29.330801+0200 Sensely[51118:3019372] Received memory pressure event 2 vm pressure 0
+
+Received memory pressure event 2 vm pressure 0
+2021-11-26 19:36:56.167819+0200 Sensely[51118:3019601] [connection] nw_endpoint_handler_set_adaptive_read_handler [C4.1 172.217.16.10:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for read_timeout failed
+2021-11-26 19:36:56.168362+0200 Sensely[51118:3019601] [connection] nw_endpoint_handler_set_adaptive_write_handler [C4.1 172.217.16.10:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for write_timeout failed
+2021-11-26 19:37:13.125237+0200 Sensely[51118:3019372] Failed to set (accessibilityIdentifier\) user defined inspected property on (SenselySDK.HTMLLabel): [<SenselySDK.HTMLLabel 0x108f27b50> setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key accessibilityIdentifier\.
+2021-11-26 19:37:13.233060+0200 Sensely[51118:3019372] CoreText note: Client requested name ".SFUI-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[UIFont systemFontOfSize:].
+2021-11-26 19:37:13.233179+0200 Sensely[51118:3019372] CoreText note: Set a breakpoint on CTFontLogSystemFontNameRequest to debug.
+1, initParams, pluggablestate: 210
+Risk branching: 0
+Risk expression: (empty)
+210, SanitasInitialDialogflow, getdynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+212, SanitasStartDialogflowDoState, dodynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+213, SanitasSendToDialogflowInitialPlaceholderState, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+214, SkipTo1ChatWithDoctor, skip: 9021
+Risk branching: (empty)
+Risk expression: (empty)
+220, SanitasSendToDialogflow, getdynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+221, SanitasSendToDialogflowDoState, dodynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+222, SanitasSendToDialogflowPlaceholderState, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+230, IntentEvaulation, skip: 210
+Risk branching: (empty)
+Risk expression: (empty)
+1000, LaunchSupport, skip: 1004
+Risk branching: (empty)
+Risk expression: (empty)
+1004, IntentFired, skip: 9001
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiU3VwcG9ydCIsIm9uRmFsc2UiOiJTdXBwb3J0In0|
+2000, SymptomChecker, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+2001, GetTextFromTranscriptionState, getdynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+2002, GetTextFromTranscriptionDoState, dodynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+2003, GetTextFromTranscriptionPlaceholder, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+2004, IntentFired, skip: 993003
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiU3ltcHRvbUNoZWNrIiwib25GYWxzZSI6IlN5bXB0b21DaGVjayJ9|
+3004, PostSymptomCheckerMenu, skip: 9000
+Risk branching: (empty)
+Risk expression: (empty)
+3100, DialogflowMenu1, skip: 3104
+Risk branching: (empty)
+Risk expression: (empty)
+3104, IntentFired, skip: 9001
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiTWVudTEiLCJvbkZhbHNlIjoiTWVudTEifQ|
+3105, DialogflowMenu2, skip: 3109
+Risk branching: (empty)
+Risk expression: (empty)
+3109, IntentFired, skip: 999001
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiTWVudTIiLCJvbkZhbHNlIjoiTWVudTIifQ|
+3110, DialogflowMenu3, skip: 3114
+Risk branching: (empty)
+Risk expression: (empty)
+3114, IntentFired, skip: 999001
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiTWVudTMiLCJvbkZhbHNlIjoiTWVudTMifQ|
+5000, Televisit, skip: 5004
+Risk branching: (empty)
+Risk expression: (empty)
+5004, IntentFired, skip: 999001
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiVGVsZXZpc2l0Iiwib25GYWxzZSI6IlRlbGV2aXNpdCJ9|
+6000, DoctorChat, skip: 6004
+Risk branching: (empty)
+Risk expression: (empty)
+6004, IntentFired, skip: 999001
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiRG9jdG9yQ2hhdCIsIm9uRmFsc2UiOiJEb2N0b3JDaGF0In0|
+7000, AppointmentBooking, skip: 7004
+Risk branching: (empty)
+Risk expression: (empty)
+7004, IntentFired, skip: 999001
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiQXBwb2ludG1lbnQiLCJvbkZhbHNlIjoiQXBwb2ludG1lbnQifQ|
+8000, CloseSession, skip: 8004
+Risk branching: (empty)
+Risk expression: (empty)
+8004, IntentFired, skip: 999999
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoiQ2xvc2VTZXNzaW9uIiwib25GYWxzZSI6IkNsb3NlU2Vzc2lvbiJ9|
+9006, SanitasMenu1Dialogflow, getdynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+9007, SanitasStartMenu1DialogflowDoState, dodynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+9008, SanitasSendToDialogflowMenu1PlaceholderState, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+9009, LoopToIntentEvaluation, skip: 220
+Risk branching: (empty)
+Risk expression: (empty)
+9011, SanitasMenu1Dialogflow, getdynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+9012, SanitasStartMenu1DialogflowDoState, dodynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+9013, SanitasSendToDialogflowMenu1PlaceholderState, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+9014, ConfirmSend, skip: 9015
+Risk branching: (empty)
+Risk expression: (empty)
+9015, LoopToIntentEvaluation, skip: 220
+Risk branching: (empty)
+Risk expression: (empty)
+9016, SendMenuIntentGetDynamicState, getdynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+9017, SendMenuIntentDoDynamicState, dodynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+9018, SendMenuIntentPlacedholderState, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+9019, ConfirmSendWithSendMenuIntent, skip: 9020
+Risk branching: (empty)
+Risk expression: (empty)
+9020, LoopToIntentEvaluationWithSendMenuIntent, skip: 220
+Risk branching: (empty)
+Risk expression: (empty)
+9021, Test3Dialogflow, getdynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+9022, Test3DialogflowDoState, dodynamicstate:
+Risk branching: (empty)
+Risk expression: (empty)
+9023, SanitasSendToDialogflowTest3PlaceholderState, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+9024, LoopToIntentEvaluation, skip: 220
+Risk branching: (empty)
+Risk expression: (empty)
+993003, InsertSymptomChecker, insertconversation:
+Risk branching: (empty)
+Risk expression: (empty)
+993004, , skip: 3004
+Risk branching: (empty)
+Risk expression: (empty)
+999000, MayoOutcomeCheck, skip:
+Risk branching: (empty)
+Risk expression:  |expression:eyJsb2dpYyI6eyJvcGVyYXRpb24iOiJzdHJFcSIsInBhcmFtMSI6ImhlbGxvIiwicGFyYW0yIjoiaGVsbG8ifSwib25UcnVlIjoifGtleXdvcmQ6Y3VycmVudC1JbnNlcnRTeW1wdG9tQ2hlY2tlcisrTWF5b0VuZFN0YXRlUmlza3wiLCJvbkZhbHNlIjoifGtleXdvcmQ6Y3VycmVudC1JbnNlcnRTeW1wdG9tQ2hlY2tlcisrTWF5b0VuZFN0YXRlUmlza3wifQ|
+999001, InsertCareMenus, insertconversation:
+Risk branching: (empty)
+Risk expression: (empty)
+999002, DEBUG_SanitasMenuDialogflow, skip: 9022
+Risk branching: (empty)
+Risk expression: (empty)
+999999, EndState, skip:
+Risk branching: (empty)
+Risk expression: (empty)
+2021-11-26 19:37:14.914207+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:14.914297+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:37:14.915284+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:14.915337+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:37:14.915771+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:14.915817+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:37:14.953821+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:14.953881+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:37:26.466890+0200 Sensely[51118:3019582] [tcp] tcp_input [C3.1:3] flags=[R] seq=2307818528, ack=0, win=0 state=FIN_WAIT_1 rcv_nxt=2307818528, snd_una=2298084605
+2021-11-26 19:37:29.215194+0200 Sensely[51118:3019372] [LayoutConstraints] Unable to simultaneously satisfy constraints.
+    Probably at least one of the constraints in the following list is one you don't want.
+    Try this:
+        (1) look at each constraint and try to figure out which you don't expect;
+        (2) find the code that added the unwanted constraint or constraints and fix it.
+    (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints)
+(
+    "<NSAutoresizingMaskLayoutConstraint:0x2813d52c0 h=--& v=--& _UIToolbarContentView:0x110c55fb0.width == 0   (active)>",
+    "<NSLayoutConstraint:0x2813efb60 H:|-(0)-[_UIButtonBarStackView:0x110c46f20]   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813efbb0 H:[_UIButtonBarStackView:0x110c46f20]-(0)-|   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813a2670 'IB_Leading_Leading' H:|-(0)-[_UIModernBarButton:0x108ec4390]   (active, names: '|':_UIButtonBarButton:0x110c87db0 )>",
+    "<NSLayoutConstraint:0x2813d0000 'IB_Leading_Leading' H:|-(>=5)-[_UIModernBarButton:0x108ec4ea0]   (active, names: '|':_UIButtonBarButton:0x108ec4cd0 )>",
+    "<NSLayoutConstraint:0x2813a2490 'IB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec4390]-(>=8)-|   (active, names: '|':_UIButtonBarButton:0x110c87db0 )>",
+    "<NSLayoutConstraint:0x2813d0050 'IB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec4ea0]-(>=5)-|   (active, names: '|':_UIButtonBarButton:0x108ec4cd0 )>",
+    "<NSLayoutConstraint:0x2813d40a0 'TB_Leading_Leading' H:|-(8)-[_UIModernBarButton:0x108ec6830'Done']   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>",
+    "<NSLayoutConstraint:0x2813d40f0 'TB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec6830'Done']-(0)-|   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>",
+    "<NSLayoutConstraint:0x2813d45f0 'UISV-canvas-connection' UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.leading == _UIButtonBarButton:0x110c87db0.leading   (active)>",
+    "<NSLayoutConstraint:0x2813d4960 'UISV-canvas-connection' UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.trailing == _UIButtonBarButton:0x108ec5be0.trailing   (active)>",
+    "<NSLayoutConstraint:0x2813d49b0 'UISV-spacing' H:[_UIButtonBarButton:0x110c87db0]-(0)-[UIView:0x108ec4b60]   (active)>",
+    "<NSLayoutConstraint:0x2813d4a00 'UISV-spacing' H:[UIView:0x108ec4b60]-(0)-[_UIButtonBarButton:0x108ec4cd0]   (active)>",
+    "<NSLayoutConstraint:0x2813d4a50 'UISV-spacing' H:[_UIButtonBarButton:0x108ec4cd0]-(0)-[UIView:0x108ec5a70]   (active)>",
+    "<NSLayoutConstraint:0x2813d4aa0 'UISV-spacing' H:[UIView:0x108ec5a70]-(0)-[_UIButtonBarButton:0x108ec5be0]   (active)>",
+    "<NSLayoutConstraint:0x2813ef9d0 'UIView-leftMargin-guide-constraint' H:|-(0)-[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'](LTR)   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>",
+    "<NSLayoutConstraint:0x2813efa70 'UIView-rightMargin-guide-constraint' H:[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']-(0)-|(LTR)   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>"
+)
+
+Will attempt to recover by breaking constraint
+<NSLayoutConstraint:0x2813a2490 'IB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec4390]-(>=8)-|   (active, names: '|':_UIButtonBarButton:0x110c87db0 )>
+
+Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
+The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in <UIKitCore/UIView.h> may also be helpful.
+2021-11-26 19:37:29.218241+0200 Sensely[51118:3019372] [LayoutConstraints] Unable to simultaneously satisfy constraints.
+    Probably at least one of the constraints in the following list is one you don't want.
+    Try this:
+        (1) look at each constraint and try to figure out which you don't expect;
+        (2) find the code that added the unwanted constraint or constraints and fix it.
+    (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints)
+(
+    "<NSAutoresizingMaskLayoutConstraint:0x2813d52c0 h=--& v=--& _UIToolbarContentView:0x110c55fb0.width == 0   (active)>",
+    "<NSLayoutConstraint:0x2813efb60 H:|-(0)-[_UIButtonBarStackView:0x110c46f20]   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813efbb0 H:[_UIButtonBarStackView:0x110c46f20]-(0)-|   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813d0000 'IB_Leading_Leading' H:|-(>=5)-[_UIModernBarButton:0x108ec4ea0]   (active, names: '|':_UIButtonBarButton:0x108ec4cd0 )>",
+    "<NSLayoutConstraint:0x2813d0050 'IB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec4ea0]-(>=5)-|   (active, names: '|':_UIButtonBarButton:0x108ec4cd0 )>",
+    "<NSLayoutConstraint:0x2813d40a0 'TB_Leading_Leading' H:|-(8)-[_UIModernBarButton:0x108ec6830'Done']   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>",
+    "<NSLayoutConstraint:0x2813d40f0 'TB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec6830'Done']-(0)-|   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>",
+    "<NSLayoutConstraint:0x2813d45f0 'UISV-canvas-connection' UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.leading == _UIButtonBarButton:0x110c87db0.leading   (active)>",
+    "<NSLayoutConstraint:0x2813d4960 'UISV-canvas-connection' UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.trailing == _UIButtonBarButton:0x108ec5be0.trailing   (active)>",
+    "<NSLayoutConstraint:0x2813d49b0 'UISV-spacing' H:[_UIButtonBarButton:0x110c87db0]-(0)-[UIView:0x108ec4b60]   (active)>",
+    "<NSLayoutConstraint:0x2813d4a00 'UISV-spacing' H:[UIView:0x108ec4b60]-(0)-[_UIButtonBarButton:0x108ec4cd0]   (active)>",
+    "<NSLayoutConstraint:0x2813d4a50 'UISV-spacing' H:[_UIButtonBarButton:0x108ec4cd0]-(0)-[UIView:0x108ec5a70]   (active)>",
+    "<NSLayoutConstraint:0x2813d4aa0 'UISV-spacing' H:[UIView:0x108ec5a70]-(0)-[_UIButtonBarButton:0x108ec5be0]   (active)>",
+    "<NSLayoutConstraint:0x2813ef9d0 'UIView-leftMargin-guide-constraint' H:|-(0)-[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'](LTR)   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>",
+    "<NSLayoutConstraint:0x2813efa70 'UIView-rightMargin-guide-constraint' H:[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']-(0)-|(LTR)   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>"
+)
+
+Will attempt to recover by breaking constraint
+<NSLayoutConstraint:0x2813d0050 'IB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec4ea0]-(>=5)-|   (active, names: '|':_UIButtonBarButton:0x108ec4cd0 )>
+
+Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
+The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in <UIKitCore/UIView.h> may also be helpful.
+2021-11-26 19:37:29.219692+0200 Sensely[51118:3019372] [LayoutConstraints] Unable to simultaneously satisfy constraints.
+    Probably at least one of the constraints in the following list is one you don't want.
+    Try this:
+        (1) look at each constraint and try to figure out which you don't expect;
+        (2) find the code that added the unwanted constraint or constraints and fix it.
+    (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints)
+(
+    "<NSAutoresizingMaskLayoutConstraint:0x2813d52c0 h=--& v=--& _UIToolbarContentView:0x110c55fb0.width == 0   (active)>",
+    "<NSLayoutConstraint:0x2813efb60 H:|-(0)-[_UIButtonBarStackView:0x110c46f20]   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813efbb0 H:[_UIButtonBarStackView:0x110c46f20]-(0)-|   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813d40a0 'TB_Leading_Leading' H:|-(8)-[_UIModernBarButton:0x108ec6830'Done']   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>",
+    "<NSLayoutConstraint:0x2813d40f0 'TB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec6830'Done']-(0)-|   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>",
+    "<NSLayoutConstraint:0x2813d45f0 'UISV-canvas-connection' UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.leading == _UIButtonBarButton:0x110c87db0.leading   (active)>",
+    "<NSLayoutConstraint:0x2813d4960 'UISV-canvas-connection' UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.trailing == _UIButtonBarButton:0x108ec5be0.trailing   (active)>",
+    "<NSLayoutConstraint:0x2813d49b0 'UISV-spacing' H:[_UIButtonBarButton:0x110c87db0]-(0)-[UIView:0x108ec4b60]   (active)>",
+    "<NSLayoutConstraint:0x2813d4a00 'UISV-spacing' H:[UIView:0x108ec4b60]-(0)-[_UIButtonBarButton:0x108ec4cd0]   (active)>",
+    "<NSLayoutConstraint:0x2813d4a50 'UISV-spacing' H:[_UIButtonBarButton:0x108ec4cd0]-(0)-[UIView:0x108ec5a70]   (active)>",
+    "<NSLayoutConstraint:0x2813d4aa0 'UISV-spacing' H:[UIView:0x108ec5a70]-(0)-[_UIButtonBarButton:0x108ec5be0]   (active)>",
+    "<NSLayoutConstraint:0x2813ef9d0 'UIView-leftMargin-guide-constraint' H:|-(0)-[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'](LTR)   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>",
+    "<NSLayoutConstraint:0x2813efa70 'UIView-rightMargin-guide-constraint' H:[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']-(0)-|(LTR)   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>"
+)
+
+Will attempt to recover by breaking constraint
+<NSLayoutConstraint:0x2813d40f0 'TB_Trailing_Trailing' H:[_UIModernBarButton:0x108ec6830'Done']-(0)-|   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>
+
+Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
+The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in <UIKitCore/UIView.h> may also be helpful.
+2021-11-26 19:37:29.221349+0200 Sensely[51118:3019372] [LayoutConstraints] Unable to simultaneously satisfy constraints.
+    Probably at least one of the constraints in the following list is one you don't want.
+    Try this:
+        (1) look at each constraint and try to figure out which you don't expect;
+        (2) find the code that added the unwanted constraint or constraints and fix it.
+    (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints)
+(
+    "<NSAutoresizingMaskLayoutConstraint:0x2813d5360 h=--& v=--& _UIToolbarContentView:0x110c55fb0.height == 0   (active)>",
+    "<NSLayoutConstraint:0x2813efc00 V:|-(0)-[_UIButtonBarStackView:0x110c46f20]   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813efc50 _UIButtonBarStackView:0x110c46f20.bottom == _UIToolbarContentView:0x110c55fb0.bottom   (active)>",
+    "<NSLayoutConstraint:0x2813d5810 UIImageView:0x108ec4990.centerY == _UIModernBarButton:0x108ec4390.centerY   (active)>",
+    "<NSLayoutConstraint:0x2813a1e50 'IB_Baseline_Baseline' _UIModernBarButton:0x108ec4390.lastBaseline == UILayoutGuide:0x2809b2f40'UIViewLayoutMarginsGuide'.bottom   (active)>",
+    "<NSLayoutConstraint:0x2813bbbb0 'IB_Top_Top' V:|-(>=0)-[_UIModernBarButton:0x108ec4390]   (active, names: '|':_UIButtonBarButton:0x110c87db0 )>",
+    "<NSLayoutConstraint:0x2813e35c0 'UIButtonBar.maximumAlignmentSize' _UIButtonBarButton:0x110c87db0.height == UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.height   (active)>",
+    "<NSLayoutConstraint:0x2813efa20 'UIView-bottomMargin-guide-constraint' V:[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']-(0)-|   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>",
+    "<NSLayoutConstraint:0x2813a1ef0 'UIView-bottomMargin-guide-constraint' V:[UILayoutGuide:0x2809b2f40'UIViewLayoutMarginsGuide']-(11)-|   (active, names: '|':_UIButtonBarButton:0x110c87db0 )>",
+    "<NSLayoutConstraint:0x2813ef980 'UIView-topMargin-guide-constraint' V:|-(0)-[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>"
+)
+
+Will attempt to recover by breaking constraint
+<NSLayoutConstraint:0x2813d5810 UIImageView:0x108ec4990.centerY == _UIModernBarButton:0x108ec4390.centerY   (active)>
+
+Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
+The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in <UIKitCore/UIView.h> may also be helpful.
+2021-11-26 19:37:29.222771+0200 Sensely[51118:3019372] [LayoutConstraints] Unable to simultaneously satisfy constraints.
+    Probably at least one of the constraints in the following list is one you don't want.
+    Try this:
+        (1) look at each constraint and try to figure out which you don't expect;
+        (2) find the code that added the unwanted constraint or constraints and fix it.
+    (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints)
+(
+    "<NSAutoresizingMaskLayoutConstraint:0x2813d5360 h=--& v=--& _UIToolbarContentView:0x110c55fb0.height == 0   (active)>",
+    "<NSLayoutConstraint:0x2813efc00 V:|-(0)-[_UIButtonBarStackView:0x110c46f20]   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813efc50 _UIButtonBarStackView:0x110c46f20.bottom == _UIToolbarContentView:0x110c55fb0.bottom   (active)>",
+    "<NSLayoutConstraint:0x2813d59f0 UIImageView:0x108ec58a0.centerY == _UIModernBarButton:0x108ec4ea0.centerY   (active)>",
+    "<NSLayoutConstraint:0x2813d02d0 'IB_Baseline_Baseline' _UIModernBarButton:0x108ec4ea0.lastBaseline == UILayoutGuide:0x2809b0b60'UIViewLayoutMarginsGuide'.bottom   (active)>",
+    "<NSLayoutConstraint:0x2813d0320 'IB_Top_Top' V:|-(>=0)-[_UIModernBarButton:0x108ec4ea0]   (active, names: '|':_UIButtonBarButton:0x108ec4cd0 )>",
+    "<NSLayoutConstraint:0x2813d0550 'UIButtonBar.maximumAlignmentSize' _UIButtonBarButton:0x108ec4cd0.height == UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.height   (active)>",
+    "<NSLayoutConstraint:0x2813efa20 'UIView-bottomMargin-guide-constraint' V:[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']-(0)-|   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>",
+    "<NSLayoutConstraint:0x2813d0230 'UIView-bottomMargin-guide-constraint' V:[UILayoutGuide:0x2809b0b60'UIViewLayoutMarginsGuide']-(11)-|   (active, names: '|':_UIButtonBarButton:0x108ec4cd0 )>",
+    "<NSLayoutConstraint:0x2813ef980 'UIView-topMargin-guide-constraint' V:|-(0)-[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>"
+)
+
+Will attempt to recover by breaking constraint
+<NSLayoutConstraint:0x2813d59f0 UIImageView:0x108ec58a0.centerY == _UIModernBarButton:0x108ec4ea0.centerY   (active)>
+
+Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
+The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in <UIKitCore/UIView.h> may also be helpful.
+2021-11-26 19:37:29.224427+0200 Sensely[51118:3019372] [LayoutConstraints] Unable to simultaneously satisfy constraints.
+    Probably at least one of the constraints in the following list is one you don't want.
+    Try this:
+        (1) look at each constraint and try to figure out which you don't expect;
+        (2) find the code that added the unwanted constraint or constraints and fix it.
+    (Note: If you're seeing NSAutoresizingMaskLayoutConstraints that you don't understand, refer to the documentation for the UIView property translatesAutoresizingMaskIntoConstraints)
+(
+    "<NSAutoresizingMaskLayoutConstraint:0x2813d5360 h=--& v=--& _UIToolbarContentView:0x110c55fb0.height == 0   (active)>",
+    "<NSLayoutConstraint:0x2813efc00 V:|-(0)-[_UIButtonBarStackView:0x110c46f20]   (active, names: '|':_UIToolbarContentView:0x110c55fb0 )>",
+    "<NSLayoutConstraint:0x2813efc50 _UIButtonBarStackView:0x110c46f20.bottom == _UIToolbarContentView:0x110c55fb0.bottom   (active)>",
+    "<NSLayoutConstraint:0x2813d0c80 UIButtonLabel:0x110c8a440.centerY == _UIModernBarButton:0x108ec6830'Done'.centerY + 1.5   (active)>",
+    "<NSLayoutConstraint:0x2813d4280 'TB_Baseline_Baseline' _UIModernBarButton:0x108ec6830'Done'.lastBaseline == UILayoutGuide:0x2809aaca0'UIViewLayoutMarginsGuide'.bottom   (active)>",
+    "<NSLayoutConstraint:0x2813d42d0 'TB_Top_Top' V:|-(>=0)-[_UIModernBarButton:0x108ec6830'Done']   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>",
+    "<NSLayoutConstraint:0x2813d4550 'UIButtonBar.maximumAlignmentSize' _UIButtonBarButton:0x108ec5be0.height == UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide'.height   (active)>",
+    "<NSLayoutConstraint:0x2813efa20 'UIView-bottomMargin-guide-constraint' V:[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']-(0)-|   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>",
+    "<NSLayoutConstraint:0x2813d41e0 'UIView-bottomMargin-guide-constraint' V:[UILayoutGuide:0x2809aaca0'UIViewLayoutMarginsGuide']-(11)-|   (active, names: '|':_UIButtonBarButton:0x108ec5be0 )>",
+    "<NSLayoutConstraint:0x2813ef980 'UIView-topMargin-guide-constraint' V:|-(0)-[UILayoutGuide:0x2809b5f80'UIViewLayoutMarginsGuide']   (active, names: '|':_UIButtonBarStackView:0x110c46f20 )>"
+)
+
+Will attempt to recover by breaking constraint
+<NSLayoutConstraint:0x2813d0c80 UIButtonLabel:0x110c8a440.centerY == _UIModernBarButton:0x108ec6830'Done'.centerY + 1.5   (active)>
+
+Make a symbolic breakpoint at UIViewAlertForUnsatisfiableConstraints to catch this in the debugger.
+The methods in the UIConstraintBasedLayoutDebugging category on UIView listed in <UIKitCore/UIView.h> may also be helpful.
+
+2021-11-26 19:37:34.329327+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:34.329400+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+KEYWORD_MANAGER::parseLogicExpression::ERROR : expression isn't an object
+GOTO: 1 210 getdynamicstate
+DS REQUEST PARAMS:
+0: DialogFlowCX
+1: skip
+2: keralty-dev
+3: usa-kdc-dev-dialogflow-a403
+4: us-east1
+5: 2671f595-b277-4206-ac2a-32796e78598a
+6: en
+7: 220
+8: {"transcription":"eyJhdWRpb2J5dGVzIjoiIiwicmV0dXJuVGV4dCI6ImhlbGxvCiJ9"}
+9: None
+10: #start-json#{"memberID":"1234"}#end-json#
+11: D762B065-60A1-43FD-A128-6C0D020DD9F7
+2021-11-26 19:37:35.167098+0200 Sensely[51118:3019871] [connection] nw_endpoint_handler_set_adaptive_read_handler [C5.2 50.18.200.157:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for read_timeout failed
+2021-11-26 19:37:35.168848+0200 Sensely[51118:3019871] [connection] nw_endpoint_handler_set_adaptive_write_handler [C5.2 50.18.200.157:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: en0, ipv4, dns)] unregister notification for write_timeout failed
+DS RESPONSE: eyJzdGF0ZSI6IFsiSGVsbG8gSm9obiBEb2UsIHdlbGNvbWUgdG8gVmlydHVhbCBBc3Npc3RhbnQgXG4gV2hhdCBjYW4gSSBoZWxwIHlvdSB3aXRoP1xuIiwgInNwZWVjaCIsICIiLCAiMjIwIiwgIlt7XCJsb2dpY1wiOiB7XCJvcGVyYXRpb25cIjogXCJzdHJFcVwiLFwicGFyYW0xXCI6IFwiZm9vXCIsXCJwYXJhbTJcIjogXCJmb29cIn0sXCJvblRydWVcIjogXCJPbmJvYXJkaW5nLmluaXRcIixcIm9uRmFsc2VcIjogXCJmb29cIn1dIiwgIiIsICIiLCAiRGlhbG9nRmxvd0NYU3RhdGUiLCAiIiwgIiIsICIiLCAiIiwgIiJdfQ==
+GOTO: 2 212 dodynamicstate
+INSERTED ols ID: 213 new ID: 0 branches: 220
+GOTO: 3 0 speechinput
+2021-11-26 19:37:43.062530+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:43.062584+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:37:43.063436+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:43.063488+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:37:43.826476+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:43.826659+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:37:43.828003+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:37:43.828203+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:02.462753+0200 Sensely[51118:3019372] SenselyGSpeechApiGRPC: ==== STOP LISTENING 1 ====
+GOTO: 5 220 getdynamicstate
+DS REQUEST PARAMS:
+0: DialogFlowCX
+1: speech
+2: keralty-dev
+3: usa-kdc-dev-dialogflow-a403
+4: us-east1
+5: 2671f595-b277-4206-ac2a-32796e78598a
+6: en
+7: 220
+8: { "audioRecording":"","transcription":"eyJhdWRpb2J5dGVzIjoiIiwicmV0dXJuVGV4dCI6ImNoYXQgd2l0aCBhIGRvY3RvciJ9"}
+9: Symptom.init:2000#book-appointment.init:7000#chat_doctor.init:6000#Televisit.init:5000#menu-1.init:3100#menu-2.init:3105#menu-3.init:3110#close-session:8000#Appointment.init:7000#chat-support.init:1000
+10: D762B065-60A1-43FD-A128-6C0D020DD9F7
+DS RESPONSE: eyJzdGF0ZSI6IFsiQSBjYXJlIGRvY3RvciB3aWxsIG5vdyBhdHRlbmQgdG8geW91ciByZXF1ZXN0XG4iLCAic2tpcCIsICIiLCAiNjAwMCIsICJbe1wibG9naWNcIjoge1wib3BlcmF0aW9uXCI6IFwic3RyRXFcIixcInBhcmFtMVwiOiBcImZvb1wiLFwicGFyYW0yXCI6IFwiZm9vXCJ9LFwib25UcnVlXCI6IFwiY2hhdF9kb2N0b3IuaW5pdFwiLFwib25GYWxzZVwiOiBcImZvb1wifV0iLCAiIiwgIiIsICJEaWFsb2dGbG93Q1hTdGF0ZSIsICIiLCAiIiwgIiIsICIiLCAiIl19
+GOTO: 6 221 dodynamicstate
+INSERTED ols ID: 222 new ID: 0 branches: 6000
+GOTO: 7 0 skip
+2021-11-26 19:38:04.153438+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:04.153507+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:04.154822+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:04.154879+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:04.928112+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:04.928261+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:04.929590+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:04.929718+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+GOTO: 25 6000 skip
+2021-11-26 19:38:08.053081+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:08.053241+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:08.054785+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:08.054908+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:08.828151+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:08.828302+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:08.829633+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:08.829762+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+GOTO: 26 6004 skip
+GOTO: 52 999001 insertconversation
+STATE INCREMENT: 1 + 1000000
+STATE INCREMENT: 723 + 1000000
+STATE INCREMENT: 724 + 1000000
+STATE INCREMENT: 725 + 1000000
+STATE INCREMENT: 726 + 1000000
+STATE INCREMENT: 727 + 1000000
+STATE INCREMENT: 728 + 1000000
+STATE INCREMENT: 729 + 1000000
+STATE INCREMENT: 730 + 1000000
+STATE INCREMENT: 731 + 1000000
+STATE INCREMENT: 732 + 1000000
+STATE INCREMENT: 800 + 1000000
+STATE INCREMENT: 810 + 1000000
+STATE INCREMENT: 811 + 1000000
+STATE INCREMENT: 812 + 1000000
+STATE INCREMENT: 820 + 1000000
+STATE INCREMENT: 821 + 1000000
+STATE INCREMENT: 822 + 1000000
+STATE INCREMENT: 830 + 1000000
+STATE INCREMENT: 831 + 1000000
+STATE INCREMENT: 832 + 1000000
+STATE INCREMENT: 840 + 1000000
+STATE INCREMENT: 841 + 1000000
+STATE INCREMENT: 842 + 1000000
+STATE INCREMENT: 850 + 1000000
+STATE INCREMENT: 851 + 1000000
+STATE INCREMENT: 852 + 1000000
+STATE INCREMENT: 1800 + 1000000
+STATE INCREMENT: 1810 + 1000000
+STATE INCREMENT: 1811 + 1000000
+STATE INCREMENT: 1812 + 1000000
+STATE INCREMENT: 1820 + 1000000
+STATE INCREMENT: 1821 + 1000000
+STATE INCREMENT: 1822 + 1000000
+STATE INCREMENT: 1830 + 1000000
+STATE INCREMENT: 1831 + 1000000
+STATE INCREMENT: 1832 + 1000000
+STATE INCREMENT: 1840 + 1000000
+STATE INCREMENT: 1841 + 1000000
+STATE INCREMENT: 1842 + 1000000
+STATE INCREMENT: 1850 + 1000000
+STATE INCREMENT: 1851 + 1000000
+STATE INCREMENT: 1852 + 1000000
+STATE INCREMENT: 2800 + 1000000
+STATE INCREMENT: 2810 + 1000000
+STATE INCREMENT: 2811 + 1000000
+STATE INCREMENT: 2812 + 1000000
+STATE INCREMENT: 2820 + 1000000
+STATE INCREMENT: 2821 + 1000000
+STATE INCREMENT: 2822 + 1000000
+STATE INCREMENT: 2830 + 1000000
+STATE INCREMENT: 2831 + 1000000
+STATE INCREMENT: 2832 + 1000000
+STATE INCREMENT: 2840 + 1000000
+STATE INCREMENT: 2841 + 1000000
+STATE INCREMENT: 2842 + 1000000
+STATE INCREMENT: 2850 + 1000000
+STATE INCREMENT: 2851 + 1000000
+STATE INCREMENT: 2852 + 1000000
+STATE INCREMENT: 3800 + 1000000
+STATE INCREMENT: 3810 + 1000000
+STATE INCREMENT: 3811 + 1000000
+STATE INCREMENT: 3812 + 1000000
+STATE INCREMENT: 3820 + 1000000
+STATE INCREMENT: 3821 + 1000000
+STATE INCREMENT: 3822 + 1000000
+STATE INCREMENT: 3830 + 1000000
+STATE INCREMENT: 3831 + 1000000
+STATE INCREMENT: 3832 + 1000000
+STATE INCREMENT: 3840 + 1000000
+STATE INCREMENT: 3841 + 1000000
+STATE INCREMENT: 3842 + 1000000
+STATE INCREMENT: 3850 + 1000000
+STATE INCREMENT: 3851 + 1000000
+STATE INCREMENT: 3852 + 1000000
+STATE INCREMENT: 4013 + 1000000
+STATE INCREMENT: 4014 + 1000000
+STATE INCREMENT: 4015 + 1000000
+STATE INCREMENT: 4016 + 1000000
+STATE INCREMENT: 4017 + 1000000
+STATE INCREMENT: 4018 + 1000000
+STATE INCREMENT: 4019 + 1000000
+STATE INCREMENT: 4020 + 1000000
+STATE INCREMENT: 4026 + 1000000
+STATE INCREMENT: 4027 + 1000000
+STATE INCREMENT: 4028 + 1000000
+STATE INCREMENT: 4029 + 1000000
+STATE INCREMENT: 4030 + 1000000
+STATE INCREMENT: 4031 + 1000000
+STATE INCREMENT: 4032 + 1000000
+STATE INCREMENT: 4033 + 1000000
+STATE INCREMENT: 4040 + 1000000
+STATE INCREMENT: 4041 + 1000000
+STATE INCREMENT: 4042 + 1000000
+STATE INCREMENT: 4043 + 1000000
+STATE INCREMENT: 4050 + 1000000
+STATE INCREMENT: 4051 + 1000000
+STATE INCREMENT: 4052 + 1000000
+STATE INCREMENT: 4053 + 1000000
+STATE INCREMENT: 4060 + 1000000
+STATE INCREMENT: 4061 + 1000000
+STATE INCREMENT: 4062 + 1000000
+STATE INCREMENT: 4063 + 1000000
+STATE INCREMENT: 4070 + 1000000
+STATE INCREMENT: 4071 + 1000000
+STATE INCREMENT: 4072 + 1000000
+STATE INCREMENT: 4073 + 1000000
+STATE INCREMENT: 5000 + 1000000
+STATE INCREMENT: 5001 + 1000000
+STATE INCREMENT: 5010 + 1000000
+STATE INCREMENT: 5011 + 1000000
+STATE INCREMENT: 5020 + 1000000
+STATE INCREMENT: 5021 + 1000000
+STATE INCREMENT: 5030 + 1000000
+STATE INCREMENT: 5031 + 1000000
+STATE INCREMENT: 960 + 1000000
+STATE INCREMENT: 970 + 1000000
+STATE INCREMENT: 985 + 1000000
+STATE INCREMENT: 987 + 1000000
+STATE INCREMENT: 990 + 1000000
+GOTO: 53 1000001 skip
+KEYWORD_MANAGER::currentValueForKey::WARNING : no value for pattern StandaloneWrapperCheckRisk was found
+KEYWORD_MANAGER::parseSingleKeyExpression::WARNING : unable to find value for key InsertCareMenus++StandaloneWrapperCheckRisk
+GOTO: 128 1004013 skip
+KEYWORD_MANAGER::currentValueForKey::WARNING : no value for pattern MayoOutcomeCheckRisk was found
+KEYWORD_MANAGER::parseSingleKeyExpression::WARNING : unable to find value for key InsertCareMenus++MayoOutcomeCheckRisk
+GOTO: 129 1004014 skip
+KEYWORD_MANAGER::currentValueForKey::WARNING : no value for pattern MayoOutcomeCheckRisk was found
+KEYWORD_MANAGER::parseSingleKeyExpression::WARNING : unable to find value for key InsertCareMenus++MayoOutcomeCheckRisk
+GOTO: 130 1004015 skip
+GOTO: 131 1004016 skip
+GOTO: 132 1004017 skip
+GOTO: 148 1004050 skip
+GOTO: 149 1004051 skip
+GOTO: 150 1004052 skip
+GOTO: 151 1004053 skip
+GOTO: 85 1001821 skiplink
+STATE_ACTION_ADD_SKIPLINK::doAction::WARNING : no value for key 'asset_id' was found
+STATE_ACTION_ADD_SKIPLINK::doAction::WARNING : no value for key 'urgency' was found
+2021-11-26 19:38:15.119170+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:15.119232+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+GOTO: 86 1001822 skip
+GOTO: 170 1000985 skip
+KEYWORD_MANAGER::currentValueForKey::WARNING : no value for pattern StandaloneWrapperCheckRisk was found
+KEYWORD_MANAGER::parseSingleKeyExpression::WARNING : unable to find value for key InsertCareMenus++StandaloneWrapperCheckRisk
+GOTO: 171 1000987 skip
+GOTO: 172 1000990 skip
+GOTO: 173 999002 skip
+2021-11-26 19:38:19.063631+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:19.063722+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:19.064934+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:19.065018+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:19.830952+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:19.831109+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:19.832447+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:19.832569+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+GOTO: 46 9022 dodynamicstate
+INSERTED ols ID: 9023 new ID: 0 branches: 220
+GOTO: 47 0 speechinput
+2021-11-26 19:38:23.574471+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:23.574588+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:23.576061+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:23.576161+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:24.345588+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:24.345737+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:24.347064+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:24.347194+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:32.414815+0200 Sensely[51118:3019372] SenselyGSpeechApiGRPC: ==== STOP LISTENING 1 ====
+GOTO: 5 220 getdynamicstate
+DS REQUEST PARAMS:
+0: DialogFlowCX
+1: speech
+2: keralty-dev
+3: usa-kdc-dev-dialogflow-a403
+4: us-east1
+5: 2671f595-b277-4206-ac2a-32796e78598a
+6: en
+7: 220
+8: { "audioRecording":"","transcription":"eyJhdWRpb2J5dGVzIjoiIiwicmV0dXJuVGV4dCI6ImNoYXQgd2l0aCBhIGRvY3RvciJ9"}
+9: Symptom.init:2000#book-appointment.init:7000#chat_doctor.init:6000#Televisit.init:5000#menu-1.init:3100#menu-2.init:3105#menu-3.init:3110#close-session:8000#Appointment.init:7000#chat-support.init:1000
+10: D762B065-60A1-43FD-A128-6C0D020DD9F7
+DS RESPONSE: eyJzdGF0ZSI6IFsiT25lIG1vcmUgdGltZT9cbiIsICJzcGVlY2giLCAiIiwgIjIyMCIsICJbe1wibG9naWNcIjoge1wib3BlcmF0aW9uXCI6IFwic3RyRXFcIixcInBhcmFtMVwiOiBcImZvb1wiLFwicGFyYW0yXCI6IFwiZm9vXCJ9LFwib25UcnVlXCI6IFwiXCIsXCJvbkZhbHNlXCI6IFwiZm9vXCJ9XSIsICIiLCAiIiwgIkRpYWxvZ0Zsb3dDWFN0YXRlIiwgIiIsICIiLCAiIiwgIiIsICIiXX0=
+GOTO: 6 221 dodynamicstate
+INSERTED ols ID: 0 new ID: 0 branches: 220
+GOTO: 7 0 speechinput
+2021-11-26 19:38:38.252137+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:38.252184+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:38.252960+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:38.254240+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:39.012734+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:39.012942+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO
+2021-11-26 19:38:39.014826+0200 Sensely[51118:3019372] WF: _userSettingsForUser mobile: {
+    filterBlacklist =     (
+    );
+    filterWhitelist =     (
+    );
+    restrictWeb = 1;
+    useContentFilter = 0;
+    useContentFilterOverrides = 0;
+    whitelistEnabled = 0;
+}
+2021-11-26 19:38:39.015011+0200 Sensely[51118:3019372] WF: _WebFilterIsActive returning: NO

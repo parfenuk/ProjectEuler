@@ -25,11 +25,20 @@ int main() {
     cout.setf(ios::fixed);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    vector<string> keys = { "GOTO", "DS", "INSERTED", "DYNAMIC", "STATE" };
+    for (int i=0; i<20; i++) keys.push_back(to_string(i)+":");
+    string S;
+    while (getline(cin,S)) {
+        for (int i=0; i<(int)keys.size(); i++) {
+            if (StringUtils::hasPrefix(S, keys[i])) cout << S << endl;
+        }
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
