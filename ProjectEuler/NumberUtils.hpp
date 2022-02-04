@@ -21,6 +21,7 @@ namespace NumberUtils
     vint digits (ull n, int base = 10, int min_size = 1);
     ull from_digits (const vint &a, int base = 10);
     bool is_palindromic_number (ull n);
+    dd clock_angle (dd h, dd m, dd s = 0);
     bool same_digits (ull n, ull m);
     ull ones_mod (ull k, ull mod);
     ll code_from_v (const vint &v, const vint &matches);

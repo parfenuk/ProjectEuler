@@ -74,6 +74,14 @@ bool is_palindromic_number (ull n)
     return Containers::isPalindrom(digits(n)); // TODO: think of how to apply template here...
 }
 
+dd clock_angle (dd h, dd m, dd s/*=0*/) // h - 0..11, m = 0..59
+{
+    dd am = 6*m + 0.1*s, ah = 30*h + m/2 + s/120;
+    dd ang = fabs(am-ah);
+    if (ang > 180) ang = 360 - ang;
+    return ang;
+}
+
 bool same_digits (ull n, ull m)
 {
     vint a = digits(n), b = digits(m);
