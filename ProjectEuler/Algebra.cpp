@@ -76,35 +76,51 @@ pll Extended_Euclid (ll a, ll b) // returns <k1,k2>: a*k1 + b*k2 == GCD(a,b)
     return mp(st.sc, st.fs - qr.fs*st.sc);
 }
 
-vull Divisors (ull n) // returns in sorted order
+vull Divisors (ull n, bool sorted/*=true*/)
 {
-    vull a, b;
-    for (ull i=1; i*i<=n; i++) {
-        
-        if (n%i == 0) {
-            a.push_back(i);
-            if (i*i != n) b.push_back(n/i);
-        }
-    }
-    while (!b.empty()) { a.push_back(b.back()); b.pop_back(); }
-    return a;
+    return Divisors(factorize(n),sorted);
 }
 
-vull Divisors_square (ull n) // returns divisors of n^2
+vull Divisors (const vpull &F, bool sorted/*=true*/)
 {
-    vull a = Divisors(n);
+    int N = (int)F.size();
+    vull P(N);
+    for (int i=0; i<N; i++) P[i] = powmod(F[i].fs, F[i].sc);
     
-    set<ull> s;
-    for (int i=0; i<(int)a.size(); i++) for (int j=0; j<(int)a.size(); j++) {
-        s.insert(a[i]*a[j]);
+    ull n = 1;
+    vull a(1,1), v(N); // 'a' is answer, 'v' is current powers of primes
+    while (true) {
+        int i = 0;
+        while (i < N && v[i] == F[i].sc) {
+            n /= P[i];
+            v[i] = 0;
+            i++;
+        }
+        if (i == N) break;
+        v[i]++;
+        n *= F[i].fs;
+        a.push_back(n);
     }
-    a.clear();
-    for (set<ull>::iterator it = s.begin(); it != s.end(); it++) a.push_back(*it);
-        
+    
+    if (sorted) sort(a.begin(), a.end());
     return a;
 }
 
-ull Divisors_sum (ull n)
+vull Divisors_product (const vull &a, bool sorted/*=true*/) // returns divisors of a[0]*...*a[n]
+{
+    vpull F;
+    for (int i=0; i<(int)a.size(); i++) F = merged_factorize(F,factorize(a[i]));
+    return Divisors(F,sorted);
+}
+
+vull Divisors_square (ull n, bool sorted/*=true*/) // returns divisors of n^2
+{
+    vpull F = factorize(n);
+    for (int i=0; i<(int)F.size(); i++) F[i].sc *= 2;
+    return Divisors(F,sorted);
+}
+
+ull Divisors_sum (ull n) // TODO: use sigma-function
 {
     vull a = Divisors(n);
     if (a.empty()) return 0;
@@ -258,6 +274,20 @@ vpull factorize (ull n)
     }
     
     if (n != 1) a.push_back(make_pair(n,1));
+    return a;
+}
+
+vpull merged_factorize (const vpull &F, const vpull &G)
+{
+    vpull a;
+    int f = 0, g = 0;
+    while (f < (int)F.size() || g < (int)G.size()) {
+        if (f == (int)F.size()) a.push_back(G[g++]);
+        else if (g == (int)G.size()) a.push_back(F[f++]);
+        else if (F[f].fs < G[g].fs) a.push_back(F[f++]);
+        else if (F[f].fs > G[g].fs) a.push_back(G[g++]);
+        else { a.push_back(mp(F[f].fs, F[f].sc + G[g].sc)); f++; g++; }
+    }
     return a;
 }
 
@@ -415,6 +445,13 @@ ull coprime_count_in_range (ull N, ull from, ull to)
     ll res = 0;
     for (int i=0; i<(int)D.size(); i++) res += MoebiusMu(D[i])*(to/D[i]);
     return res;
+}
+
+int max_power (ull n, ull p) // n = S * p^x, GCD(S,p) = 1
+{
+    int k = 0;
+    while (n%p == 0) { n /= p; k++; }
+    return k;
 }
 
 ull power_fact (ull n, ull p) // n! = S * p^x, returns x, p is prime

@@ -25,6 +25,8 @@ template <class Trzx>
 template <class Trzx>
     Trzx total_vector_sum (const vector<Trzx> &a);
 template <class Trzx>
+    Trzx total_vector_product (const vector<Trzx> &a);
+template <class Trzx>
     int index_of_object (const vector<Trzx> &a, Trzx n);
 template <class Trzx>
     bool contains (const vector<Trzx> &a, Trzx n);

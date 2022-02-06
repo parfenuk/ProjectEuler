@@ -59,6 +59,14 @@ Trzx total_vector_sum (const vector<Trzx> &a)
 }
 
 template <class Trzx>
+Trzx total_vector_product (const vector<Trzx> &a)
+{
+    Trzx s = 1;
+    for (int i=0; i<(int)a.size(); i++) s *= a[i];
+    return s;
+}
+
+template <class Trzx>
 int index_of_object (const vector<Trzx> &a, Trzx n)
 {
     for (int i=0; i<(int)a.size(); i++) if (a[i] == n) return i;

@@ -26,8 +26,10 @@ namespace Algebra
     vpull factorized_GCD (const vpull &F, const vpull &G);
     vpull factorized_GCD (const vpull &F, ull n);
     pll Extended_Euclid (ll a, ll b);
-    vull Divisors (ull n);
-    vull Divisors_square (ull n);
+    vull Divisors (ull n, bool sorted = true);
+    vull Divisors (const vpull &F, bool sorted = true);
+    vull Divisors_product (const vull &a, bool sorted = true);
+    vull Divisors_square (ull n, bool sorted = true);
     ull Divisors_sum (ull n);
     ull Divisors_count (ull n);
     ull productmod (ull a, ull n, ull mod);
@@ -39,6 +41,7 @@ namespace Algebra
     bool isProbablePrime (ull n);
     ull least_prime_divisor (ull n);
     vpull factorize (ull n);
+    vpull merged_factorize (const vpull &F, const vpull &G);
     ll primitiveRoot (ll p);
     ull rad (ull n);
     ull Chinese_theorem (vll divs, vll rests);
@@ -49,6 +52,7 @@ namespace Algebra
     ll EulerPhiSum (ll n, int Q);
     ull square_representations_count (ull n);
     ull coprime_count_in_range (ull N, ull from, ull to);
+    int max_power (ull n, ull p);
     ull power_fact (ull n, ull p);
     ull count_divisible_by (ull n, ull lb, ull ub, ull mod = 0);
     ull sum_divisible_by (ull n, ull lb, ull ub);
