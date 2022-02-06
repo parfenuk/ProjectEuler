@@ -31,6 +31,33 @@ int main() {
     
     ull ans = 0;
     
+    const int N = 20, NN = N*N/2;
+    vector<sint> A(NN+1,4);
+    
+    // 3-set
+    for (int a=1; a<=N; a++) for (int b=1; b<=a; b++) {
+        int k = a*a + b*b;
+        if (k <= NN) A[k] = 3;
+        k = a*a - b*b;
+        if (k <= NN) A[k] = 3;
+    }
+    for (int a=1; a<=N; a++) for (int b=1; b<a; b++) {
+        int k = a*b;
+        if (k <= NN) A[k] = 3;
+    }
+    // 2-set
+    for (int a=1; a*a<=NN; a++) {
+        A[a*a] = 2;
+    }
+    // 1-set
+    A[0] = 1;
+    
+    for (int i=0; i<=NN; i++) cout << i << ": " << A[i] << endl;
+    
+    // answer calcualtion
+    for (int i=0; i<NN; i++) ans += A[i]*2;
+    ans += A[NN];
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
