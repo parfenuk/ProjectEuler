@@ -120,14 +120,12 @@ vull Divisors_square (ull n, bool sorted/*=true*/) // returns divisors of n^2
     return Divisors(F,sorted);
 }
 
-ull Divisors_sum (ull n) // TODO: use sigma-function
+ull Divisors_sum (ull n)
 {
-    vull a = Divisors(n);
-    if (a.empty()) return 0;
-    a.pop_back();
-    ull sum = 0;
-    for (int i=0; i<(int)a.size(); i++) sum += a[i];
-    return sum;
+    ull s = 1;
+    vpull F = factorize(n);
+    for (int i=0; i<(int)F.size(); i++) s *= (powmod(F[i].fs,F[i].sc+1)-1)/(F[i].fs-1);
+    return s;
 }
 
 ull Divisors_count (ull n)

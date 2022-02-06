@@ -31,17 +31,6 @@ int main() {
     
     ull ans = 0;
     
-    const ull N = 2000000;
-
-    for (ull c=2; c<N; c++) {
-        vull D = Divisors_product({c-1,c+1});
-        for (int i=0; i<(int)D.size(); i++) {
-            ull n = D[i];
-            if (n >= c || n+c > N) break;
-            ans += n + 2*c + (c*c-1)/n;
-        }
-    }
-    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
