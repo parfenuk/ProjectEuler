@@ -49,7 +49,7 @@ string path_question_type (int type) {
     return PATH + "Фильтры/По типам вопроса/" + to_string(type) + ".txt";
 }
 string path_question_text (int id) {
-    return PATH + "База вопросов/" + to_string(id) + ".txt";
+    return PATH + "База вопросов v3a/" + to_string(id) + ".txt";
 }
 
 int with_image, without_image, with_double_image, with_multiple_images, with_audio, without_audio, with_video, without_video, npid;
@@ -75,7 +75,7 @@ void fillCommonInformation()
             TypeCount[i]++;
         }
     }
-    
+        
     cout << "Looking at download material\n";
     int images_to_download = 0, audios_to_download = 0, videos_to_download = 0;
     for (int i=1; i<=55000; i++) {
@@ -109,25 +109,31 @@ void get_media_values (int type, int k, int &image_lines, int &audio_lines, int 
     ifstream in (path_question_text(k));
     string S;
     image_lines = audio_lines = video_lines = text_lines = 0;
-    vector<int> ok_text(13); // T,C,A or F1,F2,F3,C,CO,A or TO,B1,B2,B3,B4,CO are correct formats
+    vector<int> ok_text(14); // T,C,A or F1,F2,F3,C,CO,A or TO,B1,B2,B3,B4,CO are correct formats
+    set<string> im_links, au_links, vi_links;
     while (getline(in,S)) {
-        if      (StringUtils::hasPrefix(S,"I:")) image_lines++;
-        else if (StringUtils::hasPrefix(S,"D:")) audio_lines++;
-        else if (StringUtils::hasPrefix(S,"V:")) video_lines++;
+        if      (StringUtils::hasPrefix(S,"I:")) im_links.insert(S.substr(3,S.length()-3));
+        else if (StringUtils::hasPrefix(S,"D:")) au_links.insert(S.substr(3,S.length()-3));
+        else if (StringUtils::hasPrefix(S,"V:")) vi_links.insert(S.substr(3,S.length()-3));
         
-        if      (StringUtils::hasPrefix(S,"T:"))  ok_text[0] = 1;
-        else if (StringUtils::hasPrefix(S,"C:"))  ok_text[1] = 1;
-        else if (StringUtils::hasPrefix(S,"A:"))  ok_text[2] = 1;
-        else if (StringUtils::hasPrefix(S,"F1:")) ok_text[3] = 1;
-        else if (StringUtils::hasPrefix(S,"F2:")) ok_text[4] = 1;
-        else if (StringUtils::hasPrefix(S,"F3:")) ok_text[5] = 1;
-        else if (StringUtils::hasPrefix(S,"TO:")) ok_text[6] = 1;
-        else if (StringUtils::hasPrefix(S,"B1:")) ok_text[7] = 1;
-        else if (StringUtils::hasPrefix(S,"B2:")) ok_text[8] = 1;
-        else if (StringUtils::hasPrefix(S,"B3:")) ok_text[9] = 1;
-        else if (StringUtils::hasPrefix(S,"B4:")) ok_text[10] = 1;
-        else if (StringUtils::hasPrefix(S,"CO:")) ok_text[11] = 1;
-        else if (StringUtils::hasPrefix(S,"TF:")) ok_text[12] = 1;
+        image_lines = (int)im_links.size();
+        audio_lines = (int)au_links.size();
+        video_lines = (int)vi_links.size();
+        
+        if      (StringUtils::hasPrefix(S,"A:"))  ok_text[0]++;
+        else if (StringUtils::hasPrefix(S,"B:"))  ok_text[1]++;
+        else if (StringUtils::hasPrefix(S,"C:"))  ok_text[2]++;
+        else if (StringUtils::hasPrefix(S,"F:"))  ok_text[3]++;
+        else if (StringUtils::hasPrefix(S,"N:"))  ok_text[4]++;
+        else if (StringUtils::hasPrefix(S,"O:"))  ok_text[5]++;
+        else if (StringUtils::hasPrefix(S,"P:"))  ok_text[6]++;
+        else if (StringUtils::hasPrefix(S,"Q:"))  ok_text[7]++;
+        else if (StringUtils::hasPrefix(S,"R:"))  ok_text[8]++;
+        else if (StringUtils::hasPrefix(S,"S:"))  ok_text[9]++;
+        else if (StringUtils::hasPrefix(S,"T:"))  ok_text[10]++;
+        else if (StringUtils::hasPrefix(S,"U:"))  ok_text[11]++;
+        else if (StringUtils::hasPrefix(S,"W:"))  ok_text[12]++;
+        else if (StringUtils::hasPrefix(S,"Z:"))  ok_text[13]++;
     }
     text_lines = total_vector_sum(ok_text);
 }
@@ -172,24 +178,27 @@ int main() {
     
     fillCommonInformation();
     //          I D V
-    research(1,{1,0,0},{0,0,0});    // 106 failed to download + 1492 have no image (probably ok)
-    research(2,{1,0,0},{});         // OK
-    research(3,{0,1,0},{});         // OK
-    research(4,{0,0,1},{});         // 1 failed to download + 1 without video (#32095)
-    research(5,{2,0,0},{});         // 37 failed to download + 48 with missing images
-    research(6,{0,2,0},{});         // 1 failed to download
-    research(7,{0,0,2},{});         // OK
-    research(8,{1,3,0},{});         // 4 failed to download + 19 with missing audios or image
-    research(9,{1,0,1},{});         // OK
-    research(10,{0,1,1},{});        // OK, no questions of this type
-    research(11,{1,0,0},{0,0,0},7); // 1 failed to download + 19 have no image (only pages #51567 and #51708 have them)
-    research(12,{1,0,0},{0,0,0},6); // 16 have no image (maybe this is ok)
-    research(13,{0,0,3},{});        // 1 has no videos (#26448)
-    research(14,{1,1,1},{});        // OK, no questions of this type
-    research(15,{2,1,0},{});        // OK
-    research(16,{1,2,0},{});        // 2 have no media (#45610, #45613), but their pages have
-    research(17,{1,2,0},{},6);      // OK
-    research(18,{1,1,0},{1,0,0},7); // OK, 10 have no audio, but their pages also don't
+    research(1,{1,0,0},{0,0,0},11);    // 106 failed to download + 1492 have no image (probably ok)
+    research(2,{1,0,0},{},11);         // OK
+    research(3,{0,1,0},{},11);         // OK
+    research(4,{0,0,1},{},11);         // 1 failed to download + 1 without video (#32095)
+    research(5,{2,0,0},{},11);         // 37 failed to download + 48 with missing images
+    research(6,{0,2,0},{},11);         // 1 failed to download
+    research(7,{0,0,2},{},11);         // OK
+    research(8,{1,3,0},{},11);         // 4 failed to download + 19 with missing audios or image
+    research(9,{1,0,1},{},11);         // OK
+    research(10,{0,1,1},{},11);        // OK, no questions of this type
+    research(11,{1,0,0},{0,0,0},15);   // 1 failed to download + 19 have no image (only pages #51567 and #51708 have them)
+    research(12,{1,0,0},{0,0,0},14);   // 16 have no image (maybe this is ok)
+    research(13,{0,0,3},{},11);        // 1 has no videos (#26448)
+    research(14,{1,1,1},{},11);        // OK, no questions of this type
+    research(15,{2,1,0},{},11);        // OK
+    research(16,{1,2,0},{},11);        // 2 have no media (#45610, #45613), but their pages have
+    research(17,{1,2,0},{},14);        // OK
+    research(18,{1,1,0},{1,0,0},15);   // OK, 10 have no audio, but their pages also don't
+    
+    ans=55000;
+    while (!Qtype[ans--]);
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
