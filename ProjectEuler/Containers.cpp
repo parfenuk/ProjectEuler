@@ -206,6 +206,41 @@ typename map<Tkey,Tval>::iterator min_greater_or_equal (map<Tkey,Tval> &M, Tkey 
 }
 
 template <class Trzx>
+void show (const set<Trzx> &a, bool show_endl/*=true*/, bool show_size/*=false*/)
+{
+    if (show_size) cout << a.size() << endl;
+    for (typename set<Trzx>::iterator it = a.begin(); it != a.end(); it++) cout << *it << endl;
+    if (show_endl) cout << endl;
+}
+
+template <class Trzx>
+set<Trzx> intersection_set (const set<Trzx> &a, const set<Trzx> &b)
+{
+    set<Trzx> c = a;
+    for (typename set<Trzx>::iterator it = a.begin(); it != a.end(); it++) {
+        if (b.find(*it) == b.end()) c.erase(*it);
+    }
+    return c;
+}
+
+template <class Trzx>
+set<Trzx> union_set (const set<Trzx> &a, const set<Trzx> &b)
+{
+    set<Trzx> c;
+    c.insert(a.begin(), a.end());
+    c.insert(b.begin(), b.end());
+    return c;
+}
+
+template <class Trzx>
+set<Trzx> minus_set (const set<Trzx> &a, const set<Trzx> &b)
+{
+    set<Trzx> c = a;
+    for (typename set<Trzx>::iterator it = b.begin(); it != b.end(); it++) c.erase(*it);
+    return c;
+}
+
+template <class Trzx>
 typename set<Trzx>::iterator max_less (set<Trzx> &S, Trzx k)
 {
     typename set<Trzx>::iterator it = S.lower_bound(k);

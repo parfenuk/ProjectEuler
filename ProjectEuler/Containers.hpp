@@ -67,6 +67,14 @@ template <class Tkey, class Tval>
 
 // SETS
 template <class Trzx>
+    void show (const set<Trzx> &a, bool show_endl = true, bool show_size = false);
+template <class Trzx>
+    set<Trzx> intersection_set (const set<Trzx> &a, const set<Trzx> &b);
+template <class Trzx>
+    set<Trzx> union_set (const set<Trzx> &a, const set<Trzx> &b);
+template <class Trzx>
+    set<Trzx> minus_set (const set<Trzx> &a, const set<Trzx> &b);
+template <class Trzx>
     typename set<Trzx>::iterator max_less (set<Trzx> &S, Trzx k);
 template <class Trzx>
     typename set<Trzx>::iterator max_less_or_equal (set<Trzx> &S, Trzx k);

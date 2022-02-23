@@ -33,6 +33,16 @@ vstring parse_by_symbol (const string &S, char p)
     return v;
 }
 
+string join_by_symbol (const vector<string> &v, char p) {
+    
+    string S;
+    for (int i=0; i<(int)v.size(); i++) {
+        S += v[i];
+        S += p;
+    } S.pop_back();
+    return S;
+}
+
 void trimSymbol (string &S, char p) {
     
     // remove trailing symbols
@@ -70,5 +80,29 @@ bool same_letters (string s, string u)
     for (int i=0; i<(int)s.length(); i++) if (s[i] != u[i]) return false;
     return true;
 }
+
+int levenshteinDistance (const string &S, const string &T) {
+    
+    int n = (int)S.length(), m = (int)T.length();
+    if (n < m) return levenshteinDistance(T,S); // first string can't be shorter
+    
+    vector<int> L(n+1), A(n+1); // L - distances array, A - interim array
+    for (int i=0; i<=n; i++) L[i] = i;
+    
+    for (int i=0; i<m; i++) {
+        A[0] = i+1;
+        for (int j=0; j<n; j++) {
+            // calculating costs for A[i+1][j+1] using array L
+            int dc = L[j+1] + 1; // deletion cost
+            int ic = A[j] + 1; // insertion cost
+            int sc = L[j] + (T[i] != S[j]); // substitution cost
+            A[j+1] = min(dc,min(ic,sc));
+        }
+        L.swap(A);
+    }
+    
+    return L[n];
+}
+
 
 }
