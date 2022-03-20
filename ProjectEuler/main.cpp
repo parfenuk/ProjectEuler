@@ -32,239 +32,226 @@ int N;
 
 // *** FIRST PART - PRIMITIVE REDUCABLES OBTAINING ***
 
-string sForm (const num &a)
-{
-    string S;
-    for (int i=0; i<min(N,10); i++) {
-        if (a[i] == -1) { S += ('0'+i); S += '*'; }
-        else for (int j=0; j<a[i]; j++) S += ('0'+i);
-    }
-    for (int i=10; i<N; i++) {
-        if (a[i] == -1) { S += ('A'+i-10); S += '*'; }
-        else for (int j=0; j<a[i]; j++) S += ('A'+i-10);
-    }
-    return S;
-}
-
-pii get_sums (const num &a)
-{
-    int s1 = 0, s2 = 0;
-    for (int i=1; i<N; i++) {
-        s1 += i*a[i];
-        s2 += i*i*a[i];
-    }
-    return mp(s1,s2);
-}
-
-sint get_different_digits (const num &a)
-{
-    sint cnt = 0;
-    for (int i=1; i<N; i++) if (a[i]) cnt++;
-    return cnt;
-}
-
-char max_digit (const num &a)
-{
-    for (int i=N-1; i>=0; i--) if (a[i]) return i;
-    return -1;
-}
-
-bool operator< (const num &a, const num &b) // no patterns
-{
-    int sa = 0, sb = 0;
-    for (int i=0; i<N; i++) { sa += a[i]; sb += b[i]; }
-    if (sa < sb) return true;
-    if (sb > sa) return false;
-    
-    for (int i=0; i<N; i++) {
-        if (a[i] < b[i]) return true;
-        if (a[i] > b[i]) return false;
-    } return false;
-}
-
-bool nested (const num &a, const num &b) // true if a is fully contained in b
-{
-    for (int i=0; i<N; i++) {
-        if (a[i] > b[i]) return false;
-    } return true;
-}
-
-void add (vector<pnn> &a, num n, num s) {
-    do {
-        a.push_back(mp(n,s));
-        if (n[N-1] || s[N-1]) break;
-        for (int i=N-1; i>0; i--) {
-            n[i] = n[i-1];
-            s[i] = s[i-1];
-        }
-    } while (true);
-}
-
-struct DPState {
-    sint len;
-    sint last_digit;
-    ll mask;
-    DPState() { len = last_digit = mask = 0; }
-    DPState(sint l, sint d, ll m) { len = l; last_digit = d; mask = m; }
-    void show() { cout << len << " " << last_digit << " " << mask << endl; }
-}initial_state;
-
-vector<vector<DPState>> dp; // dp[s1][s2] = <<len, last_digit>, mask>
-
-num get_subtractive (int s1, int s2, sint last_digit)
-{
-    num A(N);
-    A[last_digit]++;
-    while (true) {
-        s1 -= last_digit;
-        s2 -= last_digit*last_digit;
-        if (!s1 || !s2) break;
-        last_digit = dp[s1][s2].last_digit;
-        A[last_digit]++;
-    }
-    return A;
-}
-
-vector<string> get_reducables (int base)
-{
-    N = base;
-    const sint MAX_L = MAX_LENGTH[N];
-    int S1 = (N-1)*MAX_L;
-    int S2 = S1*(N-1);
-    
-    //S1 = 462; S2 = 15246;
-    
-    vector<pnn> primitive_reducables;
-    vector<pnn> reducables;
-    
-    dp = vector<vector<DPState>>(S1+1);
-    for (int i=0; i<=S1; i++) dp[i] = vector<DPState>(S2+1);
-    
-    queue<pair<pii,DPState>> Q;
-    Q.push(mp(mp(0,0),DPState()));
-    
-    int push_iterations = 1;
-    int mask_update_iterations = 0;
-    int nested_check_iterations = 0;
-    int total_iterations = 1;
-    while (!Q.empty()) {
-        pair<pii,DPState> p = Q.front(); // < <s1,s2>, <<len,last_digit>,mask> >
-        Q.pop();
-        pii sums = p.fs;
-        DPState D = p.sc;
-        //cout << "Processing " << p.fs.fs << " " << p.fs.sc << " "; D.show();
-        if (D.len == MAX_L) continue;
-        
-        for (int k=max((int)D.last_digit,1); k<N; k++) {
-            int s1 = sums.fs + k;
-            int s2 = sums.sc + k*k;
-            if (s1 > S1 || s2 > S2) break;
-            ll old_mask = dp[s1][s2].mask;
-            ll new_mask = D.mask | POWER[k];
-            total_iterations++;
-            if (dp[s1][s2].len == 0) {
-                push_iterations++;
-                dp[s1][s2] = DPState(D.len+1,k,new_mask); // just add
-                Q.push(mp(mp(s1,s2),dp[s1][s2]));
-                //cout << "Added " << s1 << " " << s2 << " "; dp[s1][s2].show();
-            }
-            else { // elem (s1,s2) exists
-                if (dp[s1][s2].len == D.len+1 || // equal lengths
-                    (old_mask | new_mask) != old_mask + new_mask) { // same digit is used
-                    dp[s1][s2].mask |= new_mask;
-                    mask_update_iterations++;
-                    //cout << "Set new mask length " << s1 << " " << s2 << " " << dp[s1][s2].mask << endl;
-                }
-                else {
-                    num a = get_subtractive(s1,s2,k);
-                    num b = get_subtractive(s1,s2,dp[s1][s2].last_digit);
-                    bool ok = true;
-                    for (int i=0; i<(int)reducables.size(); i++) {
-                        nested_check_iterations++;
-                        if (nested(reducables[i].fs,a)) { ok = false; break; }
-                    } if (!ok) continue;
-                    primitive_reducables.push_back(mp(a,b));
-                    add(reducables,a,b);
-                    //cout << "New primitive: " << sForm(a) << " -> " << sForm(b) << endl;
-                }
-            }
-        }
-    }
-    
-    cout << "Primitive reducables count: " << primitive_reducables.size() << endl;
-    
-    char c = '0';
-    S1 = S2 = 0;
-    sint dr = 0, ds = 0;
-    int len = 0;
-    vector<int> cnt_length(MAX_L+1);
-    vector<string> res;
-//    ofstream out("output.txt");
-//    for (int i=0; i<(int)primitive_reducables.size(); i++) {
-//        string S = sForm(primitive_reducables[i].fs);
-//        string T = sForm(primitive_reducables[i].sc);
-//        //out << S << " -> " << T << endl;
-//        //out << S << endl;
-//        //res.push_back(S);
-//
-//        // auxiliary calculations
-//        cnt_length[S.length()]++;
-//        if (S.length() > len) len = (int)S.length();
-//        if (S.length() <= 7 && S[0] > c) c = S[0];
-//        pii p = get_sums(primitive_reducables[i].fs);
-//        if (p.fs > S1) S1 = p.fs;
-//        if (p.sc > S2) S2 = p.sc;
-//        int d1 = get_different_digits(primitive_reducables[i].fs);
-//        int d2 = get_different_digits(primitive_reducables[i].sc);
-//        if (d1 > dr) dr = d1;
-//        if (d2 > ds) ds = d2;
-//    }
-//    cout << "\nTotal iterations: " << total_iterations << endl;
-//    cout << "Push iterations: " << push_iterations << endl;
-//    cout << "Mask iterations: " << mask_update_iterations << endl;
-//    cout << "Nested iterations: " << nested_check_iterations << endl;
-//    cout << "Count: " << primitive_reducables.size() << " " << reducables.size() << endl;
-//    cout << "Max S1 = " << S1 << ", S2 = " << S2 << endl;
-//    cout << "Max Digits R: " << dr << ", S: " << ds << endl;
-//    cout << "Max symbol: " << c << endl;
-    //cout << "Lengths: "; show(cnt_length);
-    //cout << "Max Length: " << len;
-    
-    for (int i=0; i<(int)primitive_reducables.size(); i++) cout << sForm(primitive_reducables[i].fs) << " -> " << sForm(primitive_reducables[i].sc) << endl;
-    //for (int i=0; i<(int)reducables.size(); i++) cout << sForm(reducables[i].fs) << " -> " << sForm(reducables[i].sc) << endl;
-    for (int i=0; i<(int)reducables.size(); i++) res.push_back(sForm(reducables[i].fs));
-    
-    return res;
-}
-
-string get_num (const vsint &a)
-{
-    string S;
-    for (int i=0; i<(int)a.size(); i++) {
-        if (a[i] == 0) continue;
-        if (a[i] < 10) S += ('0'+a[i]);
-        else S += ('A'+a[i]-10);
-    } return S;
-}
-
-inline void inc (sint &s1, sint &s2, const sint a) { s1 += a; s2 += a*a; }
-inline void dec (sint &s1, sint &s2, const sint a) { s1 -= a; s2 -= a*a; }
-
-// *** SECOND PART - PATTERNS OBTAINING ***
-
+#define DN vector<psii> // < digit, count >
 sint fc (char c) { if ('0' <= c && c <= '9') return c-'0'; return c-'A'+10; } // 'A' -> 10
 char tc (sint n) { if (n < 10) return '0'+n; return 'A'+n-10; }               // 12 -> 'C'
 string ts (sint cnt, sint n) { string s; for (int i=0; i<cnt; i++) s += tc(n); return s; }
 
-bool next_string (string &S)
+string stringValue (const DN &A)
 {
-    if (S.back() == tc(N-1)) return false;
-    for (int i=0; i<(int)S.length(); i++) {
-        if (S[i] != '9') S[i]++;
-        else S[i] = 'A';
+    string S;
+    for (int i=0; i<(int)A.size(); i++) {
+        char c = tc(A[i].fs);
+        for (int j=0; j<A[i].sc; j++) S += c;
+    } return S;
+}
+
+void append_digit (DN &A, sint k)
+{
+    if (k == A.back().fs) A.back().sc++;
+    else A.push_back(mp(k,1));
+}
+
+void pop_digit (DN &A)
+{
+    if (A.back().sc == 1) A.pop_back();
+    else A.back().sc--;
+}
+
+void shift (DN &A)
+{
+    for (int i=0; i<(int)A.size(); i++) A[i].fs++;
+}
+
+psii get_sums (const DN &A) // TODO: make static variables?
+{
+    sint s1 = 0, s2 = 0;
+    for (int i=0; i<(int)A.size(); i++) {
+        s1 += A[i].fs*A[i].sc;
+        s2 += A[i].fs*A[i].fs*A[i].sc;
+    } return mp(s1,s2);
+}
+
+bool nested (const DN &A, const DN &B) // A < B ?
+{
+    int pa = 0, pb = 0;
+    while (pa != (int)A.size() || pb != (int)B.size()) {
+        if (pa == (int)A.size()) return true;
+        else if (pb == (int)B.size()) return false;
+        else if (A[pa].fs < B[pb].fs) return false;
+        else if (A[pa].fs > B[pb].fs) pb++;
+        else { if (A[pa].sc > B[pb].sc) return false; pa++; pb++; }
     } return true;
 }
 
+DN join_numbers (const DN &A, const DN &B)
+{
+    DN C;
+    int pa = 0, pb = 0;
+    while (pa != (int)A.size() || pb != (int)B.size()) {
+        if (pa == (int)A.size()) C.push_back(B[pb++]);
+        else if (pb == (int)B.size()) C.push_back(A[pa++]);
+        else if (A[pa].fs < B[pb].fs) C.push_back(A[pa++]);
+        else if (A[pa].fs > B[pb].fs) C.push_back(B[pb++]);
+        else { C.push_back(mp(A[pa].fs,A[pa].sc+B[pb].sc)); pa++; pb++; }
+    } return C;
+}
+
+bool no_common_digit (const DN &A, const DN &B)
+{
+    int pa = 0, pb = 0;
+    while (pa != (int)A.size() && pb != (int)B.size()) {
+        if (A[pa].fs < B[pb].fs) pa++;
+        else if (A[pa].fs > B[pb].fs) pb++;
+        else return false;
+    } return true;
+}
+
+vector<string> get_reducables (int base) // TODO: think about naive way of obtaining small PRs
+{
+    N = base;
+    const int L = MAX_LENGTH[N];
+    // 462, 15246 max - but check it then
+    // TODO: maybe, only last digit should be stored
+    map<psii,pair<DN,sint>> M; // key: <s1,s2>, value: < min_number, last(max) digit >
+    vector<DN> v;
+    for (int i=1; i<N; i++) { // 1-len fill
+        v.push_back(DN(1,mp(i,1)));
+        M[mp(i,i*i)] = mp(v[i-1],i);
+    }
+    
+    vector<pair<DN,sint>> R; // sint - count how many times it can be increased in family
+    for (int len=2; len<=L; len++) { // fix length
+        vector<DN> w;
+        map<psii,sint> uLD; // updated last digits
+        for (int i=0; i<(int)v.size(); i++) { // fix current number with (length-1) digits
+            psii s = get_sums(v[i]);
+            for (int k=v[i].back().fs; k<N; k++) { // fix current digit to append
+                sint s1 = s.fs + k, s2 = s.sc + k*k;
+                append_digit(v[i],k);
+                if (M.find(mp(s1,s2)) == M.end()) { // brand new pair (s1,s2)
+                    M[mp(s1,s2)] = mp(v[i],k);
+                    w.push_back(v[i]);
+                }
+                else {
+                    pair<DN,sint> p = M[mp(s1,s2)];
+                    if (!no_common_digit(p.fs,v[i])) { pop_digit(v[i]); continue; }
+                    p.fs = join_numbers(p.fs,v[i]);
+                    M[mp(s1,s2)] = p;
+                    
+                    bool dominated = false;
+                    for (int j=0; j<(int)R.size(); j++) {
+                        if (nested(R[j].fs,v[i])) { dominated = true; break; }
+                    }
+                    if (!dominated) {
+                        R.push_back(mp(v[i],N-1-p.fs.back().fs)); // added to answer
+                    }
+                    
+                    sint last_digit = p.fs.back().fs;
+                    if (last_digit < p.sc) {
+                        sint d = uLD[mp(s1,s2)];
+                        // this means we have number with len digits and given last_digit
+                        if (d == 0 || d > last_digit) uLD[mp(s1,s2)] = last_digit;
+                    }
+                }
+                pop_digit(v[i]);
+            }
+        }
+        for (map<psii,sint>::iterator it=uLD.begin(); it!=uLD.end(); it++) {
+            M[it->fs].sc = it->sc;
+        }
+        w.swap(v);
+    }
+    
+    set<string> S;
+    for (int i=0; i<(int)R.size(); i++) {
+        S.insert(stringValue(R[i].fs));
+        for (int j=0; j<R[i].sc; j++) {
+            shift(R[i].fs);
+            S.insert(stringValue(R[i].fs));
+        }
+    }
+    
+    return vector<string>(S.begin(),S.end());
+}
+
+vvsint LD;
+
+DN get_DN (sint s1, sint s2, sint k)
+{
+    DN R;
+    do {
+        s1 -= k;
+        s2 -= k*k;
+        if (R.empty() || R.back().fs != k) R.push_back(mp(k,1));
+        else R.back().sc++;
+        k = LD[s1][s2];
+    } while (s1);
+    reverse(R.begin(),R.end());
+    return R;
+}
+
+vector<string> get_reducables3 (int base) // slightly wrong
+{
+    N = base;
+    const int L = 10;
+    sint S1 = (N-1)*L, S2 = S1*(N-1);
+    LD = vvsint(S1+1);
+    for (int i=0; i<=S1; i++) LD[i] = vector<sint>(S2+1);
+    map<psii,sint> M; // current last digits
+    
+    vector<pair<psii,sint>> v; // < <s1,s2>, last_digit >
+    for (int i=1; i<N; i++) { // 1-len fill
+        LD[i][i*i] = i;
+        v.push_back(mp(mp(i,i*i),i));
+    }
+    
+    vector<pair<DN,sint>> R;
+    
+    for (int len=2; len<=L; len++) { // fix length
+        M.clear();
+        vector<pair<psii,sint>> w;
+        for (int i=0; i<(int)v.size(); i++) { // fix current number with (length-1) digits
+            for (sint k=v[i].sc; k<N; k++) {
+                sint s1 = v[i].fs.fs + k, s2 = v[i].fs.sc + k*k;
+                if (LD[s1][s2] == 0) {
+                    LD[s1][s2] = k;
+                    w.push_back(mp(mp(s1,s2),k));
+                }
+                else {
+                    if (k < LD[s1][s2]) { // update last digit if necessary
+                        int d = M[mp(s1,s2)];
+                        if (d == 0 || k < d) M[mp(s1,s2)] = k;
+                    }
+                    
+                    DN r = get_DN(s1,s2,k);
+                    bool dominated = false;
+                    for (int j=0; j<(int)R.size(); j++) {
+                        if (nested(R[j].fs,r)) { dominated = true; break; }
+                    }
+                    if (!dominated) {
+                        R.push_back(mp(r,N-1-max(LD[s1][s2],k))); // added to answer
+                    }
+                }
+            }
+        }
+        w.swap(v);
+        for (map<psii,sint>::iterator it=M.begin(); it!=M.end(); it++) {
+            if (it->sc < LD[it->fs.fs][it->fs.sc]) LD[it->fs.fs][it->fs.sc] = it->sc;
+        }
+    }
+    
+    vector<string> S;
+    for (int i=0; i<(int)R.size(); i++) {
+        S.push_back(stringValue(R[i].fs));
+        for (int j=0; j<R[i].sc; j++) {
+            shift(R[i].fs);
+            S.push_back(stringValue(R[i].fs));
+        }
+    }
+    
+    return S;
+}
 
 int main() {
     clock_t Total_Time = clock();
@@ -278,24 +265,16 @@ int main() {
     
     ull ans = 0;
     
-//    for (ull n=1; n<powmod(8,6); n++) {
-//        vector<int> d = NumberUtils::digits(n,8,6);
-//        bool sorted = true;
-//        for (int i=1; i<6; i++) if (d[i] < d[i-1]) { sorted = false; break; }
-//        if (!sorted) continue;
-//        if (total_vector_sum(d) == 31) {
-//            int s2 = 0;
-//            for (int i=0; i<6; i++) s2 += d[i]*d[i];
-//            if (s2 == 181) show(d);
-//        }
-//    }
-    
-    N = 8;
+    N = 27;
     vector<string> S = get_reducables(N);
+    //for (int i=0; i<(int)S.size(); i++) cout << S[i] << endl;
     Total_Time = clock() - Total_Time;
-    cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+    cout << "Obtaining reducables time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
     Total_Time = clock();
     vector<string> s1 = Reducables::calculate_patterns(N,S);
+    Total_Time = clock() - Total_Time;
+    cout << "Generate patterns time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+    Total_Time = clock();
     
     vector<string> s2 = RealTest::real_solution(N);
     cout << "Expected Count: " << s2.size() << endl;

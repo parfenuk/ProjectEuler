@@ -118,15 +118,6 @@ vector<string> get_final_patterns (int n, vector<int> ids, bool first=true, bool
     }
     vector<int> cnt_indeces;
     for (int i=0; i<15; i++) if (!used_cnt_indeces[i].empty()) cnt_indeces.push_back(i);
-    
-    vector<string> res;
-//    if (n == N-1) {
-//        string S;
-//        for (int i=0; i<cnt_indeces[0]; i++) {
-//            res.push_back(S);
-//            S += tc(n);
-//        } return res; // { "", "n", "nn", ... }
-//    }
 
     vector<pii> ranges;
     if (cnt_indeces.size() == 1) {
@@ -145,6 +136,7 @@ vector<string> get_final_patterns (int n, vector<int> ids, bool first=true, bool
         return merge_strings_array(prefixes, suffixes);
     }
     
+    vector<string> res;
     vector<int> new_ids;
     vector<string> star_suffixes = get_final_patterns(n+1,ids,0,1), suffixes;
     bool star = (star_suffixes.size()==1 && star_suffixes[0][1]=='*');
@@ -157,7 +149,6 @@ vector<string> get_final_patterns (int n, vector<int> ids, bool first=true, bool
         if (i+1 == (int)ranges.size()) w = merge_strings_array(prefixes, star_suffixes);
         else {
             // HOW THIS SHIT WORKS! prefixes are sorted randomly!!! :D
-            //suffixes = minus_set_strings(get_final_patterns(n+1,new_ids),star_suffixes);
             suffixes = get_final_patterns(n+1,new_ids);
             sort(suffixes.begin(), suffixes.end());
             suffixes = minus_set_strings(suffixes,star_suffixes);
@@ -185,16 +176,14 @@ vector<string> calculate_patterns (int base, const vector<string> &r)
     R.clear();
     for (int i=0; i<(int)r.size(); i++) R.push_back(FN(r[i]));
     sort(R.begin(), R.end());
-    for (int i=0; i<(int)R.size(); i++) {
-        for (int j=1; j<N; j++) cout << R[i][j] << " "; cout << endl;
-    }
+
     cout << "Reducables count: " << R.size() << endl;
     
     vint ids; for (int i=0; i<(int)R.size(); i++) ids.push_back(i);
     vector<string> ans = get_final_patterns(1,ids);
     reverse(ans.begin(), ans.end());
-    ofstream out("output.txt");
-    for (int i=0; i<(int)ans.size(); i++) out << ans[i] << endl;
+//    ofstream out("output.txt");
+//    for (int i=0; i<(int)ans.size(); i++) out << ans[i] << endl;
     cout << "Patterns Count: " << ans.size() << endl;
     
     return ans;
