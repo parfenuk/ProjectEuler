@@ -15,6 +15,8 @@
 #include "Pell_Equation.cpp"
 #include "StringUtils.cpp"
 #include "Utils.cpp"
+#include "RealTest.hpp"
+#include "Reducables.hpp"
 
 using namespace Algebra;
 using namespace Containers;
@@ -23,8 +25,12 @@ using namespace Containers;
 #define pnn pair<num,num>
 
 const vll POWER = Combinatorics::generate_powers(2ll,36);
+const vsint MAX_LENGTH = { 0,0,0,0,4,4,6,7,7,7,8,9,8,9,9,11,10,11,10,10,12,11,13,13,13,13,13,13,14,14,14,14,14,14,14,15,15};
+const vsint MAX_FIRST_DIGIT = { 0,0,0,0,1,1,1,2,2,2,2,2,3,4,4,4,4,4,4,4,4,5,5,6,6,8,8,8,8,8,8,8,8,9,9,9,9 };
 
 int N;
+
+// *** FIRST PART - PRIMITIVE REDUCABLES OBTAINING ***
 
 string sForm (const num &a)
 {
@@ -119,29 +125,14 @@ num get_subtractive (int s1, int s2, sint last_digit)
     return A;
 }
 
-int main() {
-    clock_t Total_Time = clock();
-    cout.precision(12);
-    cout.setf(ios::fixed);
-    ios_base::sync_with_stdio(false);
-#ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
-    //freopen("output.txt","wt",stdout);
-#endif
-    
-    ull ans = 0;
-    
-    int cnt = 0;
-    vvsint a = Combinatorics::sum_partitions(13);
-    for (int i=0; i<a.size(); i++) if (a[i].size() <= 6) cnt++;
-    cout << cnt;
-        
-    N = 36;
-    const sint MAX_L = 15;
+vector<string> get_reducables (int base)
+{
+    N = base;
+    const sint MAX_L = MAX_LENGTH[N];
     int S1 = (N-1)*MAX_L;
     int S2 = S1*(N-1);
     
-    S1 = 462; S2 = 15246;
+    //S1 = 462; S2 = 15246;
     
     vector<pnn> primitive_reducables;
     vector<pnn> reducables;
@@ -152,7 +143,10 @@ int main() {
     queue<pair<pii,DPState>> Q;
     Q.push(mp(mp(0,0),DPState()));
     
-    int iterations = 1;
+    int push_iterations = 1;
+    int mask_update_iterations = 0;
+    int nested_check_iterations = 0;
+    int total_iterations = 1;
     while (!Q.empty()) {
         pair<pii,DPState> p = Q.front(); // < <s1,s2>, <<len,last_digit>,mask> >
         Q.pop();
@@ -167,8 +161,9 @@ int main() {
             if (s1 > S1 || s2 > S2) break;
             ll old_mask = dp[s1][s2].mask;
             ll new_mask = D.mask | POWER[k];
-            iterations++;
+            total_iterations++;
             if (dp[s1][s2].len == 0) {
+                push_iterations++;
                 dp[s1][s2] = DPState(D.len+1,k,new_mask); // just add
                 Q.push(mp(mp(s1,s2),dp[s1][s2]));
                 //cout << "Added " << s1 << " " << s2 << " "; dp[s1][s2].show();
@@ -177,6 +172,7 @@ int main() {
                 if (dp[s1][s2].len == D.len+1 || // equal lengths
                     (old_mask | new_mask) != old_mask + new_mask) { // same digit is used
                     dp[s1][s2].mask |= new_mask;
+                    mask_update_iterations++;
                     //cout << "Set new mask length " << s1 << " " << s2 << " " << dp[s1][s2].mask << endl;
                 }
                 else {
@@ -184,6 +180,7 @@ int main() {
                     num b = get_subtractive(s1,s2,dp[s1][s2].last_digit);
                     bool ok = true;
                     for (int i=0; i<(int)reducables.size(); i++) {
+                        nested_check_iterations++;
                         if (nested(reducables[i].fs,a)) { ok = false; break; }
                     } if (!ok) continue;
                     primitive_reducables.push_back(mp(a,b));
@@ -194,27 +191,135 @@ int main() {
         }
     }
     
+    cout << "Primitive reducables count: " << primitive_reducables.size() << endl;
+    
     char c = '0';
     S1 = S2 = 0;
     sint dr = 0, ds = 0;
-    for (int i=0; i<(int)primitive_reducables.size(); i++) {
-        string S = sForm(primitive_reducables[i].fs);
-        if (S.length() > ans) ans = S.length();
-        if (S[0] > c) c = S[0];
-        cout << sForm(primitive_reducables[i].fs) << " -> " << sForm(primitive_reducables[i].sc) << endl;
-        pii p = get_sums(primitive_reducables[i].fs);
-        if (p.fs > S1) S1 = p.fs;
-        if (p.sc > S2) S2 = p.sc;
-        int d1 = get_different_digits(primitive_reducables[i].fs);
-        int d2 = get_different_digits(primitive_reducables[i].sc);
-        if (d1 > dr) dr = d1;
-        if (d2 > ds) ds = d2;
+    int len = 0;
+    vector<int> cnt_length(MAX_L+1);
+    vector<string> res;
+//    ofstream out("output.txt");
+//    for (int i=0; i<(int)primitive_reducables.size(); i++) {
+//        string S = sForm(primitive_reducables[i].fs);
+//        string T = sForm(primitive_reducables[i].sc);
+//        //out << S << " -> " << T << endl;
+//        //out << S << endl;
+//        //res.push_back(S);
+//
+//        // auxiliary calculations
+//        cnt_length[S.length()]++;
+//        if (S.length() > len) len = (int)S.length();
+//        if (S.length() <= 7 && S[0] > c) c = S[0];
+//        pii p = get_sums(primitive_reducables[i].fs);
+//        if (p.fs > S1) S1 = p.fs;
+//        if (p.sc > S2) S2 = p.sc;
+//        int d1 = get_different_digits(primitive_reducables[i].fs);
+//        int d2 = get_different_digits(primitive_reducables[i].sc);
+//        if (d1 > dr) dr = d1;
+//        if (d2 > ds) ds = d2;
+//    }
+//    cout << "\nTotal iterations: " << total_iterations << endl;
+//    cout << "Push iterations: " << push_iterations << endl;
+//    cout << "Mask iterations: " << mask_update_iterations << endl;
+//    cout << "Nested iterations: " << nested_check_iterations << endl;
+//    cout << "Count: " << primitive_reducables.size() << " " << reducables.size() << endl;
+//    cout << "Max S1 = " << S1 << ", S2 = " << S2 << endl;
+//    cout << "Max Digits R: " << dr << ", S: " << ds << endl;
+//    cout << "Max symbol: " << c << endl;
+    //cout << "Lengths: "; show(cnt_length);
+    //cout << "Max Length: " << len;
+    
+    for (int i=0; i<(int)primitive_reducables.size(); i++) cout << sForm(primitive_reducables[i].fs) << " -> " << sForm(primitive_reducables[i].sc) << endl;
+    //for (int i=0; i<(int)reducables.size(); i++) cout << sForm(reducables[i].fs) << " -> " << sForm(reducables[i].sc) << endl;
+    for (int i=0; i<(int)reducables.size(); i++) res.push_back(sForm(reducables[i].fs));
+    
+    return res;
+}
+
+string get_num (const vsint &a)
+{
+    string S;
+    for (int i=0; i<(int)a.size(); i++) {
+        if (a[i] == 0) continue;
+        if (a[i] < 10) S += ('0'+a[i]);
+        else S += ('A'+a[i]-10);
+    } return S;
+}
+
+inline void inc (sint &s1, sint &s2, const sint a) { s1 += a; s2 += a*a; }
+inline void dec (sint &s1, sint &s2, const sint a) { s1 -= a; s2 -= a*a; }
+
+// *** SECOND PART - PATTERNS OBTAINING ***
+
+sint fc (char c) { if ('0' <= c && c <= '9') return c-'0'; return c-'A'+10; } // 'A' -> 10
+char tc (sint n) { if (n < 10) return '0'+n; return 'A'+n-10; }               // 12 -> 'C'
+string ts (sint cnt, sint n) { string s; for (int i=0; i<cnt; i++) s += tc(n); return s; }
+
+bool next_string (string &S)
+{
+    if (S.back() == tc(N-1)) return false;
+    for (int i=0; i<(int)S.length(); i++) {
+        if (S[i] != '9') S[i]++;
+        else S[i] = 'A';
+    } return true;
+}
+
+
+int main() {
+    clock_t Total_Time = clock();
+    cout.precision(12);
+    cout.setf(ios::fixed);
+    ios_base::sync_with_stdio(false);
+#ifndef ONLINE_JUDGE
+    //freopen("input.txt","rt",stdin);
+    //freopen("output.txt","wt",stdout);
+#endif
+    
+    ull ans = 0;
+    
+//    for (ull n=1; n<powmod(8,6); n++) {
+//        vector<int> d = NumberUtils::digits(n,8,6);
+//        bool sorted = true;
+//        for (int i=1; i<6; i++) if (d[i] < d[i-1]) { sorted = false; break; }
+//        if (!sorted) continue;
+//        if (total_vector_sum(d) == 31) {
+//            int s2 = 0;
+//            for (int i=0; i<6; i++) s2 += d[i]*d[i];
+//            if (s2 == 181) show(d);
+//        }
+//    }
+    
+    N = 8;
+    vector<string> S = get_reducables(N);
+    Total_Time = clock() - Total_Time;
+    cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+    Total_Time = clock();
+    vector<string> s1 = Reducables::calculate_patterns(N,S);
+    
+    vector<string> s2 = RealTest::real_solution(N);
+    cout << "Expected Count: " << s2.size() << endl;
+    sort(s1.begin(), s1.end());
+    int p1 = 0, p2 = 0;
+    while (p1 != (int)s1.size() || p2 != (int)s2.size()) {
+        if (p1 == (int)s1.size()) {
+            cout << "Your array doesn't contain " << s2[p2] << endl;
+            p2++;
+        }
+        else if (p2 == (int)s2.size()) {
+            cout << "Real array doesn't contain " << s1[p1] << endl;
+            p1++;
+        }
+        else if (s1[p1] < s2[p2]) {
+            cout << "Real array doesn't contain " << s1[p1] << endl;
+            p1++;
+        }
+        else if (s1[p1] > s2[p2]) {
+            cout << "Your array doesn't contain " << s2[p2] << endl;
+            p2++;
+        }
+        else { p1++; p2++; }
     }
-    cout << "\nTotal iterations: " << iterations << endl;
-    cout << "Count: " << primitive_reducables.size() << endl;
-    cout << "Max S1 = " << S1 << ", S2 = " << S2 << endl;
-    cout << "Max Digits R: " << dr << ", S: " << ds << endl;
-    cout << "Max symbol: " << c;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;

@@ -11,6 +11,9 @@
 		D1DF344325F0F551009DF141 /* Algebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1DF344125F0F551009DF141 /* Algebra.cpp */; };
 		D1DF344925F0F933009DF141 /* NumberUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1DF344725F0F933009DF141 /* NumberUtils.cpp */; };
 		D1DF345C25F13888009DF141 /* Lnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1DF345625F137F0009DF141 /* Lnum.cpp */; };
+		D1FD7DB627E749560069E029 /* Reducables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD7DB427E749560069E029 /* Reducables.cpp */; };
+		D1FD7DB927E74B980069E029 /* Brus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD7DB727E74B980069E029 /* Brus.cpp */; };
+		D1FD7DBC27E754BA0069E029 /* RealTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1FD7DBA27E754BA0069E029 /* RealTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,6 +50,12 @@
 		D1DF345F25F282B6009DF141 /* Definitions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Definitions.hpp; sourceTree = "<group>"; };
 		D1E55E851F24C7B600ADF93D /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry.cpp; sourceTree = "<group>"; };
 		D1F909651F51C2EC00A70540 /* Complex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Complex.cpp; sourceTree = "<group>"; };
+		D1FD7DB427E749560069E029 /* Reducables.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reducables.cpp; sourceTree = "<group>"; };
+		D1FD7DB527E749560069E029 /* Reducables.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Reducables.hpp; sourceTree = "<group>"; };
+		D1FD7DB727E74B980069E029 /* Brus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Brus.cpp; sourceTree = "<group>"; };
+		D1FD7DB827E74B980069E029 /* Brus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Brus.hpp; sourceTree = "<group>"; };
+		D1FD7DBA27E754BA0069E029 /* RealTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RealTest.cpp; sourceTree = "<group>"; };
+		D1FD7DBB27E754BA0069E029 /* RealTest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RealTest.hpp; sourceTree = "<group>"; };
 		FA120B0F20625D5200010E1F /* Geometry3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry3D.cpp; sourceTree = "<group>"; };
 		FA5901EE1FD9DF56003B1AF3 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +91,12 @@
 			isa = PBXGroup;
 			children = (
 				D15BA4C91F0D983F00B64B78 /* main.cpp */,
+				D1FD7DB527E749560069E029 /* Reducables.hpp */,
+				D1FD7DB427E749560069E029 /* Reducables.cpp */,
+				D1FD7DB827E74B980069E029 /* Brus.hpp */,
+				D1FD7DB727E74B980069E029 /* Brus.cpp */,
+				D1FD7DBB27E754BA0069E029 /* RealTest.hpp */,
+				D1FD7DBA27E754BA0069E029 /* RealTest.cpp */,
 				D1DF344225F0F551009DF141 /* Algebra.hpp */,
 				D1DF344125F0F551009DF141 /* Algebra.cpp */,
 				D1CDA73725F0193C00BE085D /* Combinatorics.cpp */,
@@ -168,6 +183,9 @@
 				D1DF344325F0F551009DF141 /* Algebra.cpp in Sources */,
 				D1DF345C25F13888009DF141 /* Lnum.cpp in Sources */,
 				D1DF344925F0F933009DF141 /* NumberUtils.cpp in Sources */,
+				D1FD7DBC27E754BA0069E029 /* RealTest.cpp in Sources */,
+				D1FD7DB927E74B980069E029 /* Brus.cpp in Sources */,
+				D1FD7DB627E749560069E029 /* Reducables.cpp in Sources */,
 				D15BA4CA1F0D983F00B64B78 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
