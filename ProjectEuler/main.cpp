@@ -163,16 +163,27 @@ vector<string> get_reducables (int base) // TODO: think about naive way of obtai
         w.swap(v);
     }
     
-    set<string> S;
+    cout << "Primitive reducables count: " << R.size() << endl;
+    vector<string> S;
     for (int i=0; i<(int)R.size(); i++) {
-        S.insert(stringValue(R[i].fs));
-        for (int j=0; j<R[i].sc; j++) {
-            shift(R[i].fs);
-            S.insert(stringValue(R[i].fs));
-        }
+        S.push_back(stringValue(R[i].fs));
+//        for (int j=0; j<R[i].sc; j++) {
+//            shift(R[i].fs);
+//            S.insert(stringValue(R[i].fs));
+//        }
     }
+    cout << "Before nested check: " << S.size() << endl;
+//    for (set<string>::iterator it=S.begin(); it!=S.end(); ) {
+//        bool erased = false;
+//        for (set<string>::iterator jt=S.begin(); jt!=S.end(); jt++) {
+//            if (it == jt) continue;
+//            if (StringUtils::nested(*it,*jt)) { it = S.erase(it); erased = true; break; }
+//        }
+//        if (!erased) it++;
+//    }
+//    cout << "After nested check: " << S.size() << endl;
     
-    return vector<string>(S.begin(),S.end());
+    return S;//vector<string>(S.begin(),S.end());
 }
 
 vvsint LD;
@@ -265,7 +276,7 @@ int main() {
     
     ull ans = 0;
     
-    N = 27;
+    N = 36;
     vector<string> S = get_reducables(N);
     //for (int i=0; i<(int)S.size(); i++) cout << S[i] << endl;
     Total_Time = clock() - Total_Time;

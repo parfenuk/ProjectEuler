@@ -13,10 +13,21 @@ namespace Reducables
 
 int N;
 const sint INF = 2022;
+vector<string> Prefs[36];
 
 sint fc (char c) { if ('0' <= c && c <= '9') return c-'0'; return c-'A'+10; } // 'A' -> 10
 char tc (sint n) { if (n < 10) return '0'+n; return 'A'+n-10; }               // 12 -> 'C'
 string ts (sint cnt, sint n) { string s; for (int i=0; i<cnt; i++) s += tc(n); return s; }
+
+void fill_prefs()
+{
+    for (int i=1; i<N; i++) {
+        Prefs[i].clear();
+        Prefs[i].push_back("");
+        for (int j=1; j<=15; j++) Prefs[i].push_back(Prefs[i].back()+tc(i));
+        Prefs[i].push_back(Prefs[i][0]+tc(i)+'*');
+    }
+}
 
 bool next_string (string &S)
 {
@@ -50,24 +61,20 @@ bool operator< (const FN &a, const FN &b)
 
 vector<FN> R;
 
-vector<string> prefixes_with_range (const pii &r, int n)
-{
-    vector<string> p;
-    string ns; ns += tc(n);
-    if (r.sc == INF) p.push_back(ns+'*');
-    else {
-        string S; for (int j=0; j<r.fs; j++) S += ns;
-        p.push_back(S);
-        for (int j=r.fs+1; j<=r.sc; j++) { S += ns; p.push_back(S); }
-    }
-    return p;
-}
-
 vector<string> merge_strings_array (const vector<string> &p, const vector<string> &s)
 {
     vector<string> w;
-    for (int i=0; i<(int)p.size(); i++)  for (int j=0; j<(int)s.size(); j++) {
+    for (int i=0; i<(int)p.size(); i++) for (int j=0; j<(int)s.size(); j++) {
         w.push_back(p[i] + s[j]);
+    } return w;
+}
+
+vector<string> merge_strings_array (pii r, int n, const vector<string> &s)
+{
+    vector<string> w;
+    if (r.sc == INF) r = mp(16,16);
+    for (int i=r.fs; i<=r.sc; i++) for (int j=0; j<(int)s.size(); j++) {
+        w.push_back(Prefs[n][i] + s[j]);
     } return w;
 }
 
@@ -103,12 +110,12 @@ vector<string> get_final_patterns (int n, vector<int> ids, bool first=true, bool
         sint max_digits_count = INF;
         for (int i=0; i<(int)ids.size(); i++) {
             if (R[ids[i]].last_non_zero < n) return {};
-            if (R[ids[i]].last_non_zero <= n &&
+            if (R[ids[i]].last_non_zero == n &&
                 R[ids[i]][n] < max_digits_count) max_digits_count = R[ids[i]][n];
         }
         string ret;
         if (max_digits_count == INF) { ret += tc(n); ret += '*'; return { ret }; }
-        else return prefixes_with_range(mp(0,max_digits_count-1),n);
+        else return vector<string>(Prefs[n].begin(),Prefs[n].begin()+max_digits_count);
     }
     
     vector<vector<int>> used_cnt_indeces(15); // auxiliary
@@ -131,28 +138,27 @@ vector<string> get_final_patterns (int n, vector<int> ids, bool first=true, bool
     }
     
     if (ranges.size() == 1) { // partial case
-        vector<string> prefixes = prefixes_with_range(ranges[0],n);
         vector<string> suffixes = get_final_patterns(n+1,ids);
-        return merge_strings_array(prefixes, suffixes);
+        return merge_strings_array(ranges[0],n,suffixes);
     }
     
     vector<string> res;
     vector<int> new_ids;
     vector<string> star_suffixes = get_final_patterns(n+1,ids,0,1), suffixes;
-    bool star = (star_suffixes.size()==1 && star_suffixes[0][1]=='*');
-    sint max_len = (sint)star_suffixes.size()-1;
+    //bool star = (star_suffixes.size()==1 && star_suffixes[0][1]=='*');
+    //sint max_len = (sint)star_suffixes.size()-1;
     for (int i=0; i<(int)ranges.size(); i++) {
         for (int j=ranges[i].fs; j<=min(ranges[i].sc,14); j++) {
             new_ids.insert(new_ids.end(),used_cnt_indeces[j].begin(),used_cnt_indeces[j].end());
         }
-        vector<string> prefixes = prefixes_with_range(ranges[i],n), w;
-        if (i+1 == (int)ranges.size()) w = merge_strings_array(prefixes, star_suffixes);
+        vector<string> w;
+        if (i+1 == (int)ranges.size()) w = merge_strings_array(ranges[i],n,star_suffixes);
         else {
             // HOW THIS SHIT WORKS! prefixes are sorted randomly!!! :D
             suffixes = get_final_patterns(n+1,new_ids);
             sort(suffixes.begin(), suffixes.end());
             suffixes = minus_set_strings(suffixes,star_suffixes);
-            w = merge_strings_array(prefixes, suffixes);
+            w = merge_strings_array(ranges[i],n,suffixes);
             // WHY THIS SHIT DOESN'T WORK?!
 //            suffixes = get_final_patterns(n+1,new_ids);
 //            vector<string> real_suffixes;
@@ -169,9 +175,15 @@ vector<string> get_final_patterns (int n, vector<int> ids, bool first=true, bool
     return res;
 }
 
+// OPTIMIZATION 1: dfs from 1 to N-1 manually
+// OPTIMIZATION 2: restructured FN, only 6 different digits max
+// OPTIMIZATION 3: take into account *, i.e. no many digits after it
+// OPTIMIZATION 4: look attentively at FNs with only 2 different digits
+// OPTIMIZATION 5: only patterns with * can be ambiguos
 vector<string> calculate_patterns (int base, const vector<string> &r)
 {
     N = base;
+    fill_prefs();
 
     R.clear();
     for (int i=0; i<(int)r.size(); i++) R.push_back(FN(r[i]));

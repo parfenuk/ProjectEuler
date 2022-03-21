@@ -71,4 +71,16 @@ bool same_letters (string s, string u)
     return true;
 }
 
+bool nested (const string &s, const string &u) // s,u - sorted. True if u is in s
+{
+    size_t ps = 0, pu = 0;
+    while (ps != s.length() || pu != u.length()) {
+        if (pu == u.length()) return true;
+        if (ps == s.length()) return false;
+        if (s[ps] < u[pu]) ps++;
+        else if (s[ps] > u[pu]) return false;
+        else { ps++; pu++; }
+    } return true;
+}
+
 }
