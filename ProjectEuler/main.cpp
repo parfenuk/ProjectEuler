@@ -32,7 +32,7 @@ int N;
 
 // *** FIRST PART - PRIMITIVE REDUCABLES OBTAINING ***
 
-#define DN vector<psii> // < digit, count >
+#define DN vector<pcc> // < digit, count >
 sint fc (char c) { if ('0' <= c && c <= '9') return c-'0'; return c-'A'+10; } // 'A' -> 10
 char tc (sint n) { if (n < 10) return '0'+n; return 'A'+n-10; }               // 12 -> 'C'
 string ts (sint cnt, sint n) { string s; for (int i=0; i<cnt; i++) s += tc(n); return s; }
@@ -67,8 +67,8 @@ psii get_sums (const DN &A) // TODO: make static variables?
 {
     sint s1 = 0, s2 = 0;
     for (int i=0; i<(int)A.size(); i++) {
-        s1 += A[i].fs*A[i].sc;
-        s2 += A[i].fs*A[i].fs*A[i].sc;
+        s1 += A[i].fs*1ll*A[i].sc;
+        s2 += A[i].fs*1ll*A[i].fs*A[i].sc;
     } return mp(s1,s2);
 }
 
@@ -110,10 +110,10 @@ bool no_common_digit (const DN &A, const DN &B)
 vector<string> get_reducables (int base) // TODO: think about naive way of obtaining small PRs
 {
     N = base;
-    const int L = MAX_LENGTH[N];
-    // 462, 15246 max - but check it then
+    const sint L = MAX_LENGTH[N];
+    
     // TODO: maybe, only last digit should be stored
-    map<psii,pair<DN,sint>> M; // key: <s1,s2>, value: < min_number, last(max) digit >
+    map<psii,pair<DN,char>> M; // key: <s1,s2>, value: < min_number, last(max) digit >
     vector<DN> v;
     for (int i=1; i<N; i++) { // 1-len fill
         v.push_back(DN(1,mp(i,1)));
@@ -121,20 +121,20 @@ vector<string> get_reducables (int base) // TODO: think about naive way of obtai
     }
     
     vector<DN> R; // reducable numbers
-    for (int len=2; len<=L; len++) { // fix length
+    for (sint len=2; len<=L; len++) { // fix length
         vector<DN> w;
-        map<psii,sint> uLD; // updated last digits
+        map<psii,char> uLD; // updated last digits
         for (int i=0; i<(int)v.size(); i++) { // fix current number with (length-1) digits
             psii s = get_sums(v[i]);
-            for (int k=v[i].back().fs; k<N; k++) { // fix current digit to append
-                sint s1 = s.fs + k, s2 = s.sc + k*k;
+            for (char k=v[i].back().fs; k<N; k++) { // fix current digit to append
+                sint s1 = s.fs + k, s2 = s.sc + k*1ll*k;
                 append_digit(v[i],k);
                 if (M.find(mp(s1,s2)) == M.end()) { // brand new pair (s1,s2)
                     M[mp(s1,s2)] = mp(v[i],k);
                     w.push_back(v[i]);
                 }
                 else {
-                    pair<DN,sint> p = M[mp(s1,s2)];
+                    pair<DN,char> p = M[mp(s1,s2)];
                     if (!no_common_digit(p.fs,v[i])) { pop_digit(v[i]); continue; }
                     p.fs = join_numbers(p.fs,v[i]);
                     M[mp(s1,s2)] = p;
@@ -147,7 +147,7 @@ vector<string> get_reducables (int base) // TODO: think about naive way of obtai
                         R.push_back(v[i]); // added to answer
                     }
                     
-                    sint last_digit = p.fs.back().fs;
+                    char last_digit = p.fs.back().fs;
                     if (last_digit < p.sc) {
                         sint d = uLD[mp(s1,s2)];
                         // this means we have number with len digits and given last_digit
@@ -157,7 +157,7 @@ vector<string> get_reducables (int base) // TODO: think about naive way of obtai
                 pop_digit(v[i]);
             }
         }
-        for (map<psii,sint>::iterator it=uLD.begin(); it!=uLD.end(); it++) {
+        for (map<psii,char>::iterator it=uLD.begin(); it!=uLD.end(); it++) {
             M[it->fs].sc = it->sc;
         }
         w.swap(v);
@@ -167,84 +167,6 @@ vector<string> get_reducables (int base) // TODO: think about naive way of obtai
     vector<string> S;
     for (int i=0; i<(int)R.size(); i++) {
         S.push_back(stringValue(R[i]));
-    }
-    
-    return S;
-}
-
-vvsint LD;
-
-DN get_DN (sint s1, sint s2, sint k)
-{
-    DN R;
-    do {
-        s1 -= k;
-        s2 -= k*k;
-        if (R.empty() || R.back().fs != k) R.push_back(mp(k,1));
-        else R.back().sc++;
-        k = LD[s1][s2];
-    } while (s1);
-    reverse(R.begin(),R.end());
-    return R;
-}
-
-vector<string> get_reducables3 (int base) // slightly wrong
-{
-    N = base;
-    const int L = 10;
-    sint S1 = (N-1)*L, S2 = S1*(N-1);
-    LD = vvsint(S1+1);
-    for (int i=0; i<=S1; i++) LD[i] = vector<sint>(S2+1);
-    map<psii,sint> M; // current last digits
-    
-    vector<pair<psii,sint>> v; // < <s1,s2>, last_digit >
-    for (int i=1; i<N; i++) { // 1-len fill
-        LD[i][i*i] = i;
-        v.push_back(mp(mp(i,i*i),i));
-    }
-    
-    vector<pair<DN,sint>> R;
-    
-    for (int len=2; len<=L; len++) { // fix length
-        M.clear();
-        vector<pair<psii,sint>> w;
-        for (int i=0; i<(int)v.size(); i++) { // fix current number with (length-1) digits
-            for (sint k=v[i].sc; k<N; k++) {
-                sint s1 = v[i].fs.fs + k, s2 = v[i].fs.sc + k*k;
-                if (LD[s1][s2] == 0) {
-                    LD[s1][s2] = k;
-                    w.push_back(mp(mp(s1,s2),k));
-                }
-                else {
-                    if (k < LD[s1][s2]) { // update last digit if necessary
-                        int d = M[mp(s1,s2)];
-                        if (d == 0 || k < d) M[mp(s1,s2)] = k;
-                    }
-                    
-                    DN r = get_DN(s1,s2,k);
-                    bool dominated = false;
-                    for (int j=0; j<(int)R.size(); j++) {
-                        if (nested(R[j].fs,r)) { dominated = true; break; }
-                    }
-                    if (!dominated) {
-                        R.push_back(mp(r,N-1-max(LD[s1][s2],k))); // added to answer
-                    }
-                }
-            }
-        }
-        w.swap(v);
-        for (map<psii,sint>::iterator it=M.begin(); it!=M.end(); it++) {
-            if (it->sc < LD[it->fs.fs][it->fs.sc]) LD[it->fs.fs][it->fs.sc] = it->sc;
-        }
-    }
-    
-    vector<string> S;
-    for (int i=0; i<(int)R.size(); i++) {
-        S.push_back(stringValue(R[i].fs));
-        for (int j=0; j<R[i].sc; j++) {
-            shift(R[i].fs);
-            S.push_back(stringValue(R[i].fs));
-        }
     }
     
     return S;
