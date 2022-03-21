@@ -120,7 +120,7 @@ vector<string> get_reducables (int base) // TODO: think about naive way of obtai
         M[mp(i,i*i)] = mp(v[i-1],i);
     }
     
-    vector<pair<DN,sint>> R; // sint - count how many times it can be increased in family
+    vector<DN> R; // reducable numbers
     for (int len=2; len<=L; len++) { // fix length
         vector<DN> w;
         map<psii,sint> uLD; // updated last digits
@@ -141,10 +141,10 @@ vector<string> get_reducables (int base) // TODO: think about naive way of obtai
                     
                     bool dominated = false;
                     for (int j=0; j<(int)R.size(); j++) {
-                        if (nested(R[j].fs,v[i])) { dominated = true; break; }
+                        if (nested(R[j],v[i])) { dominated = true; break; }
                     }
                     if (!dominated) {
-                        R.push_back(mp(v[i],N-1-p.fs.back().fs)); // added to answer
+                        R.push_back(v[i]); // added to answer
                     }
                     
                     sint last_digit = p.fs.back().fs;
@@ -163,27 +163,13 @@ vector<string> get_reducables (int base) // TODO: think about naive way of obtai
         w.swap(v);
     }
     
-    cout << "Primitive reducables count: " << R.size() << endl;
+    cout << "Reducables count: " << R.size() << endl;
     vector<string> S;
     for (int i=0; i<(int)R.size(); i++) {
-        S.push_back(stringValue(R[i].fs));
-//        for (int j=0; j<R[i].sc; j++) {
-//            shift(R[i].fs);
-//            S.insert(stringValue(R[i].fs));
-//        }
+        S.push_back(stringValue(R[i]));
     }
-    cout << "Before nested check: " << S.size() << endl;
-//    for (set<string>::iterator it=S.begin(); it!=S.end(); ) {
-//        bool erased = false;
-//        for (set<string>::iterator jt=S.begin(); jt!=S.end(); jt++) {
-//            if (it == jt) continue;
-//            if (StringUtils::nested(*it,*jt)) { it = S.erase(it); erased = true; break; }
-//        }
-//        if (!erased) it++;
-//    }
-//    cout << "After nested check: " << S.size() << endl;
     
-    return S;//vector<string>(S.begin(),S.end());
+    return S;
 }
 
 vvsint LD;
@@ -264,6 +250,52 @@ vector<string> get_reducables3 (int base) // slightly wrong
     return S;
 }
 
+void take_microscope (const vector<string> &R)
+{
+    cout << "N = " << N << endl;
+    int primitive_cnt = 0;
+    sint max_length = 0;
+    sint max_S1 = 0, max_S2 = 0;
+    int max_different_digits = 1;
+    int max_first_digit = 1; // in primitives
+    set<string> S(R.begin(),R.end());
+    for (set<string>::const_iterator it=S.begin(); it!=S.end(); it++) {
+        string U = *it;
+        
+        // 2. count max_length
+        if (U.length() > max_length) max_length = (sint)U.length();
+        
+        // 3. count max_S1,S2
+        sint s1 = 0, s2 = 0;
+        for (int i=0; i<(int)U.length(); i++) { s1 += fc(U[i]); s2 += fc(U[i])*fc(U[i]); }
+        if (s1 > max_S1) max_S1 = s1;
+        if (s2 > max_S2) max_S2 = s2;
+        
+        // 4. count max_different_digits
+        int dif = 1;
+        for (int i=1; i<(int)U.length(); i++) {
+            if (U[i] != U[i-1]) dif++;
+        } if (dif > max_different_digits) max_different_digits = dif;
+        
+        // 1. count primitive_cnt
+        bool is_primitive = true;
+        while (U[0] != '1') { // reduce string
+            for (int i=0; i<(int)U.length(); i++) {
+                if (U[i] == 'A') U[i] = '9';
+                else U[i]--;
+            }
+            if (S.find(U) != S.end()) { is_primitive = false; break; }
+        }
+        if (is_primitive) {
+            primitive_cnt++;
+            // 5. count max_first_digit
+            sint f = fc((*it)[0]);
+            if (f > max_first_digit) max_first_digit = f;
+        }
+    }
+    cout << primitive_cnt << " " << max_length << " " << max_S1 << " " << max_S2 << " " << max_different_digits << " " << max_first_digit << endl;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -276,7 +308,12 @@ int main() {
     
     ull ans = 0;
     
-    N = 36;
+//    for (int b=4; b<=36; b++) {
+//        vector<string> S = get_reducables(b);
+//        take_microscope(S);
+//    }
+    
+    N = 30;
     vector<string> S = get_reducables(N);
     //for (int i=0; i<(int)S.size(); i++) cout << S[i] << endl;
     Total_Time = clock() - Total_Time;

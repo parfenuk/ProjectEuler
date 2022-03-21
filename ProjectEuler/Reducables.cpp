@@ -29,15 +29,6 @@ void fill_prefs()
     }
 }
 
-bool next_string (string &S)
-{
-    if (S.back() == tc(N-1)) return false;
-    for (int i=0; i<(int)S.length(); i++) {
-        if (S[i] != '9') S[i]++;
-        else S[i] = 'A';
-    } return true;
-}
-
 struct FN { // Forbidden number
     vsint A;
     sint last_non_zero;
@@ -61,14 +52,6 @@ bool operator< (const FN &a, const FN &b)
 
 vector<FN> R;
 
-vector<string> merge_strings_array (const vector<string> &p, const vector<string> &s)
-{
-    vector<string> w;
-    for (int i=0; i<(int)p.size(); i++) for (int j=0; j<(int)s.size(); j++) {
-        w.push_back(p[i] + s[j]);
-    } return w;
-}
-
 vector<string> merge_strings_array (pii r, int n, const vector<string> &s)
 {
     vector<string> w;
@@ -86,8 +69,6 @@ vector<string> minus_set_strings (const vector<string> &S, const vector<string> 
     while (ps != (int)S.size() || pv != (int)v.size()) {
         if (ps == (int)S.size()) break;
         if (pv == (int)v.size()) { res.push_back(S[ps++]); continue; }
-//        if (S[ps] > v[pv]) { res.push_back(S[ps++]); }
-//        else if (S[ps] < v[pv]) pv++;
         if (S[ps] > v[pv]) pv++;
         else if (S[ps] < v[pv]) { res.push_back(S[ps++]); }
         else { ps++; pv++; }
@@ -126,7 +107,7 @@ vector<string> get_final_patterns (int n, vector<int> ids, bool first=true, bool
     vector<int> cnt_indeces;
     for (int i=0; i<15; i++) if (!used_cnt_indeces[i].empty()) cnt_indeces.push_back(i);
 
-    vector<pii> ranges;
+    vector<psii> ranges;
     if (cnt_indeces.size() == 1) {
         if (cnt_indeces[0] == 0) ranges = { mp(0,INF) };
         else ranges = { mp(0,cnt_indeces[0]-1), mp(cnt_indeces[0],INF) };
@@ -144,30 +125,31 @@ vector<string> get_final_patterns (int n, vector<int> ids, bool first=true, bool
     
     vector<string> res;
     vector<int> new_ids;
-    vector<string> star_suffixes = get_final_patterns(n+1,ids,0,1), suffixes;
-    //bool star = (star_suffixes.size()==1 && star_suffixes[0][1]=='*');
-    //sint max_len = (sint)star_suffixes.size()-1;
+    vector<string> star_suffixes = get_final_patterns(n+1,ids,0,1);
+    bool star = (star_suffixes.size()==1 && star_suffixes[0][1]=='*');
+    bool empty = false;
     for (int i=0; i<(int)ranges.size(); i++) {
-        for (int j=ranges[i].fs; j<=min(ranges[i].sc,14); j++) {
-            new_ids.insert(new_ids.end(),used_cnt_indeces[j].begin(),used_cnt_indeces[j].end());
-        }
         vector<string> w;
         if (i+1 == (int)ranges.size()) w = merge_strings_array(ranges[i],n,star_suffixes);
         else {
-            // HOW THIS SHIT WORKS! prefixes are sorted randomly!!! :D
-            suffixes = get_final_patterns(n+1,new_ids);
-            sort(suffixes.begin(), suffixes.end());
-            suffixes = minus_set_strings(suffixes,star_suffixes);
-            w = merge_strings_array(ranges[i],n,suffixes);
-            // WHY THIS SHIT DOESN'T WORK?!
-//            suffixes = get_final_patterns(n+1,new_ids);
-//            vector<string> real_suffixes;
-//            for (int j=0; j<(int)suffixes.size(); j++) {
-//                if (star && suffixes[j] == star_suffixes[0]) continue;
-//                if (!star && (suffixes[j].empty() || (suffixes[j].back() == tc(n+1) && suffixes[j].length() <= max_len))) continue;
-//                real_suffixes.push_back(suffixes[j]);
-//            }
-//            w = merge_strings_array(prefixes, real_suffixes);
+            if (empty) { if (star_suffixes.empty()) break; i=(int)ranges.size()-1; continue; }
+            for (int j=ranges[i].fs; j<=ranges[i].sc && j<=14; j++) {
+                new_ids.insert(new_ids.end(),used_cnt_indeces[j].begin(),used_cnt_indeces[j].end());
+            }
+            vector<string> suffixes = get_final_patterns(n+1,new_ids);
+            if (suffixes.empty()) { empty = true; continue; }
+            if (star_suffixes.empty()) {
+                w = merge_strings_array(ranges[i],n,suffixes);
+            }
+            else { // erase strings that contained in star_suffixes
+                vector<string> real_suffixes;
+                for (int j=0; j<(int)suffixes.size(); j++) {
+                    if (star && suffixes[j] == star_suffixes[0]) continue;
+                    if (!star && ((suffixes[j].empty() || suffixes[j].back() == tc(n+1)) && suffixes[j].length() < star_suffixes.size())) continue;
+                    real_suffixes.push_back(suffixes[j]);
+                }
+                w = merge_strings_array(ranges[i],n,real_suffixes);
+            }
         }
         res.insert(res.end(),w.begin(),w.end());
     }
