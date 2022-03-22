@@ -218,56 +218,79 @@ void take_microscope (const vector<string> &R)
     cout << primitive_cnt << " " << max_length << " " << max_S1 << " " << max_S2 << " " << max_different_digits << " " << max_first_digit << endl;
 }
 
+bool test_correctness (const vector<string> &s1, const vector<string> &s2)
+{
+    bool correct = true;
+    if (s1.size() != s2.size()) correct = false;
+    int p1 = 0, p2 = 0;
+    while (p1 != (int)s1.size() || p2 != (int)s2.size()) {
+        if (p1 == (int)s1.size()) {
+            cout << "Your array doesn't contain " << s2[p2] << endl;
+            correct = false;
+            p2++;
+        }
+        else if (p2 == (int)s2.size()) {
+            cout << "Real array doesn't contain " << s1[p1] << endl;
+            correct = false;
+            p1++;
+        }
+        else if (s1[p1] < s2[p2]) {
+            cout << "Real array doesn't contain " << s1[p1] << endl;
+            correct = false;
+            p1++;
+        }
+        else if (s1[p1] > s2[p2]) {
+            cout << "Your array doesn't contain " << s2[p2] << endl;
+            correct = false;
+            p2++;
+        }
+        else { p1++; p2++; }
+    }
+    return correct;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
     cout.setf(ios::fixed);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
+    freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
+    
+    // obtaining hard-coded reducables
+    vector<vector<string>> R(37);
+    string T; int K = 0;
+    while (getline(cin,T)) {
+        if (T.length() < 3) K = atoi(T.c_str());
+        else R[K].push_back(T);
+    }
     
 //    for (int b=4; b<=36; b++) {
 //        vector<string> S = get_reducables(b);
 //        take_microscope(S);
 //    }
     
-    N = 30;
-    vector<string> S = get_reducables(N);
-    //for (int i=0; i<(int)S.size(); i++) cout << S[i] << endl;
-    Total_Time = clock() - Total_Time;
-    cout << "Obtaining reducables time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
-    Total_Time = clock();
-    vector<string> s1 = Reducables::calculate_patterns(N,S);
-    Total_Time = clock() - Total_Time;
-    cout << "Generate patterns time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
-    Total_Time = clock();
-    
-    vector<string> s2 = RealTest::real_solution(N);
-    cout << "Expected Count: " << s2.size() << endl;
-    sort(s1.begin(), s1.end());
-    int p1 = 0, p2 = 0;
-    while (p1 != (int)s1.size() || p2 != (int)s2.size()) {
-        if (p1 == (int)s1.size()) {
-            cout << "Your array doesn't contain " << s2[p2] << endl;
-            p2++;
-        }
-        else if (p2 == (int)s2.size()) {
-            cout << "Real array doesn't contain " << s1[p1] << endl;
-            p1++;
-        }
-        else if (s1[p1] < s2[p2]) {
-            cout << "Real array doesn't contain " << s1[p1] << endl;
-            p1++;
-        }
-        else if (s1[p1] > s2[p2]) {
-            cout << "Your array doesn't contain " << s2[p2] << endl;
-            p2++;
-        }
-        else { p1++; p2++; }
+    for (int base=4; base<=36; base++) {
+        cout << "N = " << base << endl;
+        vector<string> S = R[base];//get_reducables(base);
+        //for (int i=0; i<(int)S.size(); i++) cout << S[i] << endl;
+        // Total_Time = clock() - Total_Time;
+        // cout << "Obtaining reducables time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+        Total_Time = clock();
+        vector<string> s1 = Reducables::calculate_patterns(base,S);
+        Total_Time = clock() - Total_Time;
+        cout << "Generate patterns time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+        Total_Time = clock();
+        
+        vector<string> s2 = RealTest::real_solution(base);
+        cout << "Expected Count: " << s2.size() << endl;
+        sort(s1.begin(), s1.end());
+        bool ok = test_correctness(s1,s2);
+        if (!ok) break;
     }
     
     cout << endl << ans << endl;

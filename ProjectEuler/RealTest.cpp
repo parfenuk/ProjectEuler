@@ -293,11 +293,16 @@ void addArr(vector<string> &v, string *ps,int cnt)
 
 vector<string> real_solution (int N)
 {
+    vPrev.clear(); vCur.clear();
+    s1.clear(); s2.clear();
+    vCurCnt = 0;
+    itochar[0] = 0;
+    iicache[0] = 0;
+    v.clear(); pv.clear();
 
     vector<string> vSex36;
     for (int i=0;i<sex36len;i++)
         vSex36.push_back(sex36[i]);
-
 
     int k = N;
     int v1,v2;
