@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D12DD9D227EA7DBF00DE66D1 /* Archivator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D12DD9D027EA7DBF00DE66D1 /* Archivator.cpp */; };
 		D15BA4CA1F0D983F00B64B78 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D15BA4C91F0D983F00B64B78 /* main.cpp */; };
 		D1DF344325F0F551009DF141 /* Algebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1DF344125F0F551009DF141 /* Algebra.cpp */; };
 		D1DF344925F0F933009DF141 /* NumberUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1DF344725F0F933009DF141 /* NumberUtils.cpp */; };
@@ -29,6 +30,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D12DD9D027EA7DBF00DE66D1 /* Archivator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Archivator.cpp; sourceTree = "<group>"; };
+		D12DD9D127EA7DBF00DE66D1 /* Archivator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Archivator.hpp; sourceTree = "<group>"; };
+		D12DD9D327EB55A400DE66D1 /* patterns.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = patterns.txt; sourceTree = "<group>"; };
 		D137260820433F5F00EA0886 /* Pell_Equation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pell_Equation.cpp; sourceTree = "<group>"; };
 		D15BA4C61F0D983F00B64B78 /* ProjectEuler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ProjectEuler; sourceTree = BUILT_PRODUCTS_DIR; };
 		D15BA4C91F0D983F00B64B78 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -91,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				D15BA4C91F0D983F00B64B78 /* main.cpp */,
+				D12DD9D127EA7DBF00DE66D1 /* Archivator.hpp */,
+				D12DD9D027EA7DBF00DE66D1 /* Archivator.cpp */,
 				D1FD7DB527E749560069E029 /* Reducables.hpp */,
 				D1FD7DB427E749560069E029 /* Reducables.cpp */,
 				D1FD7DB827E74B980069E029 /* Brus.hpp */,
@@ -118,6 +124,7 @@
 				D1CDA73325F0161000BE085D /* Utils.cpp */,
 				D15BA4D01F0D988F00B64B78 /* input.txt */,
 				D15BA4D11F0D988F00B64B78 /* output.txt */,
+				D12DD9D327EB55A400DE66D1 /* patterns.txt */,
 			);
 			path = ProjectEuler;
 			sourceTree = "<group>";
@@ -182,6 +189,7 @@
 			files = (
 				D1DF344325F0F551009DF141 /* Algebra.cpp in Sources */,
 				D1DF345C25F13888009DF141 /* Lnum.cpp in Sources */,
+				D12DD9D227EA7DBF00DE66D1 /* Archivator.cpp in Sources */,
 				D1DF344925F0F933009DF141 /* NumberUtils.cpp in Sources */,
 				D1FD7DBC27E754BA0069E029 /* RealTest.cpp in Sources */,
 				D1FD7DB927E74B980069E029 /* Brus.cpp in Sources */,

@@ -14,6 +14,7 @@ namespace Reducables
 int N;
 const sint INF = 2022;
 vector<string> Prefs[36];
+vector<sint> inf(36);
 
 sint fc (char c) { if ('0' <= c && c <= '9') return c-'0'; return c-'A'+10; } // 'A' -> 10
 char tc (sint n) { if (n < 10) return '0'+n; return 'A'+n-10; }               // 12 -> 'C'
@@ -24,7 +25,7 @@ void fill_prefs()
     for (int i=1; i<N; i++) {
         Prefs[i].clear();
         Prefs[i].push_back("");
-        for (int j=1; j<=15; j++) Prefs[i].push_back(Prefs[i].back()+tc(i));
+        for (int j=1; j<inf[i]; j++) Prefs[i].push_back(Prefs[i].back()+tc(i));
         Prefs[i].push_back(Prefs[i][0]+tc(i)+'*');
     }
 }
@@ -55,7 +56,7 @@ vector<FN> R;
 vector<string> merge_strings_array (pii r, int n, const vector<string> &s)
 {
     vector<string> w;
-    if (r.sc == INF) r = mp(16,16);
+    if (r.sc == INF) r = mp(inf[n],inf[n]);
     for (int i=r.fs; i<=r.sc; i++) for (int j=0; j<(int)s.size(); j++) {
         w.push_back(Prefs[n][i] + s[j]);
     } return w;
@@ -86,7 +87,7 @@ vector<sint> max_digits_count(37,INF);
 
 void clearance (int n)
 {
-    for (int i=0; i<15; i++) used_cnt_indeces[n][i].clear();
+    for (int i=0; i<=inf[n]; i++) used_cnt_indeces[n][i].clear();
     cnt_indeces[n].clear();
     max_digits_count[n] = INF;
 }
@@ -124,19 +125,17 @@ vector<string> get_final_patterns (int n, bool empty_ids, bool last=false, bool 
         // fill n+1 info
         clearance(n+1);
         empty_ids = true;
-        for (int j=ranges[0].fs; j<=14; j++) {
-            //id_insertion += (int)used_cnt_indeces[n][j].size();
-            for (int i=0; i<(int)used_cnt_indeces[n][j].size(); i++) {
-                int id = used_cnt_indeces[n][j][i];
-                if (R[id].last_non_zero < n+1) { should_return_empty = true; break; }
-                used_cnt_indeces[n+1][R[id][n+1]].push_back(id);
-                empty_ids = false;
-                if (R[id].last_non_zero == n+1 &&
-                    R[id][n+1] < max_digits_count[n+1]) max_digits_count[n+1] = R[id][n+1];
-            }
-            if (should_return_empty) break;
+        
+        for (int i=0; i<(int)used_cnt_indeces[n][0].size(); i++) {
+            int id = used_cnt_indeces[n][0][i];
+            if (R[id].last_non_zero < n+1) { should_return_empty = true; break; }
+            used_cnt_indeces[n+1][R[id][n+1]].push_back(id);
+            empty_ids = false;
+            if (R[id].last_non_zero == n+1 &&
+                R[id][n+1] < max_digits_count[n+1]) max_digits_count[n+1] = R[id][n+1];
         }
-        if (!should_return_empty) for (int i=0; i<15; i++) if (!used_cnt_indeces[n+1][i].empty()) cnt_indeces[n+1].push_back(i);
+            
+        if (!should_return_empty) for (int i=0; i<=inf[n]; i++) if (!used_cnt_indeces[n+1][i].empty()) cnt_indeces[n+1].push_back(i);
         
         vector<string> suffixes = get_final_patterns(n+1,empty_ids,last,should_return_empty);
         return merge_strings_array(ranges[0],n,suffixes);
@@ -144,8 +143,7 @@ vector<string> get_final_patterns (int n, bool empty_ids, bool last=false, bool 
     
     vector<string> res;
     max_digits_count[n+1] = INF;
-    for (int j=0; j<=14; j++) {
-        //id_insertion += (int)used_cnt_indeces[n][j].size();
+    for (int j=0; j<=inf[n]; j++) {
         for (int i=0; i<(int)used_cnt_indeces[n][j].size(); i++) {
             int id = used_cnt_indeces[n][j][i];
             if (R[id].last_non_zero < n+1) { should_return_empty = true; break; }
@@ -157,7 +155,7 @@ vector<string> get_final_patterns (int n, bool empty_ids, bool last=false, bool 
     vector<string> star_suffixes = get_final_patterns(n+1,empty_ids,true,should_return_empty);
     bool star = (star_suffixes.size()==1 && star_suffixes[0][1]=='*');
     bool empty = false;
-    bool any_id_added = false;
+    empty_ids = true;
     should_return_empty = false;
     clearance(n+1);
     
@@ -166,25 +164,21 @@ vector<string> get_final_patterns (int n, bool empty_ids, bool last=false, bool 
         if (r+1 == (int)ranges.size()) w = merge_strings_array(ranges[r],n,star_suffixes);
         else {
             if (empty) { if (star_suffixes.empty()) break; continue; }
-            for (int j=ranges[r].fs; j<=ranges[r].sc && j<=14; j++) {
-                //id_insertion += (int)used_cnt_indeces[n][j].size();
-                // TODO: use the fact R is sorted
-                for (int i=0; i<(int)used_cnt_indeces[n][j].size(); i++) {
-                    int id = used_cnt_indeces[n][j][i];
-                    if (R[id].last_non_zero < n+1) { should_return_empty = true; break; }
-                    used_cnt_indeces[n+1][R[id][n+1]].push_back(id);
-                    any_id_added = true;
-                    if (R[id].last_non_zero == n+1 &&
-                        R[id][n+1] < max_digits_count[n+1]) max_digits_count[n+1] = R[id][n+1];
-                }
-                if (should_return_empty) break;
+            int j = ranges[r].fs;
+            for (int i=0; i<(int)used_cnt_indeces[n][j].size(); i++) {
+                int id = used_cnt_indeces[n][j][i];
+                if (R[id].last_non_zero < n+1) { should_return_empty = true; break; }
+                used_cnt_indeces[n+1][R[id][n+1]].push_back(id);
+                empty_ids = false;
+                if (R[id].last_non_zero == n+1 &&
+                    R[id][n+1] < max_digits_count[n+1]) max_digits_count[n+1] = R[id][n+1];
             }
-            if (!should_return_empty) {
-                cnt_indeces[n+1].clear(); // TODO: alternative option: use set
-                for (int i=0; i<15; i++) if (!used_cnt_indeces[n+1][i].empty()) cnt_indeces[n+1].push_back(i);
-            }
+            if (should_return_empty) break; // Don't understand why this works
             
-            vector<string> suffixes = get_final_patterns(n+1,!any_id_added,last,should_return_empty);
+            cnt_indeces[n+1].clear(); // TODO: alternative option: use set
+            for (int i=0; i<=inf[n+1]; i++) if (!used_cnt_indeces[n+1][i].empty()) cnt_indeces[n+1].push_back(i);
+            
+            vector<string> suffixes = get_final_patterns(n+1,empty_ids,last,should_return_empty);
             if (suffixes.empty()) { empty = true; continue; }
             if (star_suffixes.empty()) {
                 w = merge_strings_array(ranges[r],n,suffixes);
@@ -199,7 +193,6 @@ vector<string> get_final_patterns (int n, bool empty_ids, bool last=false, bool 
                 w = merge_strings_array(ranges[r],n,real_suffixes);
             }
         }
-        //pattern_insertion += (int)w.size();
         res.insert(res.end(),w.begin(),w.end());
     }
     
@@ -214,25 +207,30 @@ vector<string> get_final_patterns (int n, bool empty_ids, bool last=false, bool 
 vector<string> calculate_patterns (int base, const vector<string> &r)
 {
     N = base;
-    fill_prefs();
-    for (int i=1; i<=N; i++) used_cnt_indeces[i] = vvint(15);
 
     R.clear();
     for (int i=0; i<(int)r.size(); i++) R.push_back(FN(r[i]));
     sort(R.begin(), R.end());
-
-    cout << "Reducables count: " << R.size() << endl;
     
-    //vint ids; for (int i=0; i<(int)R.size(); i++) ids.push_back(i);
-    for (int i=0; i<(int)R.size(); i++) {
-        used_cnt_indeces[1][R[i][1]].push_back(i);
+    for (int i=0; i<(int)R.size(); i++) for (int j=1; j<N; j++) {
+        if (R[i][j] > inf[j]) inf[j] = R[i][j];
     }
+    //for (int i=1; i<N; i++) cout << inf[i] << " "; cout << endl;
+    
+    fill_prefs();
+    for (int i=0; i<N; i++) {
+        used_cnt_indeces[i] = vvint(15);
+        cnt_indeces[i].clear();
+    } max_digits_count = vsint(N,INF);
+    
+    for (int i=0; i<(int)R.size(); i++) used_cnt_indeces[1][R[i][1]].push_back(i);
     for (int i=0; i<15; i++) if (!used_cnt_indeces[1][i].empty()) cnt_indeces[1].push_back(i);
     vector<string> ans = get_final_patterns(1,false);
     reverse(ans.begin(), ans.end());
+    cout << "Patterns Count: " << ans.size() << endl;
+    
 //    ofstream out("output.txt");
 //    for (int i=0; i<(int)ans.size(); i++) out << ans[i] << endl;
-    cout << "Patterns Count: " << ans.size() << endl;
     
 //    cout << "ID check: " << id_check << endl;
 //    cout << "ID insertion: " << id_insertion << endl;

@@ -17,6 +17,7 @@
 #include "Utils.cpp"
 #include "RealTest.hpp"
 #include "Reducables.hpp"
+#include "Archivator.hpp"
 
 using namespace Algebra;
 using namespace Containers;
@@ -255,43 +256,60 @@ int main() {
     cout.setf(ios::fixed);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    freopen("input.txt","rt",stdin);
+    //freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
     
     // obtaining hard-coded reducables
-    vector<vector<string>> R(37);
-    string T; int K = 0;
-    while (getline(cin,T)) {
-        if (T.length() < 3) K = atoi(T.c_str());
-        else R[K].push_back(T);
-    }
-    
+//    vector<vector<string>> R(37);
+//    string T; int K = 0;
+//    while (getline(cin,T)) {
+//        if (T.length() < 3) K = atoi(T.c_str());
+//        else R[K].push_back(T);
+//    }
+    // analysing reducables
 //    for (int b=4; b<=36; b++) {
 //        vector<string> S = get_reducables(b);
 //        take_microscope(S);
 //    }
+    // obtaining hard-coded patterns
+    ifstream in ("patterns.txt");
+    vector<vector<string>> P(37);
+    string T; int K = 3;
+    while (getline(in,T)) {
+        if (T.length() < 3) K++;
+        else P[K].push_back(T);
+    }
     
     for (int base=4; base<=36; base++) {
         cout << "N = " << base << endl;
-        vector<string> S = R[base];//get_reducables(base);
-        //for (int i=0; i<(int)S.size(); i++) cout << S[i] << endl;
-        // Total_Time = clock() - Total_Time;
-        // cout << "Obtaining reducables time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
-        Total_Time = clock();
-        vector<string> s1 = Reducables::calculate_patterns(base,S);
-        Total_Time = clock() - Total_Time;
-        cout << "Generate patterns time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
-        Total_Time = clock();
-        
-        vector<string> s2 = RealTest::real_solution(base);
-        cout << "Expected Count: " << s2.size() << endl;
-        sort(s1.begin(), s1.end());
-        bool ok = test_correctness(s1,s2);
-        if (!ok) break;
+        //vector<string> reducables = R[base];
+        //vector<string> patterns = Reducables::calculate_patterns(base,reducables);
+        vector<string> patterns = P[base];
+        sort(patterns.begin(), patterns.end());
+        vector<string> S = Archivator::get_archived_patterns(patterns);
     }
+    
+//    for (int base=4; base<=36; base++) {
+//        cout << "N = " << base << endl;
+//        vector<string> S = R[base];//get_reducables(base);
+//        //for (int i=0; i<(int)S.size(); i++) cout << S[i] << endl;
+//        // Total_Time = clock() - Total_Time;
+//        // cout << "Obtaining reducables time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+//        Total_Time = clock();
+//        vector<string> s1 = P[base];//Reducables::calculate_patterns(base,S);
+//        Total_Time = clock() - Total_Time;
+//        cout << "Generate patterns time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
+//        Total_Time = clock();
+//
+//        vector<string> s2 = RealTest::real_solution(base);
+//        cout << "Expected Count: " << s2.size() << endl;
+//        sort(s1.begin(), s1.end());
+//        bool ok = test_correctness(s1,s2);
+//        if (!ok) break;
+//    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
