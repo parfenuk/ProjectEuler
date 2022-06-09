@@ -31,10 +31,19 @@ int main() {
     
     ull ans = 0;
     
-    vpii F = {mp(0,1),mp(0,2),mp(1,2),mp(3,4),mp(3,5),mp(4,5),mp(6,7),mp(6,8),mp(7,8),mp(10,11),mp(10,12),mp(11,12),mp(13,14),mp(15,16),mp(13,17)}; // forbidden pairs, should be in different trios
-    vpii R = {mp(9,12)}; // required pairs, should be together
-    vpii C = {mp(1,0),mp(8,2)}; // some elements must be in specific trio
-    vpii D = {mp(4,0),mp(9,0)}; // some elements shouldn't be in specific trio
+    const vector<string> w = {
+        "Rock","Pelsh","Siri",     //  0  1  2
+        "OST","Old","Numbers",     //  3  4  5
+        "Money","Minuses","Katya", //  6  7  8
+        "Ira1","Ira2","Dud",       //  9 10 11
+        "Death","Covers","Cities", // 12 13 14
+        "Birds","Belarus","Animals"// 15 16 17
+    };
+    
+    vpii F = {mp(15,17),mp(2,7)}; // forbidden pairs, should be in different trios
+    vpii R = {}; // required pairs, should be together
+    vpii C = {mp(1,0),mp(9,0),mp(10,2),mp(8,1),mp(3,0),mp(0,2),mp(15,2)}; // some elements must be in specific trio
+    vpii D = {mp(13,1),mp(15,1),mp(6,2)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<18; i++) v.push_back(i);
     random_device rd;
@@ -70,8 +79,6 @@ int main() {
     sort(v.begin(), v.begin()+6);
     sort(v.begin()+6, v.begin()+12);
     sort(v.begin()+12, v.end());
-    
-    const vector<string> w = {"90s","00s","10s","Dud","Mladenci","Kino","Numbers","3Letters","PRO","Covers","Solo","Siri","Minuses","Eating","Colors","FRock","RRock","Blogers"};
     
     cout << "FOUND after " << ans << " iterations\n";
     for (int i=0; i<18; i++) {
