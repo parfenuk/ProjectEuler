@@ -31,19 +31,29 @@ int main() {
     
     ull ans = 0;
     
-    const vector<string> w = {
-        "Rock","Pelsh","Siri",     //  0  1  2
-        "OST","Old","Numbers",     //  3  4  5
-        "Money","Minuses","Katya", //  6  7  8
-        "Ira1","Ira2","Dud",       //  9 10 11
-        "Death","Covers","Cities", // 12 13 14
-        "Birds","Belarus","Animals"// 15 16 17
-    };
+    random_device r2d2;
+    mt19937 g2(r2d2());
+    vector<int> a;
+    for (int i=0; i<30; i++) a.push_back(i);
+    shuffle(a.begin(),a.end(),g2);
+    for (int i=0; i<30; i++) {
+        cout << a[i]/5 + 1 << " " << (a[i]%5+1)*300 << endl;
+    }
     
-    vpii F = {mp(15,17),mp(2,7)}; // forbidden pairs, should be in different trios
+    const vector<string> w = {
+        "Hard Rock","Hard Pop","Hard Rap", //  0  1  2
+        "PRO","Colors","Sergey",           //  3  4  5
+        "NO","Dance","Birds",              //  6  7  8
+        "Mash-ups","N.N.","Weapons",       //  9 10 11
+        "CHBD","Miroslav","Minuses",       // 12 13 14
+        "AA","4 Letters","E"               // 15 16 17
+    };
+    const vector<int> cats = { 3,4,5,10,11 };
+    
+    vpii F = {mp(3,15),mp(6,17),mp(8,11),mp(12,13)}; // forbidden pairs, should be in different trios
     vpii R = {}; // required pairs, should be together
-    vpii C = {mp(1,0),mp(9,0),mp(10,2),mp(8,1),mp(3,0),mp(0,2),mp(15,2)}; // some elements must be in specific trio
-    vpii D = {mp(13,1),mp(15,1),mp(6,2)}; // some elements shouldn't be in specific trio
+    vpii C = {mp(0,1),mp(1,2),mp(2,3)}; // some elements must be in specific trio
+    vpii D = {mp(17,1)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<18; i++) v.push_back(i);
     random_device rd;
@@ -55,7 +65,11 @@ int main() {
     while (!ok) {
         ans++;
         shuffle(v.begin(), v.end(), g);
-        for (int i=0; i<18; i++) A[v[i]] = i/6;
+        vector<int> catscnt(3);
+        for (int i=0; i<18; i++) {
+            A[v[i]] = i/6;
+            if (contains(cats,v[i])) catscnt[i/6]++;
+        } if (catscnt[0] != 2 || catscnt[1] != 1) continue;
         
         ok = true;
         // F check
@@ -68,11 +82,11 @@ int main() {
         } if (!ok) continue;
         // C check
         for (int i=0; i<(int)C.size(); i++) {
-            if (A[C[i].fs] != C[i].sc) { ok = false; break; }
+            if (A[C[i].fs]+1 != C[i].sc) { ok = false; break; }
         } if (!ok) continue;
         // D check
         for (int i=0; i<(int)D.size(); i++) {
-            if (A[D[i].fs] == D[i].sc) { ok = false; break; }
+            if (A[D[i].fs]+1 == D[i].sc) { ok = false; break; }
         }
     }
     

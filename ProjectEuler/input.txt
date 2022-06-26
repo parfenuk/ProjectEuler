@@ -1,18 +1,5 @@
 000000000000000000000000010100100001001010000000001010000110100010101001101000100001
 
-Pelsh   OST(C5)     Minuses(A3) Ira1(A2)  Covers(C1) Animals
-Siri    Belarus(A5) Death       Katya(C3) Cities     Money
-Dud(A4) Numbers     Old(A5)     Ira2(C2)  Rock       Birds(C2)
-
-Аллегрова
-Дубцова
-Дорофеева
-Билык
-Забияка
-
-
-Салтыкова
-Cat
-Круг
-Тонева
-Ортман
+Hard Rock Colors(A3)(C4) CHBD(A4)  Miroslav     NO       PRO(C3)
+Hard Pop  Sergey(A3)(C2) Birds     Minuses      AA       4 Letters
+Hard Rap  Weapons(C1)    Dance(A2) Mash-ups(A4) N.N.(C5) E
