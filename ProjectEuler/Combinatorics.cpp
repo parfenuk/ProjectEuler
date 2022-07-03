@@ -41,7 +41,7 @@ bool next_combination (vsint &a, int n, int k)
         return true;
     } return false;
 }
-// TODO: write function that counts i-th combination and reversly return number of combination
+// TODO: write function that counts i-th combination and reversly returns number of combination
 // TODO: same for permutations
 vvsint get_combinations (int n, int k) // numeration starts from 1
 {
