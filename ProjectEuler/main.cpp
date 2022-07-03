@@ -47,6 +47,34 @@ struct Cell
 
 
 
+struct Cell
+{
+    string hor; // horisontal sum
+    string ver; // vertical sum
+    string value; // empty if 'hor' or 'ver' is non-empty
+    void read (const string &S)
+    {
+        hor = ver = value = "";
+        if (S[0] != '(') value = S;
+        else {
+            size_t found = S.find("h");
+            if (found != string::npos) {
+                for (size_t i=found+1; S[i] != 'v' && S[i] != ')'; i++) {
+                    hor += S[i];
+                }
+            }
+            found = S.find("v");
+            if (found != string::npos) {
+                for (size_t i=found+1; S[i] != 'h' && S[i] != ')'; i++) {
+                    ver += S[i];
+                }
+            }
+        }
+    }
+}F[7][7];
+
+
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
