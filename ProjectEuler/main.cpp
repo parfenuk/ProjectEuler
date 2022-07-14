@@ -219,7 +219,7 @@ int main() {
         for (int i=0; i<M; i++) for (int j=i+1; j<M; j++) {
             psii p = intersection(strips[i],strips[j]);
             if (p.fs != -1) {
-                strips[i].crosses.push_back(mp(j,p));
+                //strips[i].crosses.push_back(mp(j,p));
                 strips[j].crosses.push_back(mp(i,mp(p.sc,p.fs)));
             }
         }
