@@ -1,1 +1,6 @@
 000000000000000000000000010100100001001010000000001010000110100010101001101000100001
+
+Water      SingRus     Kings(A3C2) Rock           AVI     Gordon(C3)
+Earth(C1)  Piano(C3)   Female      Pop(A5)        ART(A2) Memes
+Air(C2)    SingEng(A4) Animals     Disco          MAN     Soundtracks
+Fire(C2)   Vocals      Male        SecondSong(A3) AA      Lena(A4)
