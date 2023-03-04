@@ -41,19 +41,22 @@ int main() {
     }
     
     const vector<string> w = {
-        "Hard Rock","Hard Pop","Hard Rap", //  0  1  2
-        "PRO","Colors","Sergey",           //  3  4  5
-        "NO","Dance","Birds",              //  6  7  8
-        "Mash-ups","N.N.","Weapons",       //  9 10 11
-        "CHBD","Miroslav","Minuses",       // 12 13 14
-        "AA","4 Letters","E"               // 15 16 17
+        "Trio","Mashups","Minuses",  //  0  1  2
+        "ELE","Memes","Rock",        //  3  4  5
+        "DIS","4Letters","Pop",      //  6  7  8
+        "Demons","SingRus","SingEng",//  9 10 11
+        "Plays","Sasha","Alice",     // 12 13 14
+        "1eq2","Ends","Body"         // 15 16 17
     };
-    const vector<int> cats = { 3,4,5,10,11 };
+    const vector<int> cats = { 5,6,7,8,9 };
+    const vector<int> auctions = { 0,1,2,6,7,9,10,12 };
+    const vector<int> cats_distribution = { 1,2,2 }; // cats in each round
+    const vector<int> auctions_distribution = { 2,1,2 }; // same for auctions
     
-    vpii F = {mp(3,15),mp(6,17),mp(8,11),mp(12,13)}; // forbidden pairs, should be in different trios
-    vpii R = {}; // required pairs, should be together
-    vpii C = {mp(0,1),mp(1,2),mp(2,3)}; // some elements must be in specific trio
-    vpii D = {mp(17,1)}; // some elements shouldn't be in specific trio
+    vpii F = {mp(3,6),mp(3,15),mp(6,15),mp(10,12),mp(13,14),mp(1,4),mp(9,17)}; // forbidden pairs, should be in different trios
+    vpii R = {mp(5,8),mp(10,11)}; // required pairs, should be together
+    vpii C = {mp(0,3),mp(10,1),mp(14,1),mp(16,3),mp(6,1)}; // some elements must be in specific trio
+    vpii D = {mp(1,3),mp(2,1),mp(3,1),mp(7,1),mp(1,1)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<18; i++) v.push_back(i);
     random_device rd;
@@ -65,11 +68,17 @@ int main() {
     while (!ok) {
         ans++;
         shuffle(v.begin(), v.end(), g);
-        vector<int> catscnt(3);
+        vector<int> catscnt(3), auccnt(3);
         for (int i=0; i<18; i++) {
             A[v[i]] = i/6;
             if (contains(cats,v[i])) catscnt[i/6]++;
-        } if (catscnt[0] != 2 || catscnt[1] != 1) continue;
+            if (contains(auctions,v[i])) auccnt[i/6]++;
+        }
+        if (catscnt[0] != cats_distribution[0] ||
+            catscnt[1] != cats_distribution[1]) continue;
+        if (auccnt[0] < auctions_distribution[0] ||
+            auccnt[1] < auctions_distribution[1] ||
+            auccnt[2] < auctions_distribution[2]) continue;
         
         ok = true;
         // F check
