@@ -15,9 +15,13 @@ struct point
     
     point() { x = y = z = 0; }
     point(dd xx, dd yy, dd zz) { x = xx; y = yy; z = zz; }
+    
     void read() { cin >> x >> y >> z; }
+    void show() { cout << fixed << x << " " << y << " " << z << endl; }
+    
     dd len() { return sqrt(x*x + y*y + z*z); }
     dd len2() { return x*x + y*y + z*z; }
+    
     void set_length (dd L) {
         dd l = len();
         x *= (L/l);
@@ -25,15 +29,6 @@ struct point
         z *= (L/l);
     }
 };
-
-point make_point (dd xx, dd yy, dd zz)
-{
-    point a;
-    a.x = xx;
-    a.y = yy;
-    a.z = zz;
-    return a;
-}
 
 bool operator== (point a, point b)
 {
@@ -44,70 +39,17 @@ bool operator< (point a, point b) {
     return a.x < b.x || (a.x == b.x && (a.y < b.y || (a.y == b.y && a.z < b.z)));
 }
 
-point operator+ (point a, point b)
-{
-    point c;
-    c.x = a.x + b.x;
-    c.y = a.y + b.y;
-    c.z = a.z + b.z;
-    return c;
-}
+point operator+ (point a, point b) { return point(a.x+b.x, a.y+b.y, a.z+b.z); }
+point operator- (point a, point b) { return point(a.x-b.x, a.y-b.y, a.z-b.z); }
+point operator* (point a, dd k) { return point(a.x*k, a.y*k, a.z*k); }
+point operator/ (point a, dd k) { return point(a.x/k, a.y/k, a.z/k); }
+dd operator* (point a, point b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
+point operator^ (point a, point b) { return point(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x); }
 
-point operator- (point a, point b)
-{
-    point c;
-    c.x = a.x - b.x;
-    c.y = a.y - b.y;
-    c.z = a.z - b.z;
-    return c;
-}
+dd dist (point a, point b) { return (a-b).len(); }
+dd dist2 (point a, point b) { return (a-b).len2(); }
 
-point operator* (point a, dd k)
-{
-    point b;
-    b.x = a.x*k;
-    b.y = a.y*k;
-    b.z = a.z*k;
-    return b;
-}
-
-dd operator* (point a, point b)
-{
-    return a.x*b.x + a.y*b.y + a.z*b.z;
-}
-
-point operator/ (point a, dd k)
-{
-    point b;
-    b.x = a.x/k;
-    b.y = a.y/k;
-    b.z = a.z/k;
-    return b;
-}
-
-point operator^ (point a, point b)
-{
-    return make_point(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
-}
-
-dd dist (point a, point b)
-{
-    return (a-b).len();
-}
-
-dd dist2 (point a, point b)
-{
-    return (a-b).len2();
-}
-
-point symmetric_point (point a, point b)
-{
-    point c;
-    c.x = 2*b.x - a.x;
-    c.y = 2*b.y - a.y;
-    c.z = 2*b.z - a.z;
-    return c;
-}
+point symmetric_point (point a, point b) { return b*2 - a; }
 
 struct plane
 {
@@ -145,13 +87,13 @@ pair<point,point> intersection (plane p, plane q) // returns <point,vector> of i
 {
     point a;
     if (fabs(q.B*p.C - p.B*q.C) > EPS) {
-        a = make_point(0, (q.C*p.D - p.C*q.D)/(q.B*p.C - p.B*q.C), (p.B*q.D - q.B*p.D)/(q.B*p.C - p.B*q.C));
+        a = point(0, (q.C*p.D - p.C*q.D)/(q.B*p.C - p.B*q.C), (p.B*q.D - q.B*p.D)/(q.B*p.C - p.B*q.C));
     }
     else if (fabs(q.A*p.C - p.A*q.C) > EPS) {
-        a = make_point((q.C*p.D - p.C*q.D)/(q.A*p.C - p.A*q.C), 0, (p.A*q.D - q.A*p.D)/(q.A*p.C - p.A*q.C));
+        a = point((q.C*p.D - p.C*q.D)/(q.A*p.C - p.A*q.C), 0, (p.A*q.D - q.A*p.D)/(q.A*p.C - p.A*q.C));
     }
     else {
-        a = make_point((q.B*p.D - p.B*q.D)/(q.A*p.B - p.A*q.B), (p.A*q.D - q.A*p.D)/(q.A*p.B - p.A*q.B), 0);
+        a = point((q.B*p.D - p.B*q.D)/(q.A*p.B - p.A*q.B), (p.A*q.D - q.A*p.D)/(q.A*p.B - p.A*q.B), 0);
     }
     point v = p.n()^q.n();
     return make_pair(a,v);

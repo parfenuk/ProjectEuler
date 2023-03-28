@@ -15,9 +15,11 @@ struct point
     
     point() { x = y = 0; }
     point(dd xx, dd yy) { x = xx; y = yy; }
-    point(pii p) { x = p.fs; y = p.sc; }
+    point(pdd p) { x = p.fs; y = p.sc; }
+    
     void read() { cin >> x >> y; }
     void show() { cout << fixed << x << " " << y << endl; }
+    
     dd len() { return sqrt(x*x + y*y); }
     dd len2() { return x*x + y*y; }
     point orthogonal() { return point(-y,x); }
@@ -38,98 +40,26 @@ struct point
     }
 }NOT_FOUND = point(-1000000000, -1000000000), INFINITELY_MANY(1000000000, 1000000000);
 
-point make_point (dd xx, dd yy)
-{
-    point a;
-    a.x = xx;
-    a.y = yy;
-    return a;
-}
+bool polar_angle_sort (point a, point b) { return a.polar_angle() < b.polar_angle(); }
 
-bool polar_angle_sort (point a, point b)
-{
-    return a.polar_angle() < b.polar_angle();
-}
+bool operator== (point a, point b) { return a.x == b.x && a.y == b.y; }
+bool operator< (point a, point b) { return a.x < b.x || (a.x == b.x && a.y < b.y); }
 
-bool operator== (point a, point b)
-{
-    return a.x == b.x && a.y == b.y;
-}
+point operator+ (point a, point b) { return point(a.x+b.x, a.y+b.y); }
+point operator- (point a, point b) { return point(a.x-b.x, a.y-b.y); }
+point operator* (point a, dd k) { return point(a.x*k, a.y*k); }
+point operator/ (point a, dd k) { return point(a.x/k, a.y/k); }
+dd operator* (point a, point b) { return a.x*b.x + a.y*b.y; }
 
-bool operator< (point a, point b)
-{
-    return a.x < b.x || (a.x == b.x && a.y < b.y);
-}
+bool is_collinear (point a, point b) { return a.x*b.y == a.y*b.x; }
 
-point operator+ (point a, point b)
-{
-    point c;
-    c.x = a.x + b.x;
-    c.y = a.y + b.y;
-    return c;
-}
+dd dist (point a, point b) { return (a-b).len(); }
+dd dist2 (point a, point b) { return (a-b).len2(); }
 
-point operator- (point a, point b)
-{
-    point c;
-    c.x = a.x - b.x;
-    c.y = a.y - b.y;
-    return c;
-}
+point symmetric_point (point a, point b) { return b*2 - a; }
 
-point operator* (point a, dd k)
-{
-    point b;
-    b.x = a.x*k;
-    b.y = a.y*k;
-    return b;
-}
-
-dd operator* (point a, point b)
-{
-    return a.x*b.x + a.y*b.y;
-}
-
-point operator/ (point a, dd k)
-{
-    point b;
-    b.x = a.x/k;
-    b.y = a.y/k;
-    return b;
-}
-
-bool is_collinear (point a, point b)
-{
-    return a.x*b.y == a.y*b.x;
-}
-
-dd dist (point a, point b)
-{
-    return (a-b).len();
-}
-
-dd dist2 (point a, point b)
-{
-    return (a-b).len2();
-}
-
-point symmetric_point (point a, point b)
-{
-    point c;
-    c.x = 2*b.x - a.x;
-    c.y = 2*b.y - a.y;
-    return c;
-}
-
-dd signed_area (point a, point b, point c)
-{
-    return 0.5*((a.x-c.x)*(b.y-c.y) - (a.y-c.y)*(b.x-c.x));
-}
-
-dd triangle_area (point a, point b, point c)
-{
-    return fabs(signed_area(a,b,c));
-}
+dd signed_area (point a, point b, point c) { return 0.5*((a.x-c.x)*(b.y-c.y) - (a.y-c.y)*(b.x-c.x)); }
+dd triangle_area (point a, point b, point c) { return fabs(signed_area(a,b,c)); }
 
 bool triangle_contains_point (point a, point b, point c, point d) // abc contains d?
 {
@@ -180,7 +110,7 @@ struct line
     
     line() { A = 1; B = -1; C = 0; } // y = x
     line(dd a, dd b, dd c) { A = a; B = b; C = c; }
-    line(point a, point b);
+    line(point a, point b) { A = b.y - a.y; B = a.x - b.x; C = a.y*b.x - a.x*b.y; }
     
     void shift_by_vector (point v) { C -= (A*v.x + B*v.y); }
     point any_point (dd y = 0) { return A == 0 ? point(0,-C/B) : point((C + B*y)/A, y); }
@@ -193,29 +123,14 @@ struct line
     }
 };
 
-line::line (point a, point b)
-{
-    A = b.y - a.y;
-    B = a.x - b.x;
-    C = a.y*b.x - a.x*b.y;
-}
+bool is_parallel_lines (line p, line q) { return p.A*q.B == p.B*q.A; }
 
-bool is_parallel_lines (line p, line q)
-{
-    return p.A*q.B == p.B*q.A;
-}
-
-dd dist (point a, line p)
-{
-    return fabs((p.A*a.x+p.B*a.y+p.C)/sqrt(p.A*p.A + p.B*p.B));
-}
+dd dist (point a, line p) { return fabs((p.A*a.x+p.B*a.y+p.C)/sqrt(p.A*p.A + p.B*p.B)); }
 
 point projection (point a, line p)
 {
-    point b;
-    b.x = (p.B*p.B*a.x - p.A*(p.C + p.B*a.y)) / (p.A*p.A + p.B*p.B);
-    b.y = (p.A*p.A*a.y - p.B*(p.C + p.A*a.x)) / (p.A*p.A + p.B*p.B);
-    return b;
+    dd den = p.A*p.A + p.B*p.B;
+    return point(p.B*p.B*a.x - p.A*(p.C + p.B*a.y), p.A*p.A*a.y - p.B*(p.C + p.A*a.x)) / den;
 }
 
 point intersection_point (line p, line q)
@@ -229,10 +144,7 @@ point intersection_point (line p, line q)
     return a;
 }
 
-line orthogonal_line (point a, line p)
-{
-    return line(-p.B, p.A, p.B*a.x - p.A*a.y);
-}
+line orthogonal_line (point a, line p) { return line(-p.B, p.A, p.B*a.x - p.A*a.y); }
 
 point symmetric_point (point a, line p)
 {
@@ -267,9 +179,8 @@ struct Polygon {
     
     Polygon() {}
     Polygon(int n) {
-        
         for (int i=0; i<n; i++) {
-            P.push_back(make_point(cos((2*i+1)*PI/n),sin((2*i+1)*PI/n)));
+            P.push_back(point(cos((2*i+1)*PI/n),sin((2*i+1)*PI/n)));
         }
     }
     point operator[] (int k) { return P[k]; }
@@ -278,20 +189,17 @@ struct Polygon {
     void addPoint (point p) { P.push_back(p); }
     
     void show() {
-        
         for (int i=0; i<(int)P.size(); i++) {
             cout << fixed << P[i].x << " " << P[i].y << endl;
         }
     }
     
     void calculate_area() { // works for convex polygons only
-        
         area = 0;
         for (int i=2; i<(int)P.size(); i++) area += triangle_area(P[0],P[i-1],P[i]);
     }
     
     void calculate_perimeter() {
-        
         perimeter = 0;
         for (int i=0; i<(int)P.size(); i++) {
             int n = i+1; if (n == (int)P.size()) n = 0;
