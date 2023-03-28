@@ -115,6 +115,7 @@ struct line
     void shift_by_vector (point v) { C -= (A*v.x + B*v.y); }
     point any_point (dd y = 0) { return A == 0 ? point(0,-C/B) : point((C + B*y)/A, y); }
     point n() { return point(A,B); }
+    
     int relation (point a) {
         dd d = A*a.x + B*a.y + C;
         if (d == 0) return 0; // optionally can be changed to EPS
@@ -138,6 +139,7 @@ point intersection_point (line p, line q)
     if (is_parallel_lines(p,q)) {
         return p.A*q.C == p.C*q.A ? INFINITELY_MANY : NOT_FOUND;
     }
+    
     point a;
     a.x = (p.B*q.C - q.B*p.C) / (p.A*q.B - q.A*p.B);
     a.y = (p.A*q.C - q.A*p.C) / (q.A*p.B - p.A*q.B);
@@ -211,7 +213,6 @@ struct Polygon {
         
         dd a = 0;
         for (int i=1; i<(int)P.size(); i++) {
-            
             dd sq = triangle_area(p,P[i-1],P[i]);
             if (sq == 0) return !strictly_inside;
             a += sq;
