@@ -1,8 +1,12 @@
 000000000000000000000000010100100001001010000000001010000110100010101001101000100001
 
-SingRus(A3) SingEng Alice     Body         Memes      DIS(A4)(C3)
-1eq2        Mashups Plays(A4) Sasha        Rock(C1)   Pop(C5)
-Minuses(A4) Ends    Trio(A2)  4Letters(C2) Demons(C4) ELE
+
+
+
+Duets        Instrumentals(C1) Sings      Plays(C4) SS(A2) Game(A5)
+Covers       Trio              Nick(C3)   Mike      EE(A4) 1Letter
+Mash-ups(C5) Verse(A3)         Eating(C2) Drinking  OO     TV(A4)
+
 
 
 

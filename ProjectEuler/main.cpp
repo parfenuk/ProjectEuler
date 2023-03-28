@@ -41,22 +41,22 @@ int main() {
     }
     
     const vector<string> w = {
-        "Trio","Mashups","Minuses",  //  0  1  2
-        "ELE","Memes","Rock",        //  3  4  5
-        "DIS","4Letters","Pop",      //  6  7  8
-        "Demons","SingRus","SingEng",//  9 10 11
-        "Plays","Sasha","Alice",     // 12 13 14
-        "1eq2","Ends","Body"         // 15 16 17
+        "Covers","Trio","Verse",          //  0  1  2
+        "Nick","Mike","Sings",            //  3  4  5
+        "1Letter","Plays","Eating",       //  6  7  8
+        "Drinking","TV","Duets",          //  9 10 11
+        "SS","EE","OO",                   // 12 13 14
+        "Instrumentals","Mash-ups","Game" // 15 16 17
     };
-    const vector<int> cats = { 5,6,7,8,9 };
-    const vector<int> auctions = { 0,1,2,6,7,9,10,12 };
-    const vector<int> cats_distribution = { 1,2,2 }; // cats in each round
+    const vector<int> cats = { 3,7,8,15,16 };
+    const vector<int> auctions = { 2,4,10,11,12,13,17 };
+    const vector<int> cats_distribution = { 2,1,2 }; // cats in each round
     const vector<int> auctions_distribution = { 2,1,2 }; // same for auctions
     
-    vpii F = {mp(3,6),mp(3,15),mp(6,15),mp(10,12),mp(13,14),mp(1,4),mp(9,17)}; // forbidden pairs, should be in different trios
-    vpii R = {mp(5,8),mp(10,11)}; // required pairs, should be together
-    vpii C = {mp(0,3),mp(10,1),mp(14,1),mp(16,3),mp(6,1)}; // some elements must be in specific trio
-    vpii D = {mp(1,3),mp(2,1),mp(3,1),mp(7,1),mp(1,1)}; // some elements shouldn't be in specific trio
+    vpii F = {mp(12,13),mp(12,14),mp(13,14),mp(10,17)}; // forbidden pairs, should be in different trios
+    vpii R = {mp(8,9),mp(3,4)}; // required pairs, should be together
+    vpii C = {mp(11,1),mp(12,1),mp(15,1),mp(1,2),mp(2,3),mp(6,3)}; // some elements must be in specific trio
+    vpii D = {mp(0,1),mp(1,1),mp(3,1),mp(8,1),mp(10,1),mp(16,1)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<18; i++) v.push_back(i);
     random_device rd;
