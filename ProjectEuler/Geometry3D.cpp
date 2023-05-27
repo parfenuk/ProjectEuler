@@ -30,17 +30,15 @@ struct point
     }
 };
 
-bool operator== (point a, point b)
-{
-    return a.x == b.x && a.y == b.y && a.z == b.z;
-}
-
+bool operator== (point a, point b) { return a.x == b.x && a.y == b.y && a.z == b.z; }
 bool operator< (point a, point b) {
     return a.x < b.x || (a.x == b.x && (a.y < b.y || (a.y == b.y && a.z < b.z)));
 }
 
 point operator+ (point a, point b) { return point(a.x+b.x, a.y+b.y, a.z+b.z); }
+point operator+ (point a, dd k) { return point(a.x+k, a.y+k, a.z+k); }
 point operator- (point a, point b) { return point(a.x-b.x, a.y-b.y, a.z-b.z); }
+point operator- (point a, dd k) { return point(a.x-k, a.y-k, a.z-k); }
 point operator* (point a, dd k) { return point(a.x*k, a.y*k, a.z*k); }
 point operator/ (point a, dd k) { return point(a.x/k, a.y/k, a.z/k); }
 dd operator* (point a, point b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
@@ -49,7 +47,9 @@ point operator^ (point a, point b) { return point(a.y*b.z - a.z*b.y, a.z*b.x - a
 dd dist (point a, point b) { return (a-b).len(); }
 dd dist2 (point a, point b) { return (a-b).len2(); }
 
-point symmetric_point (point a, point b) { return b*2 - a; }
+bool is_collinear (vec a, vec b) { return a.x*b.y == a.y*b.x && a.x*b.z == a.z*b.x && a.y*b.z == a.z*b.y; }
+
+point symmetric_point (point a, point b) { return b+b-a; }
 
 struct plane
 {
@@ -60,7 +60,16 @@ struct plane
     plane(point a, point b, point c);
     
     point n() { return point(A,B,C); }
-    bool contains_point (point a) { return fabs(A*a.x + B*a.y + C*a.z + D) < EPS; }
+    dd at (point a) { return A*a.x + B*a.y + C*a.z + D; }
+    
+    int relation (point a) {
+        dd d = at(a);
+        if (d == 0) return 0; // optionally can be changed to EPS
+        if (d < 0) return -1;
+        return 1;
+    }
+    
+    bool contains (point a) { return relation(a) == 0; }
 };
 
 plane::plane (point a, point b, point c)
@@ -71,44 +80,39 @@ plane::plane (point a, point b, point c)
     D = -A*a.x - B*a.y - C*a.z;
 }
 
-int Relation (point a, plane p)
-{
-    if (fabs(a.x*p.A + a.y*p.B + a.z*p.C + p.D) < EPS) return 0;
-    if (a.x*p.A + a.y*p.B + a.z*p.C + p.D > 0) return 1;
-    return -1;
-}
-
-dd dist (point a, plane p)
-{
-    return fabs((p.A*a.x+p.B*a.y+p.C*a.z + p.D)/sqrt(p.A*p.A + p.B*p.B + p.C*p.C));
-}
+dd dist (point a, plane p) { return fabs(p.at(a))/p.n().len(); }
 
 pair<point,point> intersection (plane p, plane q) // returns <point,vector> of intersection line of planes. Must not be parallel
 {
     point a;
-    if (fabs(q.B*p.C - p.B*q.C) > EPS) {
-        a = point(0, (q.C*p.D - p.C*q.D)/(q.B*p.C - p.B*q.C), (p.B*q.D - q.B*p.D)/(q.B*p.C - p.B*q.C));
+    
+    dd prodAB = q.A*p.B - p.A*q.B;
+    dd prodAC = q.A*p.C - p.A*q.C;
+    dd prodBC = q.B*p.C - p.B*q.C;
+    
+    if (fabs(prodBC) > EPS) {
+        a = point(0, q.C*p.D - p.C*q.D, p.B*q.D - q.B*p.D) / prodBC;
     }
-    else if (fabs(q.A*p.C - p.A*q.C) > EPS) {
-        a = point((q.C*p.D - p.C*q.D)/(q.A*p.C - p.A*q.C), 0, (p.A*q.D - q.A*p.D)/(q.A*p.C - p.A*q.C));
+    else if (fabs(prodAC) > EPS) {
+        a = point(q.C*p.D - p.C*q.D, 0, p.A*q.D - q.A*p.D) / prodAC;
     }
     else {
-        a = point((q.B*p.D - p.B*q.D)/(q.A*p.B - p.A*q.B), (p.A*q.D - q.A*p.D)/(q.A*p.B - p.A*q.B), 0);
+        a = point(q.B*p.D - p.B*q.D, p.A*q.D - q.A*p.D, 0) / prodAB;
     }
     point v = p.n()^q.n();
-    return make_pair(a,v);
+    return mp(a,v);
 }
 
 // actually, there're two angles with the sum equals PI
-// point a belongs P, b belongs Q, so they denote the quarter for which to calculate the angle
+// point a belongs to P, b belongs to Q, so they denote the quarter for which to calculate the angle
 dd dihedral_angle (plane P, plane Q, point a, point b)
 {
     pair<point,point> zzz = intersection(P,Q);
     point p = zzz.fs, v = zzz.sc;
     point va = v^P.n();
-    if (Relation(p+va,Q) != Relation(a,Q)) va = va*(-1);
+    if (Q.relation(p+va) != Q.relation(a)) va = va*(-1);
     point vb = v^Q.n();
-    if (Relation(p+vb,P) != Relation(b,P)) vb = vb*(-1);
+    if (Q.relation(p+vb) != Q.relation(b)) vb = vb*(-1);
     
     dd cosa = va*vb / (va.len()*vb.len());
     if (cosa < -1) cosa = -1;

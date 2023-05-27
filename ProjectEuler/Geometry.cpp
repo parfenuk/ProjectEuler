@@ -6,6 +6,8 @@
 //  Copyright © 2017 Miraslau Parafeniuk. All rights reserved.
 //
 
+// TODO: create side extension with integer geometry (or inline with predefined numbers type)
+
 namespace Geometry
 {
 
@@ -23,11 +25,13 @@ struct point
     dd len() { return sqrt(x*x + y*y); }
     dd len2() { return x*x + y*y; }
     point orthogonal() { return point(-y,x); }
+    
     void set_length (dd L) {
         dd l = len();
         x *= (L/l);
         y *= (L/l);
     }
+    
     dd polar_angle() {
         if (x == 0 && y == 0) return 0;
         if (x == 0) return y > 0 ? PI/2 : 3*PI/2;
@@ -46,17 +50,19 @@ bool operator== (point a, point b) { return a.x == b.x && a.y == b.y; }
 bool operator< (point a, point b) { return a.x < b.x || (a.x == b.x && a.y < b.y); }
 
 point operator+ (point a, point b) { return point(a.x+b.x, a.y+b.y); }
+point operator+ (point a, dd k) { return point(a.x+k, a.y+k); }
 point operator- (point a, point b) { return point(a.x-b.x, a.y-b.y); }
+point operator- (point a, dd k) { return point(a.x-k, a.y-k); }
 point operator* (point a, dd k) { return point(a.x*k, a.y*k); }
 point operator/ (point a, dd k) { return point(a.x/k, a.y/k); }
 dd operator* (point a, point b) { return a.x*b.x + a.y*b.y; }
 
-bool is_collinear (point a, point b) { return a.x*b.y == a.y*b.x; }
-
 dd dist (point a, point b) { return (a-b).len(); }
 dd dist2 (point a, point b) { return (a-b).len2(); }
 
-point symmetric_point (point a, point b) { return b*2 - a; }
+bool is_collinear (vec a, vec b) { return a.x*b.y == a.y*b.x; }
+
+point symmetric_point (point a, point b) { return b+b-a; }
 
 dd signed_area (point a, point b, point c) { return 0.5*((a.x-c.x)*(b.y-c.y) - (a.y-c.y)*(b.x-c.x)); }
 dd triangle_area (point a, point b, point c) { return fabs(signed_area(a,b,c)); }
@@ -64,6 +70,20 @@ dd triangle_area (point a, point b, point c) { return fabs(signed_area(a,b,c)); 
 bool triangle_contains_point (point a, point b, point c, point d) // abc contains d?
 {
     return triangle_area(a,b,c) == triangle_area(a,b,d) + triangle_area(b,c,d) + triangle_area(a,c,d);
+}
+
+bool lies_on_segment (point a, seg s, bool should_check_collinearity = false)
+{
+    if (should_check_collinearity && signed_area(a,s.fs,s.sc) != 0) return false;
+    return (s.fs-a)*(s.sc-a) <= 0;
+}
+
+point geom_inversion (point a, point c, dd R)
+{
+    vec v = a-c;
+    dd L = v.len();
+    v.set_length(R*R/L);
+    return c+v;
 }
 
 bool cw (point a, point b, point c, bool q = false) // clockwise
@@ -80,7 +100,7 @@ bool ccw (point a, point b, point c, bool q = false) // counterclockwise
 
 vector<point> convex_hull (vector<point> a, bool should_skip_border_points = true)
 {
-    if (a.size() <= 1) return vector<point>();
+    if (a.size() <= 2) return a;
     
     sort(a.begin(),a.end());
     point p1 = a[0], p2 = a.back();
@@ -89,16 +109,15 @@ vector<point> convex_hull (vector<point> a, bool should_skip_border_points = tru
     down.push_back(p1);
     for (size_t i=1; i<a.size(); i++) {
         if (i == a.size()-1 || cw(p1, a[i], p2, should_skip_border_points)) {
-            while (up.size()>=2 && !cw(up[up.size()-2], up[up.size()-1], a[i], should_skip_border_points)) up.pop_back();
+            while (up.size() >= 2 && !cw(up[up.size()-2], up[up.size()-1], a[i], should_skip_border_points)) up.pop_back();
             up.push_back(a[i]);
         }
-        if (i==a.size()-1 || ccw(p1, a[i], p2, !should_skip_border_points)) {
-            while (down.size()>=2 && !ccw(down[down.size()-2], down[down.size()-1], a[i], should_skip_border_points)) down.pop_back();
+        if (i == a.size()-1 || ccw(p1, a[i], p2, !should_skip_border_points)) {
+            while (down.size() >= 2 && !ccw(down[down.size()-2], down[down.size()-1], a[i], should_skip_border_points)) down.pop_back();
             down.push_back(a[i]);
         }
     }
-    vector<point> b;
-    for (size_t i=0; i<up.size(); i++)     b.push_back(up[i]);
+    vector<point> b = up;
     for (size_t i=down.size()-2; i>0; i--) b.push_back(down[i]);
     return b;
 }
@@ -111,27 +130,40 @@ struct line
     line() { A = 1; B = -1; C = 0; } // y = x
     line(dd a, dd b, dd c) { A = a; B = b; C = c; }
     line(point a, point b) { A = b.y - a.y; B = a.x - b.x; C = a.y*b.x - a.x*b.y; }
+    line(seg s) { line(s.fs, s.sc); }
     
-    void shift_by_vector (point v) { C -= (A*v.x + B*v.y); }
+    void shift_by_vector (vec v) { C -= (A*v.x + B*v.y); }
     point any_point (dd y = 0) { return A == 0 ? point(0,-C/B) : point((C + B*y)/A, y); }
     point n() { return point(A,B); }
+    dd at (point a) { return A*a.x + B*a.y + C; }
     
     int relation (point a) {
-        dd d = A*a.x + B*a.y + C;
+        dd d = at(a);
         if (d == 0) return 0; // optionally can be changed to EPS
         if (d < 0) return -1;
         return 1;
     }
+    
+    bool contains (point a) { return relation(a) == 0; }
+    
+    line orthogonal_line (point a) { return line(-B, A, B*a.x - A*a.y); }
 };
 
 bool is_parallel_lines (line p, line q) { return p.A*q.B == p.B*q.A; }
 
-dd dist (point a, line p) { return fabs((p.A*a.x+p.B*a.y+p.C)/sqrt(p.A*p.A + p.B*p.B)); }
+dd dist (point a, line p) { return fabs(p.at(a))/p.n().len(); }
 
 point projection (point a, line p)
 {
-    dd den = p.A*p.A + p.B*p.B;
-    return point(p.B*p.B*a.x - p.A*(p.C + p.B*a.y), p.A*p.A*a.y - p.B*(p.C + p.A*a.x)) / den;
+    return point(p.B*p.B*a.x - p.A*(p.C + p.B*a.y), p.A*p.A*a.y - p.B*(p.C + p.A*a.x)) / p.n().len2();
+}
+
+dd dist_to_segment (point a, seg s)
+{
+    line p(s);
+    point b = projection(a,p);
+    if (lies_on_segment(b,s)) return dist(a,b);
+    return min(dist(a,s.fs), dist(a,s.sc));
 }
 
 point intersection_point (line p, line q)
@@ -146,15 +178,13 @@ point intersection_point (line p, line q)
     return a;
 }
 
-line orthogonal_line (point a, line p) { return line(-p.B, p.A, p.B*a.x - p.A*a.y); }
-
 point symmetric_point (point a, line p)
 {
     point b = projection(a,p);
     return symmetric_point(a,b);
 }
 
-point reflection_vector (point v, line p, point a = NOT_FOUND)
+vec reflection_vector (point v, line p, point a = NOT_FOUND)
 {
     if (p.n()*v == 0) return NOT_FOUND;
     
@@ -162,11 +192,11 @@ point reflection_vector (point v, line p, point a = NOT_FOUND)
     return symmetric_point(a+v, p) - a;
 }
 
-pair<point,dd> circumscribed_circle (point a, point b, point c)
+circ circumscribed_circle (point a, point b, point c)
 {
     line p(a,b), q(a,c);
-    p = orthogonal_line((a+b)/2, p);
-    q = orthogonal_line((a+c)/2, q);
+    p = p.orthogonal_line((a+b)/2);
+    q = q.orthogonal_line((a+c)/2);
     
     point t = intersection_point(p,q);
     
@@ -188,7 +218,7 @@ struct Polygon {
     point operator[] (int k) { return P[k]; }
     bool empty() { return P.empty(); }
     int size() { return (int)P.size(); }
-    void addPoint (point p) { P.push_back(p); }
+    void add_point (point p) { P.push_back(p); }
     
     void show() {
         for (int i=0; i<(int)P.size(); i++) {

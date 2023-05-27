@@ -39,6 +39,8 @@ template <class Trzx>
 template <class Trzx>
     void append_to (vector<Trzx> &a, const vector<Trzx> &b);
 template <class Trzx>
+    void append_reversed (vector<Trzx> &a, const vector<Trzx> &b);
+template <class Trzx>
     vector<Trzx> flatten (const vector<vector<Trzx>> &a);
 template <class Trzx>
     int count_greater_than (const vector<Trzx> &a, Trzx value);
@@ -66,6 +68,8 @@ template <class Tkey, class Tval>
     typename map<Tkey,Tval>::iterator min_greater_or_equal (map<Tkey,Tval> &M, Tkey k);
 
 // SETS
+template <class Trzx>
+    void show (const set<Trzx> &a, bool show_endl = true, bool show_size = false);
 template <class Trzx>
     typename set<Trzx>::iterator max_less (set<Trzx> &S, Trzx k);
 template <class Trzx>

@@ -84,6 +84,9 @@ using namespace std;
 #define mp make_pair
 #define fs first
 #define sc second
+#define vec point
+#define seg pair<point,point>
+#define circ pair<point,dd>
 
 const dd EPS = 0.00000001;
 const dd PI = acos(-1.0);

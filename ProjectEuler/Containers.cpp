@@ -110,6 +110,12 @@ void append_to (vector<Trzx> &a, const vector<Trzx> &b)
 }
 
 template <class Trzx>
+void append_reversed (vector<Trzx> &a, const vector<Trzx> &b)
+{
+    for (int i=(int)b.size()-1; i>=0; i--) a.push_back(b[i]);
+}
+
+template <class Trzx>
 vector<Trzx> flatten (const vector<vector<Trzx>> &a)
 {
     vector<Trzx> b;
@@ -203,6 +209,15 @@ template <class Tkey, class Tval>
 typename map<Tkey,Tval>::iterator min_greater_or_equal (map<Tkey,Tval> &M, Tkey k)
 {
     return M.lower_bound(k);
+}
+
+template <class Trzx>
+void show (const set<Trzx> &a, bool show_endl/* = true*/, bool show_size/* = false*/)
+{
+    if (show_size) cout << a.size() << endl;
+    typename set<Trzx>::iterator it;
+    for (it = a.begin(); it != a.end(); it++) cout << *it << " ";
+    if (show_endl) cout << endl;
 }
 
 template <class Trzx>

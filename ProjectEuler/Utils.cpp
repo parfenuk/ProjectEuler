@@ -36,11 +36,16 @@ vull Blub_Blub_Shum_Generator (int n)
     return v;
 }
 
+random_device rd;     // only used once to initialise (seed) engine
+mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
+uniform_int_distribution<ll> uni; // guaranteed unbiased
+
 ll random_integer (ll from, ll to)
 {
-    random_device rd;     // only used once to initialise (seed) engine
-    mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
-    uniform_int_distribution<ll> uni(from,to); // guaranteed unbiased
+    if (uni.a() != from || uni.b() != to) {
+        cout << "RELOAD DISTRIBUTION\n";
+        uni = uniform_int_distribution<ll>(from,to);
+    }
     return uni(rng);
 }
 
