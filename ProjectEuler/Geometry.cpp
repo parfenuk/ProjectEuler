@@ -11,6 +11,9 @@
 namespace Geometry
 {
 
+dd arc_angle (dd l, dd R) { return 2*asin(l/(2*R)); }
+dd segment_square (dd a, dd R) { return R*R*(a-sin(a))/2; }
+
 struct point
 {
     dd x,y;
