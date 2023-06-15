@@ -23,7 +23,7 @@ struct fraction {
     static fraction one;
     
     void reduce() {
-        ll p = Algebra::signedGCD(num, den);
+        ftype p = Algebra::signedGCD(num, den);
         num /= p;
         den /= p;
     }
@@ -42,8 +42,8 @@ bool operator!= (fraction A, fraction B) { return !(A == B); }
 
 fraction operator+ (fraction a, fraction b)
 {
-    ll d = Algebra::signedGCD(a.den, b.den);
-    ll a_mult = b.den/d, b_mult = a.den/d;
+    ftype d = Algebra::signedGCD(a.den, b.den);
+    ftype a_mult = b.den/d, b_mult = a.den/d;
     fraction c (a.num*a_mult + b.num*b_mult, a.den*a_mult);
     c.reduce();
     return c;
@@ -51,14 +51,14 @@ fraction operator+ (fraction a, fraction b)
 
 fraction operator- (fraction a, fraction b)
 {
-    ll d = Algebra::signedGCD(a.den, b.den);
-    ll a_mult = b.den/d, b_mult = a.den/d;
+    ftype d = Algebra::signedGCD(a.den, b.den);
+    ftype a_mult = b.den/d, b_mult = a.den/d;
     fraction c(a.num*a_mult - b.num*b_mult, a.den*a_mult);
     c.reduce();
     return c;
 }
 
-fraction operator* (fraction a, ll b)
+fraction operator* (fraction a, ftype b)
 {
     fraction c(a.num*b, a.den);
     c.reduce();
@@ -72,7 +72,7 @@ fraction operator* (fraction a, fraction b)
     return c;
 }
 
-fraction operator/ (fraction a, ll b)
+fraction operator/ (fraction a, ftype b)
 {
     fraction c(a.num, a.den*b);
     c.reduce();
