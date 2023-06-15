@@ -9,18 +9,20 @@
 namespace Geometry3D
 {
 
+typedef dd gtype;
+
 struct point
 {
-    dd x,y,z;
+    gtype x,y,z;
     
     point() { x = y = z = 0; }
-    point(dd xx, dd yy, dd zz) { x = xx; y = yy; z = zz; }
+    point(gtype xx, gtype yy, gtype zz) { x = xx; y = yy; z = zz; }
     
     void read() { cin >> x >> y >> z; }
     void show() { cout << fixed << x << " " << y << " " << z << endl; }
     
     dd len() { return sqrt(x*x + y*y + z*z); }
-    dd len2() { return x*x + y*y + z*z; }
+    gtype len2() { return x*x + y*y + z*z; }
     
     void set_length (dd L) {
         dd l = len();
@@ -30,40 +32,44 @@ struct point
     }
 };
 
+istream& operator>> (istream &is, point &a) { cin >> a.x >> a.y >> a.z; return is; }
+ostream& operator<< (ostream &os, point &a) { cout << fixed << a.x << " " << a.y << " " << a.z; return os; }
+
 bool operator== (point a, point b) { return a.x == b.x && a.y == b.y && a.z == b.z; }
 bool operator< (point a, point b) {
     return a.x < b.x || (a.x == b.x && (a.y < b.y || (a.y == b.y && a.z < b.z)));
 }
 
 point operator+ (point a, point b) { return point(a.x+b.x, a.y+b.y, a.z+b.z); }
-point operator+ (point a, dd k) { return point(a.x+k, a.y+k, a.z+k); }
+point operator+ (point a, gtype k) { return point(a.x+k, a.y+k, a.z+k); }
 point operator- (point a, point b) { return point(a.x-b.x, a.y-b.y, a.z-b.z); }
-point operator- (point a, dd k) { return point(a.x-k, a.y-k, a.z-k); }
-point operator* (point a, dd k) { return point(a.x*k, a.y*k, a.z*k); }
-point operator/ (point a, dd k) { return point(a.x/k, a.y/k, a.z/k); }
-dd operator* (point a, point b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
+point operator- (point a, gtype k) { return point(a.x-k, a.y-k, a.z-k); }
+point operator* (point a, gtype k) { return point(a.x*k, a.y*k, a.z*k); }
+point operator/ (point a, gtype k) { return point(a.x/k, a.y/k, a.z/k); }
+gtype operator* (point a, point b) { return a.x*b.x + a.y*b.y + a.z*b.z; }
 point operator^ (point a, point b) { return point(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x); }
 
 dd dist (point a, point b) { return (a-b).len(); }
-dd dist2 (point a, point b) { return (a-b).len2(); }
+gtype dist2 (point a, point b) { return (a-b).len2(); }
 
 bool is_collinear (vec a, vec b) { return a.x*b.y == a.y*b.x && a.x*b.z == a.z*b.x && a.y*b.z == a.z*b.y; }
 
 point symmetric_point (point a, point b) { return b+b-a; }
 
+
 struct plane
 {
-    dd A,B,C,D;
+    gtype A,B,C,D;
     
     plane() { A = 1; B = 1; C = 1; D = 0; } // x + y + z = 0;
     plane(dd a, dd b, dd c, dd d) { A = a; B = b; C = c; D = d; }
     plane(point a, point b, point c);
     
     point n() { return point(A,B,C); }
-    dd at (point a) { return A*a.x + B*a.y + C*a.z + D; }
+    gtype at (point a) { return A*a.x + B*a.y + C*a.z + D; }
     
-    int relation (point a) {
-        dd d = at(a);
+    sint relation (point a) {
+        gtype d = at(a);
         if (d == 0) return 0; // optionally can be changed to EPS
         if (d < 0) return -1;
         return 1;
@@ -82,7 +88,7 @@ plane::plane (point a, point b, point c)
 
 dd dist (point a, plane p) { return fabs(p.at(a))/p.n().len(); }
 
-pair<point,point> intersection (plane p, plane q) // returns <point,vector> of intersection line of planes. Must not be parallel
+pair<point,vec> intersection (plane p, plane q) // returns <point,vector> of intersection line of planes. Must not be parallel
 {
     point a;
     

@@ -15,7 +15,7 @@ namespace Containers
 
 // VECTORS
 template <class Trzx>
-    void show (const vector<Trzx> &a, bool show_endl = true, bool show_size = false);
+    void show (const vector<Trzx> &a, char separator = ' ', bool show_endl = true, bool show_size = false);
 template <class Trzx>
     void show_pair (const vector<Trzx> &a, bool show_endl = true, bool show_size = false);
 template <class Trzx>

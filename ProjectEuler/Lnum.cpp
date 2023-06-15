@@ -269,7 +269,7 @@ ltype operator% (Lnum A, ltype b) // assume that b > 0
 pair<Lnum,Lnum> Lnum::divmod (Lnum A, Lnum B) // < A/B, A%B >
 {
     if (B.get_size() == 1) {
-        return make_pair(A/B[0], A%B[0]);
+        return mp(A/B[0], A%B[0]);
     }
     
     bool neg_a = false, neg_b = false;
@@ -304,7 +304,7 @@ pair<Lnum,Lnum> Lnum::divmod (Lnum A, Lnum B) // < A/B, A%B >
         if (neg_b && M != O) M.change_sign();
     }
     
-    return make_pair(M,res);
+    return mp(M,res);
 }
 
 Lnum operator^ (Lnum A, ull k)

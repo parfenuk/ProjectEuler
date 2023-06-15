@@ -134,7 +134,7 @@ void fill_pythagorean_triples (ull n, vvpull &pits, bool primitive_only = true) 
         for (ull k=1;;k++) {
         
             ull A = a*k, B = b*k, C = c*k;
-            if (C <= n) pits[C].push_back(make_pair(A,B));
+            if (C <= n) pits[C].push_back(mp(A,B));
             else break;
             
             if (primitive_only) break;

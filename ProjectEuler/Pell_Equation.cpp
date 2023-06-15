@@ -44,7 +44,6 @@ pair<vull,int> PQa (ll p0, ll q0, ull d) // d > 0, q0 != 0, (p0*p0 - d) % q0 == 
     return make_pair(alphas, i-ir);
 }
 
-
 // Minimal solution of x^2 - d*y^2 = +-1
 pair<Lnum,Lnum> pell1_min (ull d, bool plus_one = true)
 {

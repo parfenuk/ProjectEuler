@@ -14,10 +14,13 @@ namespace Containers
 {
 
 template <class Trzx>
-void show (const vector<Trzx> &a, bool show_endl/*=true*/, bool show_size/*=false*/)
+void show (const vector<Trzx> &a, char separator/*=' '*/, bool show_endl/*=true*/, bool show_size/*=false*/)
 {
     if (show_size) cout << a.size() << endl;
-    for (int i=0; i<(int)a.size(); i++) cout << a[i] << " ";
+    for (int i=0; i<(int)a.size(); i++) {
+        cout << a[i];
+        if (i != (int)a.size()-1) cout << separator;
+    }
     if (show_endl) cout << endl;
 }
 

@@ -257,7 +257,7 @@ vpull factorize (ull n)
             n /= primes[i];
             k++;
         }
-        if (k) a.push_back(make_pair(primes[i],k));
+        if (k) a.push_back(mp(primes[i],k));
     }
     
     ull from = primes.back() == 2 ? 3 : primes.back() + 2;
@@ -269,10 +269,10 @@ vpull factorize (ull n)
             n /= i;
             k++;
         }
-        if (k) a.push_back(make_pair(i,k));
+        if (k) a.push_back(mp(i,k));
     }
     
-    if (n != 1) a.push_back(make_pair(n,1));
+    if (n != 1) a.push_back(mp(n,1));
     return a;
 }
 
