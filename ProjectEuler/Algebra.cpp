@@ -19,12 +19,22 @@ vint primePi;
 vint eulerPhi;
 mll eulerCache;
 vll eulerPhiSum; // prefill small values for function
+vvint gcd;
+
+void precalc_GCD (ull N)
+{
+    gcd = vvint(N+1);
+    for (int i=0; i<=N; i++) gcd[i] = vint(N+1);
+    for (int i=0; i<=N; i++) for (int j=i; j<=N; j++) gcd[i][j] = gcd[j][i] = (int)GCD(i,j);
+}
 
 ull GCD (ull a, ull b)
 {
+    if (a < (int)gcd.size() && b < (int)gcd.size() && gcd[a][b]) return gcd[a][b];
     while (a && b) {
         if (a > b) a %= b;
         else b %= a;
+        if (a < (int)gcd.size() && b < (int)gcd.size() && gcd[a][b]) return gcd[a][b];
     }
     return a + b;
 }
