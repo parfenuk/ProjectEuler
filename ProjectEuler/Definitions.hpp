@@ -87,6 +87,7 @@ using namespace std;
 #define vec point
 #define seg pair<point,point>
 #define circ pair<point,dd>
+#define sphere pair<point,dd>
 
 const dd EPS = 0.00000001;
 const dd PI = acos(-1.0);
