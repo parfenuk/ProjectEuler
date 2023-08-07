@@ -68,7 +68,7 @@ int main() {
     ull ans = 0;
     
     const int MAX = 14;
-    const string S = "ECAAA8647623200100f";
+    const string S = "AACA797564A645470";
     ans = (int)S.length();
     vector<int> a(MAX+1);
     vector<int> negative_values;
