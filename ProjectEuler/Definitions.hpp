@@ -27,6 +27,7 @@
 #include <ctime>
 #include <cstring>
 #include <cassert>
+#include <codecvt>
 
 #include <vector>
 #include <string>
