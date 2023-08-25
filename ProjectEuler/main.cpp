@@ -1053,6 +1053,14 @@ class Sudoku {
                 for (int j=0; j<9; j++) A[i][j] = s[j]-'0';
             }
         }
+        void read_dots(string s) {
+            int k = 0;
+            for (int i=0; i<9; i++) for (int j=0; j<9; j++) {
+                if (s[k] == '.') A[i][j] = 0;
+                else A[i][j] = s[k]-'0';
+                k++;
+            }
+        }
         void show() {
             for (int i=0; i<9; i++) {
                 for (int j=0; j<9; j++) cout << A[i][j];
@@ -1185,6 +1193,7 @@ class Sudoku {
     
 public:
     void load_from_console() { v.read(); }
+    void load_from_dots_string(string s) { v.read_dots(s); }
     void load_from_matrix(int **a) { for (int i=0; i<9; i++) for (int j=0; j<9; j++) v.A[i][j] = a[i][j]; }
     bool solve() {
         // returns false if no solution exists. Otherwise returns true with some solution found
@@ -1264,6 +1273,19 @@ public:
     }
 };
 
+int count_dots (const string &s)
+{
+    int cnt = 0;
+    for (int i=0; i<(int)s.length(); i++) {
+        if (s[i] != '.') cnt++;
+    } return cnt;
+}
+
+bool dots_sort (const string &a, const string &b)
+{
+    return count_dots(a) < count_dots(b);
+}
+
 int main()
 {
     // Usage:
@@ -1299,6 +1321,17 @@ int main()
     bool success = S.solve();
     if (success) S.show_solution();
     else cout << "No solution for this puzzle";
+    
+    // 6+ serconds working
+//    ......52.
+//    .8.4.....
+//    .3...9...
+//    5.1...6..
+//    2..7.....
+//    ...3.....
+//    6...1....
+//    ......7.4
+//    .......3.
     
     return 0;
 }
