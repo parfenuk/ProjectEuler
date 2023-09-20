@@ -1,158 +1,427 @@
-q1_hint    Perbesar keranjang dengan dua jari untuk membuatnya lebih besar dari singa dan masukkan ke dalamnya! Apa itu bekerja?
-q2_hint    Coba pindahkan anjing-anjing itu, pasti yang Anda cari ada di belakang!
-q3_hint    Coba pindahkan nanas, Anda tidak dapat melihat semua objek. \n\nBahkan, ada sembilan!
-q4_hint    Gabungkan semua tetesan menjadi satu yang besar dan klik di atasnya!
-q5_hint    4 x 1 = 4\n4 x 4 = 16\n4 x 4 x 4 = 64\n4 x 4 x 4 x 4 = 256
-q6_hint    Semuanya 18 segitiga triangle
-q7_hint    Jika Anda menggabungkan permen kuning dan biru, Anda mendapatkan yang hijau! \n\nPencampuran hijau dan kuning dalam proporsi yang sama dapat menghasilkan warna hijau.
-q8_hint    Lepaskan ekor palsu dan hitung bulu yang asli! \n\nJawaban 4!
-q9_hint    Perbesar keranjang dengan dua jari ke ukuran yang tepat sehingga semua labu muat!
-q10_hint    Lihatlah ekor, kaki depan, dan jumbai di bagian belakang dan klik pada mereka.
-q11_hint    Pindahkan awan terpisah dan telur palsu meleleh ke matahari.
-q12_hint    Hewan terbesar di darat adalah gajah
-q13_hint    Geser jeruji di kandang dengan satu jari dan rakun dapat melarikan diri.
-q14_hint    Pindahkan saja sarung tangan dan Anda akan menemukan yang berbeda! Hanya satu sarung tangan yang bergerak.
-q15_hint    Buang air mata ke samping dan gadis itu akan berhenti menangis.
-q16_hint    Geser dari gagang pintu ke kanan untuk membukanya!
-q17_hint    Cobalah untuk menempatkan dua batu bersama-sama!
-q18_hint    It seems that something is hidden inside the ice cream cone! \n\n\ Separate the ice cream from the cone and you'll find it!
-q19_hint    Swipe left many times to find the hidden object!
-q20_hint    Pastikan persegi panjang merah selalu berwarna merah
-q21_hint    Putar telepon sehingga arah panah sesuai dengan teks di atasnya
-q22_hint    Gesek ke kiri pada karakter untuk mencari tahu apa yang tersembunyi di baliknya.
-q23_hint    Perbesar perisai dengan dua jari untuk membuatnya lebih besar dari ksatria.
-q24_hint    8 - 1 x 0 + 2 : 2 = 9\n\n\1 x 0 = 0\n\n2 : 2 = 1\n\n8 + 1 = 9
-q25_hint    Anda dapat mengklik satu digit dua kali. Jawabannya bisa 8 + 8 + 2 atau 6 + 6 + 6.
-q26_hint    Coba geser. Mati disembunyikan di sebelah kanan. \n\nKemudian tekan dadu sampai Anda melihat 6, 6 dan 4!
-q27_hint    Balikkan ponsel dan lihat lagi nomornya :) \n\n nomor urut, nomor 87 hilang
-q28_hint    Minuman = 10\nPopCorn = 5\nFrench Fries (1 paket) = 1\n\n5 + (1 x 10) = 15
-q29_hint    Kopi = 50\n\Croissant = 10\n\n50 : 10 = 5
-q30_hint    1 + 2 = 3\n\n2 x 3= 6\n\n6 : 6 = 1
-q31_hint    9 + 3 = 12\n\n2 x 12 = 24\n\n48 : 24 = 2
-q32_hint    Jam ungu sepertinya tidak nyata, pindahkan ke samping! Waktu yang tepat adalah 10:25
-q33_hint    Jawaban yang benar 4100
-q34_hint    Dan bagaimana jika Anda memindahkan kaktus?
-q35_hint    Anda mengambil tempatnya dan sekarang nomor 2!
-q36_hint    Jika ini ibu Ella, maka nama putri kelima adalah Ella!
-q37_hint    Jika teman bermain selama tiga jam, maka masing-masing dari mereka bermain selama 3 jam.
-q38_hint    Yah, tentu saja, kakak! Jika saudara perempuan Anda tidak lahir di musim dingin, maka dia lahir di musim panas!
-q39_hint    Leo membawakan donat, Mia membawa buku dan kue dan Emma membawakan croissant (klik kata di tugas).
-q40_hint    Agata minum 2 kali setengah cangkir. Hasilnya - secangkir penuh susu dan secangkir teh penuh.
-q41_hint    Pindahkan stiker! \n\n Yang kedua adalah stiker merah muda berbentuk lingkaran!
-q42_hint    Hitung operan di antara jari-jari. Ada 10.
-q43_hint    Empat. Karena setiap ayah adalah seorang putra, diperlukan dua kursi lagi. Jadi dua kursi masing-masing untuk dua kakek dan dua lagi untuk ayah adalah jumlah minimum kursi.
-q44_hint    Agar bunga tumbuh, Anda harus: \n1) menanam benih (bawa kantong ke dalam pot dan biarkan di sana) \n2) gabungkan awan, tutup matahari sehingga turun hujan \n3) lalu buka matahari!
-q45_hint    Coba pindahkan kalkulator, lalu jumlahkan semua angka yang Anda lihat di layar. Anda akan mendapatkan 283
-q46_hint    Lihat ke kanan, geser beberapa kali ke kiri untuk menemukan objek!
-q47_hint    Balikkan ember dengan dua jari dan pecahkan celengan
-q48_hint    Tidak hanya sayuran yang ditampilkan di layar! Tomat adalah buah beri!
-q49_hint    Temukan 2 bukti dan klik pada mereka. Salah satu pelari melepaskan tali sepatunya dan pelari lainnya memiliki perut yang tidak fit...
-q50_hint    Cobalah dan dapatkan secangkir! Sepertinya seseorang tidur sambil berdiri, oh Cyberpunk 2077 di malam hari.
-q51_hint    Temukan 2 bukti dan klik pada mereka. Ada noda darah di kaki kiri si penipu dan barang bukti di tangannya!
-q52_hint    Mari kita periksa! Ambil gelas dan bawa ke gadis-gadis, air akan tumpah dan Anda akan menemukan putri duyung!
-q53_hint    Angkat bantal dan klik pada telepon.
-q54_hint    Periksa tiketnya, mereka mengatakan berapa banyak penumpang yang terbang!
-q55_hint    Kuda-kuda itu sepertinya sedang menyamar! Coba tarik klaksonnya, unicorn punya yang tidak mau lepas.
-q56_hint    Keluarkan semua barang, lalu klik spons 2 kali untuk memerasnya dan pilih gelas dengan level air tertinggi.
-q57_hint    Balikkan telepon sampai cangkirnya terbalik! Isinya akan tumpah, lalu pilih cangkir dengan kopinya.
-q58_hint    Kumpulkan kelapa, lalu klik kotak 2 kali. Ini akan pecah dan Anda bisa menghitung kelapanya.
-q59_hint    Campurkan air, spons, dan sabun, lalu bersihkan virusnya! (Geser minimal 3 kali!)
-q60_hint    Temukan dan buka semua pasangan!
-q61_hint    Seseorang tampaknya telah berbaring untuk beristirahat di lantai. Gesek melintasi layar dan bersihkan lapisan atas seperti penghapus.
-q62_hint    Seret teks ke bagian bawah layar agar es krimnya lebih tinggi!
-q63_hint    Klik dua kali pada kotak, geser ke atas untuk mengeluarkan makanan. Klik dua kali pada kaleng untuk membukanya. Kemudian bawa makanan ke anjing untuk memberinya makan.
-q64_hint    Klik pada kata "kuncinya" di teks tugas!
-q65_hint    Temukan kata yang berulang dalam teks dan klik di atasnya!
-q66_hint    Tangkap kotorannya, dan jika Anda terlalu malas, tunggu keranjangnya terisi sendiri!
-q67_hint    Tarik kembali gambar di dinding! Rupanya, pria itu punya pacar dan dia memergokinya selingkuh! Klik pada pria itu.
-q68_hint    Lepaskan sepatunya!
-q69_hint    Seret tombol peluncuran ke lokasi lain, temukan api dan bawa ke bagian bawah roket!
-q70_hint    Geser ke kiri untuk menemukan sesuatu yang bisa menghiburnya, lalu klik pria itu!
-q71_hint    Geser daftar ke kiri, di belakang kelelawar Anda akan menemukan sepanci madu. Berikan pada beruang.
-q72_hint    Seret tanda ":" setelah kata "Anda" ke dadu untuk mendapatkan 2 poin tambahan!
-q73_hint    Letakkan semua catatan bersama-sama dan kemudian transfer ke orang tersebut.
-q74_hint    Ağaca bir kez tıklayın, ardından iki kez kuşlar korkar ve uçar.
-q75_hint    Baltayı görev metninde "seviye" kelimesine getirin.
-q76_hint    ≠ elde etmek için dikey çizgiyi + işaretinden = işaretine sürükleyin.
-q77_hint    Ekranı iki parmağınızla uzaklaştırın, kedi ekranın sağ köşesinde gizlenir.
-q78_hint    Sırıtmayı yana kaydırmayı deneyin. Oldukça sevimli bir köpek, değil mi?
-q79_hint    Jika Anda menghapus bagian dari dinding rumah, Anda dapat melihat seorang gadis di jendela. Klik padanya.
-q80_hint    Merdiveni iki parmağınızla yakınlaştırın ve kedinin aşağı inmesi için bir ağaca dayayın.
-q81_hint    Taruh 5 koin di gelas tengah dan letakkan gelas ini ke gelas lain di kiri atau kanan. Kemudian masukkan sisa 5 koin ke dalam gelas kosong.
-q82_hint    Tarik tanda hubung untuk mendapatkan 545 + 5 + 5 = 555
-q83_hint    Mencampur biru dan kuning menghasilkan hijau! Gabungkan isi gelas biru dan kuning!
-q84_hint    "Jika sebuah batu bata memiliki berat 1kg + setengah, maka setengah batu bata memiliki berat 1kg dan sebuah batu bata memiliki berat 2kg. \n1) 1 + 0.5x = x \n2) 1 = 0.5x \n3) 2 = x"
-q85_hint    Setiap segi enam di bagian bawah sama dengan jumlah dua segi enam di bagian atas. Jawaban: 6
-q86_hint    Ubah angka 5 menjadi angka 3 dengan menyeret korek api.
-q87_hint    Ada 0 pada perangkat, dan mengalikan dengan 0 akan selalu menghasilkan 0. \n\nJawaban: 0.
-q88_hint    Pindahkan roket atas ke bawah dan 2 roket samping ke baris kedua dari bawah.
-q89_hint    Pindahkan kotak input, kata sandi disembunyikan di belakangnya. Klik di atasnya.
-q90_hint    Pindahkan "kata sandi" dari teks tugas ke kotak yang akan diisi.
-q91_hint    Jika Anda menekan nomor bola "9" dua kali, bola akan terbalik untuk mendapatkan "6". \n\n Jawabannya adalah 6 + 5 + 3 = 14
-q92_hint    Pertama, masukkan semua barang ke dalam koper lalu seret teks tugas ke dalamnya.
-q93_hint    Klik 100 di teks tugas atau klik tombol 100 kali.
-q94_hint    Tempatkan ayam di atas telur, lalu pindahkan dan bayi ayam akan menetas!
-q95_hint    Pindahkan gambar 1 ke bingkai 1 \n Pindahkan gambar 2 ke bingkai 2 \n Pindahkan gambar 3 ke bingkai 1.
-q96_hint    Ubah angka 5 menjadi angka 6 dengan menyeret korek api dari tanda + untuk menjadikannya minus. \n\n Jawaban 6 - 2 = 4
-q97_hint    Ubah angka 3 menjadi angka 5 dengan cara drag korek api dari angka 3. \n\n Jawab 5 - 0 = 5
-q98_hint    Ubah angka 1 menjadi angka 7 dengan cara menyeret batang korek api dari angka 8 ke angka 0. \n\n Jawaban 7 - 7 = 0
-q99_hint    Ubah angka 3 menjadi angka 2 dengan cara drag korek api dari angka 2. \n\n Jawab 2 + 1 = 3
-q100_hint    Ubah 9 menjadi 3 dan 5 menjadi 9 dengan menyeret satu kecocokan dari 3. \n\n Jawab 3 * 3 = 9
-q101_hint    Ubah angka 5 menjadi 6 dengan cara drag korek api dari angka 8. \n\n Jawab 6 * 6 = 36
-q102_hint    Ubah angka 9 menjadi angka 8 dengan menyeret kecocokan vertikal. \n\n Jawaban 4 + 4 = 8
-q103_hint    Pindahkan korek api horizontal di tengah ke kanan, dan korek api tengah dari atap ke kiri. Kemiringannya akan berubah secara otomatis.
-q104_hint    Seret 3 kecocokan paling bawah ke bagian paling atas seolah-olah sedang bercermin.
-q105_hint    Hapus satu kecocokan vertikal di baris kedua di tengah untuk kotak pertama. Horizontal kedua di baris bawah di tengah.
-q106_hint    Seret 3 korek api paling bawah ke paling atas di posisi yang sama. Dua korek api yang merupakan sirip bawah ikan, dan satu korek api yang ada di paling kanan menutup kotak.
-q107_hint    Pindahkan 2 korek api vertikal bawah ke kanan dan kiri sehingga melengkapi kotak samping. Dan pindahkan kecocokan horizontal tengah bawah ke bagian paling atas.
-q108_hint    1. Lihat di balik tirai di jendela. Geser mereka ke samping dengan jari Anda. \n2. Pindahkan kursi.
-q109_hint    Lihat gambar.
-q110_hint    Lihat gambar.
-q111_hint    Lihat gambar.
-q112_hint    Lihat gambar.
-q113_hint    Lihat gambar.
-q114_hint    Lihat gambar.
-q115_hint    Lihat gambar.
-q116_hint    Lihat gambar.
-q117_hint    Lihat gambar.
-q118_hint    Lihat gambar.
-q119_hint    Lihat gambar.
-q120_hint    Lihat gambar.
-q121_hint    Lihat gambar.
-q122_hint    Lihat gambar.
-q123_hint    Lihat gambar.
-q124_hint    Lihat gambar.
-q125_hint    Lihat gambar.
-q126_hint    Lihat gambar.
-q127_hint    Lihat gambar.
-q128_hint    Lihat gambar.
-q129_hint    Lihat gambar.
-q130_hint    Lihat gambar.
-q131_hint    Lihat gambar.
-q132_hint    Lihat gambar.
-q133_hint    Lihat gambar.
-q134_hint    Lihat gambar.
-q135_hint    Lihat gambar.
-q136_hint    Lihat gambar.
-q137_hint    Lihat gambar.
-q138_hint    Lihat gambar.
-q139_hint    Lihat gambar.
-q140_hint    Lihat gambar.
-q141_hint    Lihat gambar.
-q142_hint    Lihat gambar.
-q143_hint    Lihat gambar.
-q144_hint    Lihat gambar.
-q145_hint    Lihat gambar.
-q146_hint    Lihat gambar.
-q147_hint    Lihat gambar.
-q148_hint    Lihat gambar.
-q149_hint    Ubah angka 8 menjadi angka 9 dengan menyeret batang korek api vertikal dan mengubah tanda "-" menjadi "+".\n\nJawaban 9 + 2 = 11
-q150_hint    Ubah angka 6 menjadi angka 5 dengan memindahkan pencocokan vertikal ke tanda "-", menjadikannya tanda plus.\n\nJawaban 5 + 2 = 7
-q151_hint    Ubah angka 3 menjadi angka 5 dengan menyeret pencocokan vertikal teratas.\n\nJawaban 1 + 4 = 5
-q152_hint    Ubah angka 16 menjadi angka 18 dengan menyeret batang korek api dari angka 8 menjadi angka 6.\n\nJawabannya adalah 6 * 3 = 18
-q153_hint    Ubah angka 5 menjadi angka 9 dengan menyeret batang korek api dari tanda “+” sehingga menjadi minus.\n\nJawabannya adalah 9 - 3 = 6
-q154_hint    Ubah angka 5 menjadi angka 3 dengan menyeret batang korek api vertikal.\n\nJawaban 7 * 3 = 21
-q155_hint    Hapus 2 kecocokan diagonal dan 1 kecocokan horizontal seperti yang ditunjukkan.
-q156_hint    Pindahkan batang korek api horizontal kanan atas satu posisi ke kiri, membentuk persegi. Selanjutnya, pindahkan kecocokan vertikal kanan di bawah kecocokan vertikal paling kiri. Selesaikan kotak dengan memindahkan sisa pertandingan horizontal ke posisi bawah.
-q157_hint    Tempatkan korek api vertikal kanan atas di tengah kotak kiri atas, lalu letakkan korek api horizontal kanan atas di tengah kotak kiri atas. Anda akan mendapatkan 3 kotak besar dan 4 kotak kecil.
-q158_hint    Tempatkan korek api yang membentuk sisi kanan segitiga tegak lurus sisi bawah untuk membuat angka 4. Kemiringan korek api akan berubah secara otomatis.
+// 10
+"action_start" = "Başlat";
+"app_name" = "Hızlı Beyin";
+"best_score" = "Skorunuz: %1$@";
+"chooser_text" = "… ile paylaş";
+"clear_records_message" = "Kayıtları temizlemek istediğinizden emin misiniz?";
+"clear_records_no" = "İptal";
+"clear_records_success" = "Kayıtlar silindi";
+"clear_records_title" = "Kayıtları temizle";
+"clear_records_yes" = "Temizle";
+"correct_answer" = "Doğru cevap:";
+"dialog_best_score" = "En iyi skor: %1$@";
+"dialog_menu" = "Menü";
+"dialog_rate_dont_remember" = "Gösterme";
+"dialog_rate_enjoy_our_app" = "Bizi değerlendirin";
+"dialog_rate_feedback_hint" = "Geri bildirim bırakın";
+"dialog_rate_feedback_subject" = "Hızlı Beyin oylama %1$@";
+"dialog_rate_how_about_rate_us" = "Bu oyun sizler için sevgiyle yapıldı. Yorumlarınızı ve isteklerinizi duymaktan memnuniyet duyarız. ";
+"dialog_rate_no_thanks" = "Kapat";
+"dialog_rate_not_really" = "Tam olarak değil";
+"dialog_rate_okay_sure" = "Oyla";
+"dialog_rate_send_feedback" = "Gönder";
+"dialog_rate_would_you_give_feedback" = "Bize geri bildirimde bulunmak ister misiniz?";
+"dialog_rate_yes" = "Evet!";
+"dialog_rating" = "Oylama";
+"dialog_restart" = "Tekrar deneyin";
+"every_day_notification_title" = "Alıştırma yapma vakti!";
+"message_need_choose_game_type" = "Lütfen oyun türünü seçin.";
+"message_thanks_for_disable_ad" = "Premium güncellemesi yaptığınız için teşekkürler!";
+"new_score" = "Yeni";
+"rating_in_top" = "En iyiler listesinde yerini bul";
+"settings" = "Ayarlar";
+"settings_clear_records" = "Kayıtları temizle";
+"settings_notification_description" = "Günlük alıştırmanı unutmamak için her gün bildirim al.";
+"settings_notification_time" = "Bildirim zamanı";
+"settings_notification_title" = "Bildirimler";
+"settings_vibration_description" = "Her yanlış cevapta";
+"settings_vibration_title" = "Titreşim";
+"share_mult_table_text" = "Çarpım Tablosunda en iyi skorum %1$@. Daha iyisini yapabilir misin? %2$@
+
+%3$@";
+"share_not_app_for_this_action" = "Geçersiz işlem";
+"share_quick_math_text" = "Hızlı Matematik'te en iyi skorum %1$@. Daha iyisini yapabilir misin? %2$@
+
+%3$@";
+"share_true_false_text" = "Doğru Yanlış'ta benim en iyi skorum %1$@. Daha iyisini yapabilir misin? %2$@
+
+%3$@";
+"table_multiplication_table" = "Çarpım Tablosu";
+"time_finished" = "Zaman doldu";
+"multiplication_page_difficult_max_number" = "Zorluk (Yüksek sayı)";
+"training_page_time_in_seconds" = "Zaman (Saniye)";
+"training_page_what_train" = "Neyi geliştirmek istersin?";
+"tutorial_action_types" = "Alıştırma yapmak istediğiniz matematik işlemlerinden bir veya birkaçını seçin.";
+"tutorial_complication_value" = "Örneklerde kullanılacak en yüksek sayıyı seçin.";
+"tutorial_next" = "Anladım";
+"tutorial_time_value" = "Her soru için gerekli süreyi seç.";
+"type_mathematic" = "Hızlı Matematik";
+"type_multiplication_table" = "Alıştırma";
+"type_true_false" = "Doğru / Yanlış";
+"wrong_answer" = "Yanlış cevap:";
+"your_scores" = "Skorunuz: %1$@";
+"update_new_version_available" = "Güncelleme mevcut. Şimdi güncellensin mi?";
+"update_app" = "Uygulamayı güncelle";
+"update_app_remind_me_later" = "Daha sonra hatırlat";
+"update_app_update" = "Güncelle";
+"finish_game_your_score_title" = "Sonucunuz";
+"finish_game_new_best_score_title" = "Yeni yüksek skor";
+"train_multiplication_table" = "Çarpım tablosu alıştırması";
+"message_error_can_not_load_video" = "Video yüklenemedi";
+"video_continue_game" = "Oyuna devam edilsin mi?";
+"video_watch_a_video" = "Bir video izle";
+"end_of_game" = "Oyunun sonu";
+"gameplay_skip" = "İleri";
+"button_get_coins" = "Satın al";
+"continue_use_coins" = "%1$@ altın kullan";
+"user_level" = "Seviye %1$@";
+"user_get_coins" = "Tebrikler! %1$@ altın aldın.";
+"user_login" = "Giriş yap";
+"user_logout" = "Çıkış yap";
+"user_student" = "Öğrenci";
+"no_data" = "Sayfa yüklenemiyor";
+"title_shop" = "Mağaza";
+"type_table_shulte" = "Büyüme Tablosu";
+"schulte_next_number" = "Sonraki: %1$@";
+"game_over" = "Oyun Bitti";
+"game_over_live_title" = "Tüm canlarını tükettin";
+"special_offer_remove_ads" = "Reklamları kaldır";
+"special_offer_time_leave" = "Kalan zaman";
+"special_offer_title" = "Özel paket";
+"special_offer_finished" = "Özel teklif sona erdi";
+"dialog_remove_ads_text" = "Oynarken reklamlardan bıktınız mı? Kalıcı olarak devre dışı bırakın! Tek seferlik ödeme.";
+"training_page_difficult_max_number_new" = "Zorluk (En yüksek sayı = %1$@)";
+"training_page_max_number" = "Yüksek sayı";
+"training_page_min_number" = "Düşük sayı";
+"high_score" = "Yüksek skor";
+"score" = "Skor";
+"instructions" = "Sadece kaydır. 2+2=4. 2048'e ya da daha fazlasına ulaş.";
+"you_win" = "Kazandın!";
+"go_on" = "Devam etmek için dokun";
+"for_now" = "Şimdilik…";
+"endless" = "Sonsuz Mod";
+"reset" = "Sıfırla";
+"cancel_continue_game" = "İptal";
+"reset_dialog_title" = "Oyun sıfırlansın mı?";
+"reset_dialog_message" = "Oyunu sıfırlamak istediğinize emin misiniz?";
+"type_game_2048" = "2048";
+"share_2048_text" = "2048 de en iyi skorum %1$@. Daha iyisini yapabilir misin? %2$@
+
+ %3$@";
+"move_back" = "Geri";
+"titile_dialog_move_back" = "Geri dönüş";
+"text_dialog_move_back" = "Geri dönmek için %1$@ altın kullan veya videoyu izleyin";
+"text_not_coins" = "Yeterli altın yok";
+"notification_title_special_offer" = "Özel teklif yakında bitecek! İndirimi kaçırma!";
+"last_chance_special_offer" = "Özel teklif sona erdi. Fakat size son bir şans daha veriyoruz. Sadece şu an için.";
+"dialog_titile_tutorial" = "Nasıl oynanır";
+"user_get_coins_and_experiance" = "Tebrikler! %1$@ altın ve %2$@ deneyim edindin. ";
+"you_lose" = "Kaybettin";
+"indicator_you" = "Sen";
+"quick_game" = "Hızlı Oyun";
+"invite_players" = "Arkadaşlarını davet et";
+"see_invitations" = "Davetiyeleri gör";
+"quick_game_explanation" = "Rastgele bir rakiple mücadele";
+"invite_players_explanation" = "Bir oyun oynamak için arkadaş davet et.";
+"see_invitations_explanation" = "Size davet gönderenleri gör.";
+"inv_popup_text" = "Gelen davetiye!";
+"accept_popup_invite" = "Kabul et!";
+"game_problem" = "Oyuna başlarken bir hata oluştu, İnternet ile ilgili sorunlar olabilir. Lütfen tekrar deneyin.";
+"is_inviting_you" = "size meydan okudu!";
+"signin_other_error" = "Giriş yapılırken sorunla karşılaşıldı. Lütfen daha sonra deneyin.";
+"start_titile_fight" = "Saldır!";
+"type_game_draw" = "Berabere";
+"type_game_win" = "Kazanan";
+"type_game_lose" = "Kaybeden";
+"leaderboards_title" = "Liderler tablosu";
+"user_leave_room" = "Kullanıcı mücadeleden kaçtı.";
+"the_sale" = "Satış";
+"multiplayer_title_page" = "Arena";
+"share_app_with_friends" = "Uygulamayı arkadaşlarınla paylaşmak ister misin?";
+"dialog_more_games_title" = "Daha fazla oyun";
+"dialog_more_games_text" = "Merhaba
+ ! Başka oyunlarımızı da denemek ister misin?";
+"training_game_type_test" = "Test";
+"training_game_type_input" = "Giriş";
+"training_game_type_true_false" = "Doğru / Yanlış";
+"training_game_type_title" = "Oyun tipi";
+"type_game_input_math" = "Girdi matematiği";
+"settings_restore_purchases" = "Satın alımları onar";
+"shulte_classic_game" = "Klasik alışılmış masa";
+"menu_help_title" = "Talimat";
+"type_game_balance" = "Denge";
+"balance_equals" = "Eşit";
+"balance_short_instruction_large" = "Hangisi daha büyük?";
+"balance_short_instruction_small" = "Hangisi daha küçük?";
+"subscription_page_title" = "Abonelik";
+"subscription_full_access_title" = "Tam bir alıştırma programı al.";
+"subscription_full_access_subtitle" = "Hızlı Beyin Premium ile";
+"subscription_most_popular_label" = "En popüler";
+"subscription_yearly" = "Yıllık";
+"subscription_monthly" = "Aylık";
+"subscription_in_month" = "Bir aylık";
+"subscription_features" = "Abonelik özellikleri";
+"subscription_play_in_games" = "8+ bilişsel oyunlar oyna";
+"subscription_remove_ads" = "Reklamsız";
+"levels_games_coming_soon" = "Yeni Oyunlar Yakında…";
+"title_wrong" = "Yanlış!";
+"shulte_table_find_number" = "Sayıyı bul:";
+"subscription_total_title" = "Toplam";
+"subscription_premium" = "Premium";
+"message_error_load_video_no_internet" = "Video yüklenemedi, lütfen internet bağlantınızı kontrol edin.";
+"notification_button_play" = "Başlat";
+"notification_button_remind_later" = "%1$@ dakika sonra hatırlat";
+"shop_share_button_title" = "Uygulamayı paylaş";
+"title_loading" = "Yükleniyor, lütfen bekleyin…";
+"scores_your_score_better_then" = "Skorunuz %1$d%% oyuncudan daha iyi";
+"scores_your_score_second" = "Neredeyse en iyisisin!";
+"scores_your_score_first" = "Şampiyon sensin!";
+"rating_check_more_scores_title" = "Diğer oyuncuların skorlarına bak";
+"your_best_score" = "En iyi skorun";
+"common_error" = "Hata";
+"common_ok" = "Tamam";
+"error_privacy" = "Lütfen gizlilik ayarlarını kontrol edin. Kişilerinize erişmemiz gerekiyor.";
+"payment_success" = "Başarılı";
+"payment_error" = "Hata";
+"settings_social_title" = "Bize katılın";
+"settings_social_facebook_title" = "Facebook";
+"settings_social_vk_title" = "Vk";
+"number_speed_level" = "Hız seviyesi";
+"tutorial_2048_first" = "İlk olarak oynamak istediğiniz tahtayı seçin. Örneğin 4x4 tahtada toplam 16 fayans bulunur. Daha sonra üzerinde 2 yazan iki tane fayans ekranda rastgele bir konumda belirir";
+"tutorial_2048_two" = "Fayansları hareket ettirmek için yukarı, aşağı, sol veya sağ tarafa kaydırın. Fayansların kayabileceği alan olduğu sürece istediğiniz kadar kaydırma yapabilirsiniz.";
+"tutorial_2048_three" = "Aynı sayıya sahip fayanslar bir hareket sırasında üst üste gelirse bu iki fayansın toplamını alacak şekilde tek fayansa dönüşür. Örneğin, iki tane 2 fayansı üst üste gelecek şekilde kaydırılırsa üzerinde 4 yazan bir fayansa dönüşür. Bu işlem sırasında 2 fayanstan tek fayans oluşmasından ötürü bir fayanslık boşluk oluşur.";
+"tutorial_2048_four" = "Her adımda herhangi bir fayans birleşmesi olup olmadığına bakılmaksızın üzerinde 2 veya 4 yazan yeni bir fayans rastgele ekranda belirir.";
+"tutorial_2048_five" = "Fayans üzerindeki sayıları arttırabilmek için kaydırmaya devam edin. Amaç 2048 veya daha fazlasına ulaşmak. 2048 elde edebilmek için 2 tane 1024'e, 1024 elde etmek için 2 tane 512'e, 512 için 2 tane 256 fayansına ihtiyacınız var. Bu da böyle devam eder.";
+"tutorial_2048_six" = "Oyun, tahta tamamen dolduktan ve hareket edecek herhangi bir yer olmadığı zaman son bulur.";
+"tutorial_2048_seven" = "Her bir oyunda hedeflenen sayı elde edildiğinde altın ve deneyim kazanılır.
+
+Her bir oyun için hedeflenen sayılar:";
+"tutorial_2048_title" = "Öğretici";
+"tutorial_2048_levels_showcase_title" = "Başlamadan önce «nasıl oynanır» kısmından temel kurallara bir göz gezdirin.";
+"how_to_play_title" = "Nasıl oynanır";
+"balance_game_over_questions" = "Sorular:";
+"balance_game_over_your_answer" = "Cevabın:";
+"multiplayer_login_title" = "Arkadaşlarından daha iyi oynayabilir misin? Bunu anlamanın bir yolu var. Oyunu arkadaşlarınla birlikte oynamak! Bunun için Google ile giriş yapman gerek.";
+"game_2048_continue_game_title" = "Oyuna devam edilsin mi?";
+"game_2048_continue_game_description" = "Altın kullanarak oyuna devam edebilirsin. 2 ve 4 sayılarını kaldıracağız.";
+"settings_terms_of_service_title" = "Kullanım Şartları";
+"settings_privacy_policy" = "Gizlilik Politikası";
+"profile_login_button_description" = "Diğer cihazlarda da ilerlemenizin kaydolması için giriş yapmanız gerekiyor. Giriş yaparak diğer oyuncularla oynayabilir ve skorlarınızı karşılaştırabilirsiniz.";
+"type_hard_math" = "Zor matematik";
+"leaderboards_today" = "Bugün";
+"leaderboards_weekly" = "Bu hafta";
+"game_2048_mission_game_title" = "Görevin";
+"game_2048_mission_game_description_first" = "%1$@ rakamına ulaş ve ödülünü al";
+"game_2048_mission_game_description_second" = "ve %1$@ altın";
+"game_2048_mission_game_description_thirty" = "ve %1$@ deneyim edin";
+"game_2048_mission_game_description_get" = "ve … edin";
+"dialog_daily_quests_title" = "Günlük görevler";
+"dialog_daily_quests_claim" = "İddia";
+"dialog_daily_quests_no_quests" = "Bugün için görev yok. Geri dön ve yarın kontrol et.";
+"dialog_daily_time_until_next_quests" = "Bir sonraki görevlere kadar:";
+"dialog_daily_complete_all_quests_for_reward" = "Ödül için tüm görevleri tamamlayın:";
+"quest_desc_operator_count" = "%2$@ operatör ile %1$@ seviyeyi doğru bir şekilde çözün.";
+"quest_desc_level_count" = "%1$@ seviyelerini %2$@ içinde çözün.";
+"quest_desc_earn_xp" = "%1$@ tecrübe puanı kazanın.";
+"quest_desc_reach_level" = "%2$@ seviyesinde %1$@ seviyeye ulaşın.";
+"quest_desc_schulte_table" = "%2$@ sn altında %1$@ tabloyu çözün.";
+"quest_desc_spend_coins" = "%1$@ para harca.";
+"quest_desc_win_duel" = "%1$@ düello kazan.";
+"quest_desc_merge_tiles" = "2048 oyununda %1$@ fayansı birleştirin.";
+"quest_completed" = "Görevler tamamlandı";
+"quest_open_chest" = "Açık";
+"quest_reward_desc_coins" = "%1$@ jetonu aldınız!";
+"quest_showcase_tutorial_description" = "Günlük görevler sizin için hazır. Her gün yeni görevler tamamla ve ödül al!";
+"settings_daily_training_notification_title" = "Günlük eğitim";
+"settings_daily_quest_notification_title" = "Günlük görevler";
+"settings_daily_quest_notification_desc" = "Günlük görevlerinizi unutmamak için her gün bildirim alın.";
+"notification_quest_reminder" = "Günlük görevler için zaman.";
+"premium_option_no_ads" = "Reklamsız";
+"premium_option_games_access" = "Tüm oyunlara sınırsız erişim";
+"premium_option_cancel_anytime" = "İstediğin zaman iptal et";
+"premium_info_trial_free" = "%1$@ Ücretsiz Günleri Deneyin";
+"premium_button_continue" = "Ücretsiz deneyin";
+"premium_page_first_title" = "Ödül";
+"premium_page_second_title" = "Hızlı beyin";
+"ios_premium_subscription_rules_description" = "Geçerli sürenin bitiminden en az 24 saat önce otomatik yenileme kapatılmadığı sürece abonelik otomatik olarak yenilenecektir. Aboneliğinizi yönetmek ve otomatik yenilemeyi kapatmak için iTunes Hesabı ayarlarınıza gidebilirsiniz. Satın alma onaylandığında iTunes Hesabınızdan ücret alınacaktır. Ücretsiz denemeniz sona ermeden abone olursanız, ücretsiz denemenizin geri kalanı, satın alma işleminiz onaylanır onaylanmaz kaybeder";
+"ios_premium_subscription_then" = "sonra";
+"ios_premium_subscription_free" = "ücretsiz deneme";
+"ios_premium_subscription_start_trial" = "Deneme sürümünü başlat";
+"ios_premium_subscription_subscribe" = "Abone ol";
+"ios_premium_subscription_per" = "başına";
+"ios_premium_subscription_privacy_policy" = "Kullanım Şartları";
+"ios_premium_subscription_terms_use" = "Gizlilik Politikası";
+"ios_premium_subscription_has" = "Geçerli bir aboneliğiniz var";
+"rate_us_thanks_message" = "Geri bildiriminiz için teşekkürler!";
+"share_app_message" = "En iyi beyin gelişimi uygulaması olan Quick Brain'i tavsiye ederim!";
+"levels_cross_promo_title" = "Split Area";
+"levels_cross_promo_brain_over_title" = "Brain Over";
+"levels_cross_promo_subtitle" = "Yeni oyunumuz (Reklamlar)";
+"dialog_quests_no_connection" = "İnternet bağlantısı yok";
+"dialog_quests_retry" = "Yenile";
+"multiplayer_waiting_room_error" = "Arena'ya başlayamayız. Lütfen Google Play'de Google Play Oyunlar için son güncellemeniz olup olmadığını kontrol edin";
+"settings_theme_description" = "Karanlık bir tema açmak, pil ömrünü uzatır";
+"settings_theme_title" = "Karanlık tema";
+"promote_night_mode_dialog_title" = "Karanlık tema burada";
+"promote_night_mode_dialog_description" = "Daha rahat okuma keyfini çıkarın ve pilden tasarruf edin.";
+"promote_night_mode_dialog_button_turn_on" = "Etkinleştirmek";
+"promote_night_mode_dialog_button_cancel" = "Yakın";
+"ios_premium_info_trial_free" = "%1$@ Ücretsiz Günleri Deneyin";
+"ios_premium_info_trial_free_v2" = "%1$@ Ücretsiz";
+"settings_dark_mode_use_system" = "Sistem temasını kullan";
+"settings_dark_mode_use_system_description" = "Gece modu için sistem ayarları kullanılacaktır";
+"dialog_crosspromo_description" = "Daha ilginç alıştırmalar ve yapbozlar kurmak için ücretsiz sunuyoruz. Bu popüler oyunumuz için bir reklamdır.";
+"dialog_crosspromo_title" = "Daha fazla gamez";
+"dialog_crosspromo_get_button" = "Oyunları indir";
+"power_memo_title" = "Bellek gücü";
+"multiplayer_sorry_message" = "We apologize.
+ Due to the fact that Google has closed services for multiplayer games since March 31, 2020. which forces us to temporarily block access to the Arena. For our part, we plan to revise this mode and offer you a better solution than before.
+
+ Best Regards,
+ Quick Brain Team.
+
+
+ For any questions and suggestions, you can visit us on social network.";
+"special_offer_banner_title" = "Özel paket";
+"special_offer_banner_description" = "Tüm eğitim oyunlarına sınırsız erişim elde edin";
+"special_offer_banner_button" = "Daha fazla detay";
+"special_offer_save_money" = "%1$@ daha ucuz";
+"every_day_notification_title_1" = "Beyin için en iyi dinlenme egzersizdir! Oyuna gir!";
+"every_day_notification_title_2" = "Beynini boşalt ve oyunun tadını çıkar!";
+"every_day_notification_title_3" = "It's time for brain training!";
+"every_day_notification_title_4" = "Oyuna gir, oyna ve aklını eğit!";
+"levels_brain_over_banner_subtitle" = "Yeni oyunumuzu deneyin!";
+"event_christmas_levels_banner_title" = "Yeni Yıl Görevi";
+"event_christmas_levels_banner_subtitle" = "Görevleri tamamlayın ve ödüller kazanın!";
+"event_christmas_levels_banner_button_go" = "Başlat";
+"event_christmas_event_details_title" = "Yeni Yıl Görevi";
+"event_christmas_event_details_subtitle" = "Tüm görevleri tamamlayın ve unutulmaz bir rozet ve diğer ödüller kazanın!";
+"event_christmas_event_details_timer_title" = "Olay bitiyor";
+"event_christmas_section_reward_1_title" = "Aferin! ";
+"event_christmas_section_reward_1_subtitle" = "Beyniniz harika bir egzersiz yaptı!";
+"event_christmas_section_reward_2_title" = "Biraz Dahi! ";
+"event_christmas_section_reward_2_subtitle" = "Sadece birkaç kişi sorunları bu kadar havalı çözebilir!";
+"event_christmas_section_reward_3_title" = "Harikasın! ";
+"event_christmas_section_reward_3_subtitle" = "% 90 asla o kadar uzağa gidemez";
+"event_christmas_section_reward_4_title" = "Megamind ";
+"event_christmas_section_reward_4_subtitle" = "Einstein'dan daha iyisin!";
+"event_christmas_event_completed" = "Yeni Yıl Görevi tamamlandı";
+"event_christmas_event_claim_reward_button" = "Ödülü al";
+"win_quest_reward_title_1" = "İnanılmaz!";
+"win_quest_reward_title_2" = "Hey, Fena Değil!";
+"win_quest_reward_title_3" = "İyi iş!";
+"win_quest_reward_title_4" = "Vaov! İyi sonuç!";
+"win_quest_reward_title_5" = "Harikasın!";
+"win_quest_reward_title_6" = "Yüksek kalite, aferin!";
+"win_quest_reward_title_7" = "Inanılmaz!";
+"win_quest_reward_title_8" = "Durdurulamaz! Aferin!";
+"win_quest_reward_title_9" = "Biraz Dahi!";
+"win_quest_reward_title_10" = "Mükemmel Sonuç!";
+"win_quest_reward_title_11" = "Doğru yoldasın!";
+"win_quest_reward_title_12" = "Neşelendirmek!";
+"win_quest_reward_title_13" = "Bir dahaki sefere daha iyi şanslar!";
+"win_quest_reward_title_14" = "Hatalarından öğreniyorsun!";
+"win_quest_reward_title_15" = "Pokračovať v boji!";
+"win_quest_reward_title_16" = "Poď! Ty to dokážeš! Len ver v seba!";
+"win_quest_reward_title_17" = "Stojím za vami na 100%! Zostaň silný!";
+"win_quest_reward_title_18" = "Skúste to znova! Rozveselte sa!";
+"win_quest_reward_title_19" = "Nabudúce viac šťastia!";
+"event_game_over_to_tasks" = "K úlohám";
+"event_game_over_restart" = "Hrať znova";
+"event_quest_progress" = "%1$@ üzerinden %2$@";
+"event_quest_win_task_completed" = "Úloha dokončená";
+"event_quest_win_open_tasks" = "Otvorte zoznam úloh";
+"event_quest_profile_achievements_title" = "Úspechy";
+"achievement_item_christmas_title" = "Splňte novoročnú úlohu";
+"event_quest_dialog_your_reward_title" = "Senin ödülün";
+"event_quest_dialog_reward_title" = "Unutulmaz rozet";
+"event_quest_dialog_reward_button" = "Güzel";
+"event_quest_achievement_added" = "Başarı eklendi";
+"event_quest_share_dialog_title" = "Páčilo sa vám novoročné pátranie?";
+"event_quest_share_dialog_subtitle" = "Povedzte svojim priateľom o Quick Brain!";
+"event_quest_share_dialog_button_share" = "Odošlite odkaz priateľom";
+"event_quest_share_dialog_button_close" = "Bak ne harika bir oyun buldum! Deneyin, duramayacaksınız ve beyniniz size teşekkür edecek!";
+"event_quest_profile_achievements_empty" = "Burada henüz başarı yok. Bir sonraki etkinliği kaçırmayın!";
+"quest_desc_reach_tile_number" = "%2$@ yılında %1$@ Kafel oluştur";
+"event_quest_achievement_added_toast" = "Başarı profilinize eklendi!";
+"onboarding_page_first_title" = "Matematik becerilerinizi geliştirin";
+"onboarding_page_second_title" = "Hafıza, dikkat, hız, tepki ve daha fazlasını uygulayın!";
+"onboarding_page_third_title" = "Diğer oyunculara karşı nasıl sıraladığınızı görün";
+"onboarding_continue_button" = "Devam et";
+"subscription_premium_title" = "Ödül";
+"subscription_premium_free_title" = "Premium'u ücretsiz deneyin";
+"subscription_premium_option_one" = "Reklam yok";
+"subscription_premium_option_two" = "Tüm oyunlara tam erişim";
+"subscription_premium_option_three" = "Herhangi bir zamanda iptal";
+"subscription_terms_divider" = "ve";
+"ios_dialog_open_game_title" = "Premium abonelik";
+"ios_dialog_open_game_description" = "Tüm oyunları oynamak için abone olun! Veya bir kez oynatmak için bir reklam izleyin";
+"ios_dialog_open_game_unblock_button" = "Tüm oyunların engelini kaldır";
+"ios_dialog_open_game_watch_video_button" = "Reklamları izle";
+"ios_dialog_open_game_close_button" = "Antrenmanı bitir";
+"motivation_title_1" = "Harikasın!";
+"motivation_title_2" = "Hey, Fena Değil!";
+"motivation_title_3" = "İyi iş!";
+"motivation_title_4" = "Vaov! İyi sonuç!";
+"motivation_title_5" = "Harikasın!";
+"motivation_title_6" = "Yüksek kalite, aferin!";
+"motivation_title_7" = "Inanılmaz!";
+"motivation_title_8" = "Durdurulamaz! Aferin!";
+"motivation_title_9" = "Biraz Dahi!";
+"motivation_title_10" = "Mükemmel Sonuç!";
+"motivation_title_11" = "Doğru yoldasın!";
+"daily_workout_banner_title" = "Günlük ücretsiz egzersiz";
+"daily_workout_banner_start" = "Başlamak";
+"daily_workout_banner_next_training_title" = "Sonraki antrenman";
+"daily_workout_banner_come_tomorrow_title" = "Yarın tekrar gel!";
+"daily_workout_banner_continue" = "İlerlemek";
+"daily_workout_win_next" = "İleri";
+"daily_workout_comleted_title" = "Antrenman bitti!";
+"daily_workout_comleted_subtitle" = "Yeni bir günlük egzersiz için yarın tekrar gelin";
+"daily_workout_comleted_button_ok" = "TAMAM MI";
+"daily_workout_all_comleted_title" = "Yakında Yeni Görevler Geliyor";
+"daily_workout_all_comleted_subtitle" = "Güncellemeler için bizi izlemeye devam edin ve kaçırmayın!";
+"bo_promo_title" = "Tüm görevler tamamlandı!";
+"bo_promo_subtitle" = "Brain Over'da bulacağınız daha fazla bulmaca!";
+"bo_promo_action_button" = "Google Play'e gidin";
+"bo_promo_secondary_button" = "Kapat";
+"event_quest_weekly_title" = "Haftalık görev";
+"event_quest_completed" = "Görev tamamlandı";
+"event_quest_weekly_start_title" = "Yeni Yıl görevini tamamlayın";
+"event_quest_reward_one" = "Herkül'ün Özellikleri";
+"event_quest_reward_two" = "Pandoranın Kutusu";
+"event_quest_reward_three" = "Prometheus Ateşi";
+"event_quest_reward_four" = "Odysseus'un Zihni";
+"event_quest_reward_five" = "Hephaestus Ateşi";
+"event_quest_reward_six" = "Orpheus Arpı";
+"event_quest_reward_seven" = "Hades'in Yeraltı Dünyası";
+"event_quest_reward_eight" = "Athena Bilgeliği";
+"event_quest_reward_nine" = "Zeus Yıldırım";
+"event_quest_reward_ten" = "Poseidon'un Üç Mızrağı";
+"tutorial_game_preview_math" = "Doğru cevabı seçin";
+"tutorial_game_preview_true_false" = "Doğruyu veya yanlışı seçin";
+"tutorial_game_preview_schulte_table" = "Artan sırayla tüm sayıları seçin";
+"tutorial_game_preview_balance" = "Soruyu cevaplayın ve doğru seçeneği seçin";
+"tutorial_game_preview_power_memory" = "Renkli blokları hatırlayın, ardından bu öğeleri tekrar seçin";
+"disable_ads_main_title" = "Reklamları kaldırmak?";
+"disable_ads_main_description" = "Can sıkıcı reklamlardan kalıcı olarak kurtulun!";
+"disable_ads_main_expensive_title" = "Çok pahalı?";
+"disable_ads_main_restore_purchases" = "Satın alınanları geri yükle";
+"disable_ads_offer_title" = "Özel bir teklifin kilidini açtınız!
+Onu elde etmek için tek şansını kullan!";
+"disable_ads_offer_sale_title" = "İndirim %1$@";
+"disable_ads_offer_button_title" = "%1$@ için reklamları devre dışı bırak";
+"disable_ads_offer_dialog_description" = "Tek seferlik özel teklifi iptal etmek istediğinizden emin misiniz?";
+"disable_ads_offer_dialog_button_back" = "geri";
+"disable_ads_offer_dialog_button_discard" = "iptal etmek";
+"disable_ads_pre_interstitial_title" = "Reklamlar bu uygulamayı geliştirmemize yardımcı oluyor";
+"disable_ads_pre_interstitial_disable_ad_button_title" = "Reklamları devre dışı bırak";
+"disable_ads_pre_interstitial_see_ads_button_title" = "Bir reklam izleyin";
+"dialog_numbers_game_unblocked_title" = "Fayans yapılır!";
+"dialog_numbers_game_your_reward" = "Ödülünüz:";
+"dialog_numbers_game_button_claim_title" = "Almak";
+"dialog_numbers_game_button_no_thanks" = "Hayır, teşekkürler";
+"sudoku_new_game" = "Novo jogo";
+"sudoku_name" = "Sudoku";
+"sudoku_level_easy" = "Fácil";
+"sudoku_level_hard" = "Difícil";

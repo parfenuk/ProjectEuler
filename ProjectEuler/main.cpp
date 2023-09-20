@@ -60,17 +60,26 @@ int main() {
     freopen("input.txt","rt",stdin);
     freopen("output.txt","wt",stdout);
 #endif
-        
+    
     //ifstream in("Hints.csv");
+    vector<string> keys = { "cancel_continue_game", "common_error", "common_ok", "correct_answer", "dialog_menu", "dialog_numbers_game_unblocked_title", "dialog_restart", "finish_game_new_best_score_title", "game_over", "game_problem", "high_score", "instructions", "move_back", "onboarding_continue_button", "rating_in_top", "reset_dialog_message", "score", "settings", "titile_dialog_move_back", "video_continue_game", "video_watch_a_video", "wrong_answer", "you_win" };
+    
     string S;
+    cout << "//QB 2048 Strings\n";
     while (getline(cin,S)) {
-        size_t hint = S.find("_hint");
-        if (hint == string::npos || S[0] != 'q') { cout << "ALARM!"; return 0; }
-        int id = atoi(S.substr(1,hint-1).c_str());
-        string s1 = S.substr(0,hint+5);
-        string s2 = S.substr(hint+9,S.length()-hint-9);
-        add_escapings(s2);
-        cout << "\"q" << id << "_hint\" = \"" << s2 << "\";\n";
+        if (!StringUtils::hasPrefix(S, "\"")) continue;
+        S.erase(0,1);
+        S.pop_back();
+        S.pop_back();
+        for (int i=0; i<(int)keys.size(); i++) {
+            if (!StringUtils::hasPrefix(S,keys[i]+'"')) continue;
+            size_t c = S.find("\"");
+            c = S.find("\"", c+1);
+            string s1 = keys[i];
+            string s2 = S.substr(c+1,S.length()-c-1);
+            add_escapings(s2);
+            cout << "\"" << keys[i] << "\" = \"" << s2 << "\";\n";
+        }
     }
     
     //Total_Time = clock() - Total_Time;
