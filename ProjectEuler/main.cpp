@@ -51,6 +51,21 @@ void add_escapings (string &S) {
     }
 }
 
+void generate_from_single_element_in_list (int n)
+{
+    vector<string> ret(n);
+    string S;
+    for (int i=0; i<n; i++) {
+        getline(cin,S);
+        ret[i] = "\"" + S + "\" = ";
+    }
+    for (int i=0; i<n; i++) {
+        getline(cin,S);
+        ret[i] += "\"" + S + "\";";
+    }
+    for (int i=0; i<n; i++) cout << ret[i] << endl;
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -61,25 +76,47 @@ int main() {
     freopen("output.txt","wt",stdout);
 #endif
     
-    //ifstream in("Hints.csv");
-    vector<string> keys = { "cancel_continue_game", "common_error", "common_ok", "correct_answer", "dialog_menu", "dialog_numbers_game_unblocked_title", "dialog_restart", "finish_game_new_best_score_title", "game_over", "game_problem", "high_score", "instructions", "move_back", "onboarding_continue_button", "rating_in_top", "reset_dialog_message", "score", "settings", "titile_dialog_move_back", "video_continue_game", "video_watch_a_video", "wrong_answer", "you_win" };
+    generate_from_single_element_in_list(141);
+    return 0;
     
     string S;
-    cout << "//QB 2048 Strings\n";
+    map<string,string> M;
+    int K = 1;
     while (getline(cin,S)) {
-        if (!StringUtils::hasPrefix(S, "\"")) continue;
-        S.erase(0,1);
-        S.pop_back();
-        S.pop_back();
-        for (int i=0; i<(int)keys.size(); i++) {
-            if (!StringUtils::hasPrefix(S,keys[i]+'"')) continue;
-            size_t c = S.find("\"");
-            c = S.find("\"", c+1);
-            string s1 = keys[i];
-            string s2 = S.substr(c+1,S.length()-c-1);
-            add_escapings(s2);
-            cout << "\"" << keys[i] << "\" = \"" << s2 << "\";\n";
+        size_t br = S.find("\" = \"");
+        if (br == string::npos) {
+            if ((StringUtils::hasPrefix(S, "//") && K == 2)) cout << S << endl;
+            K++;
+            continue;
         }
+        
+        string key = S.substr(1,br-1);
+        string value = S.substr(br+5,S.length()-br-7);
+        
+        if (M.find(key) == M.end()) {
+            M[key] = value;
+            add_escapings(value);
+            cout << "\"" << key << "\" = \"" << value << "\";\n";
+        }
+        
+        //cout << key << " = " << value << endl;
+//        if (M.find(key) != M.end()) {
+//            if (M[key] != value) cout << K << ": " << key << " - same value\n";
+//            else cout << K << ": old: " << M[key] << ", new: " << value << endl;
+//        } else {
+//            M[key] = value;
+//        }
+        
+        K++;
+//        for (int i=0; i<(int)keys.size(); i++) {
+//            if (!StringUtils::hasPrefix(S,keys[i]+'"')) continue;
+//            size_t c = S.find("\"");
+//            c = S.find("\"", c+1);
+//            string s1 = keys[i];
+//            string s2 = S.substr(c+1,S.length()-c-1);
+//            add_escapings(s2);
+//            cout << "\"" << keys[i] << "\" = \"" << s2 << "\";\n";
+//        }
     }
     
     //Total_Time = clock() - Total_Time;

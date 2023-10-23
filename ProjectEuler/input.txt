@@ -1,427 +1,282 @@
-// 10
-"action_start" = "Başlat";
-"app_name" = "Hızlı Beyin";
-"best_score" = "Skorunuz: %1$@";
-"chooser_text" = "… ile paylaş";
-"clear_records_message" = "Kayıtları temizlemek istediğinizden emin misiniz?";
-"clear_records_no" = "İptal";
-"clear_records_success" = "Kayıtlar silindi";
-"clear_records_title" = "Kayıtları temizle";
-"clear_records_yes" = "Temizle";
-"correct_answer" = "Doğru cevap:";
-"dialog_best_score" = "En iyi skor: %1$@";
-"dialog_menu" = "Menü";
-"dialog_rate_dont_remember" = "Gösterme";
-"dialog_rate_enjoy_our_app" = "Bizi değerlendirin";
-"dialog_rate_feedback_hint" = "Geri bildirim bırakın";
-"dialog_rate_feedback_subject" = "Hızlı Beyin oylama %1$@";
-"dialog_rate_how_about_rate_us" = "Bu oyun sizler için sevgiyle yapıldı. Yorumlarınızı ve isteklerinizi duymaktan memnuniyet duyarız. ";
-"dialog_rate_no_thanks" = "Kapat";
-"dialog_rate_not_really" = "Tam olarak değil";
-"dialog_rate_okay_sure" = "Oyla";
-"dialog_rate_send_feedback" = "Gönder";
-"dialog_rate_would_you_give_feedback" = "Bize geri bildirimde bulunmak ister misiniz?";
-"dialog_rate_yes" = "Evet!";
-"dialog_rating" = "Oylama";
-"dialog_restart" = "Tekrar deneyin";
-"every_day_notification_title" = "Alıştırma yapma vakti!";
-"message_need_choose_game_type" = "Lütfen oyun türünü seçin.";
-"message_thanks_for_disable_ad" = "Premium güncellemesi yaptığınız için teşekkürler!";
-"new_score" = "Yeni";
-"rating_in_top" = "En iyiler listesinde yerini bul";
-"settings" = "Ayarlar";
-"settings_clear_records" = "Kayıtları temizle";
-"settings_notification_description" = "Günlük alıştırmanı unutmamak için her gün bildirim al.";
-"settings_notification_time" = "Bildirim zamanı";
-"settings_notification_title" = "Bildirimler";
-"settings_vibration_description" = "Her yanlış cevapta";
-"settings_vibration_title" = "Titreşim";
-"share_mult_table_text" = "Çarpım Tablosunda en iyi skorum %1$@. Daha iyisini yapabilir misin? %2$@
-
-%3$@";
-"share_not_app_for_this_action" = "Geçersiz işlem";
-"share_quick_math_text" = "Hızlı Matematik'te en iyi skorum %1$@. Daha iyisini yapabilir misin? %2$@
-
-%3$@";
-"share_true_false_text" = "Doğru Yanlış'ta benim en iyi skorum %1$@. Daha iyisini yapabilir misin? %2$@
-
-%3$@";
-"table_multiplication_table" = "Çarpım Tablosu";
-"time_finished" = "Zaman doldu";
-"multiplication_page_difficult_max_number" = "Zorluk (Yüksek sayı)";
-"training_page_time_in_seconds" = "Zaman (Saniye)";
-"training_page_what_train" = "Neyi geliştirmek istersin?";
-"tutorial_action_types" = "Alıştırma yapmak istediğiniz matematik işlemlerinden bir veya birkaçını seçin.";
-"tutorial_complication_value" = "Örneklerde kullanılacak en yüksek sayıyı seçin.";
-"tutorial_next" = "Anladım";
-"tutorial_time_value" = "Her soru için gerekli süreyi seç.";
-"type_mathematic" = "Hızlı Matematik";
-"type_multiplication_table" = "Alıştırma";
-"type_true_false" = "Doğru / Yanlış";
-"wrong_answer" = "Yanlış cevap:";
-"your_scores" = "Skorunuz: %1$@";
-"update_new_version_available" = "Güncelleme mevcut. Şimdi güncellensin mi?";
-"update_app" = "Uygulamayı güncelle";
-"update_app_remind_me_later" = "Daha sonra hatırlat";
-"update_app_update" = "Güncelle";
-"finish_game_your_score_title" = "Sonucunuz";
-"finish_game_new_best_score_title" = "Yeni yüksek skor";
-"train_multiplication_table" = "Çarpım tablosu alıştırması";
-"message_error_can_not_load_video" = "Video yüklenemedi";
-"video_continue_game" = "Oyuna devam edilsin mi?";
-"video_watch_a_video" = "Bir video izle";
-"end_of_game" = "Oyunun sonu";
-"gameplay_skip" = "İleri";
-"button_get_coins" = "Satın al";
-"continue_use_coins" = "%1$@ altın kullan";
-"user_level" = "Seviye %1$@";
-"user_get_coins" = "Tebrikler! %1$@ altın aldın.";
-"user_login" = "Giriş yap";
-"user_logout" = "Çıkış yap";
-"user_student" = "Öğrenci";
-"no_data" = "Sayfa yüklenemiyor";
-"title_shop" = "Mağaza";
-"type_table_shulte" = "Büyüme Tablosu";
-"schulte_next_number" = "Sonraki: %1$@";
-"game_over" = "Oyun Bitti";
-"game_over_live_title" = "Tüm canlarını tükettin";
-"special_offer_remove_ads" = "Reklamları kaldır";
-"special_offer_time_leave" = "Kalan zaman";
-"special_offer_title" = "Özel paket";
-"special_offer_finished" = "Özel teklif sona erdi";
-"dialog_remove_ads_text" = "Oynarken reklamlardan bıktınız mı? Kalıcı olarak devre dışı bırakın! Tek seferlik ödeme.";
-"training_page_difficult_max_number_new" = "Zorluk (En yüksek sayı = %1$@)";
-"training_page_max_number" = "Yüksek sayı";
-"training_page_min_number" = "Düşük sayı";
-"high_score" = "Yüksek skor";
-"score" = "Skor";
-"instructions" = "Sadece kaydır. 2+2=4. 2048'e ya da daha fazlasına ulaş.";
-"you_win" = "Kazandın!";
-"go_on" = "Devam etmek için dokun";
-"for_now" = "Şimdilik…";
-"endless" = "Sonsuz Mod";
-"reset" = "Sıfırla";
-"cancel_continue_game" = "İptal";
-"reset_dialog_title" = "Oyun sıfırlansın mı?";
-"reset_dialog_message" = "Oyunu sıfırlamak istediğinize emin misiniz?";
-"type_game_2048" = "2048";
-"share_2048_text" = "2048 de en iyi skorum %1$@. Daha iyisini yapabilir misin? %2$@
-
- %3$@";
-"move_back" = "Geri";
-"titile_dialog_move_back" = "Geri dönüş";
-"text_dialog_move_back" = "Geri dönmek için %1$@ altın kullan veya videoyu izleyin";
-"text_not_coins" = "Yeterli altın yok";
-"notification_title_special_offer" = "Özel teklif yakında bitecek! İndirimi kaçırma!";
-"last_chance_special_offer" = "Özel teklif sona erdi. Fakat size son bir şans daha veriyoruz. Sadece şu an için.";
-"dialog_titile_tutorial" = "Nasıl oynanır";
-"user_get_coins_and_experiance" = "Tebrikler! %1$@ altın ve %2$@ deneyim edindin. ";
-"you_lose" = "Kaybettin";
-"indicator_you" = "Sen";
-"quick_game" = "Hızlı Oyun";
-"invite_players" = "Arkadaşlarını davet et";
-"see_invitations" = "Davetiyeleri gör";
-"quick_game_explanation" = "Rastgele bir rakiple mücadele";
-"invite_players_explanation" = "Bir oyun oynamak için arkadaş davet et.";
-"see_invitations_explanation" = "Size davet gönderenleri gör.";
-"inv_popup_text" = "Gelen davetiye!";
-"accept_popup_invite" = "Kabul et!";
-"game_problem" = "Oyuna başlarken bir hata oluştu, İnternet ile ilgili sorunlar olabilir. Lütfen tekrar deneyin.";
-"is_inviting_you" = "size meydan okudu!";
-"signin_other_error" = "Giriş yapılırken sorunla karşılaşıldı. Lütfen daha sonra deneyin.";
-"start_titile_fight" = "Saldır!";
-"type_game_draw" = "Berabere";
-"type_game_win" = "Kazanan";
-"type_game_lose" = "Kaybeden";
-"leaderboards_title" = "Liderler tablosu";
-"user_leave_room" = "Kullanıcı mücadeleden kaçtı.";
-"the_sale" = "Satış";
-"multiplayer_title_page" = "Arena";
-"share_app_with_friends" = "Uygulamayı arkadaşlarınla paylaşmak ister misin?";
-"dialog_more_games_title" = "Daha fazla oyun";
-"dialog_more_games_text" = "Merhaba
- ! Başka oyunlarımızı da denemek ister misin?";
-"training_game_type_test" = "Test";
-"training_game_type_input" = "Giriş";
-"training_game_type_true_false" = "Doğru / Yanlış";
-"training_game_type_title" = "Oyun tipi";
-"type_game_input_math" = "Girdi matematiği";
-"settings_restore_purchases" = "Satın alımları onar";
-"shulte_classic_game" = "Klasik alışılmış masa";
-"menu_help_title" = "Talimat";
-"type_game_balance" = "Denge";
-"balance_equals" = "Eşit";
-"balance_short_instruction_large" = "Hangisi daha büyük?";
-"balance_short_instruction_small" = "Hangisi daha küçük?";
-"subscription_page_title" = "Abonelik";
-"subscription_full_access_title" = "Tam bir alıştırma programı al.";
-"subscription_full_access_subtitle" = "Hızlı Beyin Premium ile";
-"subscription_most_popular_label" = "En popüler";
-"subscription_yearly" = "Yıllık";
-"subscription_monthly" = "Aylık";
-"subscription_in_month" = "Bir aylık";
-"subscription_features" = "Abonelik özellikleri";
-"subscription_play_in_games" = "8+ bilişsel oyunlar oyna";
-"subscription_remove_ads" = "Reklamsız";
-"levels_games_coming_soon" = "Yeni Oyunlar Yakında…";
-"title_wrong" = "Yanlış!";
-"shulte_table_find_number" = "Sayıyı bul:";
-"subscription_total_title" = "Toplam";
-"subscription_premium" = "Premium";
-"message_error_load_video_no_internet" = "Video yüklenemedi, lütfen internet bağlantınızı kontrol edin.";
-"notification_button_play" = "Başlat";
-"notification_button_remind_later" = "%1$@ dakika sonra hatırlat";
-"shop_share_button_title" = "Uygulamayı paylaş";
-"title_loading" = "Yükleniyor, lütfen bekleyin…";
-"scores_your_score_better_then" = "Skorunuz %1$d%% oyuncudan daha iyi";
-"scores_your_score_second" = "Neredeyse en iyisisin!";
-"scores_your_score_first" = "Şampiyon sensin!";
-"rating_check_more_scores_title" = "Diğer oyuncuların skorlarına bak";
-"your_best_score" = "En iyi skorun";
-"common_error" = "Hata";
-"common_ok" = "Tamam";
-"error_privacy" = "Lütfen gizlilik ayarlarını kontrol edin. Kişilerinize erişmemiz gerekiyor.";
-"payment_success" = "Başarılı";
-"payment_error" = "Hata";
-"settings_social_title" = "Bize katılın";
-"settings_social_facebook_title" = "Facebook";
-"settings_social_vk_title" = "Vk";
-"number_speed_level" = "Hız seviyesi";
-"tutorial_2048_first" = "İlk olarak oynamak istediğiniz tahtayı seçin. Örneğin 4x4 tahtada toplam 16 fayans bulunur. Daha sonra üzerinde 2 yazan iki tane fayans ekranda rastgele bir konumda belirir";
-"tutorial_2048_two" = "Fayansları hareket ettirmek için yukarı, aşağı, sol veya sağ tarafa kaydırın. Fayansların kayabileceği alan olduğu sürece istediğiniz kadar kaydırma yapabilirsiniz.";
-"tutorial_2048_three" = "Aynı sayıya sahip fayanslar bir hareket sırasında üst üste gelirse bu iki fayansın toplamını alacak şekilde tek fayansa dönüşür. Örneğin, iki tane 2 fayansı üst üste gelecek şekilde kaydırılırsa üzerinde 4 yazan bir fayansa dönüşür. Bu işlem sırasında 2 fayanstan tek fayans oluşmasından ötürü bir fayanslık boşluk oluşur.";
-"tutorial_2048_four" = "Her adımda herhangi bir fayans birleşmesi olup olmadığına bakılmaksızın üzerinde 2 veya 4 yazan yeni bir fayans rastgele ekranda belirir.";
-"tutorial_2048_five" = "Fayans üzerindeki sayıları arttırabilmek için kaydırmaya devam edin. Amaç 2048 veya daha fazlasına ulaşmak. 2048 elde edebilmek için 2 tane 1024'e, 1024 elde etmek için 2 tane 512'e, 512 için 2 tane 256 fayansına ihtiyacınız var. Bu da böyle devam eder.";
-"tutorial_2048_six" = "Oyun, tahta tamamen dolduktan ve hareket edecek herhangi bir yer olmadığı zaman son bulur.";
-"tutorial_2048_seven" = "Her bir oyunda hedeflenen sayı elde edildiğinde altın ve deneyim kazanılır.
-
-Her bir oyun için hedeflenen sayılar:";
-"tutorial_2048_title" = "Öğretici";
-"tutorial_2048_levels_showcase_title" = "Başlamadan önce «nasıl oynanır» kısmından temel kurallara bir göz gezdirin.";
-"how_to_play_title" = "Nasıl oynanır";
-"balance_game_over_questions" = "Sorular:";
-"balance_game_over_your_answer" = "Cevabın:";
-"multiplayer_login_title" = "Arkadaşlarından daha iyi oynayabilir misin? Bunu anlamanın bir yolu var. Oyunu arkadaşlarınla birlikte oynamak! Bunun için Google ile giriş yapman gerek.";
-"game_2048_continue_game_title" = "Oyuna devam edilsin mi?";
-"game_2048_continue_game_description" = "Altın kullanarak oyuna devam edebilirsin. 2 ve 4 sayılarını kaldıracağız.";
-"settings_terms_of_service_title" = "Kullanım Şartları";
-"settings_privacy_policy" = "Gizlilik Politikası";
-"profile_login_button_description" = "Diğer cihazlarda da ilerlemenizin kaydolması için giriş yapmanız gerekiyor. Giriş yaparak diğer oyuncularla oynayabilir ve skorlarınızı karşılaştırabilirsiniz.";
-"type_hard_math" = "Zor matematik";
-"leaderboards_today" = "Bugün";
-"leaderboards_weekly" = "Bu hafta";
-"game_2048_mission_game_title" = "Görevin";
-"game_2048_mission_game_description_first" = "%1$@ rakamına ulaş ve ödülünü al";
-"game_2048_mission_game_description_second" = "ve %1$@ altın";
-"game_2048_mission_game_description_thirty" = "ve %1$@ deneyim edin";
-"game_2048_mission_game_description_get" = "ve … edin";
-"dialog_daily_quests_title" = "Günlük görevler";
-"dialog_daily_quests_claim" = "İddia";
-"dialog_daily_quests_no_quests" = "Bugün için görev yok. Geri dön ve yarın kontrol et.";
-"dialog_daily_time_until_next_quests" = "Bir sonraki görevlere kadar:";
-"dialog_daily_complete_all_quests_for_reward" = "Ödül için tüm görevleri tamamlayın:";
-"quest_desc_operator_count" = "%2$@ operatör ile %1$@ seviyeyi doğru bir şekilde çözün.";
-"quest_desc_level_count" = "%1$@ seviyelerini %2$@ içinde çözün.";
-"quest_desc_earn_xp" = "%1$@ tecrübe puanı kazanın.";
-"quest_desc_reach_level" = "%2$@ seviyesinde %1$@ seviyeye ulaşın.";
-"quest_desc_schulte_table" = "%2$@ sn altında %1$@ tabloyu çözün.";
-"quest_desc_spend_coins" = "%1$@ para harca.";
-"quest_desc_win_duel" = "%1$@ düello kazan.";
-"quest_desc_merge_tiles" = "2048 oyununda %1$@ fayansı birleştirin.";
-"quest_completed" = "Görevler tamamlandı";
-"quest_open_chest" = "Açık";
-"quest_reward_desc_coins" = "%1$@ jetonu aldınız!";
-"quest_showcase_tutorial_description" = "Günlük görevler sizin için hazır. Her gün yeni görevler tamamla ve ödül al!";
-"settings_daily_training_notification_title" = "Günlük eğitim";
-"settings_daily_quest_notification_title" = "Günlük görevler";
-"settings_daily_quest_notification_desc" = "Günlük görevlerinizi unutmamak için her gün bildirim alın.";
-"notification_quest_reminder" = "Günlük görevler için zaman.";
-"premium_option_no_ads" = "Reklamsız";
-"premium_option_games_access" = "Tüm oyunlara sınırsız erişim";
-"premium_option_cancel_anytime" = "İstediğin zaman iptal et";
-"premium_info_trial_free" = "%1$@ Ücretsiz Günleri Deneyin";
-"premium_button_continue" = "Ücretsiz deneyin";
-"premium_page_first_title" = "Ödül";
-"premium_page_second_title" = "Hızlı beyin";
-"ios_premium_subscription_rules_description" = "Geçerli sürenin bitiminden en az 24 saat önce otomatik yenileme kapatılmadığı sürece abonelik otomatik olarak yenilenecektir. Aboneliğinizi yönetmek ve otomatik yenilemeyi kapatmak için iTunes Hesabı ayarlarınıza gidebilirsiniz. Satın alma onaylandığında iTunes Hesabınızdan ücret alınacaktır. Ücretsiz denemeniz sona ermeden abone olursanız, ücretsiz denemenizin geri kalanı, satın alma işleminiz onaylanır onaylanmaz kaybeder";
-"ios_premium_subscription_then" = "sonra";
-"ios_premium_subscription_free" = "ücretsiz deneme";
-"ios_premium_subscription_start_trial" = "Deneme sürümünü başlat";
-"ios_premium_subscription_subscribe" = "Abone ol";
-"ios_premium_subscription_per" = "başına";
-"ios_premium_subscription_privacy_policy" = "Kullanım Şartları";
-"ios_premium_subscription_terms_use" = "Gizlilik Politikası";
-"ios_premium_subscription_has" = "Geçerli bir aboneliğiniz var";
-"rate_us_thanks_message" = "Geri bildiriminiz için teşekkürler!";
-"share_app_message" = "En iyi beyin gelişimi uygulaması olan Quick Brain'i tavsiye ederim!";
-"levels_cross_promo_title" = "Split Area";
-"levels_cross_promo_brain_over_title" = "Brain Over";
-"levels_cross_promo_subtitle" = "Yeni oyunumuz (Reklamlar)";
-"dialog_quests_no_connection" = "İnternet bağlantısı yok";
-"dialog_quests_retry" = "Yenile";
-"multiplayer_waiting_room_error" = "Arena'ya başlayamayız. Lütfen Google Play'de Google Play Oyunlar için son güncellemeniz olup olmadığını kontrol edin";
-"settings_theme_description" = "Karanlık bir tema açmak, pil ömrünü uzatır";
-"settings_theme_title" = "Karanlık tema";
-"promote_night_mode_dialog_title" = "Karanlık tema burada";
-"promote_night_mode_dialog_description" = "Daha rahat okuma keyfini çıkarın ve pilden tasarruf edin.";
-"promote_night_mode_dialog_button_turn_on" = "Etkinleştirmek";
-"promote_night_mode_dialog_button_cancel" = "Yakın";
-"ios_premium_info_trial_free" = "%1$@ Ücretsiz Günleri Deneyin";
-"ios_premium_info_trial_free_v2" = "%1$@ Ücretsiz";
-"settings_dark_mode_use_system" = "Sistem temasını kullan";
-"settings_dark_mode_use_system_description" = "Gece modu için sistem ayarları kullanılacaktır";
-"dialog_crosspromo_description" = "Daha ilginç alıştırmalar ve yapbozlar kurmak için ücretsiz sunuyoruz. Bu popüler oyunumuz için bir reklamdır.";
-"dialog_crosspromo_title" = "Daha fazla gamez";
-"dialog_crosspromo_get_button" = "Oyunları indir";
-"power_memo_title" = "Bellek gücü";
-"multiplayer_sorry_message" = "We apologize.
- Due to the fact that Google has closed services for multiplayer games since March 31, 2020. which forces us to temporarily block access to the Arena. For our part, we plan to revise this mode and offer you a better solution than before.
-
- Best Regards,
- Quick Brain Team.
-
-
- For any questions and suggestions, you can visit us on social network.";
-"special_offer_banner_title" = "Özel paket";
-"special_offer_banner_description" = "Tüm eğitim oyunlarına sınırsız erişim elde edin";
-"special_offer_banner_button" = "Daha fazla detay";
-"special_offer_save_money" = "%1$@ daha ucuz";
-"every_day_notification_title_1" = "Beyin için en iyi dinlenme egzersizdir! Oyuna gir!";
-"every_day_notification_title_2" = "Beynini boşalt ve oyunun tadını çıkar!";
-"every_day_notification_title_3" = "It's time for brain training!";
-"every_day_notification_title_4" = "Oyuna gir, oyna ve aklını eğit!";
-"levels_brain_over_banner_subtitle" = "Yeni oyunumuzu deneyin!";
-"event_christmas_levels_banner_title" = "Yeni Yıl Görevi";
-"event_christmas_levels_banner_subtitle" = "Görevleri tamamlayın ve ödüller kazanın!";
-"event_christmas_levels_banner_button_go" = "Başlat";
-"event_christmas_event_details_title" = "Yeni Yıl Görevi";
-"event_christmas_event_details_subtitle" = "Tüm görevleri tamamlayın ve unutulmaz bir rozet ve diğer ödüller kazanın!";
-"event_christmas_event_details_timer_title" = "Olay bitiyor";
-"event_christmas_section_reward_1_title" = "Aferin! ";
-"event_christmas_section_reward_1_subtitle" = "Beyniniz harika bir egzersiz yaptı!";
-"event_christmas_section_reward_2_title" = "Biraz Dahi! ";
-"event_christmas_section_reward_2_subtitle" = "Sadece birkaç kişi sorunları bu kadar havalı çözebilir!";
-"event_christmas_section_reward_3_title" = "Harikasın! ";
-"event_christmas_section_reward_3_subtitle" = "% 90 asla o kadar uzağa gidemez";
-"event_christmas_section_reward_4_title" = "Megamind ";
-"event_christmas_section_reward_4_subtitle" = "Einstein'dan daha iyisin!";
-"event_christmas_event_completed" = "Yeni Yıl Görevi tamamlandı";
-"event_christmas_event_claim_reward_button" = "Ödülü al";
-"win_quest_reward_title_1" = "İnanılmaz!";
-"win_quest_reward_title_2" = "Hey, Fena Değil!";
-"win_quest_reward_title_3" = "İyi iş!";
-"win_quest_reward_title_4" = "Vaov! İyi sonuç!";
-"win_quest_reward_title_5" = "Harikasın!";
-"win_quest_reward_title_6" = "Yüksek kalite, aferin!";
-"win_quest_reward_title_7" = "Inanılmaz!";
-"win_quest_reward_title_8" = "Durdurulamaz! Aferin!";
-"win_quest_reward_title_9" = "Biraz Dahi!";
-"win_quest_reward_title_10" = "Mükemmel Sonuç!";
-"win_quest_reward_title_11" = "Doğru yoldasın!";
-"win_quest_reward_title_12" = "Neşelendirmek!";
-"win_quest_reward_title_13" = "Bir dahaki sefere daha iyi şanslar!";
-"win_quest_reward_title_14" = "Hatalarından öğreniyorsun!";
-"win_quest_reward_title_15" = "Pokračovať v boji!";
-"win_quest_reward_title_16" = "Poď! Ty to dokážeš! Len ver v seba!";
-"win_quest_reward_title_17" = "Stojím za vami na 100%! Zostaň silný!";
-"win_quest_reward_title_18" = "Skúste to znova! Rozveselte sa!";
-"win_quest_reward_title_19" = "Nabudúce viac šťastia!";
-"event_game_over_to_tasks" = "K úlohám";
-"event_game_over_restart" = "Hrať znova";
-"event_quest_progress" = "%1$@ üzerinden %2$@";
-"event_quest_win_task_completed" = "Úloha dokončená";
-"event_quest_win_open_tasks" = "Otvorte zoznam úloh";
-"event_quest_profile_achievements_title" = "Úspechy";
-"achievement_item_christmas_title" = "Splňte novoročnú úlohu";
-"event_quest_dialog_your_reward_title" = "Senin ödülün";
-"event_quest_dialog_reward_title" = "Unutulmaz rozet";
-"event_quest_dialog_reward_button" = "Güzel";
-"event_quest_achievement_added" = "Başarı eklendi";
-"event_quest_share_dialog_title" = "Páčilo sa vám novoročné pátranie?";
-"event_quest_share_dialog_subtitle" = "Povedzte svojim priateľom o Quick Brain!";
-"event_quest_share_dialog_button_share" = "Odošlite odkaz priateľom";
-"event_quest_share_dialog_button_close" = "Bak ne harika bir oyun buldum! Deneyin, duramayacaksınız ve beyniniz size teşekkür edecek!";
-"event_quest_profile_achievements_empty" = "Burada henüz başarı yok. Bir sonraki etkinliği kaçırmayın!";
-"quest_desc_reach_tile_number" = "%2$@ yılında %1$@ Kafel oluştur";
-"event_quest_achievement_added_toast" = "Başarı profilinize eklendi!";
-"onboarding_page_first_title" = "Matematik becerilerinizi geliştirin";
-"onboarding_page_second_title" = "Hafıza, dikkat, hız, tepki ve daha fazlasını uygulayın!";
-"onboarding_page_third_title" = "Diğer oyunculara karşı nasıl sıraladığınızı görün";
-"onboarding_continue_button" = "Devam et";
-"subscription_premium_title" = "Ödül";
-"subscription_premium_free_title" = "Premium'u ücretsiz deneyin";
-"subscription_premium_option_one" = "Reklam yok";
-"subscription_premium_option_two" = "Tüm oyunlara tam erişim";
-"subscription_premium_option_three" = "Herhangi bir zamanda iptal";
-"subscription_terms_divider" = "ve";
-"ios_dialog_open_game_title" = "Premium abonelik";
-"ios_dialog_open_game_description" = "Tüm oyunları oynamak için abone olun! Veya bir kez oynatmak için bir reklam izleyin";
-"ios_dialog_open_game_unblock_button" = "Tüm oyunların engelini kaldır";
-"ios_dialog_open_game_watch_video_button" = "Reklamları izle";
-"ios_dialog_open_game_close_button" = "Antrenmanı bitir";
-"motivation_title_1" = "Harikasın!";
-"motivation_title_2" = "Hey, Fena Değil!";
-"motivation_title_3" = "İyi iş!";
-"motivation_title_4" = "Vaov! İyi sonuç!";
-"motivation_title_5" = "Harikasın!";
-"motivation_title_6" = "Yüksek kalite, aferin!";
-"motivation_title_7" = "Inanılmaz!";
-"motivation_title_8" = "Durdurulamaz! Aferin!";
-"motivation_title_9" = "Biraz Dahi!";
-"motivation_title_10" = "Mükemmel Sonuç!";
-"motivation_title_11" = "Doğru yoldasın!";
-"daily_workout_banner_title" = "Günlük ücretsiz egzersiz";
-"daily_workout_banner_start" = "Başlamak";
-"daily_workout_banner_next_training_title" = "Sonraki antrenman";
-"daily_workout_banner_come_tomorrow_title" = "Yarın tekrar gel!";
-"daily_workout_banner_continue" = "İlerlemek";
-"daily_workout_win_next" = "İleri";
-"daily_workout_comleted_title" = "Antrenman bitti!";
-"daily_workout_comleted_subtitle" = "Yeni bir günlük egzersiz için yarın tekrar gelin";
-"daily_workout_comleted_button_ok" = "TAMAM MI";
-"daily_workout_all_comleted_title" = "Yakında Yeni Görevler Geliyor";
-"daily_workout_all_comleted_subtitle" = "Güncellemeler için bizi izlemeye devam edin ve kaçırmayın!";
-"bo_promo_title" = "Tüm görevler tamamlandı!";
-"bo_promo_subtitle" = "Brain Over'da bulacağınız daha fazla bulmaca!";
-"bo_promo_action_button" = "Google Play'e gidin";
-"bo_promo_secondary_button" = "Kapat";
-"event_quest_weekly_title" = "Haftalık görev";
-"event_quest_completed" = "Görev tamamlandı";
-"event_quest_weekly_start_title" = "Yeni Yıl görevini tamamlayın";
-"event_quest_reward_one" = "Herkül'ün Özellikleri";
-"event_quest_reward_two" = "Pandoranın Kutusu";
-"event_quest_reward_three" = "Prometheus Ateşi";
-"event_quest_reward_four" = "Odysseus'un Zihni";
-"event_quest_reward_five" = "Hephaestus Ateşi";
-"event_quest_reward_six" = "Orpheus Arpı";
-"event_quest_reward_seven" = "Hades'in Yeraltı Dünyası";
-"event_quest_reward_eight" = "Athena Bilgeliği";
-"event_quest_reward_nine" = "Zeus Yıldırım";
-"event_quest_reward_ten" = "Poseidon'un Üç Mızrağı";
-"tutorial_game_preview_math" = "Doğru cevabı seçin";
-"tutorial_game_preview_true_false" = "Doğruyu veya yanlışı seçin";
-"tutorial_game_preview_schulte_table" = "Artan sırayla tüm sayıları seçin";
-"tutorial_game_preview_balance" = "Soruyu cevaplayın ve doğru seçeneği seçin";
-"tutorial_game_preview_power_memory" = "Renkli blokları hatırlayın, ardından bu öğeleri tekrar seçin";
-"disable_ads_main_title" = "Reklamları kaldırmak?";
-"disable_ads_main_description" = "Can sıkıcı reklamlardan kalıcı olarak kurtulun!";
-"disable_ads_main_expensive_title" = "Çok pahalı?";
-"disable_ads_main_restore_purchases" = "Satın alınanları geri yükle";
-"disable_ads_offer_title" = "Özel bir teklifin kilidini açtınız!
-Onu elde etmek için tek şansını kullan!";
-"disable_ads_offer_sale_title" = "İndirim %1$@";
-"disable_ads_offer_button_title" = "%1$@ için reklamları devre dışı bırak";
-"disable_ads_offer_dialog_description" = "Tek seferlik özel teklifi iptal etmek istediğinizden emin misiniz?";
-"disable_ads_offer_dialog_button_back" = "geri";
-"disable_ads_offer_dialog_button_discard" = "iptal etmek";
-"disable_ads_pre_interstitial_title" = "Reklamlar bu uygulamayı geliştirmemize yardımcı oluyor";
-"disable_ads_pre_interstitial_disable_ad_button_title" = "Reklamları devre dışı bırak";
-"disable_ads_pre_interstitial_see_ads_button_title" = "Bir reklam izleyin";
-"dialog_numbers_game_unblocked_title" = "Fayans yapılır!";
-"dialog_numbers_game_your_reward" = "Ödülünüz:";
-"dialog_numbers_game_button_claim_title" = "Almak";
-"dialog_numbers_game_button_no_thanks" = "Hayır, teşekkürler";
-"sudoku_new_game" = "Novo jogo";
-"sudoku_name" = "Sudoku";
-"sudoku_level_easy" = "Fácil";
-"sudoku_level_hard" = "Difícil";
+app_name
+onboarding_button_next
+onboarding_message_page_1
+onboarding_message_page_2
+onboarding_message_page_3
+onboarding_choose_to_improve
+onboarding_will_create_training
+onboarding_pick_your_group
+onboarding_compare_results
+subscription_hint_premium
+subscription_message_special_offer
+subscription_message_page_1
+subscription_message_page_2
+subscription_message_page_3
+subscription_message_page_3_brain_age
+subscription_message_page_3_week
+subscription_button_next
+game_finish_title_excelent
+game_finish_message_result_earn_begin
+game_finish_message_result_earn_end
+game_finish_message_result_earn_end_no_group
+game_pause_title_on_pause
+game_pause_button_continue
+game_pause_button_restart
+game_pause_button_how_to_play
+game_pause_button_quit
+game_start_message_best_result
+game_start_message_total_result
+game_start_message_difficulty
+game_start_message_achieve_score
+game_start_message_training_skills
+game_start_button_next
+game_start_max_level_reached
+skills_memory
+skills_logic
+skills_attention
+skills_verbal_counting
+game_name_balance
+game_name_magic_numbers
+game_name_planes
+game_name_color_match
+game_name_memory_power
+games_section_memory
+games_section_math
+games_section_attention
+game_hint_memory_power
+game_hint_color_match
+game_hint_planes_white
+game_hint_planes_red
+game_hint_magic_numbers
+game_hint_balance
+settings_title
+settings_option_area_of_improvemnts
+settings_option_age_group
+settings_option_sounds
+settings_option_vibration
+settings_option_reminders
+settings_option_invide_friends
+settings_option_rate_the_app
+settings_option_restore_purchase
+settings_option_security_policy
+settings_option_terms_of_service_title
+training_start_title
+training_start_button_start
+training_start_button_continue
+training_finished_title
+training_finished_message_comeback
+taining_finished_button_to_games
+main_tabs_name_games
+main_tabs_name_training
+main_tabs_name_settings
+game_colormatch_no
+game_colormatch_yes
+game_colormatch_message
+game_colormage_value
+game_colormage_color
+game_colormatch_color_red
+game_colormatch_color_green
+game_colormatch_color_blue
+game_colormatch_color_black
+game_colormatch_color_yellow
+game_colormatch_color_orange
+game_colormatch_color_purple
+subscription_plan_per_month
+subscription_plan_month
+subscription_plan_months
+subscription_plan_button_title_try_free
+subscription_plan_button_title_buy
+subscription_plan_button_title_no_thanks
+subscription_plan_choose_plan_title
+subscription_plan_choose_plan_title_default
+subscription_cancellation_terms
+subscription_cancel_anytime
+games_list_free_today
+creating_first_training
+balance_game_greater
+balance_game_lesser
+balance_game_equal
+first_training_title
+first_training_message
+first_training_button_next
+game_over_reward_title_one
+game_over_reward_title_two
+game_over_reward_title_three
+game_over_reward_title_four
+game_over_reward_title_five
+game_over_reward_title_six
+game_over_reward_title_seven
+game_over_reward_title_eight
+game_over_reward_title_nine
+game_over_reward_title_ten
+game_over_reward_title_11
+game_over_reward_title_12
+game_over_reward_title_13
+game_over_reward_title_14
+dialog_purchase_error_title
+training_finished_title_greate_job
+purchase_restored_message_success
+purchase_restored_message_failed
+ok
+game_name_hard_math
+game_hint_hard_math
+game_name_true_false
+game_hint_true_false
+cancel_continue_game
+common_error
+continue_game
+dialog_numbers_game_unblocked_title
+dialog_restart
+finish_game_new_best_score_title
+game_over
+game_problem
+high_score
+instructions
+max_tile
+move_back
+reset_dialog_message
+score
+titile_dialog_move_back
+video_continue_game
+video_watch_a_video
+Brainy
+Más
+¡Te ayudaremos a mejorar tu memoria y velocidad de pensamiento!
+¡5 minutos al día te ayudarán a mantener tu cerebro en buena forma, y ​​10 minutos te harán más inteligente!
+El entrenamiento individual desarrolla la memoria, la atención y la lógica de la manera más eficiente posible
+Seleccionar áreas de mejora
+Crearemos un entrenamiento diario basado en tus preferencias
+Elige tu grupo de edad
+Podrás comparar tu puntuación con la de tus compañeros
+De primera calidad
+Has desbloqueado la oferta especial
+Obtenga 5 juegos en su entrenamiento diario en lugar de 3
+Desbloquea todos los juegos y juega sin publicidad
+Potencia tu cerebro rápidamente con entrenamiento personal
+Edad del cerebro
+Semanas %s
+Más
+¡Excelente resultado!
+Anotaste más de
+gente de tu edad
+gente
+En pausa
+Continuar
+Comenzar de nuevo
+¿Cómo jugar?
+Salir del juego
+Mejor resultado
+Puntos anotados
+Complejidad
+Gana %1$d puntos para avanzar al siguiente nivel
+Entrenamos habilidades:
+Más
+Se ha alcanzado el nivel máximo de dificultad, sigue practicando.
+Memoria
+Lógicas
+Atención
+Conteo verbal
+Saldo numérico
+Numeros magicos
+Aviones
+Coincidencias de colores
+El poder de la memoria
+Memoria
+Matemáticas
+Atención
+Recuerda la ubicación de las fichas de colores y haz clic en ellas
+Compara si el color de la primera palabra coincide con el valor de la segunda
+Desliza el dedo en la dirección en la que miran los planos blancos
+Desliza el dedo en la dirección en la que se mueven los aviones rojos
+Haga clic en los números en orden ascendente
+Resuelve los ejemplos y contesta las preguntas
+Ajustes
+Áreas para mejorar
+Grupo de edad
+Sonidos
+Vibración
+Recordatorios
+Invitar a amigos
+Califica la aplicación
+Restaurar las compras
+Política de privacidad
+Condiciones de uso
+Entrenamiento del día
+Empezar
+Continuar
+Formación completada
+Vuelve mañana para nuevas tareas
+Ir a juegos
+Juegos
+Hoy
+Ajustes
+No
+Sí
+¿El significado de la palabra de arriba coincide con el color de la palabra de abajo?
+Sentido
+Color
+Rojo
+Verde
+Azul
+Negro
+Amarillo
+Naranja
+Púrpura
+por mes
+mes
+meses
+Iniciar %1$d-día Prueba gratuita
+Suscribir
+No, gracias
+Elija un plan después de que expiren %1$d días de prueba gratuita
+Elige un plan
+Tu suscripción anual se renovará automáticamente por el mismo período de tiempo a menos que la canceles como mínimo 24 horas antes de que termine el período actual. Puedes cancelarla en cualquier momento desde Google Play sin costos adicionales. Tu suscripción terminará al finalizar el período actual.
+Cancela en cualquier momento en Google Play
+Gratis hoy
+Creando tu primer entrenamiento...
+¿Que mas?
+¿Qué es menos?
+Son iguales
+Hora del primer entrenamiento
+Los entrenamientos diarios incluyen hasta 5 juegos diferentes.
+Adelante
+¡Ánimo!
+¡Puedes hacerlo!
+¡Bien hecho!
+¡Bonito!
+¡Bravo!
+¡Tienes un talento! ¡Adelante!
+¡Caray!
+¡Muy bien!
+¡Perfecto!
+¡Trabajo limpio! ¡Avanza!
+¡Y tú eres un genio! :)
+Los errores son experiencia.
+¡Adelante, sólo adelante!
+¡Gran trabajo!
+Error de compra
+¡Gran trabajo!
+Compras restauradas!
+Algo salió mal. Quizás ya se han restablecido las compras
+OK
+Matemáticas difíciles
+Resuelve los ejemplos y contesta las preguntas
+Verdad/Falso
+Resuelve los ejemplos y contesta las preguntas
+Cancelar
+Error
+Continuar
+¡El azulejo está hecho!
+Reiniciar
+Nuevo record!
+Fin del juego
+Un error ha ocurrido al iniciar el juego, puede haber problemas con el internet, Inténtalo de nuevo, por favor.
+Puntaje más alto
+Desliza el dedo para mover. 2 + 2 = 4. ¡Hasta llegar a 2048 o más!
+Azulejo máximo
+Regresar
+¿Seguro que quieres reiniciar el juego?
+Puntaje
+Revertir
+¿Continuar el juego?
+Ver un vídeo
