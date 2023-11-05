@@ -61,6 +61,7 @@ void generate_from_single_element_in_list (int n)
     }
     for (int i=0; i<n; i++) {
         getline(cin,S);
+        add_escapings(S);
         ret[i] += "\"" + S + "\";";
     }
     for (int i=0; i<n; i++) cout << ret[i] << endl;
@@ -75,29 +76,37 @@ int main() {
     freopen("input.txt","rt",stdin);
     freopen("output.txt","wt",stdout);
 #endif
-    
-    generate_from_single_element_in_list(141);
-    return 0;
-    
+
     string S;
-    map<string,string> M;
-    int K = 1;
     while (getline(cin,S)) {
-        size_t br = S.find("\" = \"");
-        if (br == string::npos) {
-            if ((StringUtils::hasPrefix(S, "//") && K == 2)) cout << S << endl;
-            K++;
-            continue;
-        }
-        
-        string key = S.substr(1,br-1);
-        string value = S.substr(br+5,S.length()-br-7);
-        
-        if (M.find(key) == M.end()) {
-            M[key] = value;
-            add_escapings(value);
-            cout << "\"" << key << "\" = \"" << value << "\";\n";
-        }
+        size_t found = S.find("?");
+        if (found == string::npos) { cout << S << endl; continue; }
+        string Q = S.substr(0,found+1);
+        string A = S.substr(found+1,S.length()-found-1);
+        if (A[0] == ' ') A.erase(0,1);
+        add_escapings(Q);
+        cout << "[\"" << Q << "\"," << "\"" << A << "\"],\n";
+    }
+    
+//    string S;
+//    map<string,string> M;
+//    int K = 1;
+//    while (getline(cin,S)) {
+//        size_t br = S.find("\" = \"");
+//        if (br == string::npos) {
+//            if ((StringUtils::hasPrefix(S, "//") && K == 2)) cout << S << endl;
+//            K++;
+//            continue;
+//        }
+//        
+//        string key = S.substr(1,br-1);
+//        string value = S.substr(br+5,S.length()-br-7);
+//        
+//        if (M.find(key) == M.end()) {
+//            M[key] = value;
+//            add_escapings(value);
+//            cout << "\"" << key << "\" = \"" << value << "\";\n";
+//        }
         
         //cout << key << " = " << value << endl;
 //        if (M.find(key) != M.end()) {
@@ -107,7 +116,7 @@ int main() {
 //            M[key] = value;
 //        }
         
-        K++;
+        //K++;
 //        for (int i=0; i<(int)keys.size(); i++) {
 //            if (!StringUtils::hasPrefix(S,keys[i]+'"')) continue;
 //            size_t c = S.find("\"");
@@ -117,7 +126,7 @@ int main() {
 //            add_escapings(s2);
 //            cout << "\"" << keys[i] << "\" = \"" << s2 << "\";\n";
 //        }
-    }
+    //}
     
     //Total_Time = clock() - Total_Time;
     //cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
