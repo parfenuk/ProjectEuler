@@ -19,6 +19,17 @@
 using namespace Algebra;
 using namespace Containers;
 
+const vull F = Combinatorics::generate_factorials(12);
+
+ull process_vector (vsint a, bool is_final = false)
+{
+    ull k = F[12-is_final];
+    for (int i=0; i<(int)a.size(); i++) k /= F[a[i]];
+    if (is_final || a[0] == 0) return k;
+    a[0]--;
+    return k - process_vector(a,true);
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -30,6 +41,12 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    vvsint a = Combinatorics::get_repeated_combinations(10,12);
+    for (int i=0; i<(int)a.size(); i++) {
+        ull k = process_vector(a[i]);
+        ans += k*(k-1)/2;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;

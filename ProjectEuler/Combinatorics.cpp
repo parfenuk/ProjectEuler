@@ -32,25 +32,63 @@ ull Binomial (ull n, ull k, int p = 0) // C(n,k) mod p. p must be prime and grea
     return s;
 }
 
-bool next_combination (vsint &a, int n, int k)
+bool next_combination (vsint &a, sint n, sint k)
 {
-    for (int i=k-1; i>=0; i--) {
+    for (sint i=k-1; i>=0; i--) {
         if (a[i] > n-k+i) continue;
         a[i]++;
-        for (int j=i+1; j<k; j++) a[j] = a[j-1] + 1;
+        for (sint j=i+1; j<k; j++) a[j] = a[j-1] + 1;
         return true;
     } return false;
 }
 // TODO: write function that counts i-th combination and reversly return number of combination
 // TODO: same for permutations
-vvsint get_combinations (int n, int k) // numeration starts from 1
+vvsint get_combinations (sint n, sint k) // numeration starts from 1
 {
     vsint a;
     vvsint b;
-    for (int i=1; i<=k; i++) a.push_back(i);
+    for (sint i=1; i<=k; i++) a.push_back(i);
     b.push_back(a);
     while (next_combination(a,n,k)) b.push_back(a);
     return b;
+}
+
+template <class Trzx>
+vector<Trzx> operator+ (vector<Trzx> a, const vector<Trzx> &b)
+{
+    for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
+    return a;
+}
+
+// returns all n-dimensional vectors with sum of elements equal to k
+vvsint get_repeated_combinations (sint n, sint k)
+{
+    if (n == 1) return {{ k }};
+    if (k == 0) return { vsint(n) };
+    
+    vvsint ret;
+    vector<vvsint> A;
+    for (sint i=0; i<=k; i++) A.push_back(get_repeated_combinations(n/2,i));
+    
+    if (n % 2 == 0) {
+        for (sint i=0; i<=k; i++) {
+            for (int j=0; j<(int)A[i].size(); j++)
+            for (int m=0; m<(int)A[k-i].size(); m++) {
+                ret.push_back(A[i][j] + A[k-i][m]);
+            }
+        }
+    }
+    else {
+        for (sint i=0; i<=k; i++) for (sint j=0; j+i<=k; j++) {
+            for (int l=0; l<(int)A[i].size(); l++)
+            for (int m=0; m<(int)A[j].size(); m++) {
+                ret.push_back(A[i][l] + A[j][m]);
+                ret.back().push_back(k-i-j);
+            }
+        }
+    }
+    
+    return ret;
 }
 
 // returns all partitions of n into sums: 1+1+1+1 = 2+1+1 = 2+2 = 3+1 = 4
