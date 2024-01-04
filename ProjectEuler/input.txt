@@ -1,11 +1,33 @@
 000000000000000000000000010100100001001010000000001010000110100010101001101000100001
 
 
+Female(A3) Left(C5) SingEng SingRus(A2) FinnishCovers AI[A4]
+FinnishRock Unfamous Riffs(A3) Minuses(C3) RadioTapok Name
+Guitarists(C2) Abbreviatures(A2) Animals Classic Pop MAC(A4)
+NoEnglish OI(A2) 90s(C1) Games(C4) Options(A4) The5
 
 
-Duets        Instrumentals(C1) Sings      Plays(C4) SS(A2) Game(A5)
-Covers       Trio              Nick(C3)   Mike      EE(A4) 1Letter
-Mash-ups(C5) Verse(A3)         Eating(C2) Drinking  OO     TV(A4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
