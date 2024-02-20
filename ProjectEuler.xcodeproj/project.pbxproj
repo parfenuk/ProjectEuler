@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -47,6 +47,9 @@
 		D1DF345F25F282B6009DF141 /* Definitions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Definitions.hpp; sourceTree = "<group>"; };
 		D1E55E851F24C7B600ADF93D /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry.cpp; sourceTree = "<group>"; };
 		D1F909651F51C2EC00A70540 /* Complex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Complex.cpp; sourceTree = "<group>"; };
+		DE1D21562B829672008E06CD /* Solver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Solver.cpp; sourceTree = "<group>"; };
+		DE1D21582B829746008E06CD /* Grid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Grid.cpp; sourceTree = "<group>"; };
+		DE1D215C2B84BF40008E06CD /* Generator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Generator.cpp; sourceTree = "<group>"; };
 		FA120B0F20625D5200010E1F /* Geometry3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry3D.cpp; sourceTree = "<group>"; };
 		FA5901EE1FD9DF56003B1AF3 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +85,9 @@
 			isa = PBXGroup;
 			children = (
 				D15BA4C91F0D983F00B64B78 /* main.cpp */,
+				DE1D21582B829746008E06CD /* Grid.cpp */,
+				DE1D215C2B84BF40008E06CD /* Generator.cpp */,
+				DE1D21562B829672008E06CD /* Solver.cpp */,
 				D1DF344225F0F551009DF141 /* Algebra.hpp */,
 				D1DF344125F0F551009DF141 /* Algebra.cpp */,
 				D1CDA73725F0193C00BE085D /* Combinatorics.cpp */,

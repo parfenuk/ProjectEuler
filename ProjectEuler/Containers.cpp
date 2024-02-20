@@ -18,7 +18,7 @@ void show (const vector<Trzx> &a, char separator/*=' '*/, bool show_endl/*=true*
 {
     if (show_size) cout << a.size() << endl;
     for (int i=0; i<(int)a.size(); i++) {
-        cout << a[i];
+        cout << (int)a[i];
         if (i != (int)a.size()-1) cout << separator;
     }
     if (show_endl) cout << endl;
@@ -51,6 +51,22 @@ void show_tensor (const vector<vector<vector<Trzx>>> &a)
         }
         cout << "------------------------------\n";
     }
+}
+
+template <class Trzx>
+Trzx total_min (const vector<Trzx> &a)
+{
+    Trzx m = a[0];
+    for (int i=1; i<(int)a.size(); i++) if (a[i] < m) m = a[i];
+    return m;
+}
+
+template <class Trzx>
+Trzx total_max (const vector<Trzx> &a)
+{
+    Trzx M = a[0];
+    for (int i=1; i<(int)a.size(); i++) if (a[i] > M) M = a[i];
+    return M;
 }
 
 template <class Trzx>
@@ -97,6 +113,14 @@ vector<Trzx> subvector (const vector<Trzx> &a, int from, int to)
     vector<Trzx> b;
     for (int i=max(0,from); i<=min((int)a.size()-1,to); i++) b.push_back(a[i]);
     return b;
+}
+
+template <class Trzx>
+vector<pair<Trzx,Trzx>> to_pairs (const vector<Trzx> &a)
+{
+    vector<pair<Trzx,Trzx>> p;
+    for (int i=0; i<(int)a.size(); i+=2) p.push_back(mp(a[i],a[i+1]));
+    return p;
 }
 
 template <class Trzx>

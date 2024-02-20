@@ -23,6 +23,10 @@ template <class Trzx>
 template <class Trzx>
     void show_tensor (const vector<vector<vector<Trzx>>> &a);
 template <class Trzx>
+    Trzx total_min (const vector<Trzx> &a);
+template <class Trzx>
+    Trzx total_max (const vector<Trzx> &a);
+template <class Trzx>
     Trzx total_vector_sum (const vector<Trzx> &a);
 template <class Trzx>
     Trzx total_vector_product (const vector<Trzx> &a);
@@ -48,6 +52,8 @@ template <class Trzx>
     int count_less_than (const vector<Trzx> &a, Trzx value);
 
 // PAIRS
+template <class Trzx>
+    vector<pair<Trzx,Trzx>> to_pairs (const vector<Trzx> &a);
 template <class Trzx>
     pair<Trzx,Trzx> operator+ (const pair<Trzx,Trzx> &p, const pair<Trzx,Trzx> &q);
 template <class Trzx>

@@ -129,7 +129,7 @@ vvsint sum_partitions (sint n)
 // TODO: rewrite or write an additional function that doesn't keep all partitions in memory
 vector<vvchar> fill_partitions (int k)
 {
-    const int MAXK = 10;
+    const int MAXK = k;
     vector<vvchar> partitions[MAXK+1];
     
     vchar s1(1,1);
@@ -216,6 +216,15 @@ vll generate_fixed_powers (ll n, int k, int mod = 0)
     vll a(n);
     for (ll i=1; i<=n; i++) {
         a[i-1] = Algebra::powmod(i,k,mod);
+    }
+    return a;
+}
+
+vint generate_fixed_powers (int n, int k, int mod = 0)
+{
+    vint a(n);
+    for (ll i=1; i<=n; i++) {
+        a[i-1] = (int)Algebra::powmod(i,k,mod);
     }
     return a;
 }
