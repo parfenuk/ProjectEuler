@@ -99,6 +99,14 @@ bool contains (const vector<Trzx> &a, Trzx n)
 }
 
 template <class Trzx>
+bool contains_pair (const vector<pair<Trzx,Trzx>> &a, Trzx n)
+{
+    for (int i=0; i<(int)a.size(); i++) {
+        if (a[i].fs == n || a[i].sc == n) return true;
+    } return false;
+}
+
+template <class Trzx>
 bool is_disjoint (const vector<Trzx> &a, const vector<Trzx> &b)
 {
     for (int i=0; i<(int)a.size(); i++) {

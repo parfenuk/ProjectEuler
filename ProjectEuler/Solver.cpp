@@ -15,11 +15,11 @@ using namespace Containers;
 
 int N;
 vvint G;
-vint path;
-vint path_indeces; // index of corresponsing edge in the path from G
+vsint path;
+vsint path_indeces; // index of corresponsing edge in the path from G
 int current_path_id;
-vint color_map; // which path id occupies current cell
-vint focus_point_type; // +n: begin, -n: end, 0: ordinary
+vsint color_map; // which path id occupies current cell
+vsint focus_point_type; // +n: begin, -n: end, 0: ordinary
 int total_focus_points_count;
 int focus_points_visited = 0;
 
@@ -59,7 +59,7 @@ int step_back()
     return index_of_object(G[v], to);
 }
 
-string backtrack (int initial_vertice, bool debug = false) // find Hamiltonian cycle
+vsint backtrack (int initial_vertice, bool debug = false) // find Hamiltonian cycle
 {
     path.clear();
     path.reserve(N);
@@ -69,24 +69,27 @@ string backtrack (int initial_vertice, bool debug = false) // find Hamiltonian c
     focus_points_visited = 1;
     current_path_id = focus_point_type[initial_vertice];
     
-    int solutions_found = 0;
     bool non_full_solution_found = false;
     int id_from = 0;
+    vsint solution;
     
+    clock_t Time = clock();
     while (true) {
+        if (clock() - Time > 60000000) return vsint();
+        
         bool q = step_up(id_from);
         if (q) {
             //cout << "Up: "; show(path);
             id_from = 0;
             if (path.size() == N) {
                 if (debug) Containers::show(path);
-                solutions_found++;
-                if (solutions_found > 1) return "Ambiguity";
+                if (!solution.empty()) return vsint(); //Ambiguity
+                solution = path;
             }
             else if (focus_points_visited == total_focus_points_count && !non_full_solution_found) {
                 non_full_solution_found = true;
                 if (debug) Containers::show(path);
-                return "Ambiguity";
+                return vsint(); //Ambiguity
             }
         }
         else {
@@ -97,14 +100,14 @@ string backtrack (int initial_vertice, bool debug = false) // find Hamiltonian c
         }
     }
     
-    return solutions_found ? "Unique" : "No solution";
+    return solution.empty() ? vsint() : solution; // No solution or Unique
 }
 
-string solve_graph (int n, int m, vector<psii> points) // n - rows, m - columns
+vsint solve_graph (int n, int m, vector<psii> points) // n - rows, m - columns
 {
     N = n*m;
-    color_map = vint(N);
-    focus_point_type = vint(N);
+    color_map = vsint(N);
+    focus_point_type = vsint(N);
     total_focus_points_count = 2*(int)points.size();
     
     Grid::assign_field();
@@ -121,7 +124,7 @@ string solve_graph (int n, int m, vector<psii> points) // n - rows, m - columns
     return backtrack(points[0].fs);
 }
 
-string solve_graph (int n, int m, vvsint points)
+vsint solve_graph (int n, int m, vvsint points)
 {
     vector<psii> pts;
     for (int i=0; i<points.size(); i++) {
@@ -132,15 +135,15 @@ string solve_graph (int n, int m, vvsint points)
     return solve_graph(n, m, pts);
 }
 
-string solve_grid_graph (vsint free_points, vector<psii> points)
+vsint solve_grid_graph (vsint free_points, vector<psii> points)
 {
     N = (int)free_points.size();
     
     Grid::build_graph();
     G = Grid::G;
     
-    color_map = vint(Grid::N*Grid::M);
-    focus_point_type = vint(Grid::N*Grid::M);
+    color_map = vsint(Grid::N*Grid::M);
+    focus_point_type = vsint(Grid::N*Grid::M);
     total_focus_points_count = 2*(int)points.size();
     
     for (int i=0; i<(int)points.size(); i++) {
@@ -192,9 +195,9 @@ vector<psii> any_solution_on_grid (vsint free_points) // always connected
                 for (int m=0; m<k; m++) B.push_back(free_points[A[i][pairs[j][m]]-1]);
                 
                 if (!Grid::is_good_pts_set(B)) continue;
-                string S = solve_grid_graph(free_points, Containers::to_pairs(B));
+                vsint solution = solve_grid_graph(free_points, Containers::to_pairs(B));
     
-                if (S == "Unique") {
+                if (!solution.empty()) {
                     return Containers::to_pairs(B);
                 }
             }

@@ -91,8 +91,8 @@ vsint get_random_path (sint from, sint to) // using field
     return path;
 }
 
-vector<psii> generate_single_points_set (const vsint &component)
-{
+vector<psii> generate_single_points_set (const vsint &component, int max_points_count)
+{   // TODO: hardcode all values for small components
     if (component.size() <= 12) return Solver::any_solution_on_grid(component);
     int n = (int)component.size();
     
@@ -111,17 +111,18 @@ vector<psii> generate_single_points_set (const vsint &component)
     
     vvsint w = find_connected_components(component);
     for (int i=0; i<(int)w.size(); i++) {
-        vector<psii> a = generate_single_points_set(w[i]);
+        vector<psii> a = generate_single_points_set(w[i], max_points_count - (int)points.size());
         if (a.empty()) return vector<psii>();
         Containers::append_to(points,a);
+        if (points.size() > max_points_count) return vector<psii>();
     }
     
     return points;
 }
 
-vector<vector<psii>> generate_levels (int desired_levels_count)
+vector<pair<vector<psii>,vsint>> generate_levels (int desired_levels_count, int max_points_count = 19)
 {
-    vector<vector<psii>> levels;
+    vector<pair<vector<psii>,vsint>> levels;
     vector<sint> full_component;
     for (int i=0; i<N*M; i++) full_component.push_back(i);
     int cnt = 0;
@@ -131,18 +132,18 @@ vector<vector<psii>> generate_levels (int desired_levels_count)
         cnt_total++;
         for (int i=0; i<N*M; i++) F[i] = 0;
         
-        vector<psii> pts = generate_single_points_set(full_component);
+        vector<psii> pts = generate_single_points_set(full_component, max_points_count);
         if (!pts.empty()) {
             cnt_generation_success++;
-            string S = Solver::solve_graph(N, M, pts);
-            if (S == "Unique") {
-                levels.push_back(pts);
+            vsint solution = Solver::solve_graph(N,M,pts);
+            if (!solution.empty()) {
+                levels.push_back(mp(pts,solution));
                 cnt++;
             }
         }
     }
     
-    cout << "Total: " << cnt_total << ", succeed: " << cnt_generation_success << endl;
+    cout << "Total: " << cnt_total << ", succeed: " << cnt_generation_success << ", ";
     return levels;
 }
 

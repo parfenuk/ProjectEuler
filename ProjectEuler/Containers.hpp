@@ -35,6 +35,8 @@ template <class Trzx>
 template <class Trzx>
     bool contains (const vector<Trzx> &a, Trzx n);
 template <class Trzx>
+    bool contains_pair (const vector<pair<Trzx,Trzx>> &a, Trzx n);
+template <class Trzx>
     bool is_disjoint (const vector<Trzx> &a, const vector<Trzx> &b);
 template <class Trzx>
     vector<Trzx> subvector (const vector<Trzx> &a, int from, int to);
