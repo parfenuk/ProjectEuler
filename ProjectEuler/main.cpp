@@ -41,24 +41,22 @@ int main() {
     }
     
     const vector<string> w = {
-        "Abbreviatures","AI","Animals",   //  0  1  2
-        "Classic","Female","FinnishRock", //  3  4  5
-        "FinnishCovers","90s","Unfamous", //  6  7  8
-        "Games","Guitarists","Left",      //  9 10 11
-        "MAC","Minuses","SingEng",        // 12 13 14
-        "SingRus","Name","NoEnglish",     // 15 16 17
-        "OI","Options","Pop",             // 18 19 20
-        "RadioTapok","Riffs","The5"       // 21 22 23
+        "AA","Clips","CoversUnfamous",        //  0  1  2
+        "Plays","MoviesCities","Serials",     //  3  4  5
+        "Chorus","Covers","Duets",            //  6  7  8
+        "Mash-ups","SingsOwn","Space",        //  9 10 11
+        "5Letters","ExtraSinger","HardDuets", // 12 13 14
+        "HardRock","SingMine","SovietCinema"  // 15 16 17
     };
-    const vector<int> cats = { 5,6,10,13,14 };
-    const vector<int> auctions = { 1,2,15,18,19,22,23 };
+    const vector<int> cats = { 1,2,9,12,14 };
+    const vector<int> auctions = { 0,4,5,8,11,15 };
     const vector<int> cats_distribution = { 2,1,2 }; // cats in each round
-    const vector<int> auctions_distribution = { 1,1,1,1 }; // same for auctions
+    const vector<int> auctions_distribution = { 2,1,2 }; // same for auctions
     
-    vpii F = {mp(12,18)}; // forbidden pairs, should be in different trios
+    vpii F = {mp(4,17),mp(4,5),mp(5,17)}; // forbidden pairs, should be in different trios
     vpii R = {mp(9,23),mp(14,15)}; // required pairs, should be together
-    vpii C = {mp(6,1),mp(11,1),mp(13,2),mp(16,2),mp(5,2),mp(8,2)}; // some elements must be in specific trio
-    vpii D = {mp(23,1),mp(23,2),mp(22,3),mp(22,4),mp(14,3),mp(14,4),mp(1,3),mp(1,4),mp(2,1),mp(2,2),mp(10,1),mp(5,3),mp(5,4),mp(4,3),mp(4,4),mp(3,1),mp(21,4)}; // some elements shouldn't be in specific trio
+    vpii C = {mp(0,1),mp(1,1),mp(8,2),mp(9,2),mp(10,2),mp(13,3),mp(14,3),mp(15,3),mp(16,3),mp(17,3)}; // some elements must be in specific trio
+    vpii D = {mp(2,3),mp(3,3),mp(6,1),mp(7,3)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<(int)w.size(); i++) v.push_back(i);
     random_device rd;
@@ -103,8 +101,7 @@ int main() {
     
     sort(v.begin(), v.begin()+6);
     sort(v.begin()+6, v.begin()+12);
-    sort(v.begin()+12, v.begin()+18);
-    sort(v.begin()+18, v.end());
+    sort(v.begin()+12, v.end());
     
     cout << "FOUND after " << ans << " iterations\n";
     for (int i=0; i<(int)w.size(); i++) {
