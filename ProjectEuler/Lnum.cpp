@@ -307,6 +307,20 @@ pair<Lnum,Lnum> Lnum::divmod (Lnum A, Lnum B) // < A/B, A%B >
     return mp(M,res);
 }
 
+Lnum Lnum::GCD (Lnum A, Lnum B)
+{
+    if (A.isNegative()) A.change_sign();
+    if (B.isNegative()) B.change_sign();
+    if (A.get_size() < 3 && B.get_size() < 3) {
+        ll a = A.to_long_long(), b = B.to_long_long();
+        return Algebra::GCD(a,b);
+    }
+    
+    if (A == Lnum::O) return B;
+    if (B == Lnum::O) return A;
+    return GCD(B, Lnum::divmod(A,B).sc);
+}
+
 Lnum operator^ (Lnum A, ull k)
 {
     Lnum B(1);

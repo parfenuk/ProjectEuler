@@ -13,7 +13,7 @@
 
 typedef int ltype;
 
-#define LSIZE 10
+#define LSIZE 20
 
 class Lnum
 {
@@ -82,4 +82,5 @@ public:
     Lnum& operator/= (ltype b) { *this = *this / b; return *this; }
     
     static pair<Lnum,Lnum> divmod (Lnum A, Lnum B);
+    static Lnum GCD (Lnum A, Lnum B);
 };

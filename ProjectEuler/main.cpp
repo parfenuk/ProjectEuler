@@ -44,7 +44,7 @@ vector<ftype> rec (ftype M, ftype N, int K = 13, ll L = 376, int from = 1)
     return {};
 }
 
-namespace DPFractions {
+namespace DPDenominators {
 
 // M/N = (k1+k2+...+ks)/D, s <= K, D is multiple of N
 vector<ull> dp_fractions (ull M, ull N, ull D, int maxK) // -> minimize K
@@ -93,12 +93,12 @@ vector<ull> dp_fractions (ull M, ull N, ull D, int maxK) // -> minimize K
     return {};
 }
 
-vector<ull> get_optimal_count (ull M, ull N)
+// actually DPBruteForce::dfs proves this function indeed always founds the solution with minimum K
+vector<ull> get_optimal_count (ull M, ull N, int &cur_coef)
 {
     int K = 13;
     vull ret;
-    int cur_coef = 0;
-    for (int coef=1; coef<=1200; coef++) {
+    for (int coef=1; coef<=50 || ret.empty(); coef++) {
         vull a = dp_fractions(M, N, N*coef, K);
         if (a.empty()) continue;
         if (a.size() == K && (ret.empty() || a.back() < ret.back())) {
@@ -112,26 +112,14 @@ vector<ull> get_optimal_count (ull M, ull N)
         }
         if (K == 2) break;
     }
-    cout << cur_coef << endl;
     return ret;
 }
 
-}
-
-int main() {
-    clock_t Total_Time = clock();
-    cout.precision(12);
-    cout.setf(ios::fixed);
-    ios_base::sync_with_stdio(false);
-#ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
-    //freopen("output.txt","wt",stdout);
-#endif
-    
-    ull ans = 0;
-    
+void build_interim_table()
+{
     ofstream out("interim_table.csv");
     
+    int max_coef = 0;
     for (int M=2; M<=50; M++) for (int N=1; N<=50; N++) {
         if (M > 3*N) continue;
         if (GCD(M,N) != 1) continue;
@@ -148,7 +136,10 @@ int main() {
         }
         out << ";";
         
-        vull ak = DPFractions::get_optimal_count(M,N);
+        int coef = 0;
+        vull ak = DPDenominators::get_optimal_count(M,N,coef);
+        if (coef > max_coef) max_coef = coef;
+        
         out << ak.size() << " (";
         for (int i=0; i<(int)ak.size(); i++) {
             out << ak[i];
@@ -156,16 +147,88 @@ int main() {
             else out << " ";
         }
         out << "\n";
+    }
+    cout << "Max coef: " << max_coef << endl;
+}
+
+}
+
+namespace DPBruteForce {
+
+vector<Lnum> dfs (Lfraction F, int maxK, Lnum from = 1)
+{
+    //F.show(false); cout << " " << maxK << " " << from << endl;
+    if (F.num == 1) {
+        return F.den >= from ? vector<Lnum>(1,F.den) : vector<Lnum>();
+    }
+    if (maxK == 1) { return {}; }
+    
+    Lnum quot = Lnum::divmod(F.den,F.num).fs + 1;
+    if (quot > from) from = quot;
+    Lfraction sum = fr_sum(from, from+maxK-1);
+    
+    while (sum > F) {
+        Lfraction G = F - Lfraction(1,from);
+        if (G.num == 0) return { from };
+        vector<Lnum> A = dfs(G,maxK-1,from+1);
+        if (!A.empty()) { A.push_back(from); return A; }
+        sum = sum - Lfraction(1,from);
+        sum = sum + Lfraction(1,from+maxK);
+        from += 1;
+    }
+    
+    return sum == F ? vector<Lnum>(1,from) : vector<Lnum>();
+}
+
+void build_proved_optimal_table() {
+    
+    for (int M=2; M<=50; M++) for (int N=1; N<=50; N++) {
+        if (M > 3*N) continue;
+        if (GCD(M,N) != 1) continue;
         
-        // original code that generates solutions for all tests EXTREMELY fast!!!
-        // solutions are not guaranteed to be K-optimal or V0-optimal
+        int coef;
+        int K = (int)DPDenominators::get_optimal_count(M,N,coef).size();
+        cout << M << " " << N << " " << K << endl;
+        
+        while (K != 2) {
+            cout << "Search for K = " << K-1 << ": ";
+            vector<Lnum> A = DPBruteForce::dfs(Lfraction(M,N), K-1);
+            if (A.empty()) { cout << "doesn't exist\n"; break; }
+            K = (int)A.size();
+            cout << "Found solution for K = " << K << "!\n";
+            for (int i=0; i<K; i++) cout << A[i] << " ";
+            cout << endl;
+        }
+    }
+}
+
+}
+
+int main() {
+    clock_t Total_Time = clock();
+    cout.precision(12);
+    cout.setf(ios::fixed);
+    ios_base::sync_with_stdio(false);
+#ifndef ONLINE_JUDGE
+    //freopen("input.txt","rt",stdin);
+    //freopen("output.txt","wt",stdout);
+#endif
+    
+    ull ans = 0;
+    
+    DPBruteForce::build_proved_optimal_table();
+    
+    // original code that generates solutions for all tests EXTREMELY fast!!!
+    // solutions are not guaranteed to be K-optimal or V0-optimal
+//    for (int M=2; M<=50; M++) for (int N=1; N<=50; N++) {
+//        
 //        clock_t Total_Time = clock();
 //        vector<ftype> a = rec(M,N);
 //        cout << M << "/" << N << ": size = " << a.size() << " in ";
 //        Total_Time = clock() - Total_Time;
 //        cout << fixed << ((float)Total_Time)/CLOCKS_PER_SEC << endl;
 //        for (int i=0; i<(int)a.size(); i++) cout << a[i] << " "; cout << endl;
-    }
+//    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
