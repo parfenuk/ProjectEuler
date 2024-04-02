@@ -98,7 +98,7 @@ vector<ull> get_optimal_count (ull M, ull N, int &cur_coef)
 {
     int K = 13;
     vull ret;
-    for (int coef=1; coef<=50 || ret.empty(); coef++) {
+    for (int coef=1; coef<=840 || ret.empty(); coef++) {
         vull a = dp_fractions(M, N, N*coef, K);
         if (a.empty()) continue;
         if (a.size() == K && (ret.empty() || a.back() < ret.back())) {
@@ -155,22 +155,23 @@ void build_interim_table()
 
 namespace DPBruteForce {
 
-vector<Lnum> dfs (Lfraction F, int maxK, Lnum from = 1)
+vector<Lnum> dfs (Lfraction F, int maxK, Lnum from = 1, Lnum maxV = -1)
 {
     //F.show(false); cout << " " << maxK << " " << from << endl;
     if (F.num == 1) {
-        return F.den >= from ? vector<Lnum>(1,F.den) : vector<Lnum>();
+        return F.den >= from && (maxV == -1 || F.den <= maxV) ? vector<Lnum>(1,F.den) : vector<Lnum>();
     }
     if (maxK == 1) { return {}; }
+    if (maxV != -1 && from > maxV) { return {}; }
     
     Lnum quot = Lnum::divmod(F.den,F.num).fs + 1;
     if (quot > from) from = quot;
     Lfraction sum = fr_sum(from, from+maxK-1);
     
-    while (sum > F) {
+    while (sum > F && (maxV == -1 || from <= maxV)) {
         Lfraction G = F - Lfraction(1,from);
         if (G.num == 0) return { from };
-        vector<Lnum> A = dfs(G,maxK-1,from+1);
+        vector<Lnum> A = dfs(G,maxK-1,from+1,maxV);
         if (!A.empty()) { A.push_back(from); return A; }
         sum = sum - Lfraction(1,from);
         sum = sum + Lfraction(1,from+maxK);
@@ -202,6 +203,67 @@ void build_proved_optimal_table() {
     }
 }
 
+// very slow
+vector<Lnum> find_V_optimal_solution (int M, int N, int K, Lnum maxV)
+{
+    vector<Lnum> ret;
+    while (true) {
+        vector<Lnum> A = dfs(Lfraction(M,N),K,1,maxV);
+        if (A.empty()) break;
+        ret = A;
+        //for (int i=0; i<(int)A.size(); i++) cout << A[i] << " "; cout << endl;
+        maxV = A[0]-1;
+    }
+    return ret;
+}
+
+}
+
+namespace DPDecimals {
+
+int intValue (const fraction &F) {
+    dd d = (dd)F.num / F.den;
+    d *= 1000000;
+    return round(d);
+}
+
+vector<Lnum> extract_sequence (const vint &dp, int sum)
+{
+    vector<Lnum> a;
+    while (sum) {
+        a.push_back(dp[sum]);
+        sum -= intValue(fraction(1,dp[sum]));
+    }
+    return a;
+}
+
+vector<Lnum> get_min_V_solution (int M, int N, int maxK, int maxV)
+{
+    int n = intValue(fraction(M,N));
+    
+    int S = n+9;
+    vector<int> dp(S,-1); // last number sum was obtained from
+    dp[0] = 0;
+    for (int k=1; k<=maxK; k++) { // summands count
+        for (int i=1; i<=maxV; i++) { // current fraction
+            for (int s=S-1; s>=0; s--) { // initial sum
+                if (dp[s] == -1) continue;
+                int sum = s + intValue(fraction(1,i));
+                if (sum >= S) continue;
+                dp[sum] = i;
+                if (abs(sum-n) <= 8) { // check actual sum
+                    vector<Lnum> a = extract_sequence(dp,sum);
+                    Lfraction F;
+                    for (int j=0; j<(int)a.size(); j++) F = F + Lfraction(1,a[j]);
+                    if (F == Lfraction(M,N)) return a;
+                }
+            }
+        }
+    }
+    
+    return {};
+}
+
 }
 
 int main() {
@@ -216,7 +278,19 @@ int main() {
     
     ull ans = 0;
     
-    DPBruteForce::build_proved_optimal_table();
+    for (int M=2; M<=50; M++) for (int N=1; N<=50; N++) {
+        if (M > 3*N) continue;
+        if (GCD(M,N) != 1) continue;
+        
+        int coef;
+        vull a = DPDenominators::get_optimal_count(M,N,coef);
+        int K = (int)a.size(), maxV = (int)a.back();
+        cout << M << "/" << N << " " << endl;
+        vector<Lnum> A = DPDecimals::get_min_V_solution(M,N,K+1,maxV-1);
+        Containers::show(A);
+    }
+    
+    //DPBruteForce::build_proved_optimal_table();
     
     // original code that generates solutions for all tests EXTREMELY fast!!!
     // solutions are not guaranteed to be K-optimal or V0-optimal
