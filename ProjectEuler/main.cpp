@@ -21,66 +21,6 @@
 using namespace Algebra;
 using namespace Containers;
 
-struct LevelBeauty {
-    sint points_count;
-    dd av_dist;
-    sint rotations_count;
-    
-    LevelBeauty() { points_count = av_dist = rotations_count = 0; }
-    LevelBeauty(sint pc, dd av, sint rc) {
-        points_count = pc;
-        av_dist = av;
-        rotations_count = rc;
-    }
-};
-
-LevelBeauty get_beauty (const vector<psii> &pts, const vsint &solution)
-{
-    LevelBeauty beauty;
-    beauty.points_count = pts.size();
-    
-    for (int i=0; i<(int)pts.size(); i++) {
-        psii cell1 = Grid::cell[pts[i].fs];
-        psii cell2 = Grid::cell[pts[i].sc];
-        beauty.av_dist += fabs(cell1.fs-cell2.fs) + fabs(cell1.sc-cell2.sc);
-    }
-    beauty.av_dist /= pts.size();
-    
-    sint prev_direction = -1; // 0 - up, 1 - down, 2 - left, 3 - right
-    for (int i=1; i<(int)solution.size(); i++) {
-        bool is_prev_pair = contains_pair(pts, solution[i-1]);
-        bool is_cur_pair = contains_pair(pts, solution[i]);
-        if (is_prev_pair && is_cur_pair) continue; // it's path jump change
-        
-        psii prev = Grid::cell[solution[i-1]];
-        psii cur = Grid::cell[solution[i]];
-        sint cur_direction = -1;
-        if (prev.fs == cur.fs + 1) cur_direction = 0;
-        else if (prev.fs == cur.fs - 1) cur_direction = 1;
-        else if (prev.sc == cur.sc + 1) cur_direction = 2;
-        else if (prev.sc == cur.sc - 1) cur_direction = 3;
-        
-        if (is_prev_pair) prev_direction = cur_direction; // path begin, ignore it
-        else {
-            if (cur_direction != prev_direction) beauty.rotations_count++;
-            prev_direction = cur_direction;
-        }
-    }
-    
-    return beauty;
-}
-
-bool beauty_sort (const pair<vector<psii>,vsint> &a, const pair<vector<psii>,vsint> &b) {
-    LevelBeauty b1 = get_beauty(a.fs, a.sc);
-    LevelBeauty b2 = get_beauty(b.fs, b.sc);
-    
-    if (b1.points_count < b2.points_count) return true;
-    if (b1.points_count > b2.points_count) return false;
-    if (b1.av_dist < b2.av_dist) return true;
-    if (b1.av_dist > b2.av_dist) return false;
-    return b1.rotations_count < b2.rotations_count;
-}
-
 string to_json (const vector<psii> &pts)
 {
     string S = "{ \"rows\": "; S += to_string(Grid::N);
@@ -123,52 +63,109 @@ string json_to_plist (string S)
     return "<string>" + S + "</string>";
 }
 
-ofstream out("output.txt");
-// desired_config[i] determines how many levels with exactly i points is needed
-void generate_for_dimensions (int N, int M, vector<int> desired_config)
+// path is on 10x10 board
+pair<pii,vint> get_enclosing_rect (const vint &path) // < <N,M>, new_path >
 {
-    Generator::set_dimensions(N,M);
+    int min_row = 10, max_row = -1;
+    int min_col = 10, max_col = -1;
     
-    int first_non_zero = 0;
-    while (desired_config[first_non_zero] == 0) { first_non_zero++; }
-    int last_non_zero = (int)desired_config.size() - 1;
-    while (desired_config[last_non_zero] == 0) { last_non_zero--; }
-    int sum = total_vector_sum(desired_config);
-    const int F = first_non_zero;
-    
-    vector<pair<vector<psii>,vsint>> obtained_levels;
-    
-    cout << "Work for N = " << N << ", M = " << M << " has been started\n";
-    clock_t tt = clock();
-    while (sum) {
-        vector<pair<vector<psii>,vsint>> levels = Generator::generate_levels(1,last_non_zero);
-        int n = (int)levels[0].fs.size();
-        if (n < first_non_zero) {
-            if (n < F) cout << "Generated Super!!! " << n << endl;
-            else cout << "Generated extra " << n << endl;
-            desired_config[first_non_zero]--;
-            sum--;
-            while (first_non_zero < (int)desired_config.size() && desired_config[first_non_zero] == 0) { first_non_zero++; }
-            obtained_levels.push_back(levels[0]);
-        }
-        if (n < (int)desired_config.size() && desired_config[n]) {
-            cout << "Generated " << n << endl;
-            desired_config[n]--;
-            sum--;
-            while (last_non_zero >= 0 && desired_config[last_non_zero] == 0) { last_non_zero--; }
-            obtained_levels.push_back(levels[0]);
-        }
+    for (int i=0; i<(int)path.size(); i++) {
+        int r = path[i] / 10, c = path[i] % 10;
+        if (r < min_row) min_row = r;
+        if (r > max_row) max_row = r;
+        if (c < min_col) min_col = c;
+        if (c > max_col) max_col = c;
     }
     
-    sort(obtained_levels.begin(), obtained_levels.end(), beauty_sort);
-    for (int i=0; i<(int)obtained_levels.size(); i++) {
-        out << to_json(obtained_levels[i].fs) << endl;
+    int n = max_row - min_row + 1;
+    int m = max_col - min_col + 1;
+    vint a;
+    for (int i=0; i<(int)path.size(); i++) {
+        int r = path[i] / 10, c = path[i] % 10;
+        r -= min_row; c -= min_col;
+        a.push_back(r*m + c);
     }
-    
-    tt = clock() - tt;
-    cout << "Work for N = " << N << ", M = " << M << " has been finished in ";
-    cout << ((float)tt)/CLOCKS_PER_SEC << " seconds\n";
+    return mp(mp(n,m),a);
 }
+
+struct Level {
+    int N, M;
+    pii s, e;
+    vector<psii> forbidden_cells;
+    int difficulty;
+    void show() {
+        cout << N << " " << M << endl;
+        cout << "(" << s.fs << " " << s.sc << ") -> (";
+        cout << e.fs << " " << e.sc << ")";
+        cout << "\nforbidden: ";
+        for (int i=0; i<(int)forbidden_cells.size(); i++) {
+            cout << "(" << forbidden_cells[i].fs << " " << forbidden_cells[i].sc << ") ";
+        }
+        cout << endl;
+    }
+    
+    string plist_json_value() {
+        string S = "{ \"rows\": "; S += to_string(N);
+        S += ", \"columns\": "; S += to_string(M);
+        S += ", \"pairs\": [[";
+        S += to_string(s.fs); S += ",";
+        S += to_string(s.sc); S += ",";
+        S += to_string(e.fs); S += ",";
+        S += to_string(e.sc); S += "]], \"colorIds\": [";
+        S += to_string(Utils::random_integer(1,5));
+        S += "], \"forbiddenCells\": [";
+        for (int i=0; i<(int)forbidden_cells.size(); i++) {
+            S += to_string(forbidden_cells[i].fs);
+            S += ",";
+            S += to_string(forbidden_cells[i].sc);
+            S += ",";
+        }
+        S.pop_back();
+        S += "]}";
+        
+        return S;
+    }
+};
+
+Level generate_random_level()
+{
+    Grid::set_dimensions(10,10);
+    
+    int s, e;
+    while (true) {
+        s = (int)Utils::random_integer(0,99);
+        e = (int)Utils::random_integer(0,99);
+        psii c1 = Grid::cell[s], c2 = Grid::cell[e];
+        if (abs(c1.fs - c2.fs) + abs(c1.sc - c2.sc) > 1) break;
+    }
+    
+    vint p;
+    while (true) {
+        p = Grid::get_random_path(s,e);
+        if (!p.empty()) break;
+    }
+    pair<pii,vint> R = get_enclosing_rect(p);
+    if (R.fs.sc - R.fs.fs != 0 && R.fs.sc - R.fs.fs != 1) {
+        Level l;
+        l.N = l.M = 0;
+        return l;
+    }
+    Grid::set_dimensions(R.fs.fs, R.fs.sc);
+    vint ids = Grid::generate_forbidden_cells(R.sc);
+    vector<psii> cells = Grid::ids_to_cells(ids);
+    
+    Level l;
+    l.N = R.fs.fs;
+    l.M = R.fs.sc;
+    l.s = Grid::cell[R.sc[0]];
+    l.e = Grid::cell[R.sc.back()];
+    l.forbidden_cells = cells;
+    l.difficulty = (int)p.size();
+    
+    return l;
+}
+
+bool dif_sort (const Level &a, const Level &b) { return a.difficulty < b.difficulty; }
 
 int main() {
     clock_t Total_Time = clock();
@@ -180,26 +177,35 @@ int main() {
     //freopen("output.txt","wt",stdout);
 #endif
     
-//    string S;
-//    while (getline(cin,S)) {
-//        if (S[0] != '{') continue;
-//        cout << json_to_plist(S) << endl;
-//    } return 0;
-    
     ull ans = 0;
     
-    generate_for_dimensions(4, 5,   {0,0,0,6,6,3});
-    generate_for_dimensions(5, 5,   {0,0,0,2,5,5,3});
-    generate_for_dimensions(5, 6,   {0,0,0,0,3,5,5,2});
-    generate_for_dimensions(6, 6,   {0,0,0,0,1,3,6,5});
-    generate_for_dimensions(6, 7,   {0,0,0,0,0,1,3,6,4});
-    generate_for_dimensions(7, 7,   {0,0,0,0,0,0,1,3,5,5});
-    generate_for_dimensions(7, 8,   {0,0,0,0,0,0,0,3,3,3,3});
-    generate_for_dimensions(8, 8,   {0,0,0,0,0,0,0,0,2,3,4,1});
-    generate_for_dimensions(8, 9,   {0,0,0,0,0,0,0,0,1,2,3,4});
-    generate_for_dimensions(9, 9,   {0,0,0,0,0,0,0,0,0,1,2,3,4});
-    generate_for_dimensions(9, 10,  {0,0,0,0,0,0,0,0,0,0,0,3,7});
-    generate_for_dimensions(10, 10, {0,0,0,0,0,0,0,0,0,0,0,0,10});
+    vector<Level> levels[13];
+    vector<int> level_sizes = {12,12,12,12,12,12,12,11,11,11,11,11,11};
+    vector<pii> level_dimensions = { mp(4,4), mp(4,5), mp(5,5), mp(5,6), mp(6,6), mp(6,7), mp(7,7), mp(7,8), mp(8,8), mp(8,9), mp(9,9), mp(9,10), mp(10,10) };
+    
+    while (ans != 150) {
+        Level l = generate_random_level();
+        for (int i=0; i<13; i++) {
+            if (l.N == level_dimensions[i].fs && l.M == level_dimensions[i].sc && levels[i].size() < level_sizes[i]) {
+                cout << l.N << " " << l.M << endl;
+                levels[i].push_back(l);
+                ans++;
+                break;
+            }
+        }
+        //cout << l.plist_json_value() << endl;
+    }
+    
+    vector<Level> L;
+    for (int i=0; i<13; i++) for (int j=0; j<level_sizes[i]; j++) {
+        L.push_back(levels[i][j]);
+    }
+    sort(L.begin(), L.end(), dif_sort);
+    
+    ofstream out("output.txt");
+    for (int i=0; i<ans; i++) {
+        out << "<string>" << L[i].plist_json_value() << "</string>" << endl;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;

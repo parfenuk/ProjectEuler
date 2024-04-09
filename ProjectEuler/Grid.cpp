@@ -50,7 +50,7 @@ void set_dimensions (int n, int m)
     build_graph();
 }
 
-vector<psii> ids_to_cells (const vsint &a)
+vector<psii> ids_to_cells (const vint &a)
 {
     vector<psii> ret;
     for (int i=0; i<(int)a.size(); i++) ret.push_back(cell[a[i]]);
@@ -67,6 +67,95 @@ vsint cells_to_ids (vector<psii> &a)
 bool is_neighbours (int a, int b)
 {
     return abs(cell[a].fs - cell[b].fs) + abs(cell[a].sc - cell[b].sc) == 1;
+}
+
+// here N and M are 10
+vint get_random_path (int s, int e)
+{
+    vsint p = {0,1,2,3};
+    vint path;
+    path.push_back(s);
+    
+    while (true) {
+        
+        shuffle(p.begin(), p.end(), Utils::rd);
+        bool ok = false;
+        
+        for (int z=0; z<(int)p.size(); z++) {
+            
+            if (G[path.back()].size() <= p[z]) continue;
+            int next = G[path.back()][p[z]];
+            
+            bool good = true;
+            for (int i=0; i<(int)path.size()-1; i++) {
+                if (is_neighbours(next, path[i])) { good = false; break; }
+            }
+            
+            if (good) { path.push_back(next); ok = true; break; }
+        }
+        
+        if (!ok) break;
+        
+        if (is_neighbours(path.back(), e)) { path.push_back(e); return path; }
+    }
+    
+    return {};
+}
+
+// but we have inaccessible cells here
+vint try_get_path (int s, int e)
+{
+    vbool used(N*M);
+    vint from(N*M, -1);
+    used[s] = true;
+    queue<int> q;
+    q.push(s);
+    while (!q.empty()) {
+        int v = q.front();
+        if (v == e) break;
+        q.pop();
+        
+        for (int i=0; i<(int)G[v].size(); i++) {
+            int to = G[v][i];
+            if (F[to] == INACCESSIBLE || used[to]) continue;
+            
+            used[to] = true;
+            from[to] = v;
+            q.push(to);
+        }
+    }
+    
+    if (from[e] == -1) return {};
+    vint path(1,e);
+    while (path.back() != s) {
+        path.push_back(from[path.back()]);
+    }
+    return path; // reversed, but it's ok
+}
+
+// here N and M are already determined
+vint generate_forbidden_cells (const vint &path)
+{
+    for (int i=1; i<(int)path.size()-1; i++) F[path[i]] = 1; // original path id
+    for (int i=1; i<(int)path.size()-1; i++) {
+        F[path[i]] = INACCESSIBLE;
+        while (true) {
+            vint p = try_get_path(path[0], path.back());
+            if (p.empty()) break;
+            vint filtered;
+            for (int i=1; i<(int)p.size()-1; i++) {
+                if (F[p[i]] != 1) filtered.push_back(p[i]);
+            }
+            F[Utils::random_element(filtered)] = INACCESSIBLE;
+        }
+        F[path[i]] = 1;
+    }
+    
+    vint cells;
+    for (int i=0; i<(int)F.size(); i++) {
+        if (F[i] == INACCESSIBLE) cells.push_back(i);
+    }
+    return cells;
 }
 
 vsint flipH (const vsint &a)

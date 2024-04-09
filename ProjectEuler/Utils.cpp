@@ -56,6 +56,12 @@ ll random_integer (ll from, ll to)
     return uni(rng);
 }
 
+template<class Utrz>
+Utrz random_element (const vector<Utrz> &a)
+{
+    return a[random_integer(0,(ll)a.size()-1)];
+}
+
 inline void try_increase (int &x, const int y) { x < y ? x = y : 0; }
 inline void try_decrease (int &x, const int y) { x > y ? x = y : 0; }
 
