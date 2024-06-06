@@ -77,16 +77,18 @@ int main() {
     freopen("output.txt","wt",stdout);
 #endif
 
-    string S;
-    while (getline(cin,S)) {
-        size_t found = S.find("?");
-        if (found == string::npos) { cout << S << endl; continue; }
-        string Q = S.substr(0,found+1);
-        string A = S.substr(found+1,S.length()-found-1);
-        if (A[0] == ' ') A.erase(0,1);
-        add_escapings(Q);
-        cout << "[\"" << Q << "\"," << "\"" << A << "\"],\n";
-    }
+    generate_from_single_element_in_list(73);
+    
+//    string S;
+//    while (getline(cin,S)) {
+//        size_t found = S.find("?");
+//        if (found == string::npos) { cout << S << endl; continue; }
+//        string Q = S.substr(0,found+1);
+//        string A = S.substr(found+1,S.length()-found-1);
+//        if (A[0] == ' ') A.erase(0,1);
+//        add_escapings(Q);
+//        cout << "[\"" << Q << "\"," << "\"" << A << "\"],\n";
+//    }
     
 //    string S;
 //    map<string,string> M;
