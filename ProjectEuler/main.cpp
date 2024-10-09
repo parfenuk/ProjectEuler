@@ -19,15 +19,30 @@
 using namespace Algebra;
 using namespace Containers;
 
-const vull F = Combinatorics::generate_factorials(12);
+const int Q = 998244353;
+const ll ORDER = powmod(2,23)*7*17;
+const vint ROOTS = { 3,5,6,10,11,12,13,20,22,24,26,27,35,40,42,47,48,51 };
+const int N = 900000;
 
-ull process_vector (vsint a, bool is_final = false)
+vector<pair<pii,int>> min_orders(N+1, mp(mp(1000000000,-1),0)); // < min_order, primitive_root >
+
+void fill_orders()
 {
-    ull k = F[12-is_final];
-    for (int i=0; i<(int)a.size(); i++) k /= F[a[i]];
-    if (is_final || a[0] == 0) return k;
-    a[0]--;
-    return k - process_vector(a,true);
+    for (int i=0; i<=N; i++) min_orders[i].sc = i;
+    
+    for (int i=0; i<1; i++) {
+        const ll root = powmod(ROOTS[i], (Q-1)/ORDER, Q);
+        ll s = 1;
+        int cnt = 0;
+        for (int j=1; j<=ORDER; j++) {
+            s = s*root % Q;
+            if (s <= N && j < min_orders[s].fs.fs) {
+                if (min_orders[s].fs.fs > Q) cnt++;
+                min_orders[s].fs = mp(j,root);
+            }
+        }
+        cout << "Root " << i << ": " << cnt << " updates\n";
+    }
 }
 
 int main() {
@@ -42,10 +57,12 @@ int main() {
     
     ull ans = 0;
     
-    vvsint a = Combinatorics::get_repeated_combinations(10,12);
-    for (int i=0; i<(int)a.size(); i++) {
-        ull k = process_vector(a[i]);
-        ans += k*(k-1)/2;
+    fill_orders();
+    sort(min_orders.begin(), min_orders.end());
+    reverse(min_orders.begin(), min_orders.end());
+    for (int i=0; i<1000; i++) {
+        //if (min_orders[i].fs.fs < Q) { cout << i << endl; break; }
+        cout << min_orders[i].sc << " " << min_orders[i].fs.fs << " " << min_orders[i].fs.sc << endl;
     }
     
     cout << endl << ans << endl;
