@@ -35,7 +35,7 @@ fraction fraction::one(1);
 
 bool operator< (fraction a, fraction b) { return a.num*b.den < b.num*a.den; }
 bool operator== (fraction a, fraction b) { return a.num*b.den == b.num*a.den; }
-bool operator<= (fraction A, fraction B) { return A < B || A == B; }
+bool operator<= (fraction A, fraction B) { return !(B < A); }
 bool operator>  (fraction A, fraction B) { return !(A <= B); }
 bool operator>= (fraction A, fraction B) { return !(A < B); }
 bool operator!= (fraction A, fraction B) { return !(A == B); }

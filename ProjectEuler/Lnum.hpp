@@ -28,8 +28,8 @@ public:
     Lnum(ll n);
     Lnum(ull n);
     Lnum(string S);
-    Lnum(const vint &a) { size = (int)a.size(); for (int i=0; i<size; i++) z[i] = a[i]; minus = false; }
-    Lnum(int a[], int s) { size = s; for (int i=0; i<s; i++) z[i] = a[i]; minus = false; }
+    Lnum(const vector<ltype> &a) { size = (int)a.size(); for (int i=0; i<size; i++) z[i] = a[i]; minus = false; }
+    Lnum(ltype a[], int s) { size = s; for (int i=0; i<s; i++) z[i] = a[i]; minus = false; }
     
     string to_string();
     ll to_long_long();
@@ -60,7 +60,7 @@ public:
     
     friend bool operator== (const Lnum &A, const Lnum &B);
     friend bool operator<  (const Lnum &A, const Lnum &B);
-    friend bool operator<= (const Lnum &A, const Lnum &B) { return A < B || A == B; }
+    friend bool operator<= (const Lnum &A, const Lnum &B) { return !(B < A); }
     friend bool operator>  (const Lnum &A, const Lnum &B) { return B < A; }
     friend bool operator>= (const Lnum &A, const Lnum &B) { return !(A < B); }
     friend bool operator!= (const Lnum &A, const Lnum &B) { return !(A == B); }
@@ -80,6 +80,11 @@ public:
     Lnum& operator*= (ltype b) { *this = *this * b; return *this; }
     Lnum& operator*= (Lnum B)  { *this = *this * B; return *this; }
     Lnum& operator/= (ltype b) { *this = *this / b; return *this; }
+    
+    Lnum& operator++() { *this = *this + one; return *this; }
+    Lnum operator++(int) { Lnum clone = *this; operator++(); return clone; }
+    Lnum& operator--() { *this = *this - one; return *this; }
+    Lnum operator--(int) { Lnum clone = *this; operator--(); return clone; }
     
     static pair<Lnum,Lnum> divmod (Lnum A, Lnum B);
 };

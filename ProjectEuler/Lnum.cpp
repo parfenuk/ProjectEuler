@@ -11,7 +11,8 @@
 const ltype BASE = 1000000000; // MUST be power of ten
 const sint BASE_POWER = 9;
 
-Lnum Lnum::O; // can't use public static members in non-class methods even if they're friends of it
+// can't use public static members in non-class methods even if they're friends of it
+Lnum Lnum::O;
 Lnum Lnum::one(1);
 
 Lnum::Lnum (ll n)
