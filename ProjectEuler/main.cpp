@@ -31,13 +31,6 @@ int main() {
     
     ull ans = 0;
     
-    Lnum A = Lnum(2)^202;
-    cout << ++A << endl;
-    A++;
-    cout << A << endl;
-    A--;
-    cout << --A << endl;
-    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
