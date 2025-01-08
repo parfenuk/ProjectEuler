@@ -41,22 +41,22 @@ int main() {
     }
     
     const vector<string> w = {
-        "AA","Clips","CoversUnfamous",        //  0  1  2
-        "Plays","MoviesCities","Serials",     //  3  4  5
-        "Chorus","Covers","Duets",            //  6  7  8
-        "Mash-ups","SingsOwn","Space",        //  9 10 11
-        "5Letters","ExtraSinger","HardDuets", // 12 13 14
-        "HardRock","SingMine","SovietCinema"  // 15 16 17
+        "1to5","4L","5L",                   //  0  1  2
+        "Duets","Extra","Unfamous",         //  3  4  5
+        "BandsWithNames","Clips","Covers",  //  6  7  8
+        "Minuses","Plays","Sampling",       //  9 10 11
+        "Chorus","Connection","Guetta",     // 12 13 14
+        "HardPop","ManyVowels","Sings"      // 15 16 17
     };
-    const vector<int> cats = { 1,2,9,12,14 };
-    const vector<int> auctions = { 0,4,5,8,11,15 };
+    const vector<int> cats = { 1,4,5,8,12 };
+    const vector<int> auctions = { 0,2,3,4,6,8,10,11,14,15,16 };
     const vector<int> cats_distribution = { 2,1,2 }; // cats in each round
     const vector<int> auctions_distribution = { 2,1,2 }; // same for auctions
     
-    vpii F = {mp(4,17),mp(4,5),mp(5,17)}; // forbidden pairs, should be in different trios
-    vpii R = {mp(9,23),mp(14,15)}; // required pairs, should be together
-    vpii C = {mp(0,1),mp(1,1),mp(8,2),mp(9,2),mp(10,2),mp(13,3),mp(14,3),mp(15,3),mp(16,3),mp(17,3)}; // some elements must be in specific trio
-    vpii D = {mp(2,3),mp(3,3),mp(6,1),mp(7,3)}; // some elements shouldn't be in specific trio
+    vpii F = {mp(8,11)}; // forbidden pairs, should be in different trios
+    vpii R = {}; // required pairs, should be together
+    vpii C = {mp(5,1),mp(10,2),mp(15,3),mp(16,3)}; // some elements must be in specific trio
+    vpii D = {mp(0,1),mp(1,1),mp(3,1),mp(4,1),mp(6,1),mp(7,3),mp(8,1),mp(9,3),mp(11,3),mp(12,3),mp(13,1),mp(14,1),mp(17,3)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<(int)w.size(); i++) v.push_back(i);
     random_device rd;
@@ -74,8 +74,8 @@ int main() {
             //if (contains(cats,v[i])) catscnt[i/6]++;
             if (contains(auctions,v[i])) auccnt[i/6]++;
         }
-//        if (catscnt[0] != cats_distribution[0] ||
-//            catscnt[1] != cats_distribution[1]) continue;
+        if (catscnt[0] != cats_distribution[0] ||
+            catscnt[1] != cats_distribution[1]) continue;
         if (auccnt[0] < auctions_distribution[0] ||
             auccnt[1] < auctions_distribution[1] ||
             auccnt[2] < auctions_distribution[2]) continue;
