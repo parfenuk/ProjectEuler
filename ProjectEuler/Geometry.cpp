@@ -123,7 +123,7 @@ vector<point> convex_hull (vector<point> a, bool should_skip_border_points = tru
             while (up.size() >= 2 && !cw(up[up.size()-2], up.back(), a[i], should_skip_border_points)) up.pop_back();
             up.push_back(a[i]);
         }
-        if (i == a.size()-1 || ccw(p1, a[i], p2, !should_skip_border_points)) {
+        if (i == a.size()-1 || ccw(p1, a[i], p2, should_skip_border_points)) {
             while (down.size() >= 2 && !ccw(down[down.size()-2], down.back(), a[i], should_skip_border_points)) down.pop_back();
             down.push_back(a[i]);
         }
