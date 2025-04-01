@@ -47,6 +47,7 @@
 		D1DF345F25F282B6009DF141 /* Definitions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Definitions.hpp; sourceTree = "<group>"; };
 		D1E55E851F24C7B600ADF93D /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry.cpp; sourceTree = "<group>"; };
 		D1F909651F51C2EC00A70540 /* Complex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Complex.cpp; sourceTree = "<group>"; };
+		DE3F7FCA2D9B9AE100935F49 /* FFT.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFT.cpp; sourceTree = "<group>"; };
 		DE935ADD2C15324E0036C5C2 /* Keywords.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Keywords.cpp; sourceTree = "<group>"; };
 		FA120B0F20625D5200010E1F /* Geometry3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry3D.cpp; sourceTree = "<group>"; };
 		FA5901EE1FD9DF56003B1AF3 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 				D1E55E851F24C7B600ADF93D /* Geometry.cpp */,
 				FA120B0F20625D5200010E1F /* Geometry3D.cpp */,
 				D1CDA74325F0320800BE085D /* Graphs.cpp */,
+				DE3F7FCA2D9B9AE100935F49 /* FFT.cpp */,
 				D17A22091F7443F5009BF742 /* Fractions.cpp */,
 				D1DF345725F137F0009DF141 /* Lnum.hpp */,
 				D1DF345625F137F0009DF141 /* Lnum.cpp */,

@@ -8,6 +8,7 @@
 #include "Containers.cpp"
 #include "Geometry.cpp"
 #include "Geometry3D.cpp"
+#include "FFT.cpp"
 #include "Fractions.cpp"
 #include "Lnum.hpp"
 #include "Matrix.cpp"
