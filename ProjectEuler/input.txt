@@ -1,10 +1,9 @@
 000000000000000000000000010100100001001010000000001010000110100010101001101000100001
 
 
-Female(A3) Left(C5) SingEng SingRus(A2) FinnishCovers AI[A4]
-FinnishRock Unfamous Riffs(A3) Minuses(C3) RadioTapok Name
-Guitarists(C2) Abbreviatures(A2) Animals Classic Pop MAC(A4)
-NoEnglish OI(A2) 90s(C1) Games(C4) Options(A4) The5
+Blue Duets(A4) Midi(A3) Minuses(C1) N.N. RR(C4)
+ExtraSinger Plants Speed(C5) FromUnfamous Plays(A4) Options
+Sings Mistakes(A4) Name(A4) Sampling Singers(C2) WordByWord(C3)
 
 
 
