@@ -1,0 +1,504 @@
+    static var FN11: Question = {
+        Question(ID: 1,
+                 text: "В каком фильме у героев были такие костюмы?",
+                 replacements: [],
+                 color: .systemPink,
+                 connection: "Это костюмы персонажей из фильма",
+                 answer: "Бойцовский клуб",
+                 imageQuestion: "FN11Q",
+                 imageAnswer: "FN11A")
+    }()
+    
+    static var FN12: Question = {
+        Question(ID: 2,
+                 text: "Какой товар рекламируется?",
+                 replacements: [],
+                 color: .systemPink,
+                 connection: "Это креативная реклама",
+                 answer: "краски для волос",
+                 imageQuestion: "FN12Q",
+                 imageAnswer: "FN12A")
+    }()
+    
+    static var FN13: Question = {
+        Question(ID: 3,
+                 text: "Чьи глаза?",
+                 replacements: [],
+                 color: .systemPink,
+                 connection: "Глаза американского актёра",
+                 answer: "Маколея Калкина",
+                 imageQuestion: "FN13Q",
+                 imageAnswer: "FN13A")
+    }()
+    
+    static var FN14: Question = {
+        Question(ID: 4,
+                 text: "Сферическое фото какого города?",
+                 replacements: [],
+                 color: .systemPink,
+                 connection: "На фото город",
+                 answer: "Вена",
+                 imageQuestion: "FN14Q",
+                 imageAnswer: "FN14A")
+    }()
+    
+    static var FN15: Question = {
+        Question(ID: 5,
+                 text: "Запишите число 364 римскими цифрами",
+                 replacements: [],
+                 color: .systemPink,
+                 connection: "Запись числа 364 римскими цифрами -",
+                 answer: "CCCLXIV",
+                 imageQuestion: "FN15Q",
+                 imageAnswer: "FN15A")
+    }()
+    
+    static var FN16: Question = {
+        Question(ID: 6,
+                 text: "Какой объект в разрезе?",
+                 replacements: [],
+                 color: .systemPink,
+                 connection: "На фото внутренности",
+                 answer: "бинокля",
+                 imageQuestion: "FN16Q",
+                 imageAnswer: "FN16A")
+    }()
+    
+    static var FN17: Question = {
+        Question(ID: 7,
+                 text: "Логотип какой автомобильной марки в разобранном виде?",
+                 replacements: [],
+                 color: .systemPink,
+                 connection: "На фото разобранный логотип автомобильной марки",
+                 answer: "Volkswagen",
+                 imageQuestion: "FN17Q",
+                 imageAnswer: "FN17A")
+    }()
+    
+    static var FN21: Question = {
+        Question(ID: 1,
+                 text: "Этот актёр был ковбоем номер 1 Голливуда.\n\nВ фильме «Назад в будущее 3» главный герой Марти позаимствовал его имя.\n\nОн хотел завершить карьеру киноактёра после «Гран Торино».\n\nКакой актёр?",
+                 replacements: ["актёр?"],
+                 color: .orange,
+                 connection: "В фильме «Назад в будущее» Марти отправляется в прошлое и называет себя",
+                 answer: "Клинтом Иствудом",
+                 imageAnswer: "FN21A")
+    }()
+    
+    static var FN22: Question = {
+        Question(ID: 2,
+                 text: "Для изучения этих объектов существует специальная дисциплина.\n\nБольшинство экспертов считают, что невозможно предсказать, где они появятся.\n\nДействие романа Герберта Джорджа Уэллса, опубликованного в 1895 году, начинается с появления этих объектов.\n\nЧто это за объекты?",
+                 replacements: ["объекты"],
+                 color: .orange,
+                 connection: "Эксперты считают, что невозможно спрогнозировать место появления",
+                 answer: "НЛО",
+                 imageAnswer: "FN22A")
+    }()
+    
+    static var FN23: Question = {
+        Question(ID: 3,
+                 text: "В этом городе происходит действие фильма «Ночь в музее».\n\nJay-Z в одной из своих песен называет этот город «бетонными джунглями, где рождаются мечты».\n\nВ этом городе расположено самое большое по количеству станций метро.\n\nЧто это за город?",
+                 replacements: ["город?"],
+                 color: .orange,
+                 connection: "Город с наибольшим количеством станций метро",
+                 answer: "Нью-Йорк",
+                 imageAnswer: "FN23A")
+    }()
+    
+    static var FN24: Question = {
+        Question(ID: 4,
+                 text: "Этот предмет входит в так называемые \"инструменты Страсти\".\n\nВ лёгкой атлетике он известен под другим, более привычным нам названием.\n\nПредмет использовался в качестве оружия у стражников городских ворот в средние века.\n\nКакое оружие?",
+                 replacements: ["оружие"],
+                 color: .orange,
+                 connection: "Это оружие, известное как один из Arma Christi, называется",
+                 answer: "копьё",
+                 imageAnswer: "FN24A")
+    }()
+    
+    static var FN25: Question = {
+        Question(ID: 5,
+                 text: "Элементы этого музыкального стиля можно услышать в некоторых записях кантри и блюза.\n\nВ основном его основными инструментами были саксофон и фортепиано.\n\nВторое имя короля этого музыкального жанра — Аарон.\n\nЧто это за музыкальный жанр?",
+                 replacements: ["жанр?"],
+                 color: .orange,
+                 connection: "Саксофон и фортепиано были основными инструментами в ранних записях",
+                 answer: "рок-н-ролла",
+                 imageAnswer: "FN25A")
+    }()
+    
+    static var FN26: Question = {
+        Question(ID: 6,
+                 text: "Согласно непальской легенде, это животное было стражем перед вратами рая.\n\nВ поэме Гомера он единственный узнал Одиссея, вернувшегося после долгого путешествия.\n\nВ Лондоне есть переулок славы, посвящённый представителям этого вида животных, ставших кинозвёздами.\n\nЧто это за животное?",
+                 replacements: ["животное"],
+                 color: .orange,
+                 connection: "Единственным персонажем, узнавшим Одиссея после 20 лет отсутствия, была его",
+                 answer: "собака",
+                 imageAnswer: "FN26A")
+    }()
+    
+    static var FN27: Question = {
+        Question(ID: 7,
+                 text: "Это мероприятие сопровождается религиозными обрядами среди верующих.\n\nВо время этого мероприятия обычно звучит музыка, написанная для «Сна в летнюю ночь».\n\nПо старой корейской традиции, после этого события кореец становится майором.\n\nЧто это событие?",
+                 replacements: ["событие"],
+                 color: .orange,
+                 connection: "Свадебный марш Феликса Мендельсона, написанный для комедии Шекспира «Сон в летнюю ночь», обычно сопровождает",
+                 answer: "свадебную церемонию",
+                 imageAnswer: "FN27A")
+    }()
+    
+    static var FN31: Question = {
+        Question(ID: 1,
+                 text: "Группа",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Группа",
+                 answer: "Destiny's Child",
+                 imageAnswer: "FN31A")
+    }()
+    
+    static var FN32: Question = {
+        Question(ID: 2,
+                 text: "Исполнитель",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Исполнитель",
+                 answer: "Bob Dylan",
+                 imageAnswer: "FN32A")
+    }()
+    
+    static var FN33: Question = {
+        Question(ID: 3,
+                 text: "Мультсериал",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Заставка мультсериала",
+                 answer: "Рик и Морти",
+                 imageAnswer: "FN33A")
+    }()
+    
+    static var FN34: Question = {
+        Question(ID: 4,
+                 text: "Группа\n[минус]",
+                 replacements: ["[минус]"],
+                 color: .yellow,
+                 connection: "Группа",
+                 answer: "Arctic Monkeys",
+                 imageAnswer: "FN34A")
+    }()
+    
+    static var FN35: Question = {
+        Question(ID: 5,
+                 text: "Композитор",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Композитор",
+                 answer: "Фредерик Шопен",
+                 imageAnswer: "FN35A")
+    }()
+    
+    static var FN36: Question = {
+        Question(ID: 6,
+                 text: "Кто исполняет оригинал?",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Оригинал исполняет канадский певец",
+                 answer: "The Weeknd",
+                 imageAnswer: "FN36A")
+    }()
+    
+    static var FN37: Question = {
+        Question(ID: 7,
+                 text: "Исполнитель",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Исполнитель",
+                 answer: "Despina Vandi",
+                 imageAnswer: "FN37A")
+    }()
+    
+    static var FN41: Question = {
+        Question(ID: 1,
+                 text: "Этот мультяшный персонаж считает себя настоящим рейнджером и притворяется мёртвым, как только появляется человек. Как его зовут?",
+                 replacements: ["персонаж","его"],
+                 color: .green,
+                 connection: "Настоящего рейнджера, который притворяется мёртвым, как только появляется человек, зовут",
+                 answer: "Базз Лайтер",
+                 imageAnswer: "FN41A")
+    }()
+    
+    static var FN42: Question = {
+        Question(ID: 2,
+                 text: "По мнению Фрэнсиса Бэкона, отца эмпиризма XVI века, если потереть мокрым пальцем края стакана, наполненного водой, то можно наблюдать появление ряби на поверхности воды. Эффект, описанный английским философом, был использован для создания совершенно нового типа музыкальных инструментов. В чём заключается их особенность?",
+                 replacements: ["типа музыкальных инструментов","В чём"],
+                 color: .green,
+                 connection: "Эффект, описанный Бэконом, был использован для создания",
+                 answer: "стеклянных музыкальных инструментов",
+                 imageAnswer: "FN42A")
+    }()
+    
+    static var FN43: Question = {
+        Question(ID: 3,
+                 text: "В средние века многие европейские города боролись за право проведения этого мероприятия, поскольку оно способствовало развитию торговли, предоставляло развлечения и демонстрировало определённый статус города. Что это за мероприятие?",
+                 replacements: ["мероприятия","мероприятие"],
+                 color: .green,
+                 connection: "Событие, имевшее огромное значение в жизни средневековых городов, называется",
+                 answer: "ярмарка",
+                 imageAnswer: "FN43A")
+    }()
+    
+    static var FN44: Question = {
+        Question(ID: 4,
+                 text: "В военных фильмах можно наблюдать, как солдаты \"кусают\" это оружие зубами, чтобы активировать его. Однако эта процедура – ​​всего лишь миф, можно только потерять зубы. Что это за оружие?",
+                 replacements: ["оружие"],
+                 color: .green,
+                 connection: "Вы можете потерять зубы, если попытаетесь ими выдернуть чеку у",
+                 answer: "гранаты",
+                 imageAnswer: "FN44A")
+    }()
+    
+    static var FN45: Question = {
+        Question(ID: 5,
+                 text: "В феврале 2020 года, после Камбалы, традиционных индийских соревнований, СМИ сравнили Шриниваса Гауда с этим олимпийским чемпионом. Цепляясь за двух своих буйволов, в гонке по рисовым полям он превзошёл бы на 3 сотых мировой рекорд, установленный этой спортивной легендой. С кем сравнивают индийского спортсмена-любителя?",
+                 replacements: ["чемпионом","С кем"],
+                 color: .green,
+                 connection: "Мировой рекорд на дистанции 100 метров, который Шринивас Гауда мог побить на 3 сотых секунды, принадлежит",
+                 answer: "Усейну Болту",
+                 imageAnswer: "FN45A")
+    }()
+    
+    static var FN46: Question = {
+        Question(ID: 6,
+                 text: "Согласно легенде, кардинала Ришелье раздражало, что его гости ковырялись в зубах этим предметом во время трапез. Поэтому он приказал их закруглить. Какой столовый прибор появился в результате благодаря кардиналу?",
+                 replacements: ["предметом","столовый прибор"],
+                 color: .green,
+                 connection: "Мы обязаны Ришелье изобретением",
+                 answer: "столового ножа",
+                 imageAnswer: "FN46A")
+    }()
+    
+    static var FN47: Question = {
+        Question(ID: 7,
+                 text: "Это устройство, созданное компанией Shelby Electric, работает с несколькими очень короткими перерывами с 1901 года – рекорд, занесённый в Книгу Рекордов Гиннеса. Такой срок службы обусловлен углеродной нитью, тогда как провод современных моделей выполнен из токопроводящего металла. Что это за устройство?",
+                 replacements: ["устройство"],
+                 color: .green,
+                 connection: "Этот объект из углеродной нити, занесенный в Книгу рекордов Гиннеса:",
+                 answer: "лампочка",
+                 imageAnswer: "FN47A")
+    }()
+    
+    static var FN51: Question = {
+        Question(ID: 1,
+                 text: "Кадр из какого фильма?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "Кадр из фильма",
+                 answer: "Остров проклятых",
+                 imageQuestion: "FN51Q",
+                 imageAnswer: "FN51A")
+    }()
+    
+    static var FN52: Question = {
+        Question(ID: 2,
+                 text: "Какие два кольца поменяли местами?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "Местами поменяли",
+                 answer: "красное и жёлтое кольца",
+                 imageQuestion: "FN52Q",
+                 imageAnswer: "FN52A")
+    }()
+    
+    static var FN53: Question = {
+        Question(ID: 3,
+                 text: "Чьи глаза?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "Глаза американской певицы",
+                 answer: "Billie Eilish",
+                 imageQuestion: "FN53Q",
+                 imageAnswer: "FN53A")
+    }()
+    
+    static var FN54: Question = {
+        Question(ID: 4,
+                 text: "Схема работы какого устройства?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "Это схема работы",
+                 answer: "автомобильного глушителя",
+                 imageQuestion: "FN54Q",
+                 imageAnswer: "FN54A")
+    }()
+    
+    static var FN55: Question = {
+        Question(ID: 5,
+                 text: "Кто автор оригинальной картины?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "Это модифицированный фрагмент фрески «Афинская школа», созданной",
+                 answer: "Рафаэлем Санти",
+                 imageQuestion: "FN55Q",
+                 imageAnswer: "FN55A")
+    }()
+    
+    static var FN56: Question = {
+        Question(ID: 6,
+                 text: "Логотип этого бренда включает в себя стилизованное изображение арфы. Что это за бренд?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "Кельтская арфа – символ компании",
+                 answer: "Guinness",
+                 imageQuestion: "FN56Q",
+                 imageAnswer: "FN56A")
+    }()
+    
+    static var FN57: Question = {
+        Question(ID: 7,
+                 text: "Что скрыто на этом рекламном плакате?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "Центральный объект этого рекламного плаката -",
+                 answer: "бургер",
+                 imageQuestion: "FN57Q",
+                 imageAnswer: "FN57A")
+    }()
+    
+    static var FN61: Question = {
+        Question(ID: 1,
+                 text: "С 1970 года этот предмет с подписью Adidas носит название в соответствии с региональными особенностями своих клиентов. В 2014 году он получил название Бразука для Бразилии, Ацтека для Мексики в 1986 году и Джабулани для Южной Африки в 2010 году. Что это за предмет?",
+                 replacements: ["предмет"],
+                 color: .cyan,
+                 connection: "«Бразука», «Ацтека» и «Джабулани» были разработаны для чемпионата мира по футболу и представляют собой",
+                 answer: "мячи",
+                 imageAnswer: "FN61A")
+    }()
+    
+    static var FN62: Question = {
+        Question(ID: 2,
+                 text: "Боксёр Тайсон Фьюри дрался со многими именитыми и сильными соперниками. Однако в интервью он любит вспоминать, что наиболее мощный удар получил в 2009 году на самом старте карьеры. Этот удар едва не отправил тогда ещё неопытного Тайсона в нокаут. Кто его нанёс?",
+                 replacements: ["Кто"],
+                 color: .cyan,
+                 connection: "По словам Фьюри, самый сильный удар ему в 2009 году нанёс",
+                 answer: "он сам",
+                 imageAnswer: "FN62A")
+    }()
+    
+    static var FN63: Question = {
+        Question(ID: 3,
+                 text: "Некоторые исполнители любили добавлять специальную звуковую дорожку в конце своей записи на виниле. Например, седьмой альбом ABBA, Super Trouper, заканчивается звуком аплодисментов; альбом Atom Heart Mother группы Pink Floyd завершается звуком капающей из крана воды. Какую особенность имеют эти дорожки?",
+                 replacements: ["особенность"],
+                 color: .cyan,
+                 connection: "Благодаря спиральной канавке на виниловом диске и аплодисменты у группы ABBA, и звук капли воды на виниле Pink Floyd",
+                 answer: "повторяются бесконечно",
+                 imageAnswer: "FN63A")
+    }()
+    
+    static var FN64: Question = {
+        Question(ID: 4,
+                 text: "На этом плакате Мэрилин Монро обнажает ноги и направляет наше внимание на лестницу. Плакат задуман как реклама инструмента, который используется в технических и творческих целях. Что это за инструмент?",
+                 replacements: ["инструмент","инструмента"],
+                 color: .cyan,
+                 connection: "Инструмент, рекламируемый этим плакатом с Мэрилин Монро,",
+                 answer: "треугольная линейка",
+                 imageQuestion: "FN64Q",
+                 imageAnswer: "FN64A")
+    }()
+    
+    static var FN65: Question = {
+        Question(ID: 5,
+                 text: "Говорят, что в фильме Звездные войны использовали металлический звук, который издают двери этой американской достопримечательности. Режиссёры хотели, чтобы звук открывающихся дверей шаттла Дарта Вейдера создавал зловещую атмосферу задолго до его появления. Благодаря какому зданию удалось получить этот звук?",
+                 replacements: ["достопримечательности","зданию"],
+                 color: .cyan,
+                 connection: "Для звука дверей шаттла Дарта Вейдера использовали звук тюремных дверей.",
+                 answer: "Алькатраса",
+                 imageAnswer: "FN65A")
+    }()
+    
+    static var FN66: Question = {
+        Question(ID: 6,
+                 text: "По одной из гипотез, полотно на этой фреске Микеланджело имеет форму матки, а вырывающееся покрывало представляет собой пуповину. Эксперты полагают, что это изображение процесса рождения, и видимый на произведении пупок персонажа является тому подтверждением. Что это за фреска?",
+                 replacements: ["фреске","фреска"],
+                 color: .cyan,
+                 connection: "Матка и пуповина часто упоминаются искусствоведами при интерпретации фрески Микеланджело",
+                 answer: "Сотворение Адама",
+                 imageAnswer: "FN66A")
+    }()
+    
+    static var FN67: Question = {
+        Question(ID: 7,
+                 text: "Графический дизайнер хотел подчеркнуть типографское разнообразие, создав серию забавных изображений. Он использовал разные шрифты для обозначения одного и того же объекта, используя символы, которые вы видите здесь:\n(.)(.)\n)   .   (\n(   Y   ).\nЭти изображения принимают различные формы в зависимости от используемого шрифта. Изображения чего представляет дизайнер в своём художественном проекте?",
+                 replacements: ["изображений","изображения","чего"],
+                 color: .cyan,
+                 connection: "дизайнер, использующий эти знаки, благодаря разным шрифтам создаёт множество изображений",
+                 answer: "женского тела",
+                 imageAnswer: "FN67A")
+    }()
+    
+    static var FN71: Question = {
+        Question(ID: 1,
+                 text: "Слоганом какого автомобильного бренда является фраза\n\"Возьми жизнь за рога!\"?",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Фраза «Возьми жизнь за рога» — слоган автомобильного бренда.",
+                 answer: "Dodge",
+                 imageAnswer: "FN71A")
+    }()
+    
+    static var FN72: Question = {
+        Question(ID: 2,
+                 text: "Какой писатель создал автобиографического персонажа Генри Чинаски?",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Генри Чинаски — автобиографический персонаж, созданный",
+                 answer: "Чарльзом Буковски",
+                 imageAnswer: "FN72A")
+    }()
+    
+    static var FN73: Question = {
+        Question(ID: 3,
+                 text: "Эмблема какого из Домов в сериале «Игра престолов» изображает красное солнце, пронзённое золотым копьём?",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Красное солнце, пронзённое золотым копьем на оранжевом поле, символизирует",
+                 answer: "Дом Мартеллов",
+                 imageAnswer: "FN73A")
+    }()
+    
+    static var FN74: Question = {
+        Question(ID: 4,
+                 text: "У него крылья на сандалиях и на шлеме, который является шлемом-невидимкой, а в руках у него кадуцей.\n\nКакому греческому богу присущи эти атрибуты?",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Крылатые сандалии, крылатый шлем и кадуцей — атрибуты бога",
+                 answer: "Гермес",
+                 imageAnswer: "FN74A")
+    }()
+    
+    static var FN75: Question = {
+        Question(ID: 5,
+                 text: "Сколько персонажей изображено на картине Анри Матисса «Танец»?",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "На картине Анри Матисса «Танец» изображено",
+                 answer: "пять персонажей",
+                 imageAnswer: "FN75A")
+    }()
+    
+    static var FN76: Question = {
+        Question(ID: 6,
+                 text: "Каким термином из двух слов называют температуру, равную -273.15 °C или -459.67 °F?",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Температура -273.15 °C  и -459,67 °F обозначает",
+                 answer: "абсолютный нуль",
+                 imageAnswer: "FN76A")
+    }()
+    
+    static var FN77: Question = {
+        Question(ID: 7,
+                 text: "Как зовут персонажа Джейсона Стэйтема в фильме «Большой куш»?",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Персонаж Джейсона Стэтхэма известен как",
+                 answer: "Турецкий",
+                 imageAnswer: "FN77A")
+    }()

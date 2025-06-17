@@ -47,6 +47,7 @@
 		D1DF345F25F282B6009DF141 /* Definitions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Definitions.hpp; sourceTree = "<group>"; };
 		D1E55E851F24C7B600ADF93D /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry.cpp; sourceTree = "<group>"; };
 		D1F909651F51C2EC00A70540 /* Complex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Complex.cpp; sourceTree = "<group>"; };
+		DE17DB7E2DFB7D9700B25B45 /* states.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = states.txt; sourceTree = "<group>"; };
 		DE3F7FCA2D9B9AE100935F49 /* FFT.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFT.cpp; sourceTree = "<group>"; };
 		DE935ADD2C15324E0036C5C2 /* Keywords.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Keywords.cpp; sourceTree = "<group>"; };
 		FA120B0F20625D5200010E1F /* Geometry3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry3D.cpp; sourceTree = "<group>"; };
@@ -105,6 +106,7 @@
 				D1CDA74025F031D400BE085D /* StringUtils.cpp */,
 				D1CDA73325F0161000BE085D /* Utils.cpp */,
 				D15BA4D01F0D988F00B64B78 /* input.txt */,
+				DE17DB7E2DFB7D9700B25B45 /* states.txt */,
 				D15BA4D11F0D988F00B64B78 /* output.txt */,
 				DE935ADD2C15324E0036C5C2 /* Keywords.cpp */,
 			);
