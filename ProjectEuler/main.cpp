@@ -25,9 +25,18 @@ int main() {
     cout.setf(ios::fixed);
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
-    //freopen("input.txt","rt",stdin);
-    //freopen("output.txt","wt",stdout);
+    freopen("input.txt","rt",stdin);
+    freopen("output.txt","wt",stdout);
 #endif
+    
+    for (int i=0; i<163; i++) {
+        string S;
+        getline(cin,S);
+        if (S.empty()) continue;
+        vector<string> v = StringUtils::parse_by_symbol(S, ' ');
+        cout << v[0] << " ." << v[1] << ": " << v[1] << "states\n";
+    }
+    return 0;
     
     ull ans = 0;
     
@@ -41,22 +50,22 @@ int main() {
     }
     
     const vector<string> w = {
-        "Blue","Duets","ExtraSinger",   //  0  1  2
-        "FromUnfamous","Midi","Minuses",//  3  4  5
-        "Plays","Sings","Mistakes",     //  6  7  8
-        "N.N.","Name","Options",        //  9 10 11
-        "Plants","RR","Sampling",       // 12 13 14
-        "Singers","Speed","WordByWord"  // 15 16 17
+        "America","BeginEnd","BY",        //  0  1  2
+        "UA","Cats","Chorus*",             //  3  4  5
+        "Covers*","Duets","FamilyName",    //  6  7  8
+        "HardDuets","Mistakes","Numbers*", //  9 10 11
+        "O","People*","Rivers*",            // 12 13 14
+        "Anton","Arseniy","Margo"         // 15 16 17
     };
-    const vector<int> cats = { 5,13,15,16,17 };
-    const vector<int> auctions = { 1,4,6,8,10 };
-    const vector<int> cats_distribution = { 2,1,2 }; // cats in each round
+    const vector<int> cats = {  };
+    const vector<int> auctions = { 5,6,11,13,14 };
+    const vector<int> cats_distribution = { 0,0,0 }; // cats in each round
     const vector<int> auctions_distribution = { 2,1,2 }; // same for auctions
     
-    vpii F = {mp(4,16)}; // forbidden pairs, should be in different trios
-    vpii R = {}; // required pairs, should be together
-    vpii C = {mp(0,1),mp(4,1),mp(17,3)}; // some elements must be in specific trio
-    vpii D = {mp(2,1),mp(3,3),mp(4,3),mp(6,3),mp(10,1),mp(11,1),mp(12,1),mp(15,1)}; // some elements shouldn't be in specific trio
+    vpii F = {mp(7,9)}; // forbidden pairs, should be in different trios
+    vpii R = {mp(2,3)}; // required pairs, should be together
+    vpii C = {mp(4,3),mp(5,2),mp(6,1),mp(14,1),mp(15,2),mp(16,3),mp(17,1)}; // some elements must be in specific trio
+    vpii D = {mp(0,3),mp(7,3),mp(9,1),mp(12,1),mp(13,1)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<(int)w.size(); i++) v.push_back(i);
     random_device rd;
