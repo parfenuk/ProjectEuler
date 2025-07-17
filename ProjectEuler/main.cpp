@@ -106,34 +106,42 @@ string type (string code)
 //    return ".textAnsImage";
 }
 
-vector<string> transform_question (vector<string> s)
+vector<string> transform_question (const vector<string> &s)
 {
     vector<string> A;
     
+    // compose two first strings separately
+    size_t two_dots = s[0].find(":");
+    string first_string = s[0].substr(11,two_dots-11) + " = Question("; // var MPTwo01 = Question(
+    string second_string = spaces(12) + s[1].substr(17,s[1].length()-17); // ID: 2
+    A.push_back(first_string);
+    A.push_back(second_string);
+    
     string code;
-    A.push_back(s[0].substr(11,s[0].length()-11)); // static var MPTwo01: Question = {
-    for (int i=1; i<(int)s.size()-1; i++) {
+    //A.push_back(s[0].substr(11,s[0].length()-11)); // static var MPTwo01: Question = {
+    for (int i=2; i<(int)s.size()-1; i++) {
         if (s[i].find("imageQuestion") != string::npos) continue;
         size_t found = s[i].find("imageAnswer");
         if (found != string::npos) {
             code = extract_code(s[i].substr(found+11,s[i].length()-found-11));
         }
         else {
-            A.push_back(s[i]);
+            A.push_back(s[i].substr(5,s[i].length()-5));
         }
     }
     
-    A.back().pop_back();
-    A.back() += ')';
-    A.push_back(s.back()); // }()
+    A.back().pop_back(); // remove ')'
+    A.push_back(spaces(4) + ")");
+    //A.back() += ')';
+    //A.push_back(s.back()); // }()
     
-    A.insert(A.begin()+2,spaces(17) + "type: " + type(code) + ",");
-    A.insert(A.begin()+3,spaces(17) + "code: \"" + code + "\",");
+    A.insert(A.begin()+2,spaces(12) + "type: " + type(code) + ",");
+    A.insert(A.begin()+3,spaces(12) + "code: \"" + code + "\",");
     
     return A;
 }
 
-string state_code (string &s)
+string state_code (const string &s)
 {
     string code;
     size_t found = s.find("Q:");
@@ -148,7 +156,7 @@ string state_code (string &s)
     return code;
 }
 
-string state_round_name (string &s)
+string state_round_name (const string &s)
 {
     if (s.find("T:") == string::npos) return "not_state";
     
@@ -165,12 +173,12 @@ string state_round_name (string &s)
     return name;
 }
 
-bool state_is_with_image_in_question (string &s)
+bool state_is_with_image_in_question (const string &s)
 {
     return s.find(".textWithImage") != string::npos;
 }
 
-bool state_is_custom_music (string &s)
+bool state_is_custom_music (const string &s)
 {
     string code = state_code(s);
     string file;
@@ -186,14 +194,14 @@ bool state_is_custom_music (string &s)
     return StringUtils::hasPrefix(file, code);
 }
 
-bool state_has_video (string &s)
+bool state_has_video (const string &s)
 {
     return s.find("V:") != string::npos;
 }
 
 string current_state_type = "Q"; // Q - Question, R - Repeat, A - Answer
 
-void process_state (string &s)
+void process_state (const string &s)
 {
     string code = state_code(s);
     bool withImageQ = state_is_with_image_in_question(s);
@@ -203,6 +211,14 @@ void process_state (string &s)
     M[code + current_state_type] = {withImageQ, is_music, is_video};
 }
 
+struct StatesResult {
+    int index; // fileprivate var States3 -> index == 3
+    int round; // T: .justRound(2, -> round == 2, basically should be the same as index
+    string name;
+    vector<string> codes;
+    bool is_blitz;
+};
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -210,44 +226,132 @@ int main() {
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     freopen("input.txt","rt",stdin);
-    freopen("output.txt","wt",stdout);
+    //freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
     
-    vector<string> round_names;
+    bool was_first_question = false;
+    bool was_first_state = false;
     
-    ifstream in ("states.txt");
-    string U;
-    while (getline(in,U)) {
-        string name = state_round_name(U);
-        if (name == "not_state") continue;
-        if (StringUtils::hasPrefix(name, "Повтор") || StringUtils::hasPrefix(name, "Repetitions")) current_state_type = "R";
-        else if (StringUtils::hasPrefix(name, "Ответ") || StringUtils::hasPrefix(name, "Answers")) current_state_type = "A";
-        else if (!name.empty() && !(StringUtils::hasPrefix(name, "Окончен") || StringUtils::hasPrefix(name, "Finished"))) {
-            current_state_type = "Q";
-            round_names.push_back(name);
+    vector<StatesResult> R;
+    
+    vector<string> current_states_codes;
+    string current_states_name;
+    int current_states_index = 0; // 0...7 basically
+    int current_round_index = -1;
+    int current_states_count = 0;
+    
+    // we must process states first, that's why we save strings for now
+    vector<string> question_strings;
+    string S;
+    int si = 0;
+    while (getline(cin,S)) {
+        si++;
+        // check for question or state
+        if (was_first_question == false) {
+            if (S.find(": Question") == string::npos) {
+                if (S.find("extension") == string::npos && si != 10) cout << S << endl;
+                continue;
+            }
+            else was_first_question = true;
+        }
+        if (was_first_state == false) {
+            if (S.find("fileprivate") != string::npos) was_first_state = true;
+        }
+        
+        if (was_first_state) { // process state
+            if (S.find("fileprivate") != string::npos) { // here we can obtain states array index
+                size_t dot = S.find(":");
+                current_states_index = (int)(S[dot-1] - '0');
+                continue; // we can do it, because this is definitely not state
+            }
+            if (S.find("justRound") != string::npos && current_round_index == -1) { // here we can obtain round index
+                size_t found = S.find("justRound");
+                current_round_index = (int)(S[found+10] - '0');
+            }
+            
+            string name = state_round_name(S);
+            if (name == "not_state") continue;
+            
+            current_states_count++;
+            
+            if (StringUtils::hasPrefix(name, "Повтор") || StringUtils::hasPrefix(name, "Repetitions")) current_state_type = "R";
+            else if (StringUtils::hasPrefix(name, "Ответ") || StringUtils::hasPrefix(name, "Answers")) current_state_type = "A";
+            else if (!name.empty() && !(StringUtils::hasPrefix(name, "Окончен") || StringUtils::hasPrefix(name, "Finished"))) {
+                current_state_type = "Q";
+                current_states_name = name;
+            }
+            else {
+                string code = state_code(S);
+                if (code != "empty" && !Containers::contains(current_states_codes, code)) { current_states_codes.push_back(code);
+                }
+                
+                process_state(S); // this call is to determine corresponding question type
+            }
+            
+            if (StringUtils::hasPrefix(name, "Окончен") || StringUtils::hasPrefix(name, "Finished")) { // means this is the last state
+                StatesResult r;
+                r.index = current_states_index;
+                r.round = current_round_index;
+                r.name = current_states_name;
+                r.codes = current_states_codes;
+                r.is_blitz = current_states_count < 30;
+                
+                R.push_back(r);
+                
+                current_states_codes.clear();
+                current_states_name = "";
+                current_states_index = 0;
+                current_round_index = -1;
+                current_states_count = 0;
+            }
+        }
+        else { // add question string
+            question_strings.push_back(S);
+        }
+    }
+    
+    // now process all question_strings
+    vector<string> cur;
+    for (int q=0; q<(int)question_strings.size(); q++) {
+        string U = question_strings[q];
+        vector<string> v = StringUtils::parse_by_symbol(U, ' ');
+        if (v.size() == 0) continue;
+        cur.push_back(U);
+        if (v[0] == "}()") {
+            vector<string> t = transform_question(cur);
+            cur.clear();
+            for (int i=0; i<(int)t.size(); i++) cout << t[i] << endl;
+        }
+    }
+    
+    // output states
+    for (int r=0; r<(int)R.size(); r++) {
+        vector<string> A;
+        A.push_back("fileprivate var States" + to_string(R[r].index) + " = State.allStates(round: " + to_string(R[r].round) + ",");
+        string codes_string = "[";
+        for (int i=0; i<(int)R[r].codes.size(); i++) {
+            codes_string += R[r].codes[i];
+            if (i+1 != (int)R[r].codes.size()) codes_string += ", ";
+            else codes_string += "]";
+        }
+        A.push_back(spaces(42) + "questions: " + codes_string);
+        A.push_back(spaces(42) + "name: \"" + R[r].name + "\",");
+        string code = R[r].codes.back();
+        while (is_digit(code.back())) code.pop_back(); // AW12 -> AW
+        A.push_back(spaces(42) + "time: " + code + "times[" + to_string(R[r].round) + "]");
+        if (R[r].is_blitz) {
+            A.back().push_back(',');
+            A.push_back(spaces(42) + "isBlitz: true)");
         }
         else {
-            process_state(U);
+            A.back().push_back(')');
         }
+        
+        cout << endl;
+        for (int i=0; i<(int)A.size(); i++) cout << A[i] << endl;
     }
-    
-    vector<string> cur;
-    string S;
-    while (getline(cin,S)) {
-        //cout << S.length() << " " << S << endl;
-        vector<string> v = StringUtils::parse_by_symbol(S, ' ');
-        if (v.size() == 0) continue;
-        cur.push_back(S);
-        if (v[0] == "}()") {
-            vector<string> U = transform_question(cur);
-            cur.clear();
-            for (int i=0; i<(int)U.size(); i++) cout << U[i] << endl;
-        }
-    }
-    
-    for (int i=0; i<(int)round_names.size(); i++) cout << round_names[i] << endl;
     
 //    cout << endl << ans << endl;
 //    Total_Time = clock() - Total_Time;

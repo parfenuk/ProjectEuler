@@ -1,504 +1,759 @@
-    static var FN11: Question = {
+//
+//  Set Creation Template Thematic.swift
+//  MzgbEngine
+//
+//  Created by Miraslau Parafeniuk on 02.05.24.
+//  Copyright © 2024 Miraslau Parafeniuk. All rights reserved.
+//
+
+import Foundation
+
+extension Question {
+    
+    //  PACKAGE SC
+    
+    static var SCstates = [States1,States1,States2,States3,States4,States5,States6,States7]
+    
+    static var SCtimes = [50,50,100,30,30,100,100,50]
+    
+    static var SC11: Question = {
         Question(ID: 1,
-                 text: "В каком фильме у героев были такие костюмы?",
+                 text: "Какое слово стёрли с доски?",
                  replacements: [],
                  color: .systemPink,
-                 connection: "Это костюмы персонажей из фильма",
-                 answer: "Бойцовский клуб",
-                 imageQuestion: "FN11Q",
-                 imageAnswer: "FN11A")
+                 connection: "С доски стёрли слово",
+                 answer: "звука",
+                 imageQuestion: "SC11Q",
+                 imageAnswer: "SC11A")
     }()
     
-    static var FN12: Question = {
+    static var SC12: Question = {
         Question(ID: 2,
-                 text: "Какой товар рекламируется?",
+                 text: "Название какой древней цивилизации стёрли с доски?",
                  replacements: [],
                  color: .systemPink,
-                 connection: "Это креативная реклама",
-                 answer: "краски для волос",
-                 imageQuestion: "FN12Q",
-                 imageAnswer: "FN12A")
+                 connection: "С доски стёрли название цивилизации",
+                 answer: "шумеров",
+                 imageQuestion: "SC12Q",
+                 imageAnswer: "SC12A")
     }()
     
-    static var FN13: Question = {
+    static var SC13: Question = {
         Question(ID: 3,
-                 text: "Чьи глаза?",
+                 text: "Название какой темы стёрли с доски?",
                  replacements: [],
                  color: .systemPink,
-                 connection: "Глаза американского актёра",
-                 answer: "Маколея Калкина",
-                 imageQuestion: "FN13Q",
-                 imageAnswer: "FN13A")
+                 connection: "С доски стёрли название темы",
+                 answer: "теорема Пифагора",
+                 imageQuestion: "SC13Q",
+                 imageAnswer: "SC13A")
     }()
     
-    static var FN14: Question = {
+    static var SC14: Question = {
         Question(ID: 4,
-                 text: "Сферическое фото какого города?",
+                 text: "Какой термин стёрли с доски?",
                  replacements: [],
                  color: .systemPink,
-                 connection: "На фото город",
-                 answer: "Вена",
-                 imageQuestion: "FN14Q",
-                 imageAnswer: "FN14A")
+                 connection: "С доски стёрли термин",
+                 answer: "фотосинтез",
+                 imageQuestion: "SC14Q",
+                 imageAnswer: "SC14A")
     }()
     
-    static var FN15: Question = {
+    static var SC15: Question = {
         Question(ID: 5,
-                 text: "Запишите число 364 римскими цифрами",
+                 text: "Название какого течения авангардного искусства стёрли с доски?",
                  replacements: [],
                  color: .systemPink,
-                 connection: "Запись числа 364 римскими цифрами -",
-                 answer: "CCCLXIV",
-                 imageQuestion: "FN15Q",
-                 imageAnswer: "FN15A")
+                 connection: "С доски стёрли слово",
+                 answer: "футуризм",
+                 imageQuestion: "SC15Q",
+                 imageAnswer: "SC15A")
     }()
     
-    static var FN16: Question = {
+    static var SC16: Question = {
         Question(ID: 6,
-                 text: "Какой объект в разрезе?",
+                 text: "Название какой группы элементов стёрли с доски?",
                  replacements: [],
                  color: .systemPink,
-                 connection: "На фото внутренности",
-                 answer: "бинокля",
-                 imageQuestion: "FN16Q",
-                 imageAnswer: "FN16A")
+                 connection: "С доски стёрли слово",
+                 answer: "металлы",
+                 imageQuestion: "SC16Q",
+                 imageAnswer: "SC16A")
     }()
     
-    static var FN17: Question = {
+    static var SC17: Question = {
         Question(ID: 7,
-                 text: "Логотип какой автомобильной марки в разобранном виде?",
+                 text: "Фамилию какого ученого стёрли с доски?",
                  replacements: [],
                  color: .systemPink,
-                 connection: "На фото разобранный логотип автомобильной марки",
-                 answer: "Volkswagen",
-                 imageQuestion: "FN17Q",
-                 imageAnswer: "FN17A")
+                 connection: "стёрли фамилию Блеза",
+                 answer: "Паскаля",
+                 imageQuestion: "SC17Q",
+                 imageAnswer: "SC17A")
     }()
     
-    static var FN21: Question = {
+    static var SC21: Question = {
         Question(ID: 1,
-                 text: "Этот актёр был ковбоем номер 1 Голливуда.\n\nВ фильме «Назад в будущее 3» главный герой Марти позаимствовал его имя.\n\nОн хотел завершить карьеру киноактёра после «Гран Торино».\n\nКакой актёр?",
-                 replacements: ["актёр?"],
+                 text: "Является разновидностью игры «футбэг».\n\nДля изготовления игрового снаряда используются мука и различные крупы.\n\nПо одной из версий, название произошло от английского слова.\n\nКакая игра?",
+                 replacements: ["игра"],
                  color: .orange,
-                 connection: "В фильме «Назад в будущее» Марти отправляется в прошлое и называет себя",
-                 answer: "Клинтом Иствудом",
-                 imageAnswer: "FN21A")
+                 connection: "От английского слова «носок» произошло название игры",
+                 answer: "сокс",
+                 imageAnswer: "SC21A")
     }()
     
-    static var FN22: Question = {
+    static var SC22: Question = {
         Question(ID: 2,
-                 text: "Для изучения этих объектов существует специальная дисциплина.\n\nБольшинство экспертов считают, что невозможно предсказать, где они появятся.\n\nДействие романа Герберта Джорджа Уэллса, опубликованного в 1895 году, начинается с появления этих объектов.\n\nЧто это за объекты?",
-                 replacements: ["объекты"],
+                 text: "Это существо относится к группе кишечнополостных.\n\nТело животного хорошо растягивается, и оно может проглотить добычу крупнее себя.\n\nВ честь него названо одно из крупнейших по площади созвездий южного полушария.\n\nКак называется существо?",
+                 replacements: ["существо"],
                  color: .orange,
-                 connection: "Эксперты считают, что невозможно спрогнозировать место появления",
-                 answer: "НЛО",
-                 imageAnswer: "FN22A")
+                 connection: "К группе кишечнополостных относится",
+                 answer: "гидра",
+                 imageAnswer: "SC22A")
     }()
     
-    static var FN23: Question = {
+    static var SC23: Question = {
         Question(ID: 3,
-                 text: "В этом городе происходит действие фильма «Ночь в музее».\n\nJay-Z в одной из своих песен называет этот город «бетонными джунглями, где рождаются мечты».\n\nВ этом городе расположено самое большое по количеству станций метро.\n\nЧто это за город?",
-                 replacements: ["город?"],
+                 text: "Название термина происходит от латинских слов, обозначающих «двойной» и «разрезание».\n\nВ шуточном стихотворении ее сравнивают с животным.\n\nСуществует теорема о ее свойствах в треугольнике.\n\nО чём речь?",
+                 replacements: ["чём"],
                  color: .orange,
-                 connection: "Город с наибольшим количеством станций метро",
-                 answer: "Нью-Йорк",
-                 imageAnswer: "FN23A")
+                 connection: "Крыса, которая бегает по углам и делит их пополам, – это",
+                 answer: "биссектриса",
+                 imageAnswer: "SC23A")
     }()
     
-    static var FN24: Question = {
+    static var SC24: Question = {
         Question(ID: 4,
-                 text: "Этот предмет входит в так называемые \"инструменты Страсти\".\n\nВ лёгкой атлетике он известен под другим, более привычным нам названием.\n\nПредмет использовался в качестве оружия у стражников городских ворот в средние века.\n\nКакое оружие?",
-                 replacements: ["оружие"],
+                 text: "Одним из первых применять такие соединения предложил Роберт Бойль.\n\nСреди разновидностей выделяют кислотно-основные, редокс, адсорбционные.\n\nОдно из первых веществ такого типа добывали из лишайника.\n\nКакие соединения?",
+                 replacements: ["соединения"],
                  color: .orange,
-                 connection: "Это оружие, известное как один из Arma Christi, называется",
-                 answer: "копьё",
-                 imageAnswer: "FN24A")
+                 connection: "Роберт Бойль первым предложил использовать",
+                 answer: "химические индикаторы",
+                 imageAnswer: "SC24A")
     }()
     
-    static var FN25: Question = {
+    static var SC25: Question = {
         Question(ID: 5,
-                 text: "Элементы этого музыкального стиля можно услышать в некоторых записях кантри и блюза.\n\nВ основном его основными инструментами были саксофон и фортепиано.\n\nВторое имя короля этого музыкального жанра — Аарон.\n\nЧто это за музыкальный жанр?",
-                 replacements: ["жанр?"],
+                 text: "В центре повести – образ «маленького человека».\n\nГлавный герой для достижения цели отказался от вечернего чая, ходил на цыпочках и реже стирал одежду.\n\nВ некоторых источниках жанр произведения определяется как «повесть с привидениями».\n\nКакая повесть?",
+                 replacements: ["повесть"],
                  color: .orange,
-                 connection: "Саксофон и фортепиано были основными инструментами в ранних записях",
-                 answer: "рок-н-ролла",
-                 imageAnswer: "FN25A")
+                 connection: "«Повестью с привидениями» называют произведение Николая Гоголя",
+                 answer: "Шинель",
+                 imageAnswer: "SC25A")
     }()
     
-    static var FN26: Question = {
+    static var SC26: Question = {
         Question(ID: 6,
-                 text: "Согласно непальской легенде, это животное было стражем перед вратами рая.\n\nВ поэме Гомера он единственный узнал Одиссея, вернувшегося после долгого путешествия.\n\nВ Лондоне есть переулок славы, посвящённый представителям этого вида животных, ставших кинозвёздами.\n\nЧто это за животное?",
-                 replacements: ["животное"],
+                 text: "Так звали одного из титанов в древнегреческой мифологии.\n\nЭтим словом обозначают вид ткани.\n\nАтрибут, используемый на одном из школьных предметов.\n\nКакое слово?",
+                 replacements: ["слово?"],
                  color: .orange,
-                 connection: "Единственным персонажем, узнавшим Одиссея после 20 лет отсутствия, была его",
-                 answer: "собака",
-                 imageAnswer: "FN26A")
+                 connection: "Титан в древнегреческой мифологии, ткань и сборник карт называют",
+                 answer: "атлас",
+                 imageAnswer: "SC26A")
     }()
     
-    static var FN27: Question = {
+    static var SC27: Question = {
         Question(ID: 7,
-                 text: "Это мероприятие сопровождается религиозными обрядами среди верующих.\n\nВо время этого мероприятия обычно звучит музыка, написанная для «Сна в летнюю ночь».\n\nПо старой корейской традиции, после этого события кореец становится майором.\n\nЧто это событие?",
-                 replacements: ["событие"],
+                 text: "Изучением концепции, связанной с этим термином, занимались Рене Декарт, Иван Сеченов, Иван Павлов.\n\nМеханизм формирования выглядит следующим образом: стимул – рецептор – нейрон – эффектор – реакция.\n\nТаким же словом называется российская поп-группа, образованная в 1999 году.\n\nО каком термине речь?",
+                 replacements: ["термине"],
                  color: .orange,
-                 connection: "Свадебный марш Феликса Мендельсона, написанный для комедии Шекспира «Сон в летнюю ночь», обычно сопровождает",
-                 answer: "свадебную церемонию",
-                 imageAnswer: "FN27A")
+                 connection: "Рене Декарт, Иван Сеченов и Иван Павлов занимались изучением",
+                 answer: "рефлексов",
+                 imageAnswer: "SC27A")
     }()
     
-    static var FN31: Question = {
+    static var SC31: Question = {
         Question(ID: 1,
-                 text: "Группа",
+                 text: "Какому произведению посвящен рэп?",
                  replacements: [],
                  color: .yellow,
-                 connection: "Группа",
-                 answer: "Destiny's Child",
-                 imageAnswer: "FN31A")
+                 connection: "В рэп-стиле пересказывают пьесу Максима Горького",
+                 answer: "На дне",
+                 imageAnswer: "SC31A")
     }()
     
-    static var FN32: Question = {
+    static var SC32: Question = {
         Question(ID: 2,
-                 text: "Исполнитель",
+                 text: "Про какое упражнение рассказывают?",
                  replacements: [],
                  color: .yellow,
-                 connection: "Исполнитель",
-                 answer: "Bob Dylan",
-                 imageAnswer: "FN32A")
+                 connection: "Рассказывают про",
+                 answer: "челночный бег",
+                 imageAnswer: "SC32A")
     }()
     
-    static var FN33: Question = {
+    static var SC33: Question = {
         Question(ID: 3,
-                 text: "Мультсериал",
+                 text: "О чём речь?",
                  replacements: [],
                  color: .yellow,
-                 connection: "Заставка мультсериала",
-                 answer: "Рик и Морти",
-                 imageAnswer: "FN33A")
+                 connection: "Речь о математической постоянной",
+                 answer: "число Пи",
+                 imageAnswer: "SC33A")
     }()
     
-    static var FN34: Question = {
+    static var SC34: Question = {
         Question(ID: 4,
-                 text: "Группа\n[минус]",
-                 replacements: ["[минус]"],
+                 text: "Кому посвящена песня?",
+                 replacements: [],
                  color: .yellow,
-                 connection: "Группа",
-                 answer: "Arctic Monkeys",
-                 imageAnswer: "FN34A")
+                 connection: "Песня посвящена царю",
+                 answer: "Ивану Грозному",
+                 imageAnswer: "SC34A")
     }()
     
-    static var FN35: Question = {
+    static var SC35: Question = {
         Question(ID: 5,
-                 text: "Композитор",
+                 text: "Кто преподавал вам этот закон?",
                  replacements: [],
                  color: .yellow,
-                 connection: "Композитор",
-                 answer: "Фредерик Шопен",
-                 imageAnswer: "FN35A")
+                 connection: "Этот закон преподавал",
+                 answer: "учитель физики",
+                 imageAnswer: "SC35A")
     }()
     
-    static var FN36: Question = {
+    static var SC36: Question = {
         Question(ID: 6,
-                 text: "Кто исполняет оригинал?",
+                 text: "Как зовут художника?",
                  replacements: [],
                  color: .yellow,
-                 connection: "Оригинал исполняет канадский певец",
-                 answer: "The Weeknd",
-                 imageAnswer: "FN36A")
+                 connection: "Художника зовут",
+                 answer: "Марк Шагал",
+                 imageAnswer: "SC36A")
     }()
     
-    static var FN37: Question = {
+    static var SC37: Question = {
         Question(ID: 7,
-                 text: "Исполнитель",
+                 text: "Какое слово скрыто?",
                  replacements: [],
                  color: .yellow,
-                 connection: "Исполнитель",
-                 answer: "Despina Vandi",
-                 imageAnswer: "FN37A")
+                 connection: "В песне скрыто слово",
+                 answer: "соли",
+                 imageAnswer: "SC37A")
     }()
     
-    static var FN41: Question = {
+    static var SC41: Question = {
         Question(ID: 1,
-                 text: "Этот мультяшный персонаж считает себя настоящим рейнджером и притворяется мёртвым, как только появляется человек. Как его зовут?",
-                 replacements: ["персонаж","его"],
+                 text: "Какой пословице посвящена серия «Ералаша»?",
+                 replacements: [],
                  color: .green,
-                 connection: "Настоящего рейнджера, который притворяется мёртвым, как только появляется человек, зовут",
-                 answer: "Базз Лайтер",
-                 imageAnswer: "FN41A")
+                 connection: "Серия «Ералаша» посвящена пословице",
+                 answer: "семь раз отмерь, один раз отрежь",
+                 imageAnswer: "SC41A")
     }()
     
-    static var FN42: Question = {
+    static var SC42: Question = {
         Question(ID: 2,
-                 text: "По мнению Фрэнсиса Бэкона, отца эмпиризма XVI века, если потереть мокрым пальцем края стакана, наполненного водой, то можно наблюдать появление ряби на поверхности воды. Эффект, описанный английским философом, был использован для создания совершенно нового типа музыкальных инструментов. В чём заключается их особенность?",
-                 replacements: ["типа музыкальных инструментов","В чём"],
+                 text: "Что ответит Сыроежкин?",
+                 replacements: [],
                  color: .green,
-                 connection: "Эффект, описанный Бэконом, был использован для создания",
-                 answer: "стеклянных музыкальных инструментов",
-                 imageAnswer: "FN42A")
+                 connection: "Сыроежкин ответит",
+                 answer: "интригал",
+                 imageAnswer: "SC42A")
     }()
     
-    static var FN43: Question = {
+    static var SC43: Question = {
         Question(ID: 3,
-                 text: "В средние века многие европейские города боролись за право проведения этого мероприятия, поскольку оно способствовало развитию торговли, предоставляло развлечения и демонстрировало определённый статус города. Что это за мероприятие?",
-                 replacements: ["мероприятия","мероприятие"],
+                 text: "На клип какой группы наложили чужую музыку?",
+                 replacements: [],
                  color: .green,
-                 connection: "Событие, имевшее огромное значение в жизни средневековых городов, называется",
-                 answer: "ярмарка",
-                 imageAnswer: "FN43A")
+                 connection: "Клип группы",
+                 answer: "Pink Floyd",
+                 imageAnswer: "SC43A")
     }()
     
-    static var FN44: Question = {
+    static var SC44: Question = {
         Question(ID: 4,
-                 text: "В военных фильмах можно наблюдать, как солдаты \"кусают\" это оружие зубами, чтобы активировать его. Однако эта процедура – ​​всего лишь миф, можно только потерять зубы. Что это за оружие?",
-                 replacements: ["оружие"],
+                 text: "Какой закон пытается вспомнить Петров?",
+                 replacements: [],
                  color: .green,
-                 connection: "Вы можете потерять зубы, если попытаетесь ими выдернуть чеку у",
-                 answer: "гранаты",
-                 imageAnswer: "FN44A")
+                 connection: "Петров пытается вспомнить",
+                 answer: "закон Архимеда",
+                 imageAnswer: "SC44A")
     }()
     
-    static var FN45: Question = {
+    static var SC45: Question = {
         Question(ID: 5,
-                 text: "В феврале 2020 года, после Камбалы, традиционных индийских соревнований, СМИ сравнили Шриниваса Гауда с этим олимпийским чемпионом. Цепляясь за двух своих буйволов, в гонке по рисовым полям он превзошёл бы на 3 сотых мировой рекорд, установленный этой спортивной легендой. С кем сравнивают индийского спортсмена-любителя?",
-                 replacements: ["чемпионом","С кем"],
+                 text: "Фрагмент какого мультфильма?",
+                 replacements: [],
                  color: .green,
-                 connection: "Мировой рекорд на дистанции 100 метров, который Шринивас Гауда мог побить на 3 сотых секунды, принадлежит",
-                 answer: "Усейну Болту",
-                 imageAnswer: "FN45A")
+                 connection: "Фрагмент мультфильма",
+                 answer: "В стране невыученных уроков",
+                 imageAnswer: "SC45A")
     }()
     
-    static var FN46: Question = {
+    static var SC46: Question = {
         Question(ID: 6,
-                 text: "Согласно легенде, кардинала Ришелье раздражало, что его гости ковырялись в зубах этим предметом во время трапез. Поэтому он приказал их закруглить. Какой столовый прибор появился в результате благодаря кардиналу?",
-                 replacements: ["предметом","столовый прибор"],
+                 text: "Какое слово скрыто?",
+                 replacements: [],
                  color: .green,
-                 connection: "Мы обязаны Ришелье изобретением",
-                 answer: "столового ножа",
-                 imageAnswer: "FN46A")
+                 connection: "В песне группы «Любовные истории» пропущено слово",
+                 answer: "голубками",
+                 imageAnswer: "SC46A")
     }()
     
-    static var FN47: Question = {
+    static var SC47: Question = {
         Question(ID: 7,
-                 text: "Это устройство, созданное компанией Shelby Electric, работает с несколькими очень короткими перерывами с 1901 года – рекорд, занесённый в Книгу Рекордов Гиннеса. Такой срок службы обусловлен углеродной нитью, тогда как провод современных моделей выполнен из токопроводящего металла. Что это за устройство?",
-                 replacements: ["устройство"],
+                 text: "О творчестве какого поэта рассказывают?",
+                 replacements: [],
                  color: .green,
-                 connection: "Этот объект из углеродной нити, занесенный в Книгу рекордов Гиннеса:",
-                 answer: "лампочка",
-                 imageAnswer: "FN47A")
+                 connection: "Во фрагменте из фильма «Общество мёртвых поэтов» говорят о творчестве",
+                 answer: "Уильяма Шекспира",
+                 imageAnswer: "SC47A")
     }()
     
-    static var FN51: Question = {
+    static var SC51: Question = {
         Question(ID: 1,
+                 text: "Чье школьное фото?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "На фотографии юный",
+                 answer: "Владимир Высоцкий",
+                 imageQuestion: "SC51Q",
+                 imageAnswer: "SC51A")
+    }()
+    
+    static var SC52: Question = {
+        Question(ID: 2,
+                 text: "Для чего используется эта бумага?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "Бумага с нанесенным на одну из сторон красящим слоем предназначена для",
+                 answer: "создания копий",
+                 imageQuestion: "SC52Q",
+                 imageAnswer: "SC52A")
+    }()
+    
+    static var SC53: Question = {
+        Question(ID: 3,
+                 text: "Какое государство обозначили на контурной карте?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "На контурной карте обозначили территорию",
+                 answer: "Алжира",
+                 imageQuestion: "SC53Q",
+                 imageAnswer: "SC53A")
+    }()
+    
+    static var SC54: Question = {
+        Question(ID: 4,
+                 text: "Условное обозначение какого устройства?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "На изображении условное обозначение",
+                 answer: "амперметра",
+                 imageQuestion: "SC54Q",
+                 imageAnswer: "SC54A")
+    }()
+    
+    static var SC55: Question = {
+        Question(ID: 5,
+                 text: "Какие две буквы скрыты?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "На меме, посвящённом биологии, скрыты буквы",
+                 answer: "XX",
+                 imageQuestion: "SC55Q",
+                 imageAnswer: "SC55A")
+    }()
+    
+    static var SC56: Question = {
+        Question(ID: 6,
+                 text: "Какие имена у персонажей, изображенных на иллюстрации к повести Александра Пушкина?",
+                 replacements: [],
+                 color: .systemBlue,
+                 connection: "На иллюстрации к «Капитанской дочке» изображены",
+                 answer: "Пётр и Маша",
+                 imageQuestion: "SC56Q",
+                 imageAnswer: "SC56A")
+    }()
+    
+    static var SC57: Question = {
+        Question(ID: 7,
                  text: "Кадр из какого фильма?",
                  replacements: [],
                  color: .systemBlue,
                  connection: "Кадр из фильма",
-                 answer: "Остров проклятых",
-                 imageQuestion: "FN51Q",
-                 imageAnswer: "FN51A")
+                 answer: "Вам и не снилось...",
+                 imageQuestion: "SC57Q",
+                 imageAnswer: "SC57A")
     }()
     
-    static var FN52: Question = {
-        Question(ID: 2,
-                 text: "Какие два кольца поменяли местами?",
-                 replacements: [],
-                 color: .systemBlue,
-                 connection: "Местами поменяли",
-                 answer: "красное и жёлтое кольца",
-                 imageQuestion: "FN52Q",
-                 imageAnswer: "FN52A")
-    }()
-    
-    static var FN53: Question = {
-        Question(ID: 3,
-                 text: "Чьи глаза?",
-                 replacements: [],
-                 color: .systemBlue,
-                 connection: "Глаза американской певицы",
-                 answer: "Billie Eilish",
-                 imageQuestion: "FN53Q",
-                 imageAnswer: "FN53A")
-    }()
-    
-    static var FN54: Question = {
-        Question(ID: 4,
-                 text: "Схема работы какого устройства?",
-                 replacements: [],
-                 color: .systemBlue,
-                 connection: "Это схема работы",
-                 answer: "автомобильного глушителя",
-                 imageQuestion: "FN54Q",
-                 imageAnswer: "FN54A")
-    }()
-    
-    static var FN55: Question = {
-        Question(ID: 5,
-                 text: "Кто автор оригинальной картины?",
-                 replacements: [],
-                 color: .systemBlue,
-                 connection: "Это модифицированный фрагмент фрески «Афинская школа», созданной",
-                 answer: "Рафаэлем Санти",
-                 imageQuestion: "FN55Q",
-                 imageAnswer: "FN55A")
-    }()
-    
-    static var FN56: Question = {
-        Question(ID: 6,
-                 text: "Логотип этого бренда включает в себя стилизованное изображение арфы. Что это за бренд?",
-                 replacements: [],
-                 color: .systemBlue,
-                 connection: "Кельтская арфа – символ компании",
-                 answer: "Guinness",
-                 imageQuestion: "FN56Q",
-                 imageAnswer: "FN56A")
-    }()
-    
-    static var FN57: Question = {
-        Question(ID: 7,
-                 text: "Что скрыто на этом рекламном плакате?",
-                 replacements: [],
-                 color: .systemBlue,
-                 connection: "Центральный объект этого рекламного плаката -",
-                 answer: "бургер",
-                 imageQuestion: "FN57Q",
-                 imageAnswer: "FN57A")
-    }()
-    
-    static var FN61: Question = {
+    static var SC61: Question = {
         Question(ID: 1,
-                 text: "С 1970 года этот предмет с подписью Adidas носит название в соответствии с региональными особенностями своих клиентов. В 2014 году он получил название Бразука для Бразилии, Ацтека для Мексики в 1986 году и Джабулани для Южной Африки в 2010 году. Что это за предмет?",
-                 replacements: ["предмет"],
+                 text: "В шуточной пародии на это произведение школьной программы произошедшее в нём самоубийство трактуется как убийство. В конце романа следователям удаётся обнаружить «состав преступления». Какое произведение пародировалось?",
+                 replacements: ["произведение","нём","романа"],
                  color: .cyan,
-                 connection: "«Бразука», «Ацтека» и «Джабулани» были разработаны для чемпионата мира по футболу и представляют собой",
-                 answer: "мячи",
-                 imageAnswer: "FN61A")
+                 connection: "Детективам удается обнаружить «состав преступления» в шуточной пародии на роман",
+                 answer: "Анна Каренина",
+                 imageAnswer: "SC61A")
     }()
     
-    static var FN62: Question = {
+    static var SC62: Question = {
         Question(ID: 2,
-                 text: "Боксёр Тайсон Фьюри дрался со многими именитыми и сильными соперниками. Однако в интервью он любит вспоминать, что наиболее мощный удар получил в 2009 году на самом старте карьеры. Этот удар едва не отправил тогда ещё неопытного Тайсона в нокаут. Кто его нанёс?",
-                 replacements: ["Кто"],
+                 text: "Комик Тимур Каргинов шутит, что за людьми с избыточным уровнем кальция в организме ходят школьники. Суть шутки заключается в том, что из сульфата и карбоната кальция обычно состоит это изделие. Какое?",
+                 replacements: ["изделие"],
                  color: .cyan,
-                 connection: "По словам Фьюри, самый сильный удар ему в 2009 году нанёс",
-                 answer: "он сам",
-                 imageAnswer: "FN62A")
+                 connection: "Из сульфата и карбоната кальция обычно состоит",
+                 answer: "мел",
+                 imageAnswer: "SC62A")
     }()
     
-    static var FN63: Question = {
+    static var SC63: Question = {
         Question(ID: 3,
-                 text: "Некоторые исполнители любили добавлять специальную звуковую дорожку в конце своей записи на виниле. Например, седьмой альбом ABBA, Super Trouper, заканчивается звуком аплодисментов; альбом Atom Heart Mother группы Pink Floyd завершается звуком капающей из крана воды. Какую особенность имеют эти дорожки?",
-                 replacements: ["особенность"],
+                 text: "В одном произведении не очень образованный физрук подменяет учителя на уроке астрономии. Он рассказывает, что у гуманоидов женского пола, проживающих на этой планете, отсутствуют верхние конечности. О какой планете речь?",
+                 replacements: ["планете"],
                  color: .cyan,
-                 connection: "Благодаря спиральной канавке на виниловом диске и аплодисменты у группы ABBA, и звук капли воды на виниле Pink Floyd",
-                 answer: "повторяются бесконечно",
-                 imageAnswer: "FN63A")
+                 connection: "По мнению не очень образованного физрука, нет верхних конечностей у гуманоидов женского пола",
+                 answer: "с Венеры",
+                 imageAnswer: "SC63A")
     }()
     
-    static var FN64: Question = {
+    static var SC64: Question = {
         Question(ID: 4,
-                 text: "На этом плакате Мэрилин Монро обнажает ноги и направляет наше внимание на лестницу. Плакат задуман как реклама инструмента, который используется в технических и творческих целях. Что это за инструмент?",
-                 replacements: ["инструмент","инструмента"],
+                 text: "... мой ... , Почему ты бледный?\n– Потому я бледный, Что нагрев мне вредный.\nВоду поднеси мне – Снова стану синим.\n\nКакому веществу посвящено это мнемоническое правило?",
+                 replacements: ["...","веществу"],
                  color: .cyan,
-                 connection: "Инструмент, рекламируемый этим плакатом с Мэрилин Монро,",
-                 answer: "треугольная линейка",
-                 imageQuestion: "FN64Q",
-                 imageAnswer: "FN64A")
+                 connection: "Мнемоническое правило описывало свойства",
+                 answer: "медного купороса",
+                 imageAnswer: "SC64A")
     }()
     
-    static var FN65: Question = {
+    static var SC65: Question = {
         Question(ID: 5,
-                 text: "Говорят, что в фильме Звездные войны использовали металлический звук, который издают двери этой американской достопримечательности. Режиссёры хотели, чтобы звук открывающихся дверей шаттла Дарта Вейдера создавал зловещую атмосферу задолго до его появления. Благодаря какому зданию удалось получить этот звук?",
-                 replacements: ["достопримечательности","зданию"],
+                 text: "Поступок героини одного рассказа приводит к громкому инциденту в школе. Её одноклассник берет на себя вину подруги, и ему приходится спустить отложенные на велосипед деньги на керамику. Какой опасный поступок совершила озорная школьница?",
+                 replacements: ["Поступок"],
                  color: .cyan,
-                 connection: "Для звука дверей шаттла Дарта Вейдера использовали звук тюремных дверей.",
-                 answer: "Алькатраса",
-                 imageAnswer: "FN65A")
+                 connection: "Озорная школьница в рассказе",
+                 answer: "кинула петарду в унитаз",
+                 imageAnswer: "SC65A")
     }()
     
-    static var FN66: Question = {
+    static var SC66: Question = {
         Question(ID: 6,
-                 text: "По одной из гипотез, полотно на этой фреске Микеланджело имеет форму матки, а вырывающееся покрывало представляет собой пуповину. Эксперты полагают, что это изображение процесса рождения, и видимый на произведении пупок персонажа является тому подтверждением. Что это за фреска?",
-                 replacements: ["фреске","фреска"],
+                 text: "И вы тоже это сделаете?\n\nПодобную реплику блогер Дмитрий Черышев предлагает использовать школьникам, когда они слышат от учителя широко распространённую фразу, провоцирующую их на опасное действие. Какое действие упоминается во фразе?",
+                 replacements: [" действие "],
                  color: .cyan,
-                 connection: "Матка и пуповина часто упоминаются искусствоведами при интерпретации фрески Микеланджело",
-                 answer: "Сотворение Адама",
-                 imageAnswer: "FN66A")
+                 connection: "Блогер предлагает ученикам спрашивать у учителей, готовы ли они",
+                 answer: "прыгать с крыши",
+                 imageAnswer: "SC66A")
     }()
     
-    static var FN67: Question = {
+    static var SC67: Question = {
         Question(ID: 7,
-                 text: "Графический дизайнер хотел подчеркнуть типографское разнообразие, создав серию забавных изображений. Он использовал разные шрифты для обозначения одного и того же объекта, используя символы, которые вы видите здесь:\n(.)(.)\n)   .   (\n(   Y   ).\nЭти изображения принимают различные формы в зависимости от используемого шрифта. Изображения чего представляет дизайнер в своём художественном проекте?",
-                 replacements: ["изображений","изображения","чего"],
+                 text: "Во французском языке слово «лист» звучит как «feuille». А какое пришедшее из французского в русский язык слово буквально переводится как «листоносец»?",
+                 replacements: ["слово"],
                  color: .cyan,
-                 connection: "дизайнер, использующий эти знаки, благодаря разным шрифтам создаёт множество изображений",
-                 answer: "женского тела",
-                 imageAnswer: "FN67A")
+                 connection: "«Листоносец» – буквальный перевод слова",
+                 answer: "портфель",
+                 imageAnswer: "SC67A")
     }()
     
-    static var FN71: Question = {
+    static var SC71: Question = {
         Question(ID: 1,
-                 text: "Слоганом какого автомобильного бренда является фраза\n\"Возьми жизнь за рога!\"?",
+                 text: "В честь какого полуострова получили шутливое название задние парты в классе?",
                  replacements: [],
                  color: .systemPurple,
-                 connection: "Фраза «Возьми жизнь за рога» — слоган автомобильного бренда.",
-                 answer: "Dodge",
-                 imageAnswer: "FN71A")
+                 connection: "Шутливое название задние парты получили в честь полуострова",
+                 answer: "Камчатка",
+                 imageAnswer: "SC71A")
     }()
     
-    static var FN72: Question = {
+    static var SC72: Question = {
         Question(ID: 2,
-                 text: "Какой писатель создал автобиографического персонажа Генри Чинаски?",
+                 text: "Чем занимается на труде герой песни Аллы Пугачёвой «Песенка первоклассника»?",
                  replacements: [],
                  color: .systemPurple,
-                 connection: "Генри Чинаски — автобиографический персонаж, созданный",
-                 answer: "Чарльзом Буковски",
-                 imageAnswer: "FN72A")
+                 connection: "Герой песни Аллы Пугачевой «Песенка первоклассника» занимается на труде",
+                 answer: "синхрофазотроном",
+                 imageAnswer: "SC72A")
     }()
     
-    static var FN73: Question = {
+    static var SC73: Question = {
         Question(ID: 3,
-                 text: "Эмблема какого из Домов в сериале «Игра престолов» изображает красное солнце, пронзённое золотым копьём?",
+                 text: "Какой член предложения, помимо подлежащего, является главным?",
                  replacements: [],
                  color: .systemPurple,
-                 connection: "Красное солнце, пронзённое золотым копьем на оранжевом поле, символизирует",
-                 answer: "Дом Мартеллов",
-                 imageAnswer: "FN73A")
+                 connection: "Помимо подлежащего, главным членом предложения является",
+                 answer: "сказуемое",
+                 imageAnswer: "SC73A")
     }()
     
-    static var FN74: Question = {
+    static var SC74: Question = {
         Question(ID: 4,
-                 text: "У него крылья на сандалиях и на шлеме, который является шлемом-невидимкой, а в руках у него кадуцей.\n\nКакому греческому богу присущи эти атрибуты?",
+                 text: "Какое животное изображено на белом ластике фирмы Koh-i-Noor с артикулом 300?",
                  replacements: [],
                  color: .systemPurple,
-                 connection: "Крылатые сандалии, крылатый шлем и кадуцей — атрибуты бога",
-                 answer: "Гермес",
-                 imageAnswer: "FN74A")
+                 connection: "На одном из самых распространенных ластиков Koh-i-Noor изображен",
+                 answer: "слон",
+                 imageAnswer: "SC74A")
     }()
     
-    static var FN75: Question = {
+    static var SC75: Question = {
         Question(ID: 5,
-                 text: "Сколько персонажей изображено на картине Анри Матисса «Танец»?",
+                 text: "Как называется день, когда уроки и внеклассную работу проводят учащиеся 10–11 классов?",
                  replacements: [],
                  color: .systemPurple,
-                 connection: "На картине Анри Матисса «Танец» изображено",
-                 answer: "пять персонажей",
-                 imageAnswer: "FN75A")
+                 connection: "Старшеклассники работают педагогами в День",
+                 answer: "самоуправления",
+                 imageAnswer: "SC75A")
     }()
     
-    static var FN76: Question = {
+    static var SC76: Question = {
         Question(ID: 6,
-                 text: "Каким термином из двух слов называют температуру, равную -273.15 °C или -459.67 °F?",
+                 text: "Один из вариантов какой детской игры зашифровали картинкой?",
                  replacements: [],
                  color: .systemPurple,
-                 connection: "Температура -273.15 °C  и -459,67 °F обозначает",
-                 answer: "абсолютный нуль",
-                 imageAnswer: "FN76A")
+                 connection: "Картинкой зашифрован один из вариантов игры",
+                 answer: "классики",
+                 imageQuestion: "SC76Q",
+                 imageAnswer: "SC76A")
     }()
     
-    static var FN77: Question = {
+    static var SC77: Question = {
         Question(ID: 7,
-                 text: "Как зовут персонажа Джейсона Стэйтема в фильме «Большой куш»?",
+                 text: "Кого из персонажей не было в романе «Герой нашего времени»?\n\n1. Григорий Печорин\n2. Максим Максимыч\n3. Полковник Скалозуб\n4. Бэла",
                  replacements: [],
                  color: .systemPurple,
-                 connection: "Персонаж Джейсона Стэтхэма известен как",
-                 answer: "Турецкий",
-                 imageAnswer: "FN77A")
+                 connection: "Персонажем романа Лермонтова «Герой нашего времени» не является",
+                 answer: "3. Полковник Скалозуб",
+                 imageAnswer: "SC77A")
     }()
+}
+
+fileprivate var States1: [State] = [
+    State(Q: .empty, T: .justRound(1, "Фотоблиц: стёртые слова"), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .SC11, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC12, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC13, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC14, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC15, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC16, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC17, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "50sec", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(1, "Ответы"), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .SC11, T: .connectionWithImage, M: "Rock11", N: .manual, A: .blur),
+    State(Q: .SC11, T: .horizontalConnection(answerShown: true), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .SC12, T: .connectionWithImage, M: "Rock11", N: .manual, A: .blur),
+    State(Q: .SC12, T: .horizontalConnection(answerShown: true), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .SC13, T: .connectionWithImage, M: "Rock11", N: .manual, A: .blur),
+    State(Q: .SC13, T: .horizontalConnection(answerShown: true), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .SC14, T: .connectionWithImage, M: "Rock11", N: .manual, A: .blur),
+    State(Q: .SC14, T: .horizontalConnection(answerShown: true), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .SC15, T: .connectionWithImage, M: "Rock11", N: .manual, A: .blur),
+    State(Q: .SC15, T: .horizontalConnection(answerShown: true), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .SC16, T: .connectionWithImage, M: "Rock11", N: .manual, A: .blur),
+    State(Q: .SC16, T: .horizontalConnection(answerShown: true), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .SC17, T: .connectionWithImage, M: "Rock11", N: .manual, A: .blur),
+    State(Q: .SC17, T: .horizontalConnection(answerShown: true), M: "Rock11", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(1, "Окончен!"), M: "Rock11", N: .manual, A: .swipe)
+]
+
+fileprivate var States2: [State] = [
+    State(Q: .empty, T: .justRound(2, "3 факта о..."), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC21, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC22, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC23, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC24, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC25, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC26, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC27, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(2, "Повторы"), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC21, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC22, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC23, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC24, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC25, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC26, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC27, T: .staticText, M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(2, "Ответы"), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC21, T: .verticalConnection(answerShown: false), M: "Rock10", N: .manual, A: .blur),
+    State(Q: .SC21, T: .verticalConnection(answerShown: true), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC22, T: .verticalConnection(answerShown: false), M: "Rock10", N: .manual, A: .blur),
+    State(Q: .SC22, T: .verticalConnection(answerShown: true), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC23, T: .verticalConnection(answerShown: false), M: "Rock10", N: .manual, A: .blur),
+    State(Q: .SC23, T: .verticalConnection(answerShown: true), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC24, T: .verticalConnection(answerShown: false), M: "Rock10", N: .manual, A: .blur),
+    State(Q: .SC24, T: .verticalConnection(answerShown: true), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC25, T: .verticalConnection(answerShown: false), M: "Rock10", N: .manual, A: .blur),
+    State(Q: .SC25, T: .verticalConnection(answerShown: true), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC26, T: .verticalConnection(answerShown: false), M: "Rock10", N: .manual, A: .blur),
+    State(Q: .SC26, T: .verticalConnection(answerShown: true), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC27, T: .verticalConnection(answerShown: false), M: "Rock10", N: .manual, A: .blur),
+    State(Q: .SC27, T: .verticalConnection(answerShown: true), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(2, "Окончен!"), M: "Rock10", N: .manual, A: .swipe)
+]
+
+fileprivate var States3: [State] = [
+    State(Q: .empty, T: .justRound(3, "Музыка"), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC31, T: .staticText, M: "SC31Q", N: .byMedia, A: .swipe),
+    State(Q: .SC32, T: .staticText, M: "SC32Q", N: .byMedia, A: .swipe),
+    State(Q: .SC33, T: .staticText, M: "SC33Q", N: .byMedia, A: .swipe),
+    State(Q: .SC34, T: .staticText, M: "SC34Q", N: .byMedia, A: .swipe),
+    State(Q: .SC35, T: .staticText, M: "SC35Q", N: .byMedia, A: .swipe),
+    State(Q: .SC36, T: .staticText, M: "SC36Q", N: .byMedia, A: .swipe),
+    State(Q: .SC37, T: .staticText, M: "SC37Q", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(3, "Повторы"), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC31, T: .staticText, M: "SC31R", N: .byMedia, A: .swipe),
+    State(Q: .SC32, T: .staticText, M: "SC32R", N: .byMedia, A: .swipe),
+    State(Q: .SC33, T: .staticText, M: "SC33R", N: .byMedia, A: .swipe),
+    State(Q: .SC34, T: .staticText, M: "SC34R", N: .byMedia, A: .swipe),
+    State(Q: .SC35, T: .staticText, M: "SC35R", N: .byMedia, A: .swipe),
+    State(Q: .SC36, T: .staticText, M: "SC36R", N: .byMedia, A: .swipe),
+    State(Q: .SC37, T: .staticText, M: "SC37R", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "30sec", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(3, "Ответы"), M: "Rock10", N: .manual, A: .swipe),
+    State(Q: .SC31, T: .verticalConnection(answerShown: false), M: "SC31A", N: .byTimer(5.0), A: .blur),
+    State(Q: .SC31, T: .verticalConnection(answerShown: true), M: "SC31A", N: .byMedia, A: .swipe),
+    State(Q: .SC32, T: .verticalConnection(answerShown: false), M: "SC32A", N: .byTimer(5.0), A: .blur),
+    State(Q: .SC32, T: .verticalConnection(answerShown: true), M: "SC32A", N: .byMedia, A: .swipe),
+    State(Q: .SC33, T: .verticalConnection(answerShown: false), M: "SC33A", N: .byTimer(5.0), A: .blur),
+    State(Q: .SC33, T: .verticalConnection(answerShown: true), M: "SC33A", N: .byMedia, A: .swipe),
+    State(Q: .SC34, T: .verticalConnection(answerShown: false), M: "SC34A", N: .byTimer(5.0), A: .blur),
+    State(Q: .SC34, T: .verticalConnection(answerShown: true), M: "SC34A", N: .byMedia, A: .swipe),
+    State(Q: .SC35, T: .verticalConnection(answerShown: false), M: "SC35A", N: .byTimer(5.0), A: .blur),
+    State(Q: .SC35, T: .verticalConnection(answerShown: true), M: "SC35A", N: .byMedia, A: .swipe),
+    State(Q: .SC36, T: .verticalConnection(answerShown: false), M: "SC36A", N: .byTimer(5.0), A: .blur),
+    State(Q: .SC36, T: .verticalConnection(answerShown: true), M: "SC36A", N: .byMedia, A: .swipe),
+    State(Q: .SC37, T: .verticalConnection(answerShown: false), M: "SC37A", N: .byTimer(5.0), A: .blur),
+    State(Q: .SC37, T: .verticalConnection(answerShown: true), M: "SC37A", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(3, "Окончен!"), M: "Rock10", N: .manual, A: .swipe)
+]
+
+fileprivate var States4: [State] = [
+    State(Q: .empty, T: .justRound(4, "Видеотур"), M: "Rock4Alt", N: .manual, A: .swipe),
+    State(Q: .SC41, T: .textWithImage, M: "Rock4Alt", V: "SC41Q", F: true, N: .manual, A: .swipe),
+    State(Q: .SC42, T: .textWithImage, M: "Rock4Alt", V: "SC42Q", F: true, N: .manual, A: .swipe),
+    State(Q: .SC43, T: .textWithImage, M: "Rock4Alt", V: "SC43Q", F: true, N: .manual, A: .swipe),
+    State(Q: .SC44, T: .textWithImage, M: "Rock4Alt", V: "SC44Q", F: true, N: .manual, A: .swipe),
+    State(Q: .SC45, T: .textWithImage, M: "Rock4Alt", V: "SC45Q", F: true, N: .manual, A: .swipe),
+    State(Q: .SC46, T: .textWithImage, M: "Rock4Alt", V: "SC46Q", F: true, N: .manual, A: .swipe),
+    State(Q: .SC47, T: .textWithImage, M: "Rock4Alt", V: "SC47Q", F: true, N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(4, "Повторы"), M: "Rock4Alt", N: .manual, A: .swipe),
+    State(Q: .SC41, T: .textWithImage, M: "Rock4Alt", V: "SC41R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .SC42, T: .textWithImage, M: "Rock4Alt", V: "SC42R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .SC43, T: .textWithImage, M: "Rock4Alt", V: "SC43R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .SC44, T: .textWithImage, M: "Rock4Alt", V: "SC44R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .SC45, T: .textWithImage, M: "Rock4Alt", V: "SC45R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .SC46, T: .textWithImage, M: "Rock4Alt", V: "SC46R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .SC47, T: .textWithImage, M: "Rock4Alt", V: "SC47R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "30sec", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(4, "Ответы"), M: "Rock4Alt", N: .manual, A: .swipe),
+    State(Q: .SC41, T: .verticalConnection(answerShown: false), M: "Rock4Alt", V: "SC41A", N: .manual, A: .blur),
+    State(Q: .SC41, T: .verticalConnection(answerShown: true), M: "Rock4Alt", V: "SC41A", N: .manual, A: .swipe),
+    State(Q: .SC42, T: .verticalConnection(answerShown: false), M: "Rock4Alt", V: "SC42A", N: .manual, A: .blur),
+    State(Q: .SC42, T: .verticalConnection(answerShown: true), M: "Rock4Alt", V: "SC42A", N: .manual, A: .swipe),
+    State(Q: .SC43, T: .verticalConnection(answerShown: false), M: "Rock4Alt", V: "SC43A", N: .manual, A: .blur),
+    State(Q: .SC43, T: .verticalConnection(answerShown: true), M: "Rock4Alt", V: "SC43A", N: .manual, A: .swipe),
+    State(Q: .SC44, T: .verticalConnection(answerShown: false), M: "Rock4Alt", V: "SC44A", N: .manual, A: .blur),
+    State(Q: .SC44, T: .verticalConnection(answerShown: true), M: "Rock4Alt", V: "SC44A", N: .manual, A: .swipe),
+    State(Q: .SC45, T: .verticalConnection(answerShown: false), M: "Rock4Alt", V: "SC45A", N: .manual, A: .blur),
+    State(Q: .SC45, T: .verticalConnection(answerShown: true), M: "Rock4Alt", V: "SC45A", N: .manual, A: .swipe),
+    State(Q: .SC46, T: .verticalConnection(answerShown: false), M: "Rock4Alt", V: "SC46A", N: .manual, A: .blur),
+    State(Q: .SC46, T: .verticalConnection(answerShown: true), M: "Rock4Alt", V: "SC46A", N: .manual, A: .swipe),
+    State(Q: .SC47, T: .verticalConnection(answerShown: false), M: "Rock4Alt", V: "SC47A", N: .manual, A: .blur),
+    State(Q: .SC47, T: .verticalConnection(answerShown: true), M: "Rock4Alt", V: "SC47A", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(4, "Окончен!"), M: "Rock4Alt", N: .manual, A: .swipe)
+]
+
+fileprivate var States5: [State] = [
+    State(Q: .empty, T: .justRound(5, "Картинки"), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC51, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC52, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC53, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC54, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC55, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC56, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC57, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(5, "Повторы"), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC51, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC52, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC53, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC54, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC55, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC56, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC57, T: .textWithImage, M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(5, "Ответы"), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC51, T: .connectionWithImage, M: "Rock9", N: .manual, A: .blur),
+    State(Q: .SC51, T: .horizontalConnection(answerShown: true), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC52, T: .connectionWithImage, M: "Rock9", N: .manual, A: .blur),
+    State(Q: .SC52, T: .horizontalConnection(answerShown: true), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC53, T: .connectionWithImage, M: "Rock9", N: .manual, A: .blur),
+    State(Q: .SC53, T: .horizontalConnection(answerShown: true), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC54, T: .connectionWithImage, M: "Rock9", N: .manual, A: .blur),
+    State(Q: .SC54, T: .horizontalConnection(answerShown: true), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC55, T: .connectionWithImage, M: "Rock9", N: .manual, A: .blur),
+    State(Q: .SC55, T: .horizontalConnection(answerShown: true), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC56, T: .connectionWithImage, M: "Rock9", N: .manual, A: .blur),
+    State(Q: .SC56, T: .horizontalConnection(answerShown: true), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .SC57, T: .connectionWithImage, M: "Rock9", N: .manual, A: .blur),
+    State(Q: .SC57, T: .horizontalConnection(answerShown: true), M: "Rock9", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(5, "Окончен!"), M: "Rock9", N: .manual, A: .swipe)
+]
+
+fileprivate var States6: [State] = [
+    State(Q: .empty, T: .justRound(6, "Логика"), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC61, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC62, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC63, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC64, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC65, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC66, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC67, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(6, "Повторы"), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC61, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC62, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC63, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC64, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC65, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC66, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC67, T: .staticText, M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(6, "Ответы"), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC61, T: .verticalConnection(answerShown: false), M: "Rock8", N: .manual, A: .blur),
+    State(Q: .SC61, T: .verticalConnection(answerShown: true), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC62, T: .verticalConnection(answerShown: false), M: "Rock8", N: .manual, A: .blur),
+    State(Q: .SC62, T: .verticalConnection(answerShown: true), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC63, T: .verticalConnection(answerShown: false), M: "Rock8", N: .manual, A: .blur),
+    State(Q: .SC63, T: .verticalConnection(answerShown: true), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC64, T: .verticalConnection(answerShown: false), M: "Rock8", N: .manual, A: .blur),
+    State(Q: .SC64, T: .verticalConnection(answerShown: true), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC65, T: .verticalConnection(answerShown: false), M: "Rock8", N: .manual, A: .blur),
+    State(Q: .SC65, T: .verticalConnection(answerShown: true), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC66, T: .verticalConnection(answerShown: false), M: "Rock8", N: .manual, A: .blur),
+    State(Q: .SC66, T: .verticalConnection(answerShown: true), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .SC67, T: .verticalConnection(answerShown: false), M: "Rock8", N: .manual, A: .blur),
+    State(Q: .SC67, T: .verticalConnection(answerShown: true), M: "Rock8", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(6, "Окончен!"), M: "Rock8", N: .manual, A: .swipe)
+]
+
+fileprivate var States7: [State] = [
+    State(Q: .empty, T: .justRound(7, "Блиц"), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .SC71, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC72, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC73, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC74, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC75, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC76, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .SC77, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "50sec", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(7, "Ответы"), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .SC71, T: .verticalConnection(answerShown: false), M: "Rock7", N: .manual, A: .blur),
+    State(Q: .SC71, T: .verticalConnection(answerShown: true), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .SC72, T: .verticalConnection(answerShown: false), M: "Rock7", N: .manual, A: .blur),
+    State(Q: .SC72, T: .verticalConnection(answerShown: true), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .SC73, T: .verticalConnection(answerShown: false), M: "Rock7", N: .manual, A: .blur),
+    State(Q: .SC73, T: .verticalConnection(answerShown: true), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .SC74, T: .verticalConnection(answerShown: false), M: "Rock7", N: .manual, A: .blur),
+    State(Q: .SC74, T: .verticalConnection(answerShown: true), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .SC75, T: .verticalConnection(answerShown: false), M: "Rock7", N: .manual, A: .blur),
+    State(Q: .SC75, T: .verticalConnection(answerShown: true), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .SC76, T: .connectionWithImage, M: "Rock7", N: .manual, A: .blur),
+    State(Q: .SC76, T: .horizontalConnection(answerShown: true), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .SC77, T: .verticalConnection(answerShown: false), M: "Rock7", N: .manual, A: .blur),
+    State(Q: .SC77, T: .verticalConnection(answerShown: true), M: "Rock7", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(7, "Окончен! Спасибо за игру!"), M: "Rock7", N: .manual, A: .swipe)
+]
