@@ -1,543 +1,618 @@
 //
-//  Set Creation Template Thematic.swift
+//  Set BE.swift
 //  MzgbEngine
 //
-//  Created by Miraslau Parafeniuk on 02.05.24.
+//  Created by Miraslau Parafeniuk on 12.10.24.
 //  Copyright © 2024 Miraslau Parafeniuk. All rights reserved.
 //
 
 import Foundation
     
-    //  PACKAGE SC
+    //  PACKAGE BE
     
-    static var SCstates = [States1,States1,States2,States3,States4,States5,States6,States7]
+    var BEstates = [States0,States1,States2,States3,States4,States5,States6,States7]
     
-    static var SCtimes = [50,50,100,30,30,100,100,50]
+    var BEtimes = [50,100,30,100,100,30,100,50]
     
-var SC11 = Question(
+var BE01 = Question(
             ID: 1,
             type: .imageAnsImage,
-            code: "SC11",
-            text: "Какое слово стёрли с доски?",
+            code: "BE11",
+            text: "Тентакли, Бара, Футанари, Яой, Эрогуро\n\nВиды чего перечислены?",
             replacements: [],
-            color: .systemPink,
-            connection: "С доски стёрли слово",
-            answer: "звука"
+            color: .systemRed,
+            connection: "Тентакли, Бара, Футанари, Яой, Эрогуро – это виды японской анимации для взрослых под названием",
+            answer: "хентай"
     )
-var SC12 = Question(
+var BE02 = Question(
             ID: 2,
             type: .imageAnsImage,
-            code: "SC12",
-            text: "Название какой древней цивилизации стёрли с доски?",
+            code: "BE12",
+            text: "Под каким именем известна Марина Энн Хэнцис?",
             replacements: [],
             color: .systemPink,
-            connection: "С доски стёрли название цивилизации",
-            answer: "шумеров"
+            connection: "Марина Энн Хэнцис более известна под именем",
+            answer: "Саша Грей"
     )
-var SC13 = Question(
+var BE03 = Question(
             ID: 3,
             type: .imageAnsImage,
-            code: "SC13",
-            text: "Название какой темы стёрли с доски?",
+            code: "BE13",
+            text: "Каким именно был «торнадо» – сексуальная методика, упоминаемая в фильме «Американский пирог»?",
             replacements: [],
             color: .systemPink,
-            connection: "С доски стёрли название темы",
-            answer: "теорема Пифагора"
+            connection: "В фильме «Американский пирог» фигурировал",
+            answer: "языковой торнадо"
     )
-var SC14 = Question(
+var BE04 = Question(
             ID: 4,
             type: .imageAnsImage,
-            code: "SC14",
-            text: "Какой термин стёрли с доски?",
+            code: "BE14",
+            text: "Шмаль, ганджа, гера, анаша, ляпка\n\nКакое слово лишнее?",
             replacements: [],
             color: .systemPink,
-            connection: "С доски стёрли термин",
-            answer: "фотосинтез"
+            connection: "Термины шмаль, ганжа, анаша и ляпка относятся к марихуане, а к героину –",
+            answer: "гера"
     )
-var SC15 = Question(
+var BE05 = Question(
             ID: 5,
             type: .imageAnsImage,
-            code: "SC15",
-            text: "Название какого течения авангардного искусства стёрли с доски?",
+            code: "BE15",
+            text: "В какой газете вела колонку «Секс в большом городе» героиня одноименного сериала?",
             replacements: [],
             color: .systemPink,
-            connection: "С доски стёрли слово",
-            answer: "футуризм"
+            connection: "Героиня «Секса в большом городе» вела колонку в газете",
+            answer: "New York Star"
     )
-var SC16 = Question(
+var BE06 = Question(
             ID: 6,
             type: .imageAnsImage,
-            code: "SC16",
-            text: "Название какой группы элементов стёрли с доски?",
+            code: "BE16",
+            text: "Логотип какой научной дисциплины?",
             replacements: [],
             color: .systemPink,
-            connection: "С доски стёрли слово",
-            answer: "металлы"
+            connection: "Логотип",
+            answer: "сексологии"
     )
-var SC17 = Question(
+var BE07 = Question(
             ID: 7,
             type: .imageAnsImage,
-            code: "SC17",
-            text: "Фамилию какого ученого стёрли с доски?",
+            code: "BE17",
+            text: "Каким термином называется влечение к подглядыванию за обнаженными людьми?",
             replacements: [],
             color: .systemPink,
-            connection: "стёрли фамилию Блеза",
-            answer: "Паскаля"
+            connection: "Влечение к подглядыванию за обнаженными людьми называется",
+            answer: "вуайеризм"
     )
-var SC21 = Question(
+var BE11 = Question(
             ID: 1,
             type: .textAnsImage,
-            code: "SC21",
-            text: "Является разновидностью игры «футбэг».\n\nДля изготовления игрового снаряда используются мука и различные крупы.\n\nПо одной из версий, название произошло от английского слова.\n\nКакая игра?",
-            replacements: ["игра"],
+            code: "BE21",
+            text: "Атрибут какого персонажа?",
+            replacements: [],
             color: .orange,
-            connection: "От английского слова «носок» произошло название игры",
-            answer: "сокс"
+            connection: "Очки принадлежат",
+            answer: "Раулю Дюку"
     )
-var SC22 = Question(
+var BE12 = Question(
             ID: 2,
             type: .textAnsImage,
-            code: "SC22",
-            text: "Это существо относится к группе кишечнополостных.\n\nТело животного хорошо растягивается, и оно может проглотить добычу крупнее себя.\n\nВ честь него названо одно из крупнейших по площади созвездий южного полушария.\n\nКак называется существо?",
-            replacements: ["существо"],
+            code: "BE22",
+            text: "Реклама чего?",
+            replacements: [],
             color: .orange,
-            connection: "К группе кишечнополостных относится",
-            answer: "гидра"
+            connection: "Реклама",
+            answer: "клюшек для гольфа"
     )
-var SC23 = Question(
+var BE13 = Question(
             ID: 3,
             type: .textAnsImage,
-            code: "SC23",
-            text: "Название термина происходит от латинских слов, обозначающих «двойной» и «разрезание».\n\nВ шуточном стихотворении ее сравнивают с животным.\n\nСуществует теорема о ее свойствах в треугольнике.\n\nО чём речь?",
-            replacements: ["чём"],
+            code: "BE23",
+            text: "Картина какого художника?",
+            replacements: [],
             color: .orange,
-            connection: "Крыса, которая бегает по углам и делит их пополам, – это",
-            answer: "биссектриса"
+            connection: "Картину «Великий мастурбатор» написал",
+            answer: "Сальвадор Дали"
     )
-var SC24 = Question(
+var BE14 = Question(
             ID: 4,
             type: .textAnsImage,
-            code: "SC24",
-            text: "Одним из первых применять такие соединения предложил Роберт Бойль.\n\nСреди разновидностей выделяют кислотно-основные, редокс, адсорбционные.\n\nОдно из первых веществ такого типа добывали из лишайника.\n\nКакие соединения?",
-            replacements: ["соединения"],
-            color: .orange,
-            connection: "Роберт Бойль первым предложил использовать",
-            answer: "химические индикаторы"
-    )
-var SC25 = Question(
-            ID: 5,
-            type: .textAnsImage,
-            code: "SC25",
-            text: "В центре повести – образ «маленького человека».\n\nГлавный герой для достижения цели отказался от вечернего чая, ходил на цыпочках и реже стирал одежду.\n\nВ некоторых источниках жанр произведения определяется как «повесть с привидениями».\n\nКакая повесть?",
-            replacements: ["повесть"],
-            color: .orange,
-            connection: "«Повестью с привидениями» называют произведение Николая Гоголя",
-            answer: "Шинель"
-    )
-var SC26 = Question(
-            ID: 6,
-            type: .textAnsImage,
-            code: "SC26",
-            text: "Так звали одного из титанов в древнегреческой мифологии.\n\nЭтим словом обозначают вид ткани.\n\nАтрибут, используемый на одном из школьных предметов.\n\nКакое слово?",
-            replacements: ["слово?"],
-            color: .orange,
-            connection: "Титан в древнегреческой мифологии, ткань и сборник карт называют",
-            answer: "атлас"
-    )
-var SC27 = Question(
-            ID: 7,
-            type: .textAnsImage,
-            code: "SC27",
-            text: "Изучением концепции, связанной с этим термином, занимались Рене Декарт, Иван Сеченов, Иван Павлов.\n\nМеханизм формирования выглядит следующим образом: стимул – рецептор – нейрон – эффектор – реакция.\n\nТаким же словом называется российская поп-группа, образованная в 1999 году.\n\nО каком термине речь?",
-            replacements: ["термине"],
-            color: .orange,
-            connection: "Рене Декарт, Иван Сеченов и Иван Павлов занимались изучением",
-            answer: "рефлексов"
-    )
-var SC31 = Question(
-            ID: 1,
-            type: .music,
-            code: "SC31",
-            text: "Какому произведению посвящен рэп?",
-            replacements: [],
-            color: .yellow,
-            connection: "В рэп-стиле пересказывают пьесу Максима Горького",
-            answer: "На дне"
-    )
-var SC32 = Question(
-            ID: 2,
-            type: .music,
-            code: "SC32",
-            text: "Про какое упражнение рассказывают?",
-            replacements: [],
-            color: .yellow,
-            connection: "Рассказывают про",
-            answer: "челночный бег"
-    )
-var SC33 = Question(
-            ID: 3,
-            type: .music,
-            code: "SC33",
-            text: "О чём речь?",
-            replacements: [],
-            color: .yellow,
-            connection: "Речь о математической постоянной",
-            answer: "число Пи"
-    )
-var SC34 = Question(
-            ID: 4,
-            type: .music,
-            code: "SC34",
-            text: "Кому посвящена песня?",
-            replacements: [],
-            color: .yellow,
-            connection: "Песня посвящена царю",
-            answer: "Ивану Грозному"
-    )
-var SC35 = Question(
-            ID: 5,
-            type: .music,
-            code: "SC35",
-            text: "Кто преподавал вам этот закон?",
-            replacements: [],
-            color: .yellow,
-            connection: "Этот закон преподавал",
-            answer: "учитель физики"
-    )
-var SC36 = Question(
-            ID: 6,
-            type: .music,
-            code: "SC36",
-            text: "Как зовут художника?",
-            replacements: [],
-            color: .yellow,
-            connection: "Художника зовут",
-            answer: "Марк Шагал"
-    )
-var SC37 = Question(
-            ID: 7,
-            type: .music,
-            code: "SC37",
-            text: "Какое слово скрыто?",
-            replacements: [],
-            color: .yellow,
-            connection: "В песне скрыто слово",
-            answer: "соли"
-    )
-var SC41 = Question(
-            ID: 1,
-            type: .video,
-            code: "SC41",
-            text: "Какой пословице посвящена серия «Ералаша»?",
-            replacements: [],
-            color: .green,
-            connection: "Серия «Ералаша» посвящена пословице",
-            answer: "семь раз отмерь, один раз отрежь"
-    )
-var SC42 = Question(
-            ID: 2,
-            type: .video,
-            code: "SC42",
-            text: "Что ответит Сыроежкин?",
-            replacements: [],
-            color: .green,
-            connection: "Сыроежкин ответит",
-            answer: "интригал"
-    )
-var SC43 = Question(
-            ID: 3,
-            type: .video,
-            code: "SC43",
-            text: "На клип какой группы наложили чужую музыку?",
-            replacements: [],
-            color: .green,
-            connection: "Клип группы",
-            answer: "Pink Floyd"
-    )
-var SC44 = Question(
-            ID: 4,
-            type: .video,
-            code: "SC44",
-            text: "Какой закон пытается вспомнить Петров?",
-            replacements: [],
-            color: .green,
-            connection: "Петров пытается вспомнить",
-            answer: "закон Архимеда"
-    )
-var SC45 = Question(
-            ID: 5,
-            type: .video,
-            code: "SC45",
-            text: "Фрагмент какого мультфильма?",
-            replacements: [],
-            color: .green,
-            connection: "Фрагмент мультфильма",
-            answer: "В стране невыученных уроков"
-    )
-var SC46 = Question(
-            ID: 6,
-            type: .video,
-            code: "SC46",
-            text: "Какое слово скрыто?",
-            replacements: [],
-            color: .green,
-            connection: "В песне группы «Любовные истории» пропущено слово",
-            answer: "голубками"
-    )
-var SC47 = Question(
-            ID: 7,
-            type: .video,
-            code: "SC47",
-            text: "О творчестве какого поэта рассказывают?",
-            replacements: [],
-            color: .green,
-            connection: "Во фрагменте из фильма «Общество мёртвых поэтов» говорят о творчестве",
-            answer: "Уильяма Шекспира"
-    )
-var SC51 = Question(
-            ID: 1,
-            type: .imageAnsImage,
-            code: "SC51",
-            text: "Чье школьное фото?",
-            replacements: [],
-            color: .systemBlue,
-            connection: "На фотографии юный",
-            answer: "Владимир Высоцкий"
-    )
-var SC52 = Question(
-            ID: 2,
-            type: .imageAnsImage,
-            code: "SC52",
-            text: "Для чего используется эта бумага?",
-            replacements: [],
-            color: .systemBlue,
-            connection: "Бумага с нанесенным на одну из сторон красящим слоем предназначена для",
-            answer: "создания копий"
-    )
-var SC53 = Question(
-            ID: 3,
-            type: .imageAnsImage,
-            code: "SC53",
-            text: "Какое государство обозначили на контурной карте?",
-            replacements: [],
-            color: .systemBlue,
-            connection: "На контурной карте обозначили территорию",
-            answer: "Алжира"
-    )
-var SC54 = Question(
-            ID: 4,
-            type: .imageAnsImage,
-            code: "SC54",
-            text: "Условное обозначение какого устройства?",
-            replacements: [],
-            color: .systemBlue,
-            connection: "На изображении условное обозначение",
-            answer: "амперметра"
-    )
-var SC55 = Question(
-            ID: 5,
-            type: .imageAnsImage,
-            code: "SC55",
-            text: "Какие две буквы скрыты?",
-            replacements: [],
-            color: .systemBlue,
-            connection: "На меме, посвящённом биологии, скрыты буквы",
-            answer: "XX"
-    )
-var SC56 = Question(
-            ID: 6,
-            type: .imageAnsImage,
-            code: "SC56",
-            text: "Какие имена у персонажей, изображенных на иллюстрации к повести Александра Пушкина?",
-            replacements: [],
-            color: .systemBlue,
-            connection: "На иллюстрации к «Капитанской дочке» изображены",
-            answer: "Пётр и Маша"
-    )
-var SC57 = Question(
-            ID: 7,
-            type: .imageAnsImage,
-            code: "SC57",
+            code: "BE24",
             text: "Кадр из какого фильма?",
             replacements: [],
-            color: .systemBlue,
+            color: .orange,
             connection: "Кадр из фильма",
-            answer: "Вам и не снилось..."
+            answer: "Груз 200"
     )
-var SC61 = Question(
-            ID: 1,
-            type: .textAnsImage,
-            code: "SC61",
-            text: "В шуточной пародии на это произведение школьной программы произошедшее в нём самоубийство трактуется как убийство. В конце романа следователям удаётся обнаружить «состав преступления». Какое произведение пародировалось?",
-            replacements: ["произведение","нём","романа"],
-            color: .cyan,
-            connection: "Детективам удается обнаружить «состав преступления» в шуточной пародии на роман",
-            answer: "Анна Каренина"
-    )
-var SC62 = Question(
-            ID: 2,
-            type: .textAnsImage,
-            code: "SC62",
-            text: "Комик Тимур Каргинов шутит, что за людьми с избыточным уровнем кальция в организме ходят школьники. Суть шутки заключается в том, что из сульфата и карбоната кальция обычно состоит это изделие. Какое?",
-            replacements: ["изделие"],
-            color: .cyan,
-            connection: "Из сульфата и карбоната кальция обычно состоит",
-            answer: "мел"
-    )
-var SC63 = Question(
-            ID: 3,
-            type: .textAnsImage,
-            code: "SC63",
-            text: "В одном произведении не очень образованный физрук подменяет учителя на уроке астрономии. Он рассказывает, что у гуманоидов женского пола, проживающих на этой планете, отсутствуют верхние конечности. О какой планете речь?",
-            replacements: ["планете"],
-            color: .cyan,
-            connection: "По мнению не очень образованного физрука, нет верхних конечностей у гуманоидов женского пола",
-            answer: "с Венеры"
-    )
-var SC64 = Question(
-            ID: 4,
-            type: .textAnsImage,
-            code: "SC64",
-            text: "... мой ... , Почему ты бледный?\n– Потому я бледный, Что нагрев мне вредный.\nВоду поднеси мне – Снова стану синим.\n\nКакому веществу посвящено это мнемоническое правило?",
-            replacements: ["...","веществу"],
-            color: .cyan,
-            connection: "Мнемоническое правило описывало свойства",
-            answer: "медного купороса"
-    )
-var SC65 = Question(
+var BE15 = Question(
             ID: 5,
             type: .textAnsImage,
-            code: "SC65",
-            text: "Поступок героини одного рассказа приводит к громкому инциденту в школе. Её одноклассник берет на себя вину подруги, и ему приходится спустить отложенные на велосипед деньги на керамику. Какой опасный поступок совершила озорная школьница?",
-            replacements: ["Поступок"],
-            color: .cyan,
-            connection: "Озорная школьница в рассказе",
-            answer: "кинула петарду в унитаз"
+            code: "BE25",
+            text: "Какое слово зашифровано в ребусе?",
+            replacements: [],
+            color: .orange,
+            connection: "В ребусе зашифровано слово",
+            answer: "порнография"
     )
-var SC66 = Question(
+var BE16 = Question(
             ID: 6,
             type: .textAnsImage,
-            code: "SC66",
-            text: "И вы тоже это сделаете?\n\nПодобную реплику блогер Дмитрий Черышев предлагает использовать школьникам, когда они слышат от учителя широко распространённую фразу, провоцирующую их на опасное действие. Какое действие упоминается во фразе?",
-            replacements: [" действие "],
-            color: .cyan,
-            connection: "Блогер предлагает ученикам спрашивать у учителей, готовы ли они",
-            answer: "прыгать с крыши"
+            code: "BE26",
+            text: "Кто на фото?",
+            replacements: [],
+            color: .orange,
+            connection: "На фото",
+            answer: "Пабло Эскобар"
     )
-var SC67 = Question(
+var BE17 = Question(
             ID: 7,
             type: .textAnsImage,
-            code: "SC67",
-            text: "Во французском языке слово «лист» звучит как «feuille». А какое пришедшее из французского в русский язык слово буквально переводится как «листоносец»?",
-            replacements: ["слово"],
-            color: .cyan,
-            connection: "«Листоносец» – буквальный перевод слова",
-            answer: "портфель"
+            code: "BE27",
+            text: "Первый офис какой компании?",
+            replacements: [],
+            color: .orange,
+            connection: "Первый офис компании",
+            answer: "Playboy"
     )
-var SC71 = Question(
+var BE21 = Question(
             ID: 1,
             type: .textAnsImage,
-            code: "SC71",
-            text: "В честь какого полуострова получили шутливое название задние парты в классе?",
+            code: "BE31",
+            text: "Что обсуждают персонажи?",
             replacements: [],
-            color: .systemPurple,
-            connection: "Шутливое название задние парты получили в честь полуострова",
-            answer: "Камчатка"
+            color: .yellow,
+            connection: "Герои сказки обсуждают",
+            answer: "хвост"
     )
-var SC72 = Question(
+var BE22 = Question(
             ID: 2,
             type: .textAnsImage,
-            code: "SC72",
-            text: "Чем занимается на труде герой песни Аллы Пугачёвой «Песенка первоклассника»?",
+            code: "BE32",
+            text: "Фильм",
             replacements: [],
-            color: .systemPurple,
-            connection: "Герой песни Аллы Пугачевой «Песенка первоклассника» занимается на труде",
-            answer: "синхрофазотроном"
+            color: .yellow,
+            connection: "Фильм",
+            answer: "Очень страшное кино 2"
     )
-var SC73 = Question(
+var BE23 = Question(
             ID: 3,
             type: .textAnsImage,
-            code: "SC73",
-            text: "Какой член предложения, помимо подлежащего, является главным?",
+            code: "BE33",
+            text: "Исполнитель",
             replacements: [],
-            color: .systemPurple,
-            connection: "Помимо подлежащего, главным членом предложения является",
-            answer: "сказуемое"
+            color: .yellow,
+            connection: "Исполнитель",
+            answer: "Joe Cocker"
     )
-var SC74 = Question(
+var BE24 = Question(
             ID: 4,
-            type: .textAnsImage,
-            code: "SC74",
-            text: "Какое животное изображено на белом ластике фирмы Koh-i-Noor с артикулом 300?",
+            type: .imageAnsImage,
+            code: "BE34",
+            text: "Чей голос?",
             replacements: [],
-            color: .systemPurple,
-            connection: "На одном из самых распространенных ластиков Koh-i-Noor изображен",
-            answer: "слон"
+            color: .yellow,
+            connection: "Голос телеведущей",
+            answer: "Елены Ханги"
     )
-var SC75 = Question(
+var BE25 = Question(
             ID: 5,
             type: .textAnsImage,
-            code: "SC75",
-            text: "Как называется день, когда уроки и внеклассную работу проводят учащиеся 10–11 классов?",
-            replacements: [],
-            color: .systemPurple,
-            connection: "Старшеклассники работают педагогами в День",
-            answer: "самоуправления"
+            code: "BE35",
+            text: "Группа\n[минус]",
+            replacements: ["[минус]"],
+            color: .yellow,
+            connection: "Группа",
+            answer: "Ленинград"
     )
-var SC76 = Question(
+var BE26 = Question(
+            ID: 6,
+            type: .textAnsImage,
+            code: "BE36",
+            text: "Исполнитель\n[reverse]",
+            replacements: ["[reverse]"],
+            color: .yellow,
+            connection: "Исполнитель",
+            answer: "Madonna"
+    )
+var BE27 = Question(
+            ID: 7,
+            type: .textAnsImage,
+            code: "BE37",
+            text: "Исполнитель",
+            replacements: [],
+            color: .yellow,
+            connection: "Исполнитель",
+            answer: "Наташа Королёва"
+    )
+var BE31 = Question(
+            ID: 1,
+            type: .textAnsVideo,
+            code: "BE41",
+            text: "После революции, с приходом новой власти в России, наркотики начали массовое распространение. Раньше вещество, которое в народе называли «марафет», могли позволить себе только представители богемы, теперь его употребляли прямо на улицах. Как называется вещество?",
+            replacements: ["вещество"],
+            color: .green,
+            connection: "Под названием «марафет» в народе закрепился наркотик",
+            answer: "кокаин"
+    )
+var BE32 = Question(
+            ID: 2,
+            type: .textAnsImage,
+            code: "BE42",
+            text: "Режиссер порнопародий Уилл Райдер как-то признался, что избегает сцен секса между близкими родственниками. Из-за этого оказалось, что оригинальный сериал гораздо жестче, чем его эротическая версия. О каком сериале речь?",
+            replacements: ["сериал","сериале"],
+            color: .green,
+            connection: "Из-за сексуальной связи брата и сестры оказался жестче порнопародии сериал",
+            answer: "Игра престолов"
+    )
+var BE33 = Question(
+            ID: 3,
+            type: .textAnsImage,
+            code: "BE43",
+            text: "В США существует неофициальный праздник под названием «День стейка и минета». Это мероприятие придумали как мужской праздник в противовес этой дате, которая уже стала женским праздником. Предполагается, что женщины поздравляют мужчин, которые подарили им открытки и цветы месяц назад по этому поводу. Какому?",
+            replacements: ["дате","поводу"],
+            color: .green,
+            connection: "День стейка и минета в США отмечается в противовес",
+            answer: "Дню всех влюбленных"
+    )
+var BE34 = Question(
+            ID: 4,
+            type: .textAnsImage,
+            code: "BE44",
+            text: "Какое слово скрыто?",
+            replacements: [],
+            color: .green,
+            connection: "Скрыто слово",
+            answer: "мкднлдс"
+    )
+var BE35 = Question(
+            ID: 5,
+            type: .imageAnsImage,
+            code: "BE45",
+            text: "Акции под хештегами #RedMyLips, #sendeanlat, #NotGuilty, #яНеБоюсьСказать посвящены нарушению одного закона. Какого?",
+            replacements: ["закона"],
+            color: .green,
+            connection: "Акции под хештегами #RedMyLips, #sendeanlat, #NotGuilty, #яНеБоюсьСказать посвящены нарушению закона об",
+            answer: "изнасиловании"
+    )
+var BE36 = Question(
+            ID: 6,
+            type: .textAnsImage,
+            code: "BE46",
+            text: "До 2001 года в этом французском курортном городе одновременно проходил не только кинофестиваль, но и вручение премий в области порноидустрии. Одним из перформансов порноцеремонии являлся публичный эксгибиционизм актрис на набережной Круазет, что и вызвало недовольство мэрии города. Какого?",
+            replacements: ["городе","города"],
+            color: .green,
+            connection: "До 2001 года одновременно с кинофестивалем проходило вручение премий порноиндустрии",
+            answer: "в Каннах"
+    )
+var BE37 = Question(
+            ID: 7,
+            type: .textAnsImage,
+            code: "BE47",
+            text: "Профессиональная лечебная эластичность часто представляет собой небольшое мягкую трубку с закрытой половиной и открытой другой, используемым в качестве барьера\n\nОпределение чего перевели на арабский, потом на английский и потом снова на русский?",
+            replacements: ["чего"],
+            color: .green,
+            connection: "На арабский, потом на английский и потом снова на русский перевели определение",
+            answer: "презерватива"
+    )
+var BE41 = Question(
+            ID: 1,
+            type: .textAnsImage,
+            code: "BE51",
+            text: "В немецкой рекламе этого овоща в мужскую раздевалку входит черепашка-ниндзя в одном полотенце. Герой начинает раздеваться, и нам демонстрируют это крупным планом. Какой овощ так рекламируется?",
+            replacements: ["овоща"," это ","овощ"],
+            color: .systemBlue,
+            connection: "Черепашка-ниндзя рекламирует",
+            answer: "огурцы"
+    )
+var BE42 = Question(
+            ID: 2,
+            type: .textAnsImage,
+            code: "BE52",
+            text: "По легенде, почти одновременно с этим известным романом 1726 года была написана и его эротическая версия. Особое внимание в ней было уделено подробному описанию пионерского тушения дворца, просмотру грудей в подзорной трубе и сравнению пениса героя с Везувием. О каком романе речь?",
+            replacements: ["романом","романе"],
+            color: .systemBlue,
+            connection: "По легенде, почти сразу была написана эротическая версия произведения",
+            answer: "Путешествия Гулливера"
+    )
+var BE43 = Question(
+            ID: 3,
+            type: .textAnsImage,
+            code: "BE53",
+            text: "Художник Али Махдави Парис в 2021 году представил публике объемные формы пенисов, которые может повторить на себе почти любая девушка. Достаточно иметь зеркало, фиксирующие средства и подругу сзади. Из чего Али Махдави Парис сделал пенисы?",
+            replacements: ["чего"],
+            color: .systemBlue,
+            connection: "Али Махдави Парис сделал пенисы из",
+            answer: "волос"
+    )
+var BE44 = Question(
+            ID: 4,
+            type: .textAnsImage,
+            code: "BE54",
+            text: "В 2020 году умер 96-летний мумбайский секс-эксперт Махиндер Ватса, который до последнего вздоха вел колонку в местной газете. Однажды его спросили: «Мне 18, и мои яйца больше, чем у актеров порно, это нормально?» На такое Махиндер ответил, что не стоит смотреть эротику, одновременно держа в руке этот предмет. Какой?",
+            replacements: ["предмет"],
+            color: .systemBlue,
+            connection: "На вопрос про размер яиц Махиндер Ватса ответил, что не стоит смотреть порно, держа в руке",
+            answer: "линейку"
+    )
+var BE45 = Question(
+            ID: 5,
+            type: .textAnsImage,
+            code: "BE55",
+            text: "В сети шутят, что на этом стадионе можно проводить чемпионат по «книжному» соревнованию. Какому?",
+            replacements: ["соревнованию"],
+            color: .systemBlue,
+            connection: "На фото просто арт-инсталляция на австрийском стадионе, но в сети считают, что это поле для спортивного",
+            answer: "поиска закладок"
+    )
+var BE46 = Question(
+            ID: 6,
+            type: .textAnsImage,
+            code: "BE56",
+            text: "В США на таких пистолетах иногда пишут, что их нельзя использовать ректально и перорально. Скорее всего, были случаи, когда людям, после того как они покормят свою «малышку», самим хотелось попробовать. О каких пистолетах речь?",
+            replacements: ["таких","каких"],
+            color: .systemBlue,
+            connection: "Пишут, что нельзя использовать ректально и перорально, на",
+            answer: "заправочных пистолетах"
+    )
+var BE47 = Question(
+            ID: 7,
+            type: .textAnsImage,
+            code: "BE57",
+            text: "Один новостной паблик сообщает, что у детского кафе «Блюдечек» появились филиалы – магазин одежды «Юбочек» и детский обувной «Шлёпачек». А какую букву мы пропустили в названиях этих заведений?",
+            replacements: ["букву"],
+            color: .systemBlue,
+            connection: "В названиях детских заведений «Блюдечек», «Юбочек», «Шлёпачек» есть буква",
+            answer: "у"
+    )
+var BE51 = Question(
+            ID: 1,
+            type: .imageAnsImage,
+            code: "BE61",
+            text: "О чём рассказывает комик?",
+            replacements: [],
+            color: .cyan,
+            connection: "Британский комик Джимми Карр рассказывает про",
+            answer: "минет"
+    )
+var BE52 = Question(
+            ID: 2,
+            type: .imageAnsImage,
+            code: "BE62",
+            text: "Фильм",
+            replacements: [],
+            color: .cyan,
+            connection: "Отрывок из фильма",
+            answer: "Евротур"
+    )
+var BE53 = Question(
+            ID: 3,
+            type: .imageAnsImage,
+            code: "BE63",
+            text: "Какое слово под звуком «ПИ»?",
+            replacements: [],
+            color: .cyan,
+            connection: "Под звуком «ПИ» слово",
+            answer: "заработок"
+    )
+var BE54 = Question(
+            ID: 4,
+            type: .imageAnsImage,
+            code: "BE64",
+            text: "Кто исполняет оригинал?",
+            replacements: [],
+            color: .cyan,
+            connection: "Оригинал исполняет",
+            answer: "Натали"
+    )
+var BE55 = Question(
+            ID: 5,
+            type: .imageAnsImage,
+            code: "BE65",
+            text: "Про кого эта песня 2012 года?",
+            replacements: [],
+            color: .cyan,
+            connection: "Семен Слепаков исполнил песню про",
+            answer: "Андрея Аршавина"
+    )
+var BE56 = Question(
             ID: 6,
             type: .imageAnsImage,
-            code: "SC76",
-            text: "Один из вариантов какой детской игры зашифровали картинкой?",
+            code: "BE66",
+            text: "Что завела Лидия?",
+            replacements: [],
+            color: .cyan,
+            connection: "Лидия завела",
+            answer: "хламидии"
+    )
+var BE57 = Question(
+            ID: 7,
+            type: .imageAnsImage,
+            code: "BE67",
+            text: "Инструкция по общению с кем?",
+            replacements: [],
+            color: .cyan,
+            connection: "Инструкция по общению",
+            answer: "с полицейскими"
+    )
+var BE61 = Question(
+            ID: 1,
+            type: .textAnsImage,
+            code: "BE71",
+            text: "Кто на фото с поклонником?",
             replacements: [],
             color: .systemPurple,
-            connection: "Картинкой зашифрован один из вариантов игры",
-            answer: "классики"
+            connection: "На фото с поклонником скрыто лицо",
+            answer: "Алексея Панина"
     )
-var SC77 = Question(
+var BE62 = Question(
+            ID: 2,
+            type: .textAnsImage,
+            code: "BE72",
+            text: "Что происходит на картинке?",
+            replacements: [],
+            color: .systemPurple,
+            connection: "На картинке",
+            answer: "шишка встала"
+    )
+var BE63 = Question(
+            ID: 3,
+            type: .textAnsImage,
+            code: "BE73",
+            text: "Какие буквы скрыты в шуточном приложении для любителей путешествовать?",
+            replacements: [],
+            color: .systemPurple,
+            connection: "В шуточном приложении для любителей путешествовать скрыты буквы",
+            answer: "Трип"
+    )
+var BE64 = Question(
+            ID: 4,
+            type: .textAnsImage,
+            code: "BE74",
+            text: "Названием какого советского фильма нарекли скульптуру интернет-пользователи?",
+            replacements: [],
+            color: .systemPurple,
+            connection: "Интернет-пользователи назвали скульптуру",
+            answer: "Любовь и голуби"
+    )
+var BE65 = Question(
+            ID: 5,
+            type: .textAnsImage,
+            code: "BE75",
+            text: "Какое слово скрыто на шуточной картинке?",
+            replacements: [],
+            color: .systemPurple,
+            connection: "Скрыто слово",
+            answer: "салями"
+    )
+var BE66 = Question(
+            ID: 6,
+            type: .textAnsImage,
+            code: "BE76",
+            text: "Какая фигура скрыта на пародийной картинке?",
+            replacements: [],
+            color: .systemPurple,
+            connection: "На картинке скрыта",
+            answer: "белая королева"
+    )
+var BE67 = Question(
             ID: 7,
             type: .textAnsImage,
-            code: "SC77",
-            text: "Кого из персонажей не было в романе «Герой нашего времени»?\n\n1. Григорий Печорин\n2. Максим Максимыч\n3. Полковник Скалозуб\n4. Бэла",
+            code: "BE77",
+            text: "Реклама какой компании?",
             replacements: [],
             color: .systemPurple,
-            connection: "Персонажем романа Лермонтова «Герой нашего времени» не является",
-            answer: "3. Полковник Скалозуб"
+            connection: "Реклама компании",
+            answer: "Sony"
+    )
+var BE71 = Question(
+            ID: 1,
+            type: .textAnsImage,
+            code: "BE81",
+            text: "В Таиланде путана пообещала туристу незабываемый ceкс: « ... ... – ... ... !»\n\nКакое устойчивое выражение пропущено?",
+            replacements: ["... ..."],
+            color: .systemPurple,
+            connection: "В Таиланде путана пообещала туристу незабываемый ceкс:",
+            answer: "Мужик сказал – мужик сделал"
+    )
+var BE72 = Question(
+            ID: 2,
+            type: .textAnsImage,
+            code: "BE82",
+            text: "Бубука, дрын, коряга, корталыга, обрез, младший брат, Тишка, шершавый\n\nЧто предлагают называть этими словами?",
+            replacements: [],
+            color: .systemGreen,
+            connection: "Бубукой, корягой и младшим братом некоторые называют",
+            answer: "член"
+    )
+var BE73 = Question(
+            ID: 3,
+            type: .textAnsImage,
+            code: "BE83",
+            text: "В каком городе, если верить песне группы «Ленинград», шикарные плюхи размером с большую печать?",
+            replacements: [],
+            color: .systemGreen,
+            connection: "Согласно песне группы «Ленинград», шикарные плюхи размером с большую печать",
+            answer: "в Ростове"
+    )
+var BE74 = Question(
+            ID: 4,
+            type: .textAnsImage,
+            code: "BE84",
+            text: "До чего, согласно переделанной поговорке, язык может довести помимо Киева?",
+            replacements: [],
+            color: .systemGreen,
+            connection: "Согласно переделанной поговорке, язык может довести до Киева, а может до",
+            answer: "оргазма"
+    )
+var BE75 = Question(
+            ID: 5,
+            type: .textAnsImage,
+            code: "BE85",
+            text: "Какие женщины, согласно шутке, единственные точно знают, где находятся их мужья?",
+            replacements: [],
+            color: .systemGreen,
+            connection: "Единственные женщины, которые точно знают, где находятся их мужья, – это",
+            answer: "вдовы"
+    )
+var BE76 = Question(
+            ID: 6,
+            type: .textAnsImage,
+            code: "BE86",
+            text: "Что в Древней Греции называли жаргонной фразой «игра на флейте»?",
+            replacements: [],
+            color: .systemGreen,
+            connection: "Жаргонизм «игра на флейте» означает",
+            answer: "оральный секс"
+    )
+var BE77 = Question(
+            ID: 7,
+            type: .textAnsImage,
+            code: "BE87",
+            text: "«Девочка с эмоциональностью камня выбирает между зоофилией и некрофилией»\n\nКраткое описание какой серии фильмов?",
+            replacements: [],
+            color: .systemGreen,
+            connection: "«Девочка с эмоциональностью камня выбирает между зоофилией и некрофилией» – описание фильма",
+            answer: "Сумерки"
     )
 
-fileprivate var States1 = State.allStates(round: 1,
-                                          questions: [SC11, SC12, SC13, SC14, SC15, SC16, SC17]
-                                          name: "Фотоблиц: стёртые слова",
-                                          time: SCtimes[1],
+fileprivate var States0 = State.allStates(round: 0,
+                                          questions: [BE01, BE02, BE03, BE04, BE05, BE06, BE07],
+                                          name: "Блиц с галочками",
+                                          time: BEtimes[0],
                                           isBlitz: true)
 
+fileprivate var States1 = State.allStates(round: 1,
+                                          questions: [BE11, BE12, BE13, BE14, BE15, BE16, BE17],
+                                          name: "Картинки",
+                                          time: BEtimes[1])
+
 fileprivate var States2 = State.allStates(round: 2,
-                                          questions: [SC21, SC22, SC23, SC24, SC25, SC26, SC27]
-                                          name: "3 факта о...",
-                                          time: SCtimes[2])
+                                          questions: [BE21, BE22, BE23, BE24, BE25, BE26, BE27],
+                                          name: "Музыка",
+                                          time: BEtimes[2])
 
 fileprivate var States3 = State.allStates(round: 3,
-                                          questions: [SC31, SC32, SC33, SC34, SC35, SC36, SC37]
-                                          name: "Музыка",
-                                          time: SCtimes[3])
+                                          questions: [BE31, BE32, BE33, BE34, BE35, BE36, BE37],
+                                          name: "Логика",
+                                          time: BEtimes[3])
 
 fileprivate var States4 = State.allStates(round: 4,
-                                          questions: [SC41, SC42, SC43, SC44, SC45, SC46, SC47]
-                                          name: "Видеотур",
-                                          time: SCtimes[4])
+                                          questions: [BE41, BE42, BE43, BE44, BE45, BE46, BE47],
+                                          name: "Логика",
+                                          time: BEtimes[4])
 
 fileprivate var States5 = State.allStates(round: 5,
-                                          questions: [SC51, SC52, SC53, SC54, SC55, SC56, SC57]
-                                          name: "Картинки",
-                                          time: SCtimes[5])
+                                          questions: [BE51, BE52, BE53, BE54, BE55, BE56, BE57],
+                                          name: "Музыка",
+                                          time: BEtimes[5])
 
 fileprivate var States6 = State.allStates(round: 6,
-                                          questions: [SC61, SC62, SC63, SC64, SC65, SC66, SC67]
-                                          name: "Логика",
-                                          time: SCtimes[6])
+                                          questions: [BE61, BE62, BE63, BE64, BE65, BE66, BE67],
+                                          name: "Картинки",
+                                          time: BEtimes[6])
 
 fileprivate var States7 = State.allStates(round: 7,
-                                          questions: [SC71, SC72, SC73, SC74, SC75, SC76, SC77]
+                                          questions: [BE71, BE72, BE73, BE74, BE75, BE76, BE77],
                                           name: "Блиц",
-                                          time: SCtimes[7],
+                                          time: BEtimes[7],
                                           isBlitz: true)

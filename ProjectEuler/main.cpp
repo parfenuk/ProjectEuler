@@ -32,6 +32,15 @@ string spaces (int k)
     return s;
 }
 
+string str_removed (string s, string to_remove)
+{
+    size_t pos;
+    while ((pos = s.find(to_remove)) != string::npos) {
+        s.erase(pos, to_remove.length());
+    }
+    return s;
+}
+
 string extract_code (string s)
 {
     string code;
@@ -226,7 +235,7 @@ int main() {
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     freopen("input.txt","rt",stdin);
-    //freopen("output.txt","wt",stdout);
+    freopen("output.txt","wt",stdout);
 #endif
     
     ull ans = 0;
@@ -251,7 +260,7 @@ int main() {
         // check for question or state
         if (was_first_question == false) {
             if (S.find(": Question") == string::npos) {
-                if (S.find("extension") == string::npos && si != 10) cout << S << endl;
+                if (S.find("extension") == string::npos && si != 10) cout << str_removed(S,"static ") << endl;
                 continue;
             }
             else was_first_question = true;
@@ -336,7 +345,7 @@ int main() {
             if (i+1 != (int)R[r].codes.size()) codes_string += ", ";
             else codes_string += "]";
         }
-        A.push_back(spaces(42) + "questions: " + codes_string);
+        A.push_back(spaces(42) + "questions: " + codes_string + ",");
         A.push_back(spaces(42) + "name: \"" + R[r].name + "\",");
         string code = R[r].codes.back();
         while (is_digit(code.back())) code.pop_back(); // AW12 -> AW
