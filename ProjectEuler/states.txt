@@ -1,236 +1,231 @@
-fileprivate var States1: [State] = [
-    State(Q: .empty, T: .justRound(1, "Фотоблиц"), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .FN11, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN12, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN13, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN14, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN15, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN16, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN17, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "50sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(1, "Ответы"), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .FN11, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .FN11, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .FN12, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .FN12, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .FN13, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .FN13, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .FN14, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .FN14, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .FN15, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .FN15, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .FN16, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .FN16, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .FN17, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .FN17, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(1, "Окончен!"), M: "Offspring2", N: .manual, A: .swipe)
-]
-
-fileprivate var States2: [State] = [
-    State(Q: .empty, T: .justRound(2, "3 факта о..."), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN21, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN22, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN23, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN24, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN25, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN26, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN27, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(2, "Повторы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN21, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN22, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN23, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN24, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN25, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN26, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN27, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(2, "Ответы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN21, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .FN21, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN22, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .FN22, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN23, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .FN23, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN24, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .FN24, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN25, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .FN25, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN26, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .FN26, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN27, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .FN27, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(2, "Окончен!"), M: "Offspring3", N: .manual, A: .swipe)
-]
-
-fileprivate var States3: [State] = [
-    State(Q: .empty, T: .justRound(3, "Музыка"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN31, T: .staticText, M: "FN31Q", N: .byMedia, A: .swipe),
-    State(Q: .FN32, T: .staticText, M: "FN32Q", N: .byMedia, A: .swipe),
-    State(Q: .FN33, T: .staticText, M: "FN33Q", N: .byMedia, A: .swipe),
-    State(Q: .FN34, T: .staticText, M: "FN34Q", N: .byMedia, A: .swipe),
-    State(Q: .FN35, T: .staticText, M: "FN35Q", N: .byMedia, A: .swipe),
-    State(Q: .FN36, T: .staticText, M: "FN36Q", N: .byMedia, A: .swipe),
-    State(Q: .FN37, T: .staticText, M: "FN37Q", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(3, "Повторы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN31, T: .staticText, M: "FN31R", N: .byMedia, A: .swipe),
-    State(Q: .FN32, T: .staticText, M: "FN32R", N: .byMedia, A: .swipe),
-    State(Q: .FN33, T: .staticText, M: "FN33R", N: .byMedia, A: .swipe),
-    State(Q: .FN34, T: .staticText, M: "FN34R", N: .byMedia, A: .swipe),
-    State(Q: .FN35, T: .staticText, M: "FN35R", N: .byMedia, A: .swipe),
-    State(Q: .FN36, T: .staticText, M: "FN36R", N: .byMedia, A: .swipe),
-    State(Q: .FN37, T: .staticText, M: "FN37R", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "30sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(3, "Ответы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .FN31, T: .verticalConnection(answerShown: false), M: "FN31A", N: .byTimer(5.0), A: .blur),
-    State(Q: .FN31, T: .verticalConnection(answerShown: true), M: "FN31A", N: .byMedia, A: .swipe),
-    State(Q: .FN32, T: .verticalConnection(answerShown: false), M: "FN32A", N: .byTimer(5.0), A: .blur),
-    State(Q: .FN32, T: .verticalConnection(answerShown: true), M: "FN32A", N: .byMedia, A: .swipe),
-    State(Q: .FN33, T: .verticalConnection(answerShown: false), M: "FN33A", N: .byTimer(5.0), A: .blur),
-    State(Q: .FN33, T: .verticalConnection(answerShown: true), M: "FN33A", N: .byMedia, A: .swipe),
-    State(Q: .FN34, T: .verticalConnection(answerShown: false), M: "FN34A", N: .byTimer(5.0), A: .blur),
-    State(Q: .FN34, T: .verticalConnection(answerShown: true), M: "FN34A", N: .byMedia, A: .swipe),
-    State(Q: .FN35, T: .verticalConnection(answerShown: false), M: "FN35A", N: .byTimer(5.0), A: .blur),
-    State(Q: .FN35, T: .verticalConnection(answerShown: true), M: "FN35A", N: .byMedia, A: .swipe),
-    State(Q: .FN36, T: .verticalConnection(answerShown: false), M: "FN36A", N: .byTimer(5.0), A: .blur),
-    State(Q: .FN36, T: .verticalConnection(answerShown: true), M: "FN36A", N: .byMedia, A: .swipe),
-    State(Q: .FN37, T: .verticalConnection(answerShown: false), M: "FN37A", N: .byTimer(5.0), A: .blur),
-    State(Q: .FN37, T: .verticalConnection(answerShown: true), M: "FN37A", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(3, "Окончен!"), M: "Offspring3", N: .manual, A: .swipe)
-]
-
-fileprivate var States4: [State] = [
-    State(Q: .empty, T: .justRound(4, "Минное поле"), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN41, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN42, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN43, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN44, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN45, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN46, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN47, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(4, "Повторы"), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN41, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN42, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN43, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN44, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN45, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN46, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN47, T: .staticText, M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(4, "Ответы"), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN41, T: .verticalConnection(answerShown: false), M: "Rock4", N: .manual, A: .blur),
-    State(Q: .FN41, T: .verticalConnection(answerShown: true), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN42, T: .verticalConnection(answerShown: false), M: "Rock4", N: .manual, A: .blur),
-    State(Q: .FN42, T: .verticalConnection(answerShown: true), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN43, T: .verticalConnection(answerShown: false), M: "Rock4", N: .manual, A: .blur),
-    State(Q: .FN43, T: .verticalConnection(answerShown: true), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN44, T: .verticalConnection(answerShown: false), M: "Rock4", N: .manual, A: .blur),
-    State(Q: .FN44, T: .verticalConnection(answerShown: true), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN45, T: .verticalConnection(answerShown: false), M: "Rock4", N: .manual, A: .blur),
-    State(Q: .FN45, T: .verticalConnection(answerShown: true), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN46, T: .verticalConnection(answerShown: false), M: "Rock4", N: .manual, A: .blur),
-    State(Q: .FN46, T: .verticalConnection(answerShown: true), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .FN47, T: .verticalConnection(answerShown: false), M: "Rock4", N: .manual, A: .blur),
-    State(Q: .FN47, T: .verticalConnection(answerShown: true), M: "Rock4", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(4, "Окончен!"), M: "Rock4", N: .manual, A: .swipe)
-]
-
-fileprivate var States5: [State] = [
-    State(Q: .empty, T: .justRound(5, "Картинки"), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN51, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN52, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN53, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN54, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN55, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN56, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN57, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(5, "Повторы"), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN51, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN52, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN53, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN54, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN55, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN56, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN57, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(5, "Ответы"), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN51, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .FN51, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN52, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .FN52, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN53, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .FN53, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN54, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .FN54, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN55, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .FN55, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN56, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .FN56, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .FN57, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .FN57, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(5, "Окончен!"), M: "Offspring5", N: .manual, A: .swipe)
-]
-
-fileprivate var States6: [State] = [
-    State(Q: .empty, T: .justRound(6, "Логика"), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN61, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN62, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN63, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN64, T: .textWithImage, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN65, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN66, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN67, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(6, "Повторы"), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN61, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN62, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN63, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN64, T: .textWithImage, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN65, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN66, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN67, T: .staticText, M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(6, "Ответы"), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN61, T: .verticalConnection(answerShown: false), M: "Offspring6", N: .manual, A: .blur),
-    State(Q: .FN61, T: .verticalConnection(answerShown: true), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN62, T: .verticalConnection(answerShown: false), M: "Offspring6", V: "FN62A", N: .manual, A: .blur),
-    State(Q: .FN62, T: .verticalConnection(answerShown: true), M: "Offspring6", V: "FN62A", N: .manual, A: .swipe),
-    State(Q: .FN63, T: .verticalConnection(answerShown: false), M: "Offspring6", N: .manual, A: .blur),
-    State(Q: .FN63, T: .verticalConnection(answerShown: true), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN64, T: .connectionWithImage, M: "Offspring6", N: .manual, A: .blur),
-    State(Q: .FN64, T: .horizontalConnection(answerShown: true), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN65, T: .verticalConnection(answerShown: false), M: "Offspring6", N: .manual, A: .blur),
-    State(Q: .FN65, T: .verticalConnection(answerShown: true), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN66, T: .verticalConnection(answerShown: false), M: "Offspring6", N: .manual, A: .blur),
-    State(Q: .FN66, T: .verticalConnection(answerShown: true), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .FN67, T: .verticalConnection(answerShown: false), M: "Offspring6", N: .manual, A: .blur),
-    State(Q: .FN67, T: .verticalConnection(answerShown: true), M: "Offspring6", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(6, "Окончен!"), M: "Offspring6", N: .manual, A: .swipe)
-]
-
-fileprivate var States7: [State] = [
-    State(Q: .empty, T: .justRound(7, "Блиц"), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .FN71, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN72, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN73, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN74, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN75, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN76, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .FN77, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "50sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(7, "Ответы"), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .FN71, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .FN71, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .FN72, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .FN72, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .FN73, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .FN73, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .FN74, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .FN74, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .FN75, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .FN75, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .FN76, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .FN76, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .FN77, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .FN77, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(7, "Окончен! Спасибо за игру!"), M: "Offspring7", N: .manual, A: .swipe)
-]
-
+Alco
+ATW
+AW
+B
+BA
+BC
+BE
+Best
+Birt
+BTF
+BTS
+C
+CH
+CHNY
+CL
+CLTwo
+CLThree
+CLFour
+CLFive
+CLSix
+CLSeven
+CLEight
+CLNine
+CLTen
+CLEleven
+CLTwelve
+CLThirteen
+CLFourteen
+CLFifteen
+CLSixteen
+CLSeventeen
+CLEighteen
+CLNineteen
+CLTwenty
+CLTwentyOne
+CLTwentyTwo
+CLTwentyThree
+CLTwentyFour
+CLTwentyFive
+CLTwentySix
+CLTwentySeven
+CLTwentyEight
+CM
+Cmd
+CMus
+CMusTwo
+CMusThree
+CMusFour
+CNY
+D
+DE
+DIG
+Dis
+DM
+DNT
+DR
+DS
+DT
+DetOne
+DetTwo
+DetThree
+E
+EE
+EFP
+EI
+Eng
+EP
+F
+FAS
+FE
+FEF
+FilY
+FN
+Food
+FR
+FRDE
+G
+GB
+GG
+Gik
+GM
+GP
+H
+HCP
+HH
+His
+HL
+HP
+HPO
+HT
+HUM
+IT
+KBH
+L
+LIT
+LS
+M
+Miro
+MLOne
+MLTwo
+MLThree
+MLFour
+MLFive
+MLSix
+MLSeven
+MLEight
+MLNine
+MLTen
+MLEleven
+MLTwelve
+MLThirteen
+MLFourteen
+MLFifteen
+MLSixteen
+MLSeventeen
+MLEighteen
+MLNineteen
+MLTwenty
+MLTwentyOne
+MLTwentyTwo
+MLTwentyThree
+MPOne
+MPTwo
+MPThree
+MPFour
+MPFive
+MPSix
+MPSeven
+MPEight
+MPNine
+MPTen
+MPEleven
+MPTwelve
+MPThirteen
+MPFourteen
+MPFifteen
+MPSixteen
+MPSeventeen
+MPEighteen
+MPNineteen
+MPTwenty
+MPTwentyOne
+MPTwentyTwo
+MPTwentyThree
+MPTwentyFour
+MS
+Mult
+MuS
+MW
+Myth
+N
+NC
+NR
+NT
+NU
+NY
+OT
+P
+PL
+POP
+Q
+R
+Rock
+ROM
+RRock
+RU
+RUD
+S
+SC
+Scary
+SD
+Ser
+SiO
+SL
+SO
+SOV
+SP
+Spt
+SR
+Star
+Sto
+T
+TH
+Top
+TRAV
+TT
+TV
+TucOne
+TucTwo
+TucThree
+TucFour
+TucFive
+TucSix
+TucSeven
+TucEight
+TucNine
+TucTen
+TucEleven
+TucTwelve
+TucThirteen
+TucFourteen
+TW
+U
+VH
+W
+WM
+X
+XMAS
+XXLEight
+XXLEighteen
+XXLEleven
+XXLFifteen
+XXLFive
+XXLFour
+XXLFourteen
+XXLNine
+XXLNineteen
+XXLOne
+XXLSeven
+XXLSeventeen
+XXLSix
+XXLSixteen
+XXLTen
+XXLThirteen
+XXLThree
+XXLTwelve
+XXLTwenty
+XXLTwentyOne
+XXLTwentyTwo
+XXLTwo
+Z

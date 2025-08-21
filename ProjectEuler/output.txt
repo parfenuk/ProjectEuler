@@ -1,618 +1,231 @@
-//
-//  Set BE.swift
-//  MzgbEngine
-//
-//  Created by Miraslau Parafeniuk on 12.10.24.
-//  Copyright © 2024 Miraslau Parafeniuk. All rights reserved.
-//
-
-import Foundation
-    
-    //  PACKAGE BE
-    
-    var BEstates = [States0,States1,States2,States3,States4,States5,States6,States7]
-    
-    var BEtimes = [50,100,30,100,100,30,100,50]
-    
-var BE01 = Question(
-            ID: 1,
-            type: .imageAnsImage,
-            code: "BE11",
-            text: "Тентакли, Бара, Футанари, Яой, Эрогуро\n\nВиды чего перечислены?",
-            replacements: [],
-            color: .systemRed,
-            connection: "Тентакли, Бара, Футанари, Яой, Эрогуро – это виды японской анимации для взрослых под названием",
-            answer: "хентай"
-    )
-var BE02 = Question(
-            ID: 2,
-            type: .imageAnsImage,
-            code: "BE12",
-            text: "Под каким именем известна Марина Энн Хэнцис?",
-            replacements: [],
-            color: .systemPink,
-            connection: "Марина Энн Хэнцис более известна под именем",
-            answer: "Саша Грей"
-    )
-var BE03 = Question(
-            ID: 3,
-            type: .imageAnsImage,
-            code: "BE13",
-            text: "Каким именно был «торнадо» – сексуальная методика, упоминаемая в фильме «Американский пирог»?",
-            replacements: [],
-            color: .systemPink,
-            connection: "В фильме «Американский пирог» фигурировал",
-            answer: "языковой торнадо"
-    )
-var BE04 = Question(
-            ID: 4,
-            type: .imageAnsImage,
-            code: "BE14",
-            text: "Шмаль, ганджа, гера, анаша, ляпка\n\nКакое слово лишнее?",
-            replacements: [],
-            color: .systemPink,
-            connection: "Термины шмаль, ганжа, анаша и ляпка относятся к марихуане, а к героину –",
-            answer: "гера"
-    )
-var BE05 = Question(
-            ID: 5,
-            type: .imageAnsImage,
-            code: "BE15",
-            text: "В какой газете вела колонку «Секс в большом городе» героиня одноименного сериала?",
-            replacements: [],
-            color: .systemPink,
-            connection: "Героиня «Секса в большом городе» вела колонку в газете",
-            answer: "New York Star"
-    )
-var BE06 = Question(
-            ID: 6,
-            type: .imageAnsImage,
-            code: "BE16",
-            text: "Логотип какой научной дисциплины?",
-            replacements: [],
-            color: .systemPink,
-            connection: "Логотип",
-            answer: "сексологии"
-    )
-var BE07 = Question(
-            ID: 7,
-            type: .imageAnsImage,
-            code: "BE17",
-            text: "Каким термином называется влечение к подглядыванию за обнаженными людьми?",
-            replacements: [],
-            color: .systemPink,
-            connection: "Влечение к подглядыванию за обнаженными людьми называется",
-            answer: "вуайеризм"
-    )
-var BE11 = Question(
-            ID: 1,
-            type: .textAnsImage,
-            code: "BE21",
-            text: "Атрибут какого персонажа?",
-            replacements: [],
-            color: .orange,
-            connection: "Очки принадлежат",
-            answer: "Раулю Дюку"
-    )
-var BE12 = Question(
-            ID: 2,
-            type: .textAnsImage,
-            code: "BE22",
-            text: "Реклама чего?",
-            replacements: [],
-            color: .orange,
-            connection: "Реклама",
-            answer: "клюшек для гольфа"
-    )
-var BE13 = Question(
-            ID: 3,
-            type: .textAnsImage,
-            code: "BE23",
-            text: "Картина какого художника?",
-            replacements: [],
-            color: .orange,
-            connection: "Картину «Великий мастурбатор» написал",
-            answer: "Сальвадор Дали"
-    )
-var BE14 = Question(
-            ID: 4,
-            type: .textAnsImage,
-            code: "BE24",
-            text: "Кадр из какого фильма?",
-            replacements: [],
-            color: .orange,
-            connection: "Кадр из фильма",
-            answer: "Груз 200"
-    )
-var BE15 = Question(
-            ID: 5,
-            type: .textAnsImage,
-            code: "BE25",
-            text: "Какое слово зашифровано в ребусе?",
-            replacements: [],
-            color: .orange,
-            connection: "В ребусе зашифровано слово",
-            answer: "порнография"
-    )
-var BE16 = Question(
-            ID: 6,
-            type: .textAnsImage,
-            code: "BE26",
-            text: "Кто на фото?",
-            replacements: [],
-            color: .orange,
-            connection: "На фото",
-            answer: "Пабло Эскобар"
-    )
-var BE17 = Question(
-            ID: 7,
-            type: .textAnsImage,
-            code: "BE27",
-            text: "Первый офис какой компании?",
-            replacements: [],
-            color: .orange,
-            connection: "Первый офис компании",
-            answer: "Playboy"
-    )
-var BE21 = Question(
-            ID: 1,
-            type: .textAnsImage,
-            code: "BE31",
-            text: "Что обсуждают персонажи?",
-            replacements: [],
-            color: .yellow,
-            connection: "Герои сказки обсуждают",
-            answer: "хвост"
-    )
-var BE22 = Question(
-            ID: 2,
-            type: .textAnsImage,
-            code: "BE32",
-            text: "Фильм",
-            replacements: [],
-            color: .yellow,
-            connection: "Фильм",
-            answer: "Очень страшное кино 2"
-    )
-var BE23 = Question(
-            ID: 3,
-            type: .textAnsImage,
-            code: "BE33",
-            text: "Исполнитель",
-            replacements: [],
-            color: .yellow,
-            connection: "Исполнитель",
-            answer: "Joe Cocker"
-    )
-var BE24 = Question(
-            ID: 4,
-            type: .imageAnsImage,
-            code: "BE34",
-            text: "Чей голос?",
-            replacements: [],
-            color: .yellow,
-            connection: "Голос телеведущей",
-            answer: "Елены Ханги"
-    )
-var BE25 = Question(
-            ID: 5,
-            type: .textAnsImage,
-            code: "BE35",
-            text: "Группа\n[минус]",
-            replacements: ["[минус]"],
-            color: .yellow,
-            connection: "Группа",
-            answer: "Ленинград"
-    )
-var BE26 = Question(
-            ID: 6,
-            type: .textAnsImage,
-            code: "BE36",
-            text: "Исполнитель\n[reverse]",
-            replacements: ["[reverse]"],
-            color: .yellow,
-            connection: "Исполнитель",
-            answer: "Madonna"
-    )
-var BE27 = Question(
-            ID: 7,
-            type: .textAnsImage,
-            code: "BE37",
-            text: "Исполнитель",
-            replacements: [],
-            color: .yellow,
-            connection: "Исполнитель",
-            answer: "Наташа Королёва"
-    )
-var BE31 = Question(
-            ID: 1,
-            type: .textAnsVideo,
-            code: "BE41",
-            text: "После революции, с приходом новой власти в России, наркотики начали массовое распространение. Раньше вещество, которое в народе называли «марафет», могли позволить себе только представители богемы, теперь его употребляли прямо на улицах. Как называется вещество?",
-            replacements: ["вещество"],
-            color: .green,
-            connection: "Под названием «марафет» в народе закрепился наркотик",
-            answer: "кокаин"
-    )
-var BE32 = Question(
-            ID: 2,
-            type: .textAnsImage,
-            code: "BE42",
-            text: "Режиссер порнопародий Уилл Райдер как-то признался, что избегает сцен секса между близкими родственниками. Из-за этого оказалось, что оригинальный сериал гораздо жестче, чем его эротическая версия. О каком сериале речь?",
-            replacements: ["сериал","сериале"],
-            color: .green,
-            connection: "Из-за сексуальной связи брата и сестры оказался жестче порнопародии сериал",
-            answer: "Игра престолов"
-    )
-var BE33 = Question(
-            ID: 3,
-            type: .textAnsImage,
-            code: "BE43",
-            text: "В США существует неофициальный праздник под названием «День стейка и минета». Это мероприятие придумали как мужской праздник в противовес этой дате, которая уже стала женским праздником. Предполагается, что женщины поздравляют мужчин, которые подарили им открытки и цветы месяц назад по этому поводу. Какому?",
-            replacements: ["дате","поводу"],
-            color: .green,
-            connection: "День стейка и минета в США отмечается в противовес",
-            answer: "Дню всех влюбленных"
-    )
-var BE34 = Question(
-            ID: 4,
-            type: .textAnsImage,
-            code: "BE44",
-            text: "Какое слово скрыто?",
-            replacements: [],
-            color: .green,
-            connection: "Скрыто слово",
-            answer: "мкднлдс"
-    )
-var BE35 = Question(
-            ID: 5,
-            type: .imageAnsImage,
-            code: "BE45",
-            text: "Акции под хештегами #RedMyLips, #sendeanlat, #NotGuilty, #яНеБоюсьСказать посвящены нарушению одного закона. Какого?",
-            replacements: ["закона"],
-            color: .green,
-            connection: "Акции под хештегами #RedMyLips, #sendeanlat, #NotGuilty, #яНеБоюсьСказать посвящены нарушению закона об",
-            answer: "изнасиловании"
-    )
-var BE36 = Question(
-            ID: 6,
-            type: .textAnsImage,
-            code: "BE46",
-            text: "До 2001 года в этом французском курортном городе одновременно проходил не только кинофестиваль, но и вручение премий в области порноидустрии. Одним из перформансов порноцеремонии являлся публичный эксгибиционизм актрис на набережной Круазет, что и вызвало недовольство мэрии города. Какого?",
-            replacements: ["городе","города"],
-            color: .green,
-            connection: "До 2001 года одновременно с кинофестивалем проходило вручение премий порноиндустрии",
-            answer: "в Каннах"
-    )
-var BE37 = Question(
-            ID: 7,
-            type: .textAnsImage,
-            code: "BE47",
-            text: "Профессиональная лечебная эластичность часто представляет собой небольшое мягкую трубку с закрытой половиной и открытой другой, используемым в качестве барьера\n\nОпределение чего перевели на арабский, потом на английский и потом снова на русский?",
-            replacements: ["чего"],
-            color: .green,
-            connection: "На арабский, потом на английский и потом снова на русский перевели определение",
-            answer: "презерватива"
-    )
-var BE41 = Question(
-            ID: 1,
-            type: .textAnsImage,
-            code: "BE51",
-            text: "В немецкой рекламе этого овоща в мужскую раздевалку входит черепашка-ниндзя в одном полотенце. Герой начинает раздеваться, и нам демонстрируют это крупным планом. Какой овощ так рекламируется?",
-            replacements: ["овоща"," это ","овощ"],
-            color: .systemBlue,
-            connection: "Черепашка-ниндзя рекламирует",
-            answer: "огурцы"
-    )
-var BE42 = Question(
-            ID: 2,
-            type: .textAnsImage,
-            code: "BE52",
-            text: "По легенде, почти одновременно с этим известным романом 1726 года была написана и его эротическая версия. Особое внимание в ней было уделено подробному описанию пионерского тушения дворца, просмотру грудей в подзорной трубе и сравнению пениса героя с Везувием. О каком романе речь?",
-            replacements: ["романом","романе"],
-            color: .systemBlue,
-            connection: "По легенде, почти сразу была написана эротическая версия произведения",
-            answer: "Путешествия Гулливера"
-    )
-var BE43 = Question(
-            ID: 3,
-            type: .textAnsImage,
-            code: "BE53",
-            text: "Художник Али Махдави Парис в 2021 году представил публике объемные формы пенисов, которые может повторить на себе почти любая девушка. Достаточно иметь зеркало, фиксирующие средства и подругу сзади. Из чего Али Махдави Парис сделал пенисы?",
-            replacements: ["чего"],
-            color: .systemBlue,
-            connection: "Али Махдави Парис сделал пенисы из",
-            answer: "волос"
-    )
-var BE44 = Question(
-            ID: 4,
-            type: .textAnsImage,
-            code: "BE54",
-            text: "В 2020 году умер 96-летний мумбайский секс-эксперт Махиндер Ватса, который до последнего вздоха вел колонку в местной газете. Однажды его спросили: «Мне 18, и мои яйца больше, чем у актеров порно, это нормально?» На такое Махиндер ответил, что не стоит смотреть эротику, одновременно держа в руке этот предмет. Какой?",
-            replacements: ["предмет"],
-            color: .systemBlue,
-            connection: "На вопрос про размер яиц Махиндер Ватса ответил, что не стоит смотреть порно, держа в руке",
-            answer: "линейку"
-    )
-var BE45 = Question(
-            ID: 5,
-            type: .textAnsImage,
-            code: "BE55",
-            text: "В сети шутят, что на этом стадионе можно проводить чемпионат по «книжному» соревнованию. Какому?",
-            replacements: ["соревнованию"],
-            color: .systemBlue,
-            connection: "На фото просто арт-инсталляция на австрийском стадионе, но в сети считают, что это поле для спортивного",
-            answer: "поиска закладок"
-    )
-var BE46 = Question(
-            ID: 6,
-            type: .textAnsImage,
-            code: "BE56",
-            text: "В США на таких пистолетах иногда пишут, что их нельзя использовать ректально и перорально. Скорее всего, были случаи, когда людям, после того как они покормят свою «малышку», самим хотелось попробовать. О каких пистолетах речь?",
-            replacements: ["таких","каких"],
-            color: .systemBlue,
-            connection: "Пишут, что нельзя использовать ректально и перорально, на",
-            answer: "заправочных пистолетах"
-    )
-var BE47 = Question(
-            ID: 7,
-            type: .textAnsImage,
-            code: "BE57",
-            text: "Один новостной паблик сообщает, что у детского кафе «Блюдечек» появились филиалы – магазин одежды «Юбочек» и детский обувной «Шлёпачек». А какую букву мы пропустили в названиях этих заведений?",
-            replacements: ["букву"],
-            color: .systemBlue,
-            connection: "В названиях детских заведений «Блюдечек», «Юбочек», «Шлёпачек» есть буква",
-            answer: "у"
-    )
-var BE51 = Question(
-            ID: 1,
-            type: .imageAnsImage,
-            code: "BE61",
-            text: "О чём рассказывает комик?",
-            replacements: [],
-            color: .cyan,
-            connection: "Британский комик Джимми Карр рассказывает про",
-            answer: "минет"
-    )
-var BE52 = Question(
-            ID: 2,
-            type: .imageAnsImage,
-            code: "BE62",
-            text: "Фильм",
-            replacements: [],
-            color: .cyan,
-            connection: "Отрывок из фильма",
-            answer: "Евротур"
-    )
-var BE53 = Question(
-            ID: 3,
-            type: .imageAnsImage,
-            code: "BE63",
-            text: "Какое слово под звуком «ПИ»?",
-            replacements: [],
-            color: .cyan,
-            connection: "Под звуком «ПИ» слово",
-            answer: "заработок"
-    )
-var BE54 = Question(
-            ID: 4,
-            type: .imageAnsImage,
-            code: "BE64",
-            text: "Кто исполняет оригинал?",
-            replacements: [],
-            color: .cyan,
-            connection: "Оригинал исполняет",
-            answer: "Натали"
-    )
-var BE55 = Question(
-            ID: 5,
-            type: .imageAnsImage,
-            code: "BE65",
-            text: "Про кого эта песня 2012 года?",
-            replacements: [],
-            color: .cyan,
-            connection: "Семен Слепаков исполнил песню про",
-            answer: "Андрея Аршавина"
-    )
-var BE56 = Question(
-            ID: 6,
-            type: .imageAnsImage,
-            code: "BE66",
-            text: "Что завела Лидия?",
-            replacements: [],
-            color: .cyan,
-            connection: "Лидия завела",
-            answer: "хламидии"
-    )
-var BE57 = Question(
-            ID: 7,
-            type: .imageAnsImage,
-            code: "BE67",
-            text: "Инструкция по общению с кем?",
-            replacements: [],
-            color: .cyan,
-            connection: "Инструкция по общению",
-            answer: "с полицейскими"
-    )
-var BE61 = Question(
-            ID: 1,
-            type: .textAnsImage,
-            code: "BE71",
-            text: "Кто на фото с поклонником?",
-            replacements: [],
-            color: .systemPurple,
-            connection: "На фото с поклонником скрыто лицо",
-            answer: "Алексея Панина"
-    )
-var BE62 = Question(
-            ID: 2,
-            type: .textAnsImage,
-            code: "BE72",
-            text: "Что происходит на картинке?",
-            replacements: [],
-            color: .systemPurple,
-            connection: "На картинке",
-            answer: "шишка встала"
-    )
-var BE63 = Question(
-            ID: 3,
-            type: .textAnsImage,
-            code: "BE73",
-            text: "Какие буквы скрыты в шуточном приложении для любителей путешествовать?",
-            replacements: [],
-            color: .systemPurple,
-            connection: "В шуточном приложении для любителей путешествовать скрыты буквы",
-            answer: "Трип"
-    )
-var BE64 = Question(
-            ID: 4,
-            type: .textAnsImage,
-            code: "BE74",
-            text: "Названием какого советского фильма нарекли скульптуру интернет-пользователи?",
-            replacements: [],
-            color: .systemPurple,
-            connection: "Интернет-пользователи назвали скульптуру",
-            answer: "Любовь и голуби"
-    )
-var BE65 = Question(
-            ID: 5,
-            type: .textAnsImage,
-            code: "BE75",
-            text: "Какое слово скрыто на шуточной картинке?",
-            replacements: [],
-            color: .systemPurple,
-            connection: "Скрыто слово",
-            answer: "салями"
-    )
-var BE66 = Question(
-            ID: 6,
-            type: .textAnsImage,
-            code: "BE76",
-            text: "Какая фигура скрыта на пародийной картинке?",
-            replacements: [],
-            color: .systemPurple,
-            connection: "На картинке скрыта",
-            answer: "белая королева"
-    )
-var BE67 = Question(
-            ID: 7,
-            type: .textAnsImage,
-            code: "BE77",
-            text: "Реклама какой компании?",
-            replacements: [],
-            color: .systemPurple,
-            connection: "Реклама компании",
-            answer: "Sony"
-    )
-var BE71 = Question(
-            ID: 1,
-            type: .textAnsImage,
-            code: "BE81",
-            text: "В Таиланде путана пообещала туристу незабываемый ceкс: « ... ... – ... ... !»\n\nКакое устойчивое выражение пропущено?",
-            replacements: ["... ..."],
-            color: .systemPurple,
-            connection: "В Таиланде путана пообещала туристу незабываемый ceкс:",
-            answer: "Мужик сказал – мужик сделал"
-    )
-var BE72 = Question(
-            ID: 2,
-            type: .textAnsImage,
-            code: "BE82",
-            text: "Бубука, дрын, коряга, корталыга, обрез, младший брат, Тишка, шершавый\n\nЧто предлагают называть этими словами?",
-            replacements: [],
-            color: .systemGreen,
-            connection: "Бубукой, корягой и младшим братом некоторые называют",
-            answer: "член"
-    )
-var BE73 = Question(
-            ID: 3,
-            type: .textAnsImage,
-            code: "BE83",
-            text: "В каком городе, если верить песне группы «Ленинград», шикарные плюхи размером с большую печать?",
-            replacements: [],
-            color: .systemGreen,
-            connection: "Согласно песне группы «Ленинград», шикарные плюхи размером с большую печать",
-            answer: "в Ростове"
-    )
-var BE74 = Question(
-            ID: 4,
-            type: .textAnsImage,
-            code: "BE84",
-            text: "До чего, согласно переделанной поговорке, язык может довести помимо Киева?",
-            replacements: [],
-            color: .systemGreen,
-            connection: "Согласно переделанной поговорке, язык может довести до Киева, а может до",
-            answer: "оргазма"
-    )
-var BE75 = Question(
-            ID: 5,
-            type: .textAnsImage,
-            code: "BE85",
-            text: "Какие женщины, согласно шутке, единственные точно знают, где находятся их мужья?",
-            replacements: [],
-            color: .systemGreen,
-            connection: "Единственные женщины, которые точно знают, где находятся их мужья, – это",
-            answer: "вдовы"
-    )
-var BE76 = Question(
-            ID: 6,
-            type: .textAnsImage,
-            code: "BE86",
-            text: "Что в Древней Греции называли жаргонной фразой «игра на флейте»?",
-            replacements: [],
-            color: .systemGreen,
-            connection: "Жаргонизм «игра на флейте» означает",
-            answer: "оральный секс"
-    )
-var BE77 = Question(
-            ID: 7,
-            type: .textAnsImage,
-            code: "BE87",
-            text: "«Девочка с эмоциональностью камня выбирает между зоофилией и некрофилией»\n\nКраткое описание какой серии фильмов?",
-            replacements: [],
-            color: .systemGreen,
-            connection: "«Девочка с эмоциональностью камня выбирает между зоофилией и некрофилией» – описание фильма",
-            answer: "Сумерки"
-    )
-
-fileprivate var States0 = State.allStates(round: 0,
-                                          questions: [BE01, BE02, BE03, BE04, BE05, BE06, BE07],
-                                          name: "Блиц с галочками",
-                                          time: BEtimes[0],
-                                          isBlitz: true)
-
-fileprivate var States1 = State.allStates(round: 1,
-                                          questions: [BE11, BE12, BE13, BE14, BE15, BE16, BE17],
-                                          name: "Картинки",
-                                          time: BEtimes[1])
-
-fileprivate var States2 = State.allStates(round: 2,
-                                          questions: [BE21, BE22, BE23, BE24, BE25, BE26, BE27],
-                                          name: "Музыка",
-                                          time: BEtimes[2])
-
-fileprivate var States3 = State.allStates(round: 3,
-                                          questions: [BE31, BE32, BE33, BE34, BE35, BE36, BE37],
-                                          name: "Логика",
-                                          time: BEtimes[3])
-
-fileprivate var States4 = State.allStates(round: 4,
-                                          questions: [BE41, BE42, BE43, BE44, BE45, BE46, BE47],
-                                          name: "Логика",
-                                          time: BEtimes[4])
-
-fileprivate var States5 = State.allStates(round: 5,
-                                          questions: [BE51, BE52, BE53, BE54, BE55, BE56, BE57],
-                                          name: "Музыка",
-                                          time: BEtimes[5])
-
-fileprivate var States6 = State.allStates(round: 6,
-                                          questions: [BE61, BE62, BE63, BE64, BE65, BE66, BE67],
-                                          name: "Картинки",
-                                          time: BEtimes[6])
-
-fileprivate var States7 = State.allStates(round: 7,
-                                          questions: [BE71, BE72, BE73, BE74, BE75, BE76, BE77],
-                                          name: "Блиц",
-                                          time: BEtimes[7],
-                                          isBlitz: true)
+case .Alco: Alcostates
+case .ATW: ATWstates
+case .AW: AWstates
+case .B: Bstates
+case .BA: BAstates
+case .BC: BCstates
+case .BE: BEstates
+case .Best: Beststates
+case .Birt: Birtstates
+case .BTF: BTFstates
+case .BTS: BTSstates
+case .C: Cstates
+case .CH: CHstates
+case .CHNY: CHNYstates
+case .CL: CLstates
+case .CLTwo: CLTwostates
+case .CLThree: CLThreestates
+case .CLFour: CLFourstates
+case .CLFive: CLFivestates
+case .CLSix: CLSixstates
+case .CLSeven: CLSevenstates
+case .CLEight: CLEightstates
+case .CLNine: CLNinestates
+case .CLTen: CLTenstates
+case .CLEleven: CLElevenstates
+case .CLTwelve: CLTwelvestates
+case .CLThirteen: CLThirteenstates
+case .CLFourteen: CLFourteenstates
+case .CLFifteen: CLFifteenstates
+case .CLSixteen: CLSixteenstates
+case .CLSeventeen: CLSeventeenstates
+case .CLEighteen: CLEighteenstates
+case .CLNineteen: CLNineteenstates
+case .CLTwenty: CLTwentystates
+case .CLTwentyOne: CLTwentyOnestates
+case .CLTwentyTwo: CLTwentyTwostates
+case .CLTwentyThree: CLTwentyThreestates
+case .CLTwentyFour: CLTwentyFourstates
+case .CLTwentyFive: CLTwentyFivestates
+case .CLTwentySix: CLTwentySixstates
+case .CLTwentySeven: CLTwentySevenstates
+case .CLTwentyEight: CLTwentyEightstates
+case .CM: CMstates
+case .Cmd: Cmdstates
+case .CMus: CMusstates
+case .CMusTwo: CMusTwostates
+case .CMusThree: CMusThreestates
+case .CMusFour: CMusFourstates
+case .CNY: CNYstates
+case .D: Dstates
+case .DE: DEstates
+case .DIG: DIGstates
+case .Dis: Disstates
+case .DM: DMstates
+case .DNT: DNTstates
+case .DR: DRstates
+case .DS: DSstates
+case .DT: DTstates
+case .DetOne: DetOnestates
+case .DetTwo: DetTwostates
+case .DetThree: DetThreestates
+case .E: Estates
+case .EE: EEstates
+case .EFP: EFPstates
+case .EI: EIstates
+case .Eng: Engstates
+case .EP: EPstates
+case .F: Fstates
+case .FAS: FASstates
+case .FE: FEstates
+case .FEF: FEFstates
+case .FilY: FilYstates
+case .FN: FNstates
+case .Food: Foodstates
+case .FR: FRstates
+case .FRDE: FRDEstates
+case .G: Gstates
+case .GB: GBstates
+case .GG: GGstates
+case .Gik: Gikstates
+case .GM: GMstates
+case .GP: GPstates
+case .H: Hstates
+case .HCP: HCPstates
+case .HH: HHstates
+case .His: Hisstates
+case .HL: HLstates
+case .HP: HPstates
+case .HPO: HPOstates
+case .HT: HTstates
+case .HUM: HUMstates
+case .IT: ITstates
+case .KBH: KBHstates
+case .L: Lstates
+case .LIT: LITstates
+case .LS: LSstates
+case .M: Mstates
+case .Miro: Mirostates
+case .MLOne: MLOnestates
+case .MLTwo: MLTwostates
+case .MLThree: MLThreestates
+case .MLFour: MLFourstates
+case .MLFive: MLFivestates
+case .MLSix: MLSixstates
+case .MLSeven: MLSevenstates
+case .MLEight: MLEightstates
+case .MLNine: MLNinestates
+case .MLTen: MLTenstates
+case .MLEleven: MLElevenstates
+case .MLTwelve: MLTwelvestates
+case .MLThirteen: MLThirteenstates
+case .MLFourteen: MLFourteenstates
+case .MLFifteen: MLFifteenstates
+case .MLSixteen: MLSixteenstates
+case .MLSeventeen: MLSeventeenstates
+case .MLEighteen: MLEighteenstates
+case .MLNineteen: MLNineteenstates
+case .MLTwenty: MLTwentystates
+case .MLTwentyOne: MLTwentyOnestates
+case .MLTwentyTwo: MLTwentyTwostates
+case .MLTwentyThree: MLTwentyThreestates
+case .MPOne: MPOnestates
+case .MPTwo: MPTwostates
+case .MPThree: MPThreestates
+case .MPFour: MPFourstates
+case .MPFive: MPFivestates
+case .MPSix: MPSixstates
+case .MPSeven: MPSevenstates
+case .MPEight: MPEightstates
+case .MPNine: MPNinestates
+case .MPTen: MPTenstates
+case .MPEleven: MPElevenstates
+case .MPTwelve: MPTwelvestates
+case .MPThirteen: MPThirteenstates
+case .MPFourteen: MPFourteenstates
+case .MPFifteen: MPFifteenstates
+case .MPSixteen: MPSixteenstates
+case .MPSeventeen: MPSeventeenstates
+case .MPEighteen: MPEighteenstates
+case .MPNineteen: MPNineteenstates
+case .MPTwenty: MPTwentystates
+case .MPTwentyOne: MPTwentyOnestates
+case .MPTwentyTwo: MPTwentyTwostates
+case .MPTwentyThree: MPTwentyThreestates
+case .MPTwentyFour: MPTwentyFourstates
+case .MS: MSstates
+case .Mult: Multstates
+case .MuS: MuSstates
+case .MW: MWstates
+case .Myth: Mythstates
+case .N: Nstates
+case .NC: NCstates
+case .NR: NRstates
+case .NT: NTstates
+case .NU: NUstates
+case .NY: NYstates
+case .OT: OTstates
+case .P: Pstates
+case .PL: PLstates
+case .POP: POPstates
+case .Q: Qstates
+case .R: Rstates
+case .Rock: Rockstates
+case .ROM: ROMstates
+case .RRock: RRockstates
+case .RU: RUstates
+case .RUD: RUDstates
+case .S: Sstates
+case .SC: SCstates
+case .Scary: Scarystates
+case .SD: SDstates
+case .Ser: Serstates
+case .SiO: SiOstates
+case .SL: SLstates
+case .SO: SOstates
+case .SOV: SOVstates
+case .SP: SPstates
+case .Spt: Sptstates
+case .SR: SRstates
+case .Star: Starstates
+case .Sto: Stostates
+case .T: Tstates
+case .TH: THstates
+case .Top: Topstates
+case .TRAV: TRAVstates
+case .TT: TTstates
+case .TV: TVstates
+case .TucOne: TucOnestates
+case .TucTwo: TucTwostates
+case .TucThree: TucThreestates
+case .TucFour: TucFourstates
+case .TucFive: TucFivestates
+case .TucSix: TucSixstates
+case .TucSeven: TucSevenstates
+case .TucEight: TucEightstates
+case .TucNine: TucNinestates
+case .TucTen: TucTenstates
+case .TucEleven: TucElevenstates
+case .TucTwelve: TucTwelvestates
+case .TucThirteen: TucThirteenstates
+case .TucFourteen: TucFourteenstates
+case .TW: TWstates
+case .U: Ustates
+case .VH: VHstates
+case .W: Wstates
+case .WM: WMstates
+case .X: Xstates
+case .XMAS: XMASstates
+case .XXLEight: XXLEightstates
+case .XXLEighteen: XXLEighteenstates
+case .XXLEleven: XXLElevenstates
+case .XXLFifteen: XXLFifteenstates
+case .XXLFive: XXLFivestates
+case .XXLFour: XXLFourstates
+case .XXLFourteen: XXLFourteenstates
+case .XXLNine: XXLNinestates
+case .XXLNineteen: XXLNineteenstates
+case .XXLOne: XXLOnestates
+case .XXLSeven: XXLSevenstates
+case .XXLSeventeen: XXLSeventeenstates
+case .XXLSix: XXLSixstates
+case .XXLSixteen: XXLSixteenstates
+case .XXLTen: XXLTenstates
+case .XXLThirteen: XXLThirteenstates
+case .XXLThree: XXLThreestates
+case .XXLTwelve: XXLTwelvestates
+case .XXLTwenty: XXLTwentystates
+case .XXLTwentyOne: XXLTwentyOnestates
+case .XXLTwentyTwo: XXLTwentyTwostates
+case .XXLTwo: XXLTwostates
+case .Z: Zstates

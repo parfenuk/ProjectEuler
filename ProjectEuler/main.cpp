@@ -228,6 +228,25 @@ struct StatesResult {
     bool is_blitz;
 };
 
+void printEnums()
+{
+    ifstream in ("states.txt");
+    string S;
+    vector<string> W;
+    while (getline(in,S)) {
+        W.push_back(S);
+    }
+    for (int i=0; i<(int)W.size(); i++) {
+        cout << "case " << W[i] << endl;
+    }
+    for (int i=0; i<(int)W.size(); i++) {
+        cout << "case ." << W[i] << ": " << W[i] << "times" << endl;
+    }
+    for (int i=0; i<(int)W.size(); i++) {
+        cout << "case ." << W[i] << ": " << W[i] << "states" << endl;
+    }
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);

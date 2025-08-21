@@ -1,8 +1,8 @@
 //
-//  Set BE.swift
+//  Set KBH.swift
 //  MzgbEngine
 //
-//  Created by Miraslau Parafeniuk on 12.10.24.
+//  Created by Miraslau Parafeniuk on 23.11.24.
 //  Copyright © 2024 Miraslau Parafeniuk. All rights reserved.
 //
 
@@ -10,818 +10,807 @@ import Foundation
 
 extension Question {
     
-    //  PACKAGE BE
+    //  PACKAGE KBH
     
-    static var BEstates = [States0,States1,States2,States3,States4,States5,States6,States7]
+    static var KBHstates = [States0,States1,States2,States3,States4,States5,States6,States7]
     
-    static var BEtimes = [50,100,30,100,100,30,100,50]
+    static var KBHtimes = [50,100,30,100,100,30,30,50]
     
-    static var BE01: Question = {
+    static var KBH01: Question = {
         Question(ID: 1,
-                 text: "Тентакли, Бара, Футанари, Яой, Эрогуро\n\nВиды чего перечислены?",
+                 text: "Сколько этажей в гостинице «Жемчужина», без учёта подземных?",
                  replacements: [],
-                 color: .systemRed,
-                 connection: "Тентакли, Бара, Футанари, Яой, Эрогуро – это виды японской анимации для взрослых под названием",
-                 answer: "хентай",
-                 imageAnswer: "BE11A")
+                 color: .red,
+                 connection: "В гостинице «Жемчужина»",
+                 answer: "17 этажей",
+                 imageAnswer: "KBH01A")
     }()
-    
-    static var BE02: Question = {
+    static var KBH02: Question = {
         Question(ID: 2,
-                 text: "Под каким именем известна Марина Энн Хэнцис?",
+                 text: "Какой разрыв между командами с такими оценками?",
                  replacements: [],
-                 color: .systemPink,
-                 connection: "Марина Энн Хэнцис более известна под именем",
-                 answer: "Саша Грей",
-                 imageAnswer: "BE12A")
+                 color: .red,
+                 connection: "Между командами с такими оценками разрыв",
+                 answer: "0.2 балла",
+                 imageQuestion: "KBH02Q",
+                 imageAnswer: "KBH02A")
     }()
-    
-    static var BE03: Question = {
+    static var KBH03: Question = {
         Question(ID: 3,
-                 text: "Каким именно был «торнадо» – сексуальная методика, упоминаемая в фильме «Американский пирог»?",
+                 text: "На каком острове проходил Летний кубок КВН 2000?",
                  replacements: [],
-                 color: .systemPink,
-                 connection: "В фильме «Американский пирог» фигурировал",
-                 answer: "языковой торнадо",
-                 imageAnswer: "BE13A")
+                 color: .red,
+                 connection: "Летний кубок КВН 2000 проходил на",
+                 answer: "Кипре",
+                 imageAnswer: "KBH03A")
     }()
-    
-    static var BE04: Question = {
+    static var KBH04: Question = {
         Question(ID: 4,
-                 text: "Шмаль, ганджа, гера, анаша, ляпка\n\nКакое слово лишнее?",
+                 text: "Какое отчество у Валдиса Пельша?",
                  replacements: [],
-                 color: .systemPink,
-                 connection: "Термины шмаль, ганжа, анаша и ляпка относятся к марихуане, а к героину –",
-                 answer: "гера",
-                 imageAnswer: "BE14A")
+                 color: .red,
+                 connection: "Отчество Валдиса Пельша",
+                 answer: "Эйженович",
+                 imageAnswer: "KBH04A")
     }()
-    
-    static var BE05: Question = {
+    static var KBH05: Question = {
         Question(ID: 5,
-                 text: "В какой газете вела колонку «Секс в большом городе» героиня одноименного сериала?",
+                 text: "Кто иллюстрирует букву Ч в азбуке?",
                  replacements: [],
-                 color: .systemPink,
-                 connection: "Героиня «Секса в большом городе» вела колонку в газете",
-                 answer: "New York Star",
-                 imageAnswer: "BE15A")
+                 color: .red,
+                 connection: "Команда КВН «Прима» упомянула в своём номере",
+                 answer: "Николае Чаушеску",
+                 imageQuestion: "KBH05Q",
+                 imageAnswer: "KBH05A")
     }()
-    
-    static var BE06: Question = {
+    static var KBH06: Question = {
         Question(ID: 6,
-                 text: "Логотип какой научной дисциплины?",
+                 text: "За какой российский футбольный клуб болеет Дмитрий Шпеньков?",
                  replacements: [],
-                 color: .systemPink,
-                 connection: "Логотип",
-                 answer: "сексологии",
-                 imageQuestion: "BE16Q",
-                 imageAnswer: "BE16A")
+                 color: .red,
+                 connection: "Дмитрий Шпеньков болеет за",
+                 answer: "ЦСКА",
+                 imageAnswer: "KBH06A")
     }()
-    
-    static var BE07: Question = {
+    static var KBH07: Question = {
         Question(ID: 7,
-                 text: "Каким термином называется влечение к подглядыванию за обнаженными людьми?",
+                 text: "В каком году «Голосящий КиВиН» переехал из Юрмалы в Светлогорск?",
                  replacements: [],
+                 color: .red,
+                 connection: "Из Юрмалы в Светлогорск «Голосящий КиВиН» переехал",
+                 answer: "в 2015 году",
+                 imageAnswer: "KBH07A")
+    }()
+    static var KBH11: Question = {
+        Question(ID: 1,
+                 text: "В официальном Telegram-канале КВН эта команда в первом туре прошлого года получила такую оценку от Алексея Екса: «Дайте Никите «Оскара»! ✊🏻😊⚡️🐱». О какой команде речь?",
+                 replacements: ["команда", "команде"],
                  color: .systemPink,
-                 connection: "Влечение к подглядыванию за обнаженными людьми называется",
-                 answer: "вуайеризм",
-                 imageAnswer: "BE17A")
+                 connection: "Комментарий Алексея Екса «Дайте Никите «Оскара»! ✊🏻😊⚡️🐱» был адресован команде КВН",
+                 answer: "Громокошки",
+                 imageAnswer: "KBH11A")
+    }()
+    static var KBH12: Question = {
+        Question(ID: 2,
+                 text: "Художник Иван Звягинцев нарисовал эту «околоКВНовскую» знаменитость со Святой гранатой Антиохийской из комедии «Монти Пайтон». Автор отметил, что отсылка на британский коллектив неслучайна, так как этот человек часто ставил его в пример современному КВН. Кого нарисовал Звягинцев?",
+                 replacements: ["знаменитость", "человек", "Кого"],
+                 color: .systemPink,
+                 connection: "Художник Иван Звягинцев изобразил со Святой гранатой в руках",
+                 answer: "Дмитрия Кравченко",
+                 imageAnswer: "KBH12A")
+    }()
+    static var KBH13: Question = {
+        Question(ID: 3,
+                 text: "Одна команда в Сочи представила азбуку КВНщика. В ней этот юмористический приём нарисован под буквой «А», хотя начинается он совсем на другую букву. О каком приёме речь?",
+                 replacements: ["прием", "он", "приеме"],
+                 color: .systemPink,
+                 connection: "В азбуке КВНщика на букву «А» начинается",
+                 answer: "обманка",
+                 imageAnswer: "KBH13A")
+    }()
+    static var KBH14: Question = {
+        Question(ID: 4,
+                 text: "«Меня вместе с вами увлёк их последний задор, но пародий на Валерия Леонтьева мы видели тысячи. Это была хорошая пародия, это была смешная пародия, это была веселая пародия, но это была только пародия. Сообщаю вам, что я им поставил за эту пародию высший балл «четыре», чтобы успокоить вас.»\n\nПро какую команду так сказал Гусман?",
+                 replacements: ["команду"],
+                 color: .systemPink,
+                 connection: "«Меня вместе с вами увлёк их последний задор, но пародий на Валерия Леонтьева мы видели тысячи», – так Юлий Гусман сказал про команду КВН",
+                 answer: "Фёдор Двинятин",
+                 imageAnswer: "KBH14A")
+    }()
+    static var KBH15: Question = {
+        Question(ID: 5,
+                 text: "Изначально этого КВНщика пригласили в команду КВН «Запорожье – Кривой Рог – Транзит» для постановки танцевальных номеров. Потом он стал участвовать в номерах, а после чемпионства организовал свою команду, где стал фронтменом. Однако настоящая популярность к нему пришла только в 2019 году. О ком речь?",
+                 replacements: ["КВНщика", " он ", " ком "],
+                 color: .systemPink,
+                 connection: "Начинал как постановщик танцевальных номеров в команде КВН «Запорожье – Кривой Рог – Транзит»",
+                 answer: "Владимир Зеленский",
+                 imageAnswer: "KBH15A")
+    }()
+    static var KBH16: Question = {
+        Question(ID: 6,
+                 text: "Знайте, мы палёные огнями,\nБезумными ветрами, нас свобода несёт.\nДайте дорогу, не спрашивайте для чего,\nИ любите нас такими, как есть.\n\nОтбивку какой команды КВН перевели на русский?",
+                 replacements: ["команды КВН"],
+                 color: .systemPink,
+                 connection: "Знайте, мы паленые огнями, Безумными ветрами, нас свобода несет. Дайте дорогу, не спрашивайте для чего, И любите нас такими, как есть. На русский перевели отбивку команды КВН",
+                 answer: "Сборная Камызякского края по КВНу",
+                 imageAnswer: "KBH16A")
+    }()
+    static var KBH17: Question = {
+        Question(ID: 7,
+                 text: "Нобелевскую премию в области медицины получил учёный, научившийся оживлять людей. ... ... лично поблагодарил его за вклад в науку.\n\nКакая личность пропущена в шутке команды КВН «Полиграф Полиграфыч»?",
+                 replacements: ["... ...", "личность"],
+                 color: .systemPink,
+                 connection: "Человека, который научился оживлять людей, лично поблагодарил",
+                 answer: "Альфред Нобель",
+                 imageAnswer: "KBH17A")
     }()
 
-    static var BE11: Question = {
+    static var KBH21: Question = {
         Question(ID: 1,
-                 text: "Атрибут какого персонажа?",
-                 replacements: [],
+                 text: "В какой лиге игра начиналась с этой песни?\n(+1 балл, если назовете исполнителя)",
+                 replacements: ["(+1 балл, если назовете исполнителя)"],
                  color: .orange,
-                 connection: "Очки принадлежат",
-                 answer: "Раулю Дюку",
-                 imageQuestion: "BE21Q",
-                 imageAnswer: "BE21A")
+                 connection: "Песню поет ведущий лиги",
+                 answer: "Старт, Арбен Арзуманов",
+                 imageAnswer: "KBH21A")
     }()
-    static var BE12: Question = {
+    static var KBH22: Question = {
         Question(ID: 2,
-                 text: "Реклама чего?",
-                 replacements: [],
+                 text: "Какая команда исполняет песню?\n[reverse]",
+                 replacements: ["[reverse]"],
                  color: .orange,
-                 connection: "Реклама",
-                 answer: "клюшек для гольфа",
-                 imageQuestion: "BE22Q",
-                 imageAnswer: "BE22A")
+                 connection: "Песню исполняет команда КВН",
+                 answer: "ДАЛС",
+                 imageAnswer: "KBH22A")
     }()
-    static var BE13: Question = {
+    static var KBH23: Question = {
         Question(ID: 3,
-                 text: "Картина какого художника?",
+                 text: "Какую команду обсуждает Денис Косяков?",
                  replacements: [],
                  color: .orange,
-                 connection: "Картину «Великий мастурбатор» написал",
-                 answer: "Сальвадор Дали",
-                 imageQuestion: "BE23Q",
-                 imageAnswer: "BE23A")
+                 connection: "Денис Косяков обсуждает команду КВН",
+                 answer: "Волжане",
+                 imageAnswer: "KBH23A")
     }()
-    static var BE14: Question = {
+    static var KBH24: Question = {
         Question(ID: 4,
-                 text: "Кадр из какого фильма?",
+                 text: "Отбивка какой команды КВН?",
                  replacements: [],
                  color: .orange,
-                 connection: "Кадр из фильма",
-                 answer: "Груз 200",
-                 imageQuestion: "BE24Q",
-                 imageAnswer: "BE24A")
+                 connection: "Отбивка команды КВН",
+                 answer: "Электрошок",
+                 imageAnswer: "KBH24A")
     }()
-    static var BE15: Question = {
+    static var KBH25: Question = {
         Question(ID: 5,
-                 text: "Какое слово зашифровано в ребусе?",
+                 text: "Какой фильм озвучен КВНщиками?",
                  replacements: [],
                  color: .orange,
-                 connection: "В ребусе зашифровано слово",
-                 answer: "порнография",
-                 imageQuestion: "BE25Q",
-                 imageAnswer: "BE25A")
+                 connection: "Озвучен фрагмент фильма",
+                 answer: "Обыкновенное чудо",
+                 imageAnswer: "KBH25A")
     }()
-
-    static var BE16: Question = {
+    static var KBH26: Question = {
         Question(ID: 6,
-                 text: "Кто на фото?",
-                 replacements: [],
-                 color: .orange,
-                 connection: "На фото",
-                 answer: "Пабло Эскобар",
-                 imageQuestion: "BE26Q",
-                 imageAnswer: "BE26A")
-    }()
-    static var BE17: Question = {
-        Question(ID: 7,
-                 text: "Первый офис какой компании?",
-                 replacements: [],
-                 color: .orange,
-                 connection: "Первый офис компании",
-                 answer: "Playboy",
-                 imageQuestion: "BE27Q",
-                 imageAnswer: "BE27A")
-    }()
-    static var BE21: Question = {
-        Question(ID: 1,
-                 text: "Что обсуждают персонажи?",
-                 replacements: [],
-                 color: .yellow,
-                 connection: "Герои сказки обсуждают",
-                 answer: "хвост",
-                 imageAnswer: "BE31A")
-    }()
-    static var BE22: Question = {
-        Question(ID: 2,
-                 text: "Фильм",
-                 replacements: [],
-                 color: .yellow,
-                 connection: "Фильм",
-                 answer: "Очень страшное кино 2",
-                 imageAnswer: "BE32A")
-    }()
-    static var BE23: Question = {
-        Question(ID: 3,
-                 text: "Исполнитель",
-                 replacements: [],
-                 color: .yellow,
-                 connection: "Исполнитель",
-                 answer: "Joe Cocker",
-                 imageAnswer: "BE33A")
-    }()
-    static var BE24: Question = {
-        Question(ID: 4,
                  text: "Чей голос?",
                  replacements: [],
-                 color: .yellow,
-                 connection: "Голос телеведущей",
-                 answer: "Елены Ханги",
-                 imageAnswer: "BE34A")
+                 color: .orange,
+                 connection: "Голос",
+                 answer: "Михаила Шаца",
+                 imageAnswer: "KBH26A")
     }()
-    static var BE25: Question = {
-        Question(ID: 5,
-                 text: "Группа\n[минус]",
-                 replacements: ["[минус]"],
-                 color: .yellow,
-                 connection: "Группа",
-                 answer: "Ленинград",
-                 imageAnswer: "BE35A")
-    }()
-    static var BE26: Question = {
-        Question(ID: 6,
-                 text: "Исполнитель\n[reverse]",
-                 replacements: ["[reverse]"],
-                 color: .yellow,
-                 connection: "Исполнитель",
-                 answer: "Madonna",
-                 imageAnswer: "BE36A")
-    }()
-    static var BE27: Question = {
+    static var KBH27: Question = {
         Question(ID: 7,
-                 text: "Исполнитель",
+                 text: "Кто исполняет эту песню?",
                  replacements: [],
-                 color: .yellow,
-                 connection: "Исполнитель",
-                 answer: "Наташа Королёва",
-                 imageAnswer: "BE37A")
+                 color: .orange,
+                 connection: "Песню Deep Purple исполняет",
+                 answer: "Александр Пушной",
+                 imageAnswer: "KBH27A")
     }()
 
-    static var BE31: Question = {
+    static var KBH31: Question = {
         Question(ID: 1,
-                 text: "После революции, с приходом новой власти в России, наркотики начали массовое распространение. Раньше вещество, которое в народе называли «марафет», могли позволить себе только представители богемы, теперь его употребляли прямо на улицах. Как называется вещество?",
-                 replacements: ["вещество"],
-                 color: .green,
-                 connection: "Под названием «марафет» в народе закрепился наркотик",
-                 answer: "кокаин",
-                 imageAnswer: "BE41A")
-    }()
-    static var BE32: Question = {
-        Question(ID: 2,
-                 text: "Режиссер порнопародий Уилл Райдер как-то признался, что избегает сцен секса между близкими родственниками. Из-за этого оказалось, что оригинальный сериал гораздо жестче, чем его эротическая версия. О каком сериале речь?",
-                 replacements: ["сериал","сериале"],
-                 color: .green,
-                 connection: "Из-за сексуальной связи брата и сестры оказался жестче порнопародии сериал",
-                 answer: "Игра престолов",
-                 imageAnswer: "BE42A")
-    }()
-    static var BE33: Question = {
-        Question(ID: 3,
-                 text: "В США существует неофициальный праздник под названием «День стейка и минета». Это мероприятие придумали как мужской праздник в противовес этой дате, которая уже стала женским праздником. Предполагается, что женщины поздравляют мужчин, которые подарили им открытки и цветы месяц назад по этому поводу. Какому?",
-                 replacements: ["дате","поводу"],
-                 color: .green,
-                 connection: "День стейка и минета в США отмечается в противовес",
-                 answer: "Дню всех влюбленных",
-                 imageAnswer: "BE43A")
-    }()
-    
-    static var BE34: Question = {
-        Question(ID: 4,
-                 text: "Какое слово скрыто?",
+                 text: "Из аксессуаров какой команды Высшей лиги сделали кошку?",
                  replacements: [],
-                 color: .green,
-                 connection: "Скрыто слово",
-                 answer: "мкднлдс",
-                 imageQuestion: "BE44Q",
-                 imageAnswer: "BE44A")
+                 color: .yellow,
+                 connection: "Это аксессуары команды КВН",
+                 answer: "Кефир",
+                 imageQuestion: "KBH31Q",
+                 imageAnswer: "KBH31A")
     }()
-    static var BE35: Question = {
-        Question(ID: 5,
-                 text: "Акции под хештегами #RedMyLips, #sendeanlat, #NotGuilty, #яНеБоюсьСказать посвящены нарушению одного закона. Какого?",
-                 replacements: ["закона"],
-                 color: .green,
-                 connection: "Акции под хештегами #RedMyLips, #sendeanlat, #NotGuilty, #яНеБоюсьСказать посвящены нарушению закона об",
-                 answer: "изнасиловании",
-                 imageAnswer: "BE45A")
-    }()
-    static var BE36: Question = {
-        Question(ID: 6,
-                 text: "До 2001 года в этом французском курортном городе одновременно проходил не только кинофестиваль, но и вручение премий в области порноидустрии. Одним из перформансов порноцеремонии являлся публичный эксгибиционизм актрис на набережной Круазет, что и вызвало недовольство мэрии города. Какого?",
-                 replacements: ["городе","города"],
-                 color: .green,
-                 connection: "До 2001 года одновременно с кинофестивалем проходило вручение премий порноиндустрии",
-                 answer: "в Каннах",
-                 imageAnswer: "BE46A")
-    }()
-    static var BE37: Question = {
-        Question(ID: 7,
-                 text: "Профессиональная лечебная эластичность часто представляет собой небольшое мягкую трубку с закрытой половиной и открытой другой, используемым в качестве барьера\n\nОпределение чего перевели на арабский, потом на английский и потом снова на русский?",
-                 replacements: ["чего"],
-                 color: .green,
-                 connection: "На арабский, потом на английский и потом снова на русский перевели определение",
-                 answer: "презерватива",
-                 imageAnswer: "BE47A")
-    }()
-    
-    static var BE41: Question = {
-        Question(ID: 1,
-                 text: "В немецкой рекламе этого овоща в мужскую раздевалку входит черепашка-ниндзя в одном полотенце. Герой начинает раздеваться, и нам демонстрируют это крупным планом. Какой овощ так рекламируется?",
-                 replacements: ["овоща"," это ","овощ"],
-                 color: .systemBlue,
-                 connection: "Черепашка-ниндзя рекламирует",
-                 answer: "огурцы",
-                 imageAnswer: "BE51A")
-    }()
-    static var BE42: Question = {
+    static var KBH32: Question = {
         Question(ID: 2,
-                 text: "По легенде, почти одновременно с этим известным романом 1726 года была написана и его эротическая версия. Особое внимание в ней было уделено подробному описанию пионерского тушения дворца, просмотру грудей в подзорной трубе и сравнению пениса героя с Везувием. О каком романе речь?",
-                 replacements: ["романом","романе"],
-                 color: .systemBlue,
-                 connection: "По легенде, почти сразу была написана эротическая версия произведения",
-                 answer: "Путешествия Гулливера",
-                 imageAnswer: "BE52A")
+                 text: "Кто на фото?",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "На фото молодой",
+                 answer: "Михаил Стогниенко",
+                 imageQuestion: "KBH32Q",
+                 imageAnswer: "KBH32A")
     }()
-    static var BE43: Question = {
+    static var KBH33: Question = {
         Question(ID: 3,
-                 text: "Художник Али Махдави Парис в 2021 году представил публике объемные формы пенисов, которые может повторить на себе почти любая девушка. Достаточно иметь зеркало, фиксирующие средства и подругу сзади. Из чего Али Махдави Парис сделал пенисы?",
-                 replacements: ["чего"],
-                 color: .systemBlue,
-                 connection: "Али Махдави Парис сделал пенисы из",
-                 answer: "волос",
-                 imageAnswer: "BE53A")
+                 text: "Фанатки какой команды КВН?",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Это фанатки команды КВН",
+                 answer: "Dasistfak't",
+                 imageQuestion: "KBH33Q",
+                 imageAnswer: "KBH33A")
     }()
-    static var BE44: Question = {
+    static var KBH34: Question = {
         Question(ID: 4,
-                 text: "В 2020 году умер 96-летний мумбайский секс-эксперт Махиндер Ватса, который до последнего вздоха вел колонку в местной газете. Однажды его спросили: «Мне 18, и мои яйца больше, чем у актеров порно, это нормально?» На такое Махиндер ответил, что не стоит смотреть эротику, одновременно держа в руке этот предмет. Какой?",
-                 replacements: ["предмет"],
-                 color: .systemBlue,
-                 connection: "На вопрос про размер яиц Махиндер Ватса ответил, что не стоит смотреть порно, держа в руке",
-                 answer: "линейку",
-                 imageAnswer: "BE54A")
+                 text: "Какой бывший сотрудник АМИК зашифрован?",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "На картинке зашифрован",
+                 answer: "Валерий Хотног",
+                 imageQuestion: "KBH34Q",
+                 imageAnswer: "KBH34A")
     }()
-    static var BE45: Question = {
+    static var KBH35: Question = {
         Question(ID: 5,
-                 text: "В сети шутят, что на этом стадионе можно проводить чемпионат по «книжному» соревнованию. Какому?",
-                 replacements: ["соревнованию"],
-                 color: .systemBlue,
-                 connection: "На фото просто арт-инсталляция на австрийском стадионе, но в сети считают, что это поле для спортивного",
-                 answer: "поиска закладок",
-                 imageQuestion: "BE55Q",
-                 imageAnswer: "BE55A")
+                 text: "Кто настоящий Эндрю?",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Настоящий Эндрю под цифрой",
+                 answer: "1",
+                 imageQuestion: "KBH35Q",
+                 imageAnswer: "KBH35A")
     }()
-    static var BE46: Question = {
+    static var KBH36: Question = {
         Question(ID: 6,
-                 text: "В США на таких пистолетах иногда пишут, что их нельзя использовать ректально и перорально. Скорее всего, были случаи, когда людям, после того как они покормят свою «малышку», самим хотелось попробовать. О каких пистолетах речь?",
-                 replacements: ["таких","каких"],
-                 color: .systemBlue,
-                 connection: "Пишут, что нельзя использовать ректально и перорально, на",
-                 answer: "заправочных пистолетах",
-                 imageAnswer: "BE56A")
+                 text: "Какие буквы символизируют эти фигуры в логотипе АМИК?",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Эти фигуры в логотипе АМИК символизируют буквы",
+                 answer: "Д и О",
+                 imageQuestion: "KBH36Q",
+                 imageAnswer: "KBH36A")
     }()
-    static var BE47: Question = {
+    static var KBH37: Question = {
         Question(ID: 7,
-                 text: "Один новостной паблик сообщает, что у детского кафе «Блюдечек» появились филиалы – магазин одежды «Юбочек» и детский обувной «Шлёпачек». А какую букву мы пропустили в названиях этих заведений?",
-                 replacements: ["букву"],
-                 color: .systemBlue,
-                 connection: "В названиях детских заведений «Блюдечек», «Юбочек», «Шлёпачек» есть буква",
-                 answer: "у",
-                 imageAnswer: "BE57A")
+                 text: "Контур какого субъекта Российской Федерации?",
+                 replacements: [],
+                 color: .yellow,
+                 connection: "Из фактов составлен контур",
+                 answer: "Забайкальского края",
+                 imageQuestion: "KBH37Q",
+                 imageAnswer: "KBH37A")
     }()
 
-    static var BE51: Question = {
+    static var KBH41: Question = {
         Question(ID: 1,
-                 text: "О чём рассказывает комик?",
-                 replacements: [],
-                 color: .cyan,
-                 connection: "Британский комик Джимми Карр рассказывает про",
-                 answer: "минет",
-                 imageAnswer: "BE61A")
+                 text: "Дон Каркос во время Второй мировой войны был ранен шрапнелью и из-за этого ослеп на один глаз. Спустя 64 года во время работы в конюшне мужчину ногой ударила лошадь, он отлетел в стену и... Что было дальше?",
+                 replacements: ["Что было дальше?"],
+                 color: .green,
+                 connection: "После того, как Дона Каркоса ногой ударила лошадь,",
+                 answer: "его зрение восстановилось",
+                 imageAnswer: "KBH41A")
     }()
-    static var BE52: Question = {
+    static var KBH42: Question = {
         Question(ID: 2,
-                 text: "Фильм",
-                 replacements: [],
-                 color: .cyan,
-                 connection: "Отрывок из фильма",
-                 answer: "Евротур",
-                 imageAnswer: "BE62A")
+                 text: "Короля Египта Фарука I постоянно мучали кошмары, в которых его преследуют голодные львы. Чтобы избавиться от страха, придворные посоветовали монарху встретиться с врагом лицом к лицу. Король принял данный совет и... Что было дальше?",
+                 replacements: ["Что было дальше?"],
+                 color: .green,
+                 connection: "Чтобы избавиться от кошмаров, король Египта Фарук I",
+                 answer: "пошел в зоопарк и застрелил льва",
+                 imageAnswer: "KBH42A")
     }()
-    static var BE53: Question = {
+    static var KBH43: Question = {
         Question(ID: 3,
-                 text: "Какое слово под звуком «ПИ»?",
-                 replacements: [],
-                 color: .cyan,
-                 connection: "Под звуком «ПИ» слово",
-                 answer: "заработок",
-                 imageAnswer: "BE63A")
+                 text: "Древнегреческий философ Филоксен был отправлен в ссылку на каменоломню за критику стихов тирана Дионисия I. Спустя время Дионисий пригласил своего недоброжелателя и прочитал ему свои новые стихи. Философ выслушал его и ... Что было дальше?",
+                 replacements: ["Что было дальше?"],
+                 color: .green,
+                 connection: "После того, как тиран Дионисий I прочитал свои новые стихи Филоксену, тот",
+                 answer: "сказал, что возвращается обратно на каменоломню",
+                 imageAnswer: "KBH43A")
     }()
-    static var BE54: Question = {
+    static var KBH44: Question = {
         Question(ID: 4,
-                 text: "Кто исполняет оригинал?",
-                 replacements: [],
-                 color: .cyan,
-                 connection: "Оригинал исполняет",
-                 answer: "Натали",
-                 imageAnswer: "BE64A")
+                 text: "Один помещик хотел устроить ребенка учиться в университет. Для этого нужно было отправить прошение императору, с чем у малограмотного мужчины возникли проблемы. Он слышал, что высоких особ именуют «августейшими», но почему именно так, помещику было неизвестно. Поэтому он решил сымпровизировать и ... Что было дальше?",
+                 replacements: ["Что было дальше?"],
+                 color: .green,
+                 connection: "Помещик не знал, как правильно обращаться к императору, поэтому",
+                 answer: "написал «Сентябрейший государь...»",
+                 imageAnswer: "KBH44A")
     }()
-    static var BE55: Question = {
+    static var KBH45: Question = {
         Question(ID: 5,
-                 text: "Про кого эта песня 2012 года?",
-                 replacements: [],
-                 color: .cyan,
-                 connection: "Семен Слепаков исполнил песню про",
-                 answer: "Андрея Аршавина",
-                 imageAnswer: "BE65A")
+                 text: "На экзамене по астрономии Максу Борну задали несложный вопрос. Учёный знал, что правильный ответ звучит как «замерить время и направление движения, длину светящейся части и затем вычислить приблизительную траекторию». Но физик решил пошутить и ... Что было дальше?",
+                 replacements: ["Что было дальше?"],
+                 color: .green,
+                 connection: "На вопрос экзаменатора о том, что нужно делать, если вы увидели падающую звезду, Макс Борн ответил:",
+                 answer: "Нужно загадать желание",
+                 imageAnswer: "KBH45A")
     }()
-    static var BE56: Question = {
+    static var KBH46: Question = {
         Question(ID: 6,
-                 text: "Что завела Лидия?",
-                 replacements: [],
-                 color: .cyan,
-                 connection: "Лидия завела",
-                 answer: "хламидии",
-                 imageAnswer: "BE66A")
+                 text: "На один из заводов в Ташкенте пришло письмо от заказчика из Риги на латышском языке, которое работники с большим трудом смогли перевести. Сотрудники узбекского предприятия хотели, чтобы переписка велась на русском, поэтому они... Что было дальше?",
+                 replacements: ["Что было дальше?"],
+                 color: .green,
+                 connection: "Чтобы вести переписку на русском языке, сотрудники завода в Ташкенте",
+                 answer: "отправили ответ на узбекском языке",
+                 imageAnswer: "KBH46A")
     }()
-    static var BE57: Question = {
+    static var KBH47: Question = {
         Question(ID: 7,
-                 text: "Инструкция по общению с кем?",
-                 replacements: [],
-                 color: .cyan,
-                 connection: "Инструкция по общению",
-                 answer: "с полицейскими",
-                 imageAnswer: "BE67A")
+                 text: "Актёры перед спектаклем часто ходят по гримёрке абсолютно голые, чтобы отвлечься от своего мирского образа. Однажды Фаина Раневская, практикуя этот метод, стояла перед зеркалом без одежды с сигаретой в руках. В этот момент в комнату забежал гримёр, который тут же замер. Актриса некоторое время наблюдала за ним и ... Что было дальше?",
+                 replacements: ["Что было дальше?"],
+                 color: .green,
+                 connection: "Фаина Раневская, стоя голой перед зеркалом,",
+                 answer: "спросила у гримёра: «Ничего, что я курю?»",
+                 imageAnswer: "KBH47A")
     }()
 
-    static var BE61: Question = {
+    static var KBH51: Question = {
         Question(ID: 1,
-                 text: "Кто на фото с поклонником?",
+                 text: "Каким словом заканчивается припев?\n\n1. Кайфулька\n2. Танцулька\n3. Фигулька\n4. Игрулька",
                  replacements: [],
-                 color: .systemPurple,
-                 connection: "На фото с поклонником скрыто лицо",
-                 answer: "Алексея Панина",
-                 imageQuestion: "BE71Q",
-                 imageAnswer: "BE71A")
+                 color: .systemBlue,
+                 connection: "Припев заканчивается словом",
+                 answer: "2. Танцулька",
+                 imageAnswer: "KBH51A")
     }()
-    static var BE62: Question = {
+    static var KBH52: Question = {
         Question(ID: 2,
-                 text: "Что происходит на картинке?",
+                 text: "Какое слово запикано?",
                  replacements: [],
-                 color: .systemPurple,
-                 connection: "На картинке",
-                 answer: "шишка встала",
-                 imageQuestion: "BE72Q",
-                 imageAnswer: "BE72A")
-    }()
-    
-    static var BE63: Question = {
-        Question(ID: 3,
-                 text: "Какие буквы скрыты в шуточном приложении для любителей путешествовать?",
-                 replacements: [],
-                 color: .systemPurple,
-                 connection: "В шуточном приложении для любителей путешествовать скрыты буквы",
-                 answer: "Трип",
-                 imageQuestion: "BE73Q",
-                 imageAnswer: "BE73A")
-    }()
-    static var BE64: Question = {
-        Question(ID: 4,
-                 text: "Названием какого советского фильма нарекли скульптуру интернет-пользователи?",
-                 replacements: [],
-                 color: .systemPurple,
-                 connection: "Интернет-пользователи назвали скульптуру",
-                 answer: "Любовь и голуби",
-                 imageQuestion: "BE74Q",
-                 imageAnswer: "BE74A")
-    }()
-    static var BE65: Question = {
-        Question(ID: 5,
-                 text: "Какое слово скрыто на шуточной картинке?",
-                 replacements: [],
-                 color: .systemPurple,
-                 connection: "Скрыто слово",
-                 answer: "салями",
-                 imageQuestion: "BE75Q",
-                 imageAnswer: "BE75A")
-    }()
-    static var BE66: Question = {
-        Question(ID: 6,
-                 text: "Какая фигура скрыта на пародийной картинке?",
-                 replacements: [],
-                 color: .systemPurple,
-                 connection: "На картинке скрыта",
-                 answer: "белая королева",
-                 imageQuestion: "BE76Q",
-                 imageAnswer: "BE76A")
-    }()
-    static var BE67: Question = {
-        Question(ID: 7,
-                 text: "Реклама какой компании?",
-                 replacements: [],
-                 color: .systemPurple,
-                 connection: "Реклама компании",
-                 answer: "Sony",
-                 imageQuestion: "BE77Q",
-                 imageAnswer: "BE77A")
+                 color: .systemBlue,
+                 connection: "Запикано слово",
+                 answer: "утка",
+                 imageAnswer: "KBH52A")
     }()
 
-    static var BE71: Question = {
-        Question(ID: 1,
-                 text: "В Таиланде путана пообещала туристу незабываемый ceкс: « ... ... – ... ... !»\n\nКакое устойчивое выражение пропущено?",
-                 replacements: ["... ..."],
-                 color: .systemPurple,
-                 connection: "В Таиланде путана пообещала туристу незабываемый ceкс:",
-                 answer: "Мужик сказал – мужик сделал",
-                 imageAnswer: "BE81A")
-    }()
-    static var BE72: Question = {
-        Question(ID: 2,
-                 text: "Бубука, дрын, коряга, корталыга, обрез, младший брат, Тишка, шершавый\n\nЧто предлагают называть этими словами?",
-                 replacements: [],
-                 color: .systemGreen,
-                 connection: "Бубукой, корягой и младшим братом некоторые называют",
-                 answer: "член",
-                 imageAnswer: "BE82A")
-    }()
-    static var BE73: Question = {
+    static var KBH53: Question = {
         Question(ID: 3,
-                 text: "В каком городе, если верить песне группы «Ленинград», шикарные плюхи размером с большую печать?",
+                 text: "Трейлер какого сериала?",
                  replacements: [],
-                 color: .systemGreen,
-                 connection: "Согласно песне группы «Ленинград», шикарные плюхи размером с большую печать",
-                 answer: "в Ростове",
-                 imageAnswer: "BE83A")
+                 color: .systemBlue,
+                 connection: "Трейлер странного сериала",
+                 answer: "Очень странные дела",
+                 imageAnswer: "KBH53A")
     }()
-    static var BE74: Question = {
+    static var KBH54: Question = {
         Question(ID: 4,
-                 text: "До чего, согласно переделанной поговорке, язык может довести помимо Киева?",
+                 text: "Кто издаёт эти звуки?\n\n1. Хомяк\n2. Лиса\n3. Коала\n4. Попугай",
                  replacements: [],
-                 color: .systemGreen,
-                 connection: "Согласно переделанной поговорке, язык может довести до Киева, а может до",
-                 answer: "оргазма",
-                 imageAnswer: "BE84A")
+                 color: .systemBlue,
+                 connection: "Это звуки",
+                 answer: "4. Попугая",
+                 imageAnswer: "KBH54A")
     }()
-    static var BE75: Question = {
+    static var KBH55: Question = {
         Question(ID: 5,
-                 text: "Какие женщины, согласно шутке, единственные точно знают, где находятся их мужья?",
+                 text: "О ком песня?",
                  replacements: [],
-                 color: .systemGreen,
-                 connection: "Единственные женщины, которые точно знают, где находятся их мужья, – это",
-                 answer: "вдовы",
-                 imageAnswer: "BE85A")
+                 color: .systemBlue,
+                 connection: "Песня посвящена",
+                 answer: "Олегу Газманову",
+                 imageAnswer: "KBH55A")
     }()
-    static var BE76: Question = {
+    static var KBH56: Question = {
         Question(ID: 6,
-                 text: "Что в Древней Греции называли жаргонной фразой «игра на флейте»?",
+                 text: "О чём турецкая песня?",
                  replacements: [],
-                 color: .systemGreen,
-                 connection: "Жаргонизм «игра на флейте» означает",
-                 answer: "оральный секс",
-                 imageAnswer: "BE86A")
+                 color: .systemBlue,
+                 connection: "В песне на турецком языке поется",
+                 answer: "о разбитом сердце",
+                 imageAnswer: "KBH56A")
     }()
-    static var BE77: Question = {
+
+    static var KBH57: Question = {
         Question(ID: 7,
-                 text: "«Девочка с эмоциональностью камня выбирает между зоофилией и некрофилией»\n\nКраткое описание какой серии фильмов?",
+                 text: "Обзоры на что?",
                  replacements: [],
-                 color: .systemGreen,
-                 connection: "«Девочка с эмоциональностью камня выбирает между зоофилией и некрофилией» – описание фильма",
-                 answer: "Сумерки",
-                 imageAnswer: "BE87A")
+                 color: .systemBlue,
+                 connection: "Начинающие блогеры обозревают",
+                 answer: "пыль",
+                 imageAnswer: "KBH57A")
+    }()
+
+    static var KBH61: Question = {
+        Question(ID: 1,
+                 text: "Что показывает Ольга Бузова в игре «Крокодил»?",
+                 replacements: [],
+                 color: .cyan,
+                 connection: "Ольга Бузова показывает",
+                 answer: "мотоцикл",
+                 imageAnswer: "KBH61A")
+    }()
+
+    static var KBH62: Question = {
+        Question(ID: 2,
+                 text: "Чему учит видео?",
+                 replacements: [],
+                 color: .cyan,
+                 connection: "Такие рисунки иллюстрируют правила употребления",
+                 answer: "глаголов в русском языке",
+                 imageAnswer: "KBH62A")
+    }()
+
+    static var KBH63: Question = {
+        Question(ID: 3,
+                 text: "Что происходит?",
+                 replacements: [],
+                 color: .cyan,
+                 connection: "На видео",
+                 answer: "шейпинг лица",
+                 imageAnswer: "KBH63A")
+    }()
+
+    static var KBH64: Question = {
+        Question(ID: 4,
+                 text: "Что рекламируется?",
+                 replacements: [],
+                 color: .cyan,
+                 connection: "На видео израильская реклама",
+                 answer: "ракет",
+                 imageAnswer: "KBH64A")
+    }()
+
+    static var KBH65: Question = {
+        Question(ID: 5,
+                 text: "Чему учит женщина в этом видео?",
+                 replacements: [],
+                 color: .cyan,
+                 connection: "В ролике женщина учит, как правильно делать",
+                 answer: "массаж опоссуму",
+                 imageAnswer: "KBH65A")
+    }()
+    static var KBH66: Question = {
+        Question(ID: 6,
+                 text: "Чему посвящён фестиваль?",
+                 replacements: [],
+                 color: .cyan,
+                 connection: "На видео кадры с международного фестиваля",
+                 answer: "крапивы",
+                 imageAnswer: "KBH66A")
+    }()
+    static var KBH67: Question = {
+        Question(ID: 7,
+                 text: "Что закупили?",
+                 replacements: [],
+                 color: .cyan,
+                 connection: "Так была произведена контрольная закупка",
+                 answer: "туалетной бумаги",
+                 imageAnswer: "KBH67A")
+    }()
+
+    static var KBH71: Question = {
+        Question(ID: 1,
+                 text: "Мужчина устроился на завод протезов и целый год работал...",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Мужчина устроился на завод протезов и целый год работал",
+                 answer: "не покладая рук",
+                 imageAnswer: "KBH71A")
+    }()
+    static var KBH72: Question = {
+        Question(ID: 2,
+                 text: "Ковбои всегда сдают экзамены, потому что у них есть...",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Ковбои всегда сдают экзамены, потому что у них есть",
+                 answer: "шпоры",
+                 imageAnswer: "KBH72A")
+    }()
+    static var KBH73: Question = {
+        Question(ID: 3,
+                 text: "Когда у тебя есть старший брат, это ужасно, потому что ты всегда знаешь, как ты будешь...",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Когда у тебя есть старший брат, это ужасно, потому что ты всегда знаешь, как ты будешь",
+                 answer: "одет через полгода",
+                 imageAnswer: "KBH73A")
+    }()
+    static var KBH74: Question = {
+        Question(ID: 4,
+                 text: "Поручик Ржевский напился и приставал к женщинам. И его уже не интересовала ни их внешность, ни возраст, ни...",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Поручик Ржевский напился и приставал к женщинам. И его уже не интересовала ни их внешность, ни возраст, ни их",
+                 answer: "пол",
+                 imageAnswer: "KBH74A")
+    }()
+    static var KBH75: Question = {
+        Question(ID: 5,
+                 text: "Россия – самая большая страна в мире, а машину...",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Россия – самая большая страна в мире, а машину",
+                 answer: "поставить некуда",
+                 imageAnswer: "KBH75A")
+    }()
+    static var KBH76: Question = {
+        Question(ID: 6,
+                 text: "Бабуля была шокирована и оказалась в тупике, когда внук приехал сразу...",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Бабуля была шокирована и оказалась в тупике, когда внук приехал сразу",
+                 answer: "пухленький",
+                 imageAnswer: "KBH76A")
+    }()
+    static var KBH77: Question = {
+        Question(ID: 7,
+                 text: "Земли – крестьянам, заводы – рабочим, пиво – ...",
+                 replacements: [],
+                 color: .systemPurple,
+                 connection: "Земли – крестьянам, заводы – рабочим, пиво –",
+                 answer: "мне",
+                 imageAnswer: "KBH77A")
     }()
 }
 
 fileprivate var States0: [State] = [
-    State(Q: .empty, T: .justRound(0, "Блиц с галочками"), M: "Offspring", N: .manual, A: .swipe),
-    State(Q: .BE01, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE02, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE03, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE04, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE05, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE06, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE07, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .empty, T: .justRound(0, "Сторона A: КВН\nБлиц с галочками"), M: "Offspring", N: .manual, A: .swipe),
+    State(Q: .KBH01, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH02, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH03, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH04, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH05, T: .textWithImage, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH06, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH07, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
     State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "50sec", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(0, "Ответы"), M: "Offspring", N: .manual, A: .swipe),
-    State(Q: .BE01, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
-    State(Q: .BE01, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
-    State(Q: .BE02, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
-    State(Q: .BE02, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
-    State(Q: .BE03, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
-    State(Q: .BE03, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
-    State(Q: .BE04, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
-    State(Q: .BE04, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
-    State(Q: .BE05, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
-    State(Q: .BE05, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
-    State(Q: .BE06, T: .connectionWithImage, M: "Offspring", N: .manual, A: .blur),
-    State(Q: .BE06, T: .horizontalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
-    State(Q: .BE07, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
-    State(Q: .BE07, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
+    State(Q: .KBH01, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
+    State(Q: .KBH01, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
+    State(Q: .KBH02, T: .connectionWithImage, M: "Offspring", N: .manual, A: .blur),
+    State(Q: .KBH02, T: .horizontalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
+    State(Q: .KBH03, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
+    State(Q: .KBH03, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
+    State(Q: .KBH04, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
+    State(Q: .KBH04, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
+    State(Q: .KBH05, T: .connectionWithImage, M: "Offspring", N: .manual, A: .blur),
+    State(Q: .KBH05, T: .horizontalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
+    State(Q: .KBH06, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
+    State(Q: .KBH06, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
+    State(Q: .KBH07, T: .verticalConnection(answerShown: false), M: "Offspring", N: .manual, A: .blur),
+    State(Q: .KBH07, T: .verticalConnection(answerShown: true), M: "Offspring", N: .manual, A: .swipe),
     State(Q: .empty, T: .justRound(0, "Окончен!"), M: "Offspring", N: .manual, A: .swipe)
 ]
 
 fileprivate var States1: [State] = [
-    State(Q: .empty, T: .justRound(1, "Картинки"), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE11, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE12, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE13, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE14, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE15, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE16, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE17, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(1, "Повторы"), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE11, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE12, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE13, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE14, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE15, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE16, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE17, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(1, "Логика"), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH11, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH12, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH13, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH14, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH15, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH16, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH17, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(1, "Повторы"), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH11, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH12, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH13, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH14, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH15, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH16, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH17, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
     State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(1, "Ответы"), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE11, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .BE11, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE12, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .BE12, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE13, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .BE13, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE14, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .BE14, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE15, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .BE15, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE16, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .BE16, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .BE17, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
-    State(Q: .BE17, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(1, "Окончен!"), M: "Offspring2", N: .manual, A: .swipe)
+    State(Q: .empty, T: .justRound(1, "Ответы"), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH11, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
+    State(Q: .KBH11, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH12, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
+    State(Q: .KBH12, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH13, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
+    State(Q: .KBH13, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH14, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
+    State(Q: .KBH14, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH15, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
+    State(Q: .KBH15, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .KBH16, T: .verticalConnection(answerShown: false), M: "KBH16A", N: .manual, A: .blur),
+    State(Q: .KBH16, T: .verticalConnection(answerShown: true), M: "KBH16A", N: .manual, A: .swipe),
+    State(Q: .KBH17, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
+    State(Q: .KBH17, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(1, "Окончен!"), M: "Offspring3", N: .manual, A: .swipe)
 ]
 
 fileprivate var States2: [State] = [
     State(Q: .empty, T: .justRound(2, "Музыка"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE21, T: .staticText, M: "BE31Q", N: .byMedia, A: .swipe),
-    State(Q: .BE22, T: .staticText, M: "BE32Q", N: .byMedia, A: .swipe),
-    State(Q: .BE23, T: .staticText, M: "BE33Q", N: .byMedia, A: .swipe),
-    State(Q: .BE24, T: .staticText, M: "BE34Q", N: .byMedia, A: .swipe),
-    State(Q: .BE25, T: .staticText, M: "BE35Q", N: .byMedia, A: .swipe),
-    State(Q: .BE26, T: .staticText, M: "BE36Q", N: .byMedia, A: .swipe),
-    State(Q: .BE27, T: .staticText, M: "BE37Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH21, T: .staticText, M: "KBH21Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH22, T: .staticText, M: "KBH22Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH23, T: .staticText, M: "KBH23Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH24, T: .staticText, M: "KBH24Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH25, T: .staticText, M: "KBH25Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH26, T: .staticText, M: "KBH26Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH27, T: .staticText, M: "KBH27Q", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(2, "Повторы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE21, T: .staticText, M: "BE31R", N: .byMedia, A: .swipe),
-    State(Q: .BE22, T: .staticText, M: "BE32R", N: .byMedia, A: .swipe),
-    State(Q: .BE23, T: .staticText, M: "BE33R", N: .byMedia, A: .swipe),
-    State(Q: .BE24, T: .staticText, M: "BE34R", N: .byMedia, A: .swipe),
-    State(Q: .BE25, T: .staticText, M: "BE35R", N: .byMedia, A: .swipe),
-    State(Q: .BE26, T: .staticText, M: "BE36R", N: .byMedia, A: .swipe),
-    State(Q: .BE27, T: .staticText, M: "BE37R", N: .byMedia, A: .swipe),
+    State(Q: .KBH21, T: .staticText, M: "KBH21R", N: .byMedia, A: .swipe),
+    State(Q: .KBH22, T: .staticText, M: "KBH22R", N: .byMedia, A: .swipe),
+    State(Q: .KBH23, T: .staticText, M: "KBH23R", N: .byMedia, A: .swipe),
+    State(Q: .KBH24, T: .staticText, M: "KBH24R", N: .byMedia, A: .swipe),
+    State(Q: .KBH25, T: .staticText, M: "KBH25R", N: .byMedia, A: .swipe),
+    State(Q: .KBH26, T: .staticText, M: "KBH26R", N: .byMedia, A: .swipe),
+    State(Q: .KBH27, T: .staticText, M: "KBH27R", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "30sec", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(2, "Ответы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE21, T: .verticalConnection(answerShown: false), M: "BE31A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE21, T: .verticalConnection(answerShown: true), M: "BE31A", N: .byMedia, A: .swipe),
-    State(Q: .BE22, T: .verticalConnection(answerShown: false), M: "BE32A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE22, T: .verticalConnection(answerShown: true), M: "BE32A", N: .byMedia, A: .swipe),
-    State(Q: .BE23, T: .verticalConnection(answerShown: false), M: "BE33A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE23, T: .verticalConnection(answerShown: true), M: "BE33A", N: .byMedia, A: .swipe),
-    State(Q: .BE24, T: .verticalConnection(answerShown: false), M: "BE34A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE24, T: .verticalConnection(answerShown: true), M: "BE34A", N: .byMedia, A: .swipe),
-    State(Q: .BE25, T: .verticalConnection(answerShown: false), M: "BE35A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE25, T: .verticalConnection(answerShown: true), M: "BE35A", N: .byMedia, A: .swipe),
-    State(Q: .BE26, T: .verticalConnection(answerShown: false), M: "BE36A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE26, T: .verticalConnection(answerShown: true), M: "BE36A", N: .byMedia, A: .swipe),
-    State(Q: .BE27, T: .verticalConnection(answerShown: false), M: "BE37A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE27, T: .verticalConnection(answerShown: true), M: "BE37A", N: .byMedia, A: .swipe),
+    State(Q: .KBH21, T: .verticalConnection(answerShown: false), M: "KBH21A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH21, T: .verticalConnection(answerShown: true), M: "KBH21A", N: .byMedia, A: .swipe),
+    State(Q: .KBH22, T: .verticalConnection(answerShown: false), M: "KBH22A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH22, T: .verticalConnection(answerShown: true), M: "KBH22A", N: .byMedia, A: .swipe),
+    State(Q: .KBH23, T: .verticalConnection(answerShown: false), M: "KBH23A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH23, T: .verticalConnection(answerShown: true), M: "KBH23A", N: .byMedia, A: .swipe),
+    State(Q: .KBH24, T: .verticalConnection(answerShown: false), M: "KBH24A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH24, T: .verticalConnection(answerShown: true), M: "KBH24A", N: .byMedia, A: .swipe),
+    State(Q: .KBH25, T: .verticalConnection(answerShown: false), M: "KBH25A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH25, T: .verticalConnection(answerShown: true), M: "KBH25A", N: .byMedia, A: .swipe),
+    State(Q: .KBH26, T: .verticalConnection(answerShown: false), M: "KBH26A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH26, T: .verticalConnection(answerShown: true), M: "KBH26A", N: .byMedia, A: .swipe),
+    State(Q: .KBH27, T: .verticalConnection(answerShown: false), M: "KBH27A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH27, T: .verticalConnection(answerShown: true), M: "KBH27A", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(2, "Окончен!"), M: "Offspring3", N: .manual, A: .swipe)
 ]
 
 fileprivate var States3: [State] = [
-    State(Q: .empty, T: .justRound(3, "Логика"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE31, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE32, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE33, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE34, T: .textWithImage, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE35, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE36, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE37, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(3, "Повторы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE31, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE32, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE33, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE34, T: .textWithImage, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE35, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE36, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE37, T: .staticText, M: "Offspring3", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(3, "Картинки"), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH31, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH32, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH33, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH34, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH35, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH36, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH37, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(3, "Повторы"), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH31, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH32, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH33, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH34, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH35, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH36, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH37, T: .textWithImage, M: "Offspring2", N: .manual, A: .swipe),
     State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(3, "Ответы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE31, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .BE31, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE32, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .BE32, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE33, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .BE33, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE34, T: .connectionWithImage, M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .BE34, T: .horizontalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE35, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .BE35, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE36, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .BE36, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE37, T: .verticalConnection(answerShown: false), M: "Offspring3", N: .manual, A: .blur),
-    State(Q: .BE37, T: .verticalConnection(answerShown: true), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(3, "Окончен!"), M: "Offspring3", N: .manual, A: .swipe)
+    State(Q: .empty, T: .justRound(3, "Ответы"), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH31, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
+    State(Q: .KBH31, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH32, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
+    State(Q: .KBH32, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH33, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
+    State(Q: .KBH33, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH34, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
+    State(Q: .KBH34, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH35, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
+    State(Q: .KBH35, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH36, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
+    State(Q: .KBH36, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .KBH37, T: .connectionWithImage, M: "Offspring2", N: .manual, A: .blur),
+    State(Q: .KBH37, T: .horizontalConnection(answerShown: true), M: "Offspring2", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(3, "Окончен!"), M: "Offspring2", N: .manual, A: .swipe)
 ]
 
 fileprivate var States4: [State] = [
-    State(Q: .empty, T: .justRound(4, "Логика"), M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE41, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE42, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE43, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE44, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE45, T: .textWithImage, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE46, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE47, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(4, "Сторона B: Странный юмор\nЧто было дальше?"), M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH41, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH42, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH43, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH44, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH45, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH46, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH47, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
     State(Q: .empty, T: .justRound(4, "Повторы"), M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE41, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE42, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE43, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE44, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE45, T: .textWithImage, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE46, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE47, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH41, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH42, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH43, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH44, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH45, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH46, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH47, T: .staticText, M: "Offspring4", N: .manual, A: .swipe),
     State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(4, "Ответы"), M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE41, T: .verticalConnection(answerShown: false), M: "Offspring4", V: "BE51A", N: .manual, A: .blur),
-    State(Q: .BE41, T: .verticalConnection(answerShown: true), M: "Offspring4", V: "BE51A", N: .manual, A: .swipe),
-    State(Q: .BE42, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
-    State(Q: .BE42, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE43, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
-    State(Q: .BE43, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE44, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
-    State(Q: .BE44, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE45, T: .connectionWithImage, M: "Offspring4", N: .manual, A: .blur),
-    State(Q: .BE45, T: .horizontalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE46, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
-    State(Q: .BE46, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
-    State(Q: .BE47, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
-    State(Q: .BE47, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH41, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
+    State(Q: .KBH41, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH42, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
+    State(Q: .KBH42, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH43, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
+    State(Q: .KBH43, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH44, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
+    State(Q: .KBH44, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH45, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
+    State(Q: .KBH45, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH46, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
+    State(Q: .KBH46, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
+    State(Q: .KBH47, T: .verticalConnection(answerShown: false), M: "Offspring4", N: .manual, A: .blur),
+    State(Q: .KBH47, T: .verticalConnection(answerShown: true), M: "Offspring4", N: .manual, A: .swipe),
     State(Q: .empty, T: .justRound(4, "Окончен!"), M: "Offspring4", N: .manual, A: .swipe)
 ]
 
 fileprivate var States5: [State] = [
     State(Q: .empty, T: .justRound(5, "Музыка"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE51, T: .staticText, M: "BE61Q", N: .byMedia, A: .swipe),
-    State(Q: .BE52, T: .staticText, M: "BE62Q", N: .byMedia, A: .swipe),
-    State(Q: .BE53, T: .staticText, M: "BE63Q", N: .byMedia, A: .swipe),
-    State(Q: .BE54, T: .staticText, M: "BE64Q", N: .byMedia, A: .swipe),
-    State(Q: .BE55, T: .staticText, M: "BE65Q", N: .byMedia, A: .swipe),
-    State(Q: .BE56, T: .staticText, M: "BE66Q", N: .byMedia, A: .swipe),
-    State(Q: .BE57, T: .staticText, M: "BE67Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH51, T: .staticText, M: "KBH51Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH52, T: .staticText, M: "KBH52Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH53, T: .staticText, M: "KBH53Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH54, T: .staticText, M: "KBH54Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH55, T: .staticText, M: "KBH55Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH56, T: .staticText, M: "KBH56Q", N: .byMedia, A: .swipe),
+    State(Q: .KBH57, T: .staticText, M: "KBH57Q", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(5, "Повторы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE51, T: .staticText, M: "BE61R", N: .byMedia, A: .swipe),
-    State(Q: .BE52, T: .staticText, M: "BE62R", N: .byMedia, A: .swipe),
-    State(Q: .BE53, T: .staticText, M: "BE63R", N: .byMedia, A: .swipe),
-    State(Q: .BE54, T: .staticText, M: "BE64R", N: .byMedia, A: .swipe),
-    State(Q: .BE55, T: .staticText, M: "BE65R", N: .byMedia, A: .swipe),
-    State(Q: .BE56, T: .staticText, M: "BE66R", N: .byMedia, A: .swipe),
-    State(Q: .BE57, T: .staticText, M: "BE67R", N: .byMedia, A: .swipe),
+    State(Q: .KBH51, T: .staticText, M: "KBH51R", N: .byMedia, A: .swipe),
+    State(Q: .KBH52, T: .staticText, M: "KBH52R", N: .byMedia, A: .swipe),
+    State(Q: .KBH53, T: .staticText, M: "KBH53R", N: .byMedia, A: .swipe),
+    State(Q: .KBH54, T: .staticText, M: "KBH54R", N: .byMedia, A: .swipe),
+    State(Q: .KBH55, T: .staticText, M: "KBH55R", N: .byMedia, A: .swipe),
+    State(Q: .KBH56, T: .staticText, M: "KBH56R", N: .byMedia, A: .swipe),
+    State(Q: .KBH57, T: .staticText, M: "KBH57R", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "30sec", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(5, "Ответы"), M: "Offspring3", N: .manual, A: .swipe),
-    State(Q: .BE51, T: .verticalConnection(answerShown: false), M: "BE61A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE51, T: .verticalConnection(answerShown: true), M: "BE61A", N: .byMedia, A: .swipe),
-    State(Q: .BE52, T: .verticalConnection(answerShown: false), M: "BE62A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE52, T: .verticalConnection(answerShown: true), M: "BE62A", N: .byMedia, A: .swipe),
-    State(Q: .BE53, T: .verticalConnection(answerShown: false), M: "BE63A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE53, T: .verticalConnection(answerShown: true), M: "BE63A", N: .byMedia, A: .swipe),
-    State(Q: .BE54, T: .verticalConnection(answerShown: false), M: "BE64A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE54, T: .verticalConnection(answerShown: true), M: "BE64A", N: .byMedia, A: .swipe),
-    State(Q: .BE55, T: .verticalConnection(answerShown: false), M: "BE65A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE55, T: .verticalConnection(answerShown: true), M: "BE65A", N: .byMedia, A: .swipe),
-    State(Q: .BE56, T: .verticalConnection(answerShown: false), M: "BE66A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE56, T: .verticalConnection(answerShown: true), M: "BE66A", N: .byMedia, A: .swipe),
-    State(Q: .BE57, T: .verticalConnection(answerShown: false), M: "BE67A", N: .byTimer(5.0), A: .blur),
-    State(Q: .BE57, T: .verticalConnection(answerShown: true), M: "BE67A", N: .byMedia, A: .swipe),
+    State(Q: .KBH51, T: .verticalConnection(answerShown: false), M: "KBH51A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH51, T: .verticalConnection(answerShown: true), M: "KBH51A", N: .byMedia, A: .swipe),
+    State(Q: .KBH52, T: .verticalConnection(answerShown: false), M: "KBH52A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH52, T: .verticalConnection(answerShown: true), M: "KBH52A", N: .byMedia, A: .swipe),
+    State(Q: .KBH53, T: .verticalConnection(answerShown: false), M: "KBH53A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH53, T: .verticalConnection(answerShown: true), M: "KBH53A", N: .byMedia, A: .swipe),
+    State(Q: .KBH54, T: .verticalConnection(answerShown: false), M: "KBH54A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH54, T: .verticalConnection(answerShown: true), M: "KBH54A", N: .byMedia, A: .swipe),
+    State(Q: .KBH55, T: .verticalConnection(answerShown: false), M: "KBH55A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH55, T: .verticalConnection(answerShown: true), M: "KBH55A", N: .byMedia, A: .swipe),
+    State(Q: .KBH56, T: .verticalConnection(answerShown: false), M: "KBH56A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH56, T: .verticalConnection(answerShown: true), M: "KBH56A", N: .byMedia, A: .swipe),
+    State(Q: .KBH57, T: .verticalConnection(answerShown: false), M: "KBH57A", N: .byTimer(5.0), A: .blur),
+    State(Q: .KBH57, T: .verticalConnection(answerShown: true), M: "KBH57A", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(5, "Окончен!"), M: "Offspring3", N: .manual, A: .swipe)
 ]
 
 fileprivate var States6: [State] = [
-    State(Q: .empty, T: .justRound(6, "Картинки"), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE61, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE62, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE63, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE64, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE65, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE66, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE67, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(6, "Повторы"), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE61, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE62, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE63, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE64, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE65, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE66, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE67, T: .textWithImage, M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "100sec", N: .byMedia, A: .swipe),
-    State(Q: .empty, T: .justRound(6, "Ответы"), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE61, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .BE61, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE62, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .BE62, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE63, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .BE63, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE64, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .BE64, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE65, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .BE65, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE66, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .BE66, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .BE67, T: .connectionWithImage, M: "Offspring5", N: .manual, A: .blur),
-    State(Q: .BE67, T: .horizontalConnection(answerShown: true), M: "Offspring5", N: .manual, A: .swipe),
-    State(Q: .empty, T: .justRound(6, "Окончен!"), M: "Offspring5", N: .manual, A: .swipe)
+    State(Q: .empty, T: .justRound(6, "Видеотур"), M: "Rock4", N: .manual, A: .swipe),
+    State(Q: .KBH61, T: .textWithImage, M: "Rock4", V: "KBH61Q", F: true, N: .manual, A: .swipe),
+    State(Q: .KBH62, T: .textWithImage, M: "Rock4", V: "KBH62Q", F: true, N: .manual, A: .swipe),
+    State(Q: .KBH63, T: .textWithImage, M: "Rock4", V: "KBH63Q", F: true, N: .manual, A: .swipe),
+    State(Q: .KBH64, T: .textWithImage, M: "Rock4", V: "KBH64Q", F: true, N: .manual, A: .swipe),
+    State(Q: .KBH65, T: .textWithImage, M: "Rock4", V: "KBH65Q", F: true, N: .manual, A: .swipe),
+    State(Q: .KBH66, T: .textWithImage, M: "Rock4", V: "KBH66Q", F: true, N: .manual, A: .swipe),
+    State(Q: .KBH67, T: .textWithImage, M: "Rock4", V: "KBH67Q", F: true, N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(6, "Повторы"), M: "Rock4", N: .manual, A: .swipe),
+    State(Q: .KBH61, T: .textWithImage, M: "Rock4", V: "KBH61R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .KBH62, T: .textWithImage, M: "Rock4", V: "KBH62R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .KBH63, T: .textWithImage, M: "Rock4", V: "KBH63R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .KBH64, T: .textWithImage, M: "Rock4", V: "KBH64R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .KBH65, T: .textWithImage, M: "Rock4", V: "KBH65R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .KBH66, T: .textWithImage, M: "Rock4", V: "KBH66R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .KBH67, T: .textWithImage, M: "Rock4", V: "KBH67R", F: true, N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "30sec", N: .byMedia, A: .swipe),
+    State(Q: .empty, T: .justRound(6, "Ответы"), M: "Rock4", N: .manual, A: .swipe),
+    State(Q: .KBH61, T: .verticalConnection(answerShown: false), M: "Rock4", V: "KBH61A", N: .manual, A: .blur),
+    State(Q: .KBH61, T: .verticalConnection(answerShown: true), M: "Rock4", V: "KBH61A", N: .manual, A: .swipe),
+    State(Q: .KBH62, T: .verticalConnection(answerShown: false), M: "Rock4", V: "KBH62A", N: .manual, A: .blur),
+    State(Q: .KBH62, T: .verticalConnection(answerShown: true), M: "Rock4", V: "KBH62A", N: .manual, A: .swipe),
+    State(Q: .KBH63, T: .verticalConnection(answerShown: false), M: "Rock4", V: "KBH63A", N: .manual, A: .blur),
+    State(Q: .KBH63, T: .verticalConnection(answerShown: true), M: "Rock4", V: "KBH63A", N: .manual, A: .swipe),
+    State(Q: .KBH64, T: .verticalConnection(answerShown: false), M: "Rock4", V: "KBH64A", N: .manual, A: .blur),
+    State(Q: .KBH64, T: .verticalConnection(answerShown: true), M: "Rock4", V: "KBH64A", N: .manual, A: .swipe),
+    State(Q: .KBH65, T: .verticalConnection(answerShown: false), M: "Rock4", V: "KBH65A", N: .manual, A: .blur),
+    State(Q: .KBH65, T: .verticalConnection(answerShown: true), M: "Rock4", V: "KBH65A", N: .manual, A: .swipe),
+    State(Q: .KBH66, T: .verticalConnection(answerShown: false), M: "Rock4", V: "KBH66A", N: .manual, A: .blur),
+    State(Q: .KBH66, T: .verticalConnection(answerShown: true), M: "Rock4", V: "KBH66A", N: .manual, A: .swipe),
+    State(Q: .KBH67, T: .verticalConnection(answerShown: false), M: "Rock4", V: "KBH67A", N: .manual, A: .blur),
+    State(Q: .KBH67, T: .verticalConnection(answerShown: true), M: "Rock4", V: "KBH67A", N: .manual, A: .swipe),
+    State(Q: .empty, T: .justRound(6, "Окончен!"), M: "Rock4", N: .manual, A: .swipe)
 ]
 
 fileprivate var States7: [State] = [
-    State(Q: .empty, T: .justRound(7, "Блиц"), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .BE71, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE72, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE73, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE74, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE75, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE76, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
-    State(Q: .BE77, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .empty, T: .justRound(7, "Блиц: закончить шутку"), M: "Offspring7", N: .manual, A: .swipe),
+    State(Q: .KBH71, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH72, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH73, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH74, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH75, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH76, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
+    State(Q: .KBH77, T: .staticText, M: "100sec", N: .byTimer(13.43), A: .swipe),
     State(Q: .empty, T: .staticImage(image: "bgrd-3-picmip"), M: "50sec", N: .byMedia, A: .swipe),
     State(Q: .empty, T: .justRound(7, "Ответы"), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .BE71, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .BE71, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .BE72, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .BE72, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .BE73, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .BE73, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .BE74, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .BE74, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .BE75, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .BE75, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .BE76, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .BE76, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
-    State(Q: .BE77, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
-    State(Q: .BE77, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
+    State(Q: .KBH71, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
+    State(Q: .KBH71, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
+    State(Q: .KBH72, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
+    State(Q: .KBH72, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
+    State(Q: .KBH73, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
+    State(Q: .KBH73, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
+    State(Q: .KBH74, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
+    State(Q: .KBH74, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
+    State(Q: .KBH75, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
+    State(Q: .KBH75, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
+    State(Q: .KBH76, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
+    State(Q: .KBH76, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
+    State(Q: .KBH77, T: .verticalConnection(answerShown: false), M: "Offspring7", N: .manual, A: .blur),
+    State(Q: .KBH77, T: .verticalConnection(answerShown: true), M: "Offspring7", N: .manual, A: .swipe),
     State(Q: .empty, T: .justRound(7, "Окончен! Спасибо за игру!"), M: "Offspring7", N: .manual, A: .swipe)
 ]
