@@ -26,46 +26,37 @@ int main() {
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     freopen("input.txt","rt",stdin);
-    freopen("output.txt","wt",stdout);
+    //freopen("output.txt","wt",stdout);
 #endif
-    
-    for (int i=0; i<163; i++) {
-        string S;
-        getline(cin,S);
-        if (S.empty()) continue;
-        vector<string> v = StringUtils::parse_by_symbol(S, ' ');
-        cout << v[0] << " ." << v[1] << ": " << v[1] << "states\n";
-    }
-    return 0;
     
     ull ans = 0;
     
-    random_device r2d2;
-    mt19937 g2(r2d2());
-    vector<int> a;
-    for (int i=0; i<30; i++) a.push_back(i);
-    shuffle(a.begin(),a.end(),g2);
-    for (int i=0; i<30; i++) {
-        cout << a[i]/5 + 1 << " " << (a[i]%5+1)*300 << endl;
-    }
+//    random_device r2d2;
+//    mt19937 g2(r2d2());
+//    vector<int> a;
+//    for (int i=0; i<30; i++) a.push_back(i);
+//    shuffle(a.begin(),a.end(),g2);
+//    for (int i=0; i<30; i++) {
+//        cout << a[i]/5 + 1 << " " << (a[i]%5+1)*300 << endl;
+//    }
     
     const vector<string> w = {
-        "America","BeginEnd","BY",        //  0  1  2
-        "UA","Cats","Chorus*",             //  3  4  5
-        "Covers*","Duets","FamilyName",    //  6  7  8
-        "HardDuets","Mistakes","Numbers*", //  9 10 11
-        "O","People*","Rivers*",            // 12 13 14
-        "Anton","Arseniy","Margo"         // 15 16 17
+        "4Letters","5Letters","Absence",        //  0  1  2
+        "Adjanced","Alyona","BM",               //  3  4  5
+        "Chorus","CoversFamous","Instumentals", //  6  7  8
+        "Unfamous","Voice","Mash-ups",          //  9 10 11
+        "Midi","Numbers","Olya",                // 12 13 14
+        "Plays","OO","TV"                       // 15 16 17
     };
-    const vector<int> cats = {  };
-    const vector<int> auctions = { 5,6,11,13,14 };
-    const vector<int> cats_distribution = { 0,0,0 }; // cats in each round
+    const vector<int> cats = { 0,2,6,7,15 };
+    const vector<int> auctions = { 1,2,7,13,16 };
+    const vector<int> cats_distribution = { 2,1,2 }; // cats in each round
     const vector<int> auctions_distribution = { 2,1,2 }; // same for auctions
     
-    vpii F = {mp(7,9)}; // forbidden pairs, should be in different trios
-    vpii R = {mp(2,3)}; // required pairs, should be together
-    vpii C = {mp(4,3),mp(5,2),mp(6,1),mp(14,1),mp(15,2),mp(16,3),mp(17,1)}; // some elements must be in specific trio
-    vpii D = {mp(0,3),mp(7,3),mp(9,1),mp(12,1),mp(13,1)}; // some elements shouldn't be in specific trio
+    vpii F = {mp(4,15)}; // forbidden pairs, should be in different trios
+    vpii R = {mp(0,1),mp(4,14)}; // required pairs, should be together
+    vpii C = {mp(13,3),mp(11,2)}; // some elements must be in specific trio
+    vpii D = {mp(5,1),mp(6,1),mp(8,3),mp(17,1)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<(int)w.size(); i++) v.push_back(i);
     random_device rd;
