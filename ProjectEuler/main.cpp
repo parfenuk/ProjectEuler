@@ -19,6 +19,14 @@
 using namespace Algebra;
 using namespace Containers;
 
+void process_lyrics()
+{
+    string S;
+    while (getline(cin,S)) {
+        cout << S << "\\n";
+    }
+}
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -28,6 +36,8 @@ int main() {
     freopen("input.txt","rt",stdin);
     //freopen("output.txt","wt",stdout);
 #endif
+    process_lyrics();
+    return 0;
     
     ull ans = 0;
     
@@ -41,22 +51,22 @@ int main() {
 //    }
     
     const vector<string> w = {
-        "4Letters","5Letters","Absence",        //  0  1  2
-        "Adjanced","Alyona","BM",               //  3  4  5
-        "Chorus","CoversFamous","Instumentals", //  6  7  8
-        "Unfamous","Voice","Mash-ups",          //  9 10 11
-        "Midi","Numbers","Olya",                // 12 13 14
-        "Plays","OO","TV"                       // 15 16 17
+        "6Letters","6Plus6","Adjanced",      //  0  1  2
+        "ANT","Colors","Duets",              //  3  4  5
+        "EAT","Number6","OthersSing",        //  6  7  8
+        "Palindromes","SameName","Slow",     //  9 10 11
+        "SovietCinema","TamTam","Transport", // 12 13 14
+        "UND","Weapons","WordByWord"         // 15 16 17
     };
-    const vector<int> cats = { 0,2,6,7,15 };
-    const vector<int> auctions = { 1,2,7,13,16 };
+    const vector<int> cats = { 6,7,9,10,11 };
+    const vector<int> auctions = { 2,5,8,13,14,15,16,17 };
     const vector<int> cats_distribution = { 2,1,2 }; // cats in each round
     const vector<int> auctions_distribution = { 2,1,2 }; // same for auctions
     
-    vpii F = {mp(4,15)}; // forbidden pairs, should be in different trios
-    vpii R = {mp(0,1),mp(4,14)}; // required pairs, should be together
-    vpii C = {mp(13,3),mp(11,2)}; // some elements must be in specific trio
-    vpii D = {mp(5,1),mp(6,1),mp(8,3),mp(17,1)}; // some elements shouldn't be in specific trio
+    vpii F = {mp(3,6),mp(3,15),mp(6,15),mp(14,16)}; // forbidden pairs, should be in different trios
+    vpii R = {}; // required pairs, should be together
+    vpii C = {mp(0,1),mp(1,2),mp(7,3),mp(8,2),mp(13,3)}; // some elements must be in specific trio
+    vpii D = {mp(2,3),mp(11,1),mp(12,1),mp(17,1)}; // some elements shouldn't be in specific trio
     
     vint v; for (int i=0; i<(int)w.size(); i++) v.push_back(i);
     random_device rd;

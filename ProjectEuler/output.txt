@@ -1,9 +1,9 @@
 
 
 
-Absence(C3A5) Voice Unfamous Plays(C2) Adjanced OO(A3)
-CoversFamous(C5A2) BM Alyona Olya Mash-ups Instumentals
-Chorus(C1) Midi TV Numbers(A4) 4Letters(C4) 5Letters(A4/A5)
+6Letters    EAT(C1) Palindromes(C3) Colors       Transport(A4)  Weapons(A3)
+6Plus6      ANT     Adjanced        Duets(A4)    Slow(C3)       OthersSing
+Number6(C1) UND     TamTam(A3)      SameName(C5) WordByWord(A4) SovietCinema
 
 
 
