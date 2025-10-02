@@ -1,231 +1,930 @@
-Alco
-ATW
-AW
-B
-BA
-BC
-BE
-Best
-Birt
-BTF
-BTS
-C
-CH
-CHNY
-CL
-CLTwo
-CLThree
-CLFour
-CLFive
-CLSix
-CLSeven
-CLEight
-CLNine
-CLTen
-CLEleven
-CLTwelve
-CLThirteen
-CLFourteen
-CLFifteen
-CLSixteen
-CLSeventeen
-CLEighteen
-CLNineteen
-CLTwenty
-CLTwentyOne
-CLTwentyTwo
-CLTwentyThree
-CLTwentyFour
-CLTwentyFive
-CLTwentySix
-CLTwentySeven
-CLTwentyEight
-CM
-Cmd
-CMus
-CMusTwo
-CMusThree
-CMusFour
-CNY
-D
-DE
-DIG
-Dis
-DM
-DNT
-DR
-DS
-DT
-DetOne
-DetTwo
-DetThree
-E
-EE
-EFP
-EI
-Eng
-EP
-F
-FAS
-FE
-FEF
-FilY
-FN
-Food
-FR
-FRDE
-G
-GB
-GG
-Gik
-GM
-GP
-H
-HCP
-HH
-His
-HL
-HP
-HPO
-HT
-HUM
-IT
-KBH
-L
-LIT
-LS
-M
-Miro
-MLOne
-MLTwo
-MLThree
-MLFour
-MLFive
-MLSix
-MLSeven
-MLEight
-MLNine
-MLTen
-MLEleven
-MLTwelve
-MLThirteen
-MLFourteen
-MLFifteen
-MLSixteen
-MLSeventeen
-MLEighteen
-MLNineteen
-MLTwenty
-MLTwentyOne
-MLTwentyTwo
-MLTwentyThree
-MPOne
-MPTwo
-MPThree
-MPFour
-MPFive
-MPSix
-MPSeven
-MPEight
-MPNine
-MPTen
-MPEleven
-MPTwelve
-MPThirteen
-MPFourteen
-MPFifteen
-MPSixteen
-MPSeventeen
-MPEighteen
-MPNineteen
-MPTwenty
-MPTwentyOne
-MPTwentyTwo
-MPTwentyThree
-MPTwentyFour
-MS
-Mult
-MuS
-MW
-Myth
-N
-NC
-NR
-NT
-NU
-NY
-OT
-P
-PL
-POP
-Q
-R
-Rock
-ROM
-RRock
-RU
-RUD
-S
-SC
-Scary
-SD
-Ser
-SiO
-SL
-SO
-SOV
-SP
-Spt
-SR
-Star
-Sto
-T
-TH
-Top
-TRAV
-TT
-TV
-TucOne
-TucTwo
-TucThree
-TucFour
-TucFive
-TucSix
-TucSeven
-TucEight
-TucNine
-TucTen
-TucEleven
-TucTwelve
-TucThirteen
-TucFourteen
-TW
-U
-VH
-W
-WM
-X
-XMAS
-XXLEight
-XXLEighteen
-XXLEleven
-XXLFifteen
-XXLFive
-XXLFour
-XXLFourteen
-XXLNine
-XXLNineteen
-XXLOne
-XXLSeven
-XXLSeventeen
-XXLSix
-XXLSixteen
-XXLTen
-XXLThirteen
-XXLThree
-XXLTwelve
-XXLTwenty
-XXLTwentyOne
-XXLTwentyTwo
-XXLTwo
-Z
+//
+//  QuestionSet.swift
+//  MzgbEngine
+//
+//  Created by Miraslau Parafeniuk on 10.06.25.
+//  Copyright © 2025 Miraslau Parafeniuk. All rights reserved.
+//
+
+import Foundation
+
+enum QuestionSet: String, CaseIterable {
+    case USARU
+    case MLTwentyEight
+    case BTT
+    case EAT
+    case CNM
+    case MLTwentySeven
+    case CMRU
+    case MLTwentySix
+    case MPTwentyFive
+    case MPTwentySix
+    case MPTwentySeven
+    case MPTwentyEight
+    case MLTwentyFive
+    case LR
+    case BF
+    case BD
+    case DD
+    case AK
+    case Alco
+    case ATW
+    case AW
+    case B
+    case BA
+    case BC
+    case BE
+    case Best
+    case Birt
+    case BTF
+    case BTS
+    case C
+    case CaM
+    case CH
+    case CHNY
+    case CL
+    case CLTwo
+    case CLThree
+    case CLFour
+    case CLFive
+    case CLSix
+    case CLSeven
+    case CLEight
+    case CLNine
+    case CLTen
+    case CLEleven
+    case CLTwelve
+    case CLThirteen
+    case CLFourteen
+    case CLFifteen
+    case CLSixteen
+    case CLSeventeen
+    case CLEighteen
+    case CLNineteen
+    case CLTwenty
+    case CLTwentyOne
+    case CLTwentyTwo
+    case CLTwentyThree
+    case CLTwentyFour
+    case CLTwentyFive
+    case CLTwentySix
+    case CLTwentySeven
+    case CLTwentyEight
+    case CLTwentyNine
+    case CLThirty
+    case CM
+    case Cmd
+    case CMus
+    case CMusTwo
+    case CMusThree
+    case CMusFour
+    case CMusFive
+    case CNY
+    case D
+    case DE
+    case DIG
+    case Dis
+    case DM
+    case DNT
+    case DR
+    case DS
+    case DT
+    case DetOne
+    case DetTwo
+    case DetThree
+    case E
+    case EE
+    case EFP
+    case EI
+    case Eng
+    case EP
+    case F
+    case FAS
+    case FE
+    case FEF
+    case FilY
+    case FN
+    case Food
+    case FR
+    case FRDE
+    case G
+    case GB
+    case GG
+    case Gik
+    case GM
+    case GP
+    case H
+    case HCP
+    case HH
+    case HIMYM
+    case His
+    case HL
+    case HP
+    case HPO
+    case HT
+    case HUM
+    case IT
+    case KBH
+    case L
+    case LIT
+    case LS
+    case M
+    case Miro
+    case MLOne
+    case MLTwo
+    case MLThree
+    case MLFour
+    case MLFive
+    case MLSix
+    case MLSeven
+    case MLEight
+    case MLNine
+    case MLTen
+    case MLEleven
+    case MLTwelve
+    case MLThirteen
+    case MLFourteen
+    case MLFifteen
+    case MLSixteen
+    case MLSeventeen
+    case MLEighteen
+    case MLNineteen
+    case MLTwenty
+    case MLTwentyOne
+    case MLTwentyTwo
+    case MLTwentyThree
+    case MLTwentyFour
+    case MPOne
+    case MPTwo
+    case MPThree
+    case MPFour
+    case MPFive
+    case MPSix
+    case MPSeven
+    case MPEight
+    case MPNine
+    case MPTen
+    case MPEleven
+    case MPTwelve
+    case MPThirteen
+    case MPFourteen
+    case MPFifteen
+    case MPSixteen
+    case MPSeventeen
+    case MPEighteen
+    case MPNineteen
+    case MPTwenty
+    case MPTwentyOne
+    case MPTwentyTwo
+    case MPTwentyThree
+    case MPTwentyFour
+    case MS
+    case Mult
+    case MuS
+    case MW
+    case Myth
+    case N
+    case NC
+    case NF
+    case NR
+    case NT
+    case NU
+    case NY
+    case OT
+    case P
+    case PL
+    case POP
+    case Q
+    case R
+    case Rock
+    case ROM
+    case RRock
+    case RU
+    case RUD
+    case S
+    case SC
+    case Scary
+    case SD
+    case Ser
+    case SiO
+    case SL
+    case SO
+    case SOV
+    case SP
+    case Spt
+    case SR
+    case Star
+    case Sto
+    case T
+    case TH
+    case Top
+    case TRAV
+    case TT
+    case TV
+    case TucOne
+    case TucTwo
+    case TucThree
+    case TucFour
+    case TucFive
+    case TucSix
+    case TucSeven
+    case TucEight
+    case TucNine
+    case TucTen
+    case TucEleven
+    case TucTwelve
+    case TucThirteen
+    case TucFourteen
+    case TucFifteen
+    case TucSixteen
+    case TucSeventeen
+    case TW
+    case U
+    case VH
+    case VHS
+    case W
+    case WM
+    case X
+    case XMAS
+    case XXLEight
+    case XXLEighteen
+    case XXLEleven
+    case XXLFifteen
+    case XXLFive
+    case XXLFour
+    case XXLFourteen
+    case XXLNine
+    case XXLNineteen
+    case XXLOne
+    case XXLSeven
+    case XXLSeventeen
+    case XXLSix
+    case XXLSixteen
+    case XXLTen
+    case XXLThirteen
+    case XXLThree
+    case XXLTwelve
+    case XXLTwenty
+    case XXLTwentyOne
+    case XXLTwentyTwo
+    case XXLTwo
+    case Z
+    
+    case none
+}
+
+extension QuestionSet {
+    var code: String {
+        rawValue
+    }
+    
+    var folderName: String {
+        "Set \(code)"
+    }
+    
+    var times: [Int] {
+        switch self {
+        case .USARU: USARUtimes
+        case .MLTwentyEight: MLTwentyEighttimes
+        case .BTT: BTTtimes
+        case .EAT: EATtimes
+        case .CNM: CNMtimes
+        case .MPTwentyEight: MPTwentyEighttimes
+        case .MLTwentySeven: MLTwentySeventimes
+        case .MPTwentySeven: MPTwentySeventimes
+        case .CMRU: CMRUtimes
+        case .MPTwentySix: MPTwentySixtimes
+        case .MLTwentySix: MLTwentySixtimes
+        case .MPTwentyFive: MPTwentyFivetimes
+        case .MLTwentyFive: MLTwentyFivetimes
+        case .LR: LRtimes
+        case .BF: BFtimes
+        case .BD: BDtimes
+        case .DD: DDtimes
+        case .AK: AKtimes
+        case .Alco: Alcotimes
+        case .ATW: ATWtimes
+        case .AW: AWtimes
+        case .B: Btimes
+        case .BA: BAtimes
+        case .BC: BCtimes
+        case .BE: BEtimes
+        case .Best: Besttimes
+        case .Birt: Birttimes
+        case .BTF: BTFtimes
+        case .BTS: BTStimes
+        case .C: Ctimes
+        case .CaM: CaMtimes
+        case .CH: CHtimes
+        case .CHNY: CHNYtimes
+        case .CL: CLtimes
+        case .CLTwo: CLTwotimes
+        case .CLThree: CLThreetimes
+        case .CLFour: CLFourtimes
+        case .CLFive: CLFivetimes
+        case .CLSix: CLSixtimes
+        case .CLSeven: CLSeventimes
+        case .CLEight: CLEighttimes
+        case .CLNine: CLNinetimes
+        case .CLTen: CLTentimes
+        case .CLEleven: CLEleventimes
+        case .CLTwelve: CLTwelvetimes
+        case .CLThirteen: CLThirteentimes
+        case .CLFourteen: CLFourteentimes
+        case .CLFifteen: CLFifteentimes
+        case .CLSixteen: CLSixteentimes
+        case .CLSeventeen: CLSeventeentimes
+        case .CLEighteen: CLEighteentimes
+        case .CLNineteen: CLNineteentimes
+        case .CLTwenty: CLTwentytimes
+        case .CLTwentyOne: CLTwentyOnetimes
+        case .CLTwentyTwo: CLTwentyTwotimes
+        case .CLTwentyThree: CLTwentyThreetimes
+        case .CLTwentyFour: CLTwentyFourtimes
+        case .CLTwentyFive: CLTwentyFivetimes
+        case .CLTwentySix: CLTwentySixtimes
+        case .CLTwentySeven: CLTwentySeventimes
+        case .CLTwentyEight: CLTwentyEighttimes
+        case .CLTwentyNine: CLTwentyNinetimes
+        case .CLThirty: CLThirtytimes
+        case .CM: CMtimes
+        case .Cmd: Cmdtimes
+        case .CMus: CMustimes
+        case .CMusTwo: CMusTwotimes
+        case .CMusThree: CMusThreetimes
+        case .CMusFour: CMusFourtimes
+        case .CMusFive: CMusFivetimes
+        case .CNY: CNYtimes
+        case .D: Dtimes
+        case .DE: DEtimes
+        case .DIG: DIGtimes
+        case .Dis: Distimes
+        case .DM: DMtimes
+        case .DNT: DNTtimes
+        case .DR: DRtimes
+        case .DS: DStimes
+        case .DT: DTtimes
+        case .DetOne: DetOnetimes
+        case .DetTwo: DetTwotimes
+        case .DetThree: DetThreetimes
+        case .E: Etimes
+        case .EE: EEtimes
+        case .EFP: EFPtimes
+        case .EI: EItimes
+        case .Eng: Engtimes
+        case .EP: EPtimes
+        case .F: Ftimes
+        case .FAS: FAStimes
+        case .FE: FEtimes
+        case .FEF: FEFtimes
+        case .FilY: FilYtimes
+        case .FN: FNtimes
+        case .Food: Foodtimes
+        case .FR: FRtimes
+        case .FRDE: FRDEtimes
+        case .G: Gtimes
+        case .GB: GBtimes
+        case .GG: GGtimes
+        case .Gik: Giktimes
+        case .GM: GMtimes
+        case .GP: GPtimes
+        case .H: Htimes
+        case .HCP: HCPtimes
+        case .HH: HHtimes
+        case .HIMYM: HIMYMtimes
+        case .His: Histimes
+        case .HL: HLtimes
+        case .HP: HPtimes
+        case .HPO: HPOtimes
+        case .HT: HTtimes
+        case .HUM: HUMtimes
+        case .IT: ITtimes
+        case .KBH: KBHtimes
+        case .L: Ltimes
+        case .LIT: LITtimes
+        case .LS: LStimes
+        case .M: Mtimes
+        case .Miro: Mirotimes
+        case .MLOne: MLOnetimes
+        case .MLTwo: MLTwotimes
+        case .MLThree: MLThreetimes
+        case .MLFour: MLFourtimes
+        case .MLFive: MLFivetimes
+        case .MLSix: MLSixtimes
+        case .MLSeven: MLSeventimes
+        case .MLEight: MLEighttimes
+        case .MLNine: MLNinetimes
+        case .MLTen: MLTentimes
+        case .MLEleven: MLEleventimes
+        case .MLTwelve: MLTwelvetimes
+        case .MLThirteen: MLThirteentimes
+        case .MLFourteen: MLFourteentimes
+        case .MLFifteen: MLFifteentimes
+        case .MLSixteen: MLSixteentimes
+        case .MLSeventeen: MLSeventeentimes
+        case .MLEighteen: MLEighteentimes
+        case .MLNineteen: MLNineteentimes
+        case .MLTwenty: MLTwentytimes
+        case .MLTwentyOne: MLTwentyOnetimes
+        case .MLTwentyTwo: MLTwentyTwotimes
+        case .MLTwentyThree: MLTwentyThreetimes
+        case .MLTwentyFour: MLTwentyFourtimes
+        case .MPOne: MPOnetimes
+        case .MPTwo: MPTwotimes
+        case .MPThree: MPThreetimes
+        case .MPFour: MPFourtimes
+        case .MPFive: MPFivetimes
+        case .MPSix: MPSixtimes
+        case .MPSeven: MPSeventimes
+        case .MPEight: MPEighttimes
+        case .MPNine: MPNinetimes
+        case .MPTen: MPTentimes
+        case .MPEleven: MPEleventimes
+        case .MPTwelve: MPTwelvetimes
+        case .MPThirteen: MPThirteentimes
+        case .MPFourteen: MPFourteentimes
+        case .MPFifteen: MPFifteentimes
+        case .MPSixteen: MPSixteentimes
+        case .MPSeventeen: MPSeventeentimes
+        case .MPEighteen: MPEighteentimes
+        case .MPNineteen: MPNineteentimes
+        case .MPTwenty: MPTwentytimes
+        case .MPTwentyOne: MPTwentyOnetimes
+        case .MPTwentyTwo: MPTwentyTwotimes
+        case .MPTwentyThree: MPTwentyThreetimes
+        case .MPTwentyFour: MPTwentyFourtimes
+        case .MS: MStimes
+        case .Mult: Multtimes
+        case .MuS: MuStimes
+        case .MW: MWtimes
+        case .Myth: Mythtimes
+        case .N: Ntimes
+        case .NC: NCtimes
+        case .NF: NFtimes
+        case .NR: NRtimes
+        case .NT: NTtimes
+        case .NU: NUtimes
+        case .NY: NYtimes
+        case .OT: OTtimes
+        case .P: Ptimes
+        case .PL: PLtimes
+        case .POP: POPtimes
+        case .Q: Qtimes
+        case .R: Rtimes
+        case .Rock: Rocktimes
+        case .ROM: ROMtimes
+        case .RRock: RRocktimes
+        case .RU: RUtimes
+        case .RUD: RUDtimes
+        case .S: Stimes
+        case .SC: SCtimes
+        case .Scary: Scarytimes
+        case .SD: SDtimes
+        case .Ser: Sertimes
+        case .SiO: SiOtimes
+        case .SL: SLtimes
+        case .SO: SOtimes
+        case .SOV: SOVtimes
+        case .SP: SPtimes
+        case .Spt: Spttimes
+        case .SR: SRtimes
+        case .Star: Startimes
+        case .Sto: Stotimes
+        case .T: Ttimes
+        case .TH: THtimes
+        case .Top: Toptimes
+        case .TRAV: TRAVtimes
+        case .TT: TTtimes
+        case .TV: TVtimes
+        case .TucOne: TucOnetimes
+        case .TucTwo: TucTwotimes
+        case .TucThree: TucThreetimes
+        case .TucFour: TucFourtimes
+        case .TucFive: TucFivetimes
+        case .TucSix: TucSixtimes
+        case .TucSeven: TucSeventimes
+        case .TucEight: TucEighttimes
+        case .TucNine: TucNinetimes
+        case .TucTen: TucTentimes
+        case .TucEleven: TucEleventimes
+        case .TucTwelve: TucTwelvetimes
+        case .TucThirteen: TucThirteentimes
+        case .TucFourteen: TucFourteentimes
+        case .TucFifteen: TucFifteentimes
+        case .TucSixteen: TucSixteentimes
+        case .TucSeventeen: TucSeventeentimes
+        case .TW: TWtimes
+        case .U: Utimes
+        case .VH: VHtimes
+        case .VHS: VHStimes
+        case .W: Wtimes
+        case .WM: WMtimes
+        case .X: Xtimes
+        case .XMAS: XMAStimes
+        case .XXLEight: XXLEighttimes
+        case .XXLEighteen: XXLEighteentimes
+        case .XXLEleven: XXLEleventimes
+        case .XXLFifteen: XXLFifteentimes
+        case .XXLFive: XXLFivetimes
+        case .XXLFour: XXLFourtimes
+        case .XXLFourteen: XXLFourteentimes
+        case .XXLNine: XXLNinetimes
+        case .XXLNineteen: XXLNineteentimes
+        case .XXLOne: XXLOnetimes
+        case .XXLSeven: XXLSeventimes
+        case .XXLSeventeen: XXLSeventeentimes
+        case .XXLSix: XXLSixtimes
+        case .XXLSixteen: XXLSixteentimes
+        case .XXLTen: XXLTentimes
+        case .XXLThirteen: XXLThirteentimes
+        case .XXLThree: XXLThreetimes
+        case .XXLTwelve: XXLTwelvetimes
+        case .XXLTwenty: XXLTwentytimes
+        case .XXLTwentyOne: XXLTwentyOnetimes
+        case .XXLTwentyTwo: XXLTwentyTwotimes
+        case .XXLTwo: XXLTwotimes
+        case .Z: Ztimes
+        case .none: []
+        }
+    }
+    
+    var states: [[State]] {
+        switch self {
+        case .USARU: USARUstates
+        case .MLTwentyEight: MLTwentyEightstates
+        case .BTT: BTTstates
+        case .EAT: EATstates
+        case .CNM: CNMstates
+        case .MPTwentyEight: MPTwentyEightstates
+        case .MLTwentySeven: MLTwentySevenstates
+        case .MPTwentySeven: MPTwentySevenstates
+        case .CMRU: CMRUstates
+        case .MPTwentySix: MPTwentySixstates
+        case .MLTwentySix: MLTwentySixstates
+        case .MPTwentyFive: MPTwentyFivestates
+        case .MLTwentyFive: MLTwentyFivestates
+        case .LR: LRstates
+        case .BF: BFstates
+        case .BD: BDstates
+        case .DD: DDstates
+        case .AK: AKstates
+        case .Alco: Alcostates
+        case .ATW: ATWstates
+        case .AW: AWstates
+        case .B: Bstates
+        case .BA: BAstates
+        case .BC: BCstates
+        case .BE: BEstates
+        case .Best: Beststates
+        case .Birt: Birtstates
+        case .BTF: BTFstates
+        case .BTS: BTSstates
+        case .C: Cstates
+        case .CaM: CaMstates
+        case .CH: CHstates
+        case .CHNY: CHNYstates
+        case .CL: CLstates
+        case .CLTwo: CLTwostates
+        case .CLThree: CLThreestates
+        case .CLFour: CLFourstates
+        case .CLFive: CLFivestates
+        case .CLSix: CLSixstates
+        case .CLSeven: CLSevenstates
+        case .CLEight: CLEightstates
+        case .CLNine: CLNinestates
+        case .CLTen: CLTenstates
+        case .CLEleven: CLElevenstates
+        case .CLTwelve: CLTwelvestates
+        case .CLThirteen: CLThirteenstates
+        case .CLFourteen: CLFourteenstates
+        case .CLFifteen: CLFifteenstates
+        case .CLSixteen: CLSixteenstates
+        case .CLSeventeen: CLSeventeenstates
+        case .CLEighteen: CLEighteenstates
+        case .CLNineteen: CLNineteenstates
+        case .CLTwenty: CLTwentystates
+        case .CLTwentyOne: CLTwentyOnestates
+        case .CLTwentyTwo: CLTwentyTwostates
+        case .CLTwentyThree: CLTwentyThreestates
+        case .CLTwentyFour: CLTwentyFourstates
+        case .CLTwentyFive: CLTwentyFivestates
+        case .CLTwentySix: CLTwentySixstates
+        case .CLTwentySeven: CLTwentySevenstates
+        case .CLTwentyEight: CLTwentyEightstates
+        case .CLTwentyNine: CLTwentyNinestates
+        case .CLThirty: CLThirtystates
+        case .CM: CMstates
+        case .Cmd: Cmdstates
+        case .CMus: CMusstates
+        case .CMusTwo: CMusTwostates
+        case .CMusThree: CMusThreestates
+        case .CMusFour: CMusFourstates
+        case .CMusFive: CMusFivestates
+        case .CNY: CNYstates
+        case .D: Dstates
+        case .DE: DEstates
+        case .DIG: DIGstates
+        case .Dis: Disstates
+        case .DM: DMstates
+        case .DNT: DNTstates
+        case .DR: DRstates
+        case .DS: DSstates
+        case .DT: DTstates
+        case .DetOne: DetOnestates
+        case .DetTwo: DetTwostates
+        case .DetThree: DetThreestates
+        case .E: Estates
+        case .EE: EEstates
+        case .EFP: EFPstates
+        case .EI: EIstates
+        case .Eng: Engstates
+        case .EP: EPstates
+        case .F: Fstates
+        case .FAS: FASstates
+        case .FE: FEstates
+        case .FEF: FEFstates
+        case .FilY: FilYstates
+        case .FN: FNstates
+        case .Food: Foodstates
+        case .FR: FRstates
+        case .FRDE: FRDEstates
+        case .G: Gstates
+        case .GB: GBstates
+        case .GG: GGstates
+        case .Gik: Gikstates
+        case .GM: GMstates
+        case .GP: GPstates
+        case .H: Hstates
+        case .HCP: HCPstates
+        case .HH: HHstates
+        case .HIMYM: HIMYMstates
+        case .His: Hisstates
+        case .HL: HLstates
+        case .HP: HPstates
+        case .HPO: HPOstates
+        case .HT: HTstates
+        case .HUM: HUMstates
+        case .IT: ITstates
+        case .KBH: KBHstates
+        case .L: Lstates
+        case .LIT: LITstates
+        case .LS: LSstates
+        case .M: Mstates
+        case .Miro: Mirostates
+        case .MLOne: MLOnestates
+        case .MLTwo: MLTwostates
+        case .MLThree: MLThreestates
+        case .MLFour: MLFourstates
+        case .MLFive: MLFivestates
+        case .MLSix: MLSixstates
+        case .MLSeven: MLSevenstates
+        case .MLEight: MLEightstates
+        case .MLNine: MLNinestates
+        case .MLTen: MLTenstates
+        case .MLEleven: MLElevenstates
+        case .MLTwelve: MLTwelvestates
+        case .MLThirteen: MLThirteenstates
+        case .MLFourteen: MLFourteenstates
+        case .MLFifteen: MLFifteenstates
+        case .MLSixteen: MLSixteenstates
+        case .MLSeventeen: MLSeventeenstates
+        case .MLEighteen: MLEighteenstates
+        case .MLNineteen: MLNineteenstates
+        case .MLTwenty: MLTwentystates
+        case .MLTwentyOne: MLTwentyOnestates
+        case .MLTwentyTwo: MLTwentyTwostates
+        case .MLTwentyThree: MLTwentyThreestates
+        case .MLTwentyFour: MLTwentyFourstates
+        case .MPOne: MPOnestates
+        case .MPTwo: MPTwostates
+        case .MPThree: MPThreestates
+        case .MPFour: MPFourstates
+        case .MPFive: MPFivestates
+        case .MPSix: MPSixstates
+        case .MPSeven: MPSevenstates
+        case .MPEight: MPEightstates
+        case .MPNine: MPNinestates
+        case .MPTen: MPTenstates
+        case .MPEleven: MPElevenstates
+        case .MPTwelve: MPTwelvestates
+        case .MPThirteen: MPThirteenstates
+        case .MPFourteen: MPFourteenstates
+        case .MPFifteen: MPFifteenstates
+        case .MPSixteen: MPSixteenstates
+        case .MPSeventeen: MPSeventeenstates
+        case .MPEighteen: MPEighteenstates
+        case .MPNineteen: MPNineteenstates
+        case .MPTwenty: MPTwentystates
+        case .MPTwentyOne: MPTwentyOnestates
+        case .MPTwentyTwo: MPTwentyTwostates
+        case .MPTwentyThree: MPTwentyThreestates
+        case .MPTwentyFour: MPTwentyFourstates
+        case .MS: MSstates
+        case .Mult: Multstates
+        case .MuS: MuSstates
+        case .MW: MWstates
+        case .Myth: Mythstates
+        case .N: Nstates
+        case .NC: NCstates
+        case .NF: NFstates
+        case .NR: NRstates
+        case .NT: NTstates
+        case .NU: NUstates
+        case .NY: NYstates
+        case .OT: OTstates
+        case .P: Pstates
+        case .PL: PLstates
+        case .POP: POPstates
+        case .Q: Qstates
+        case .R: Rstates
+        case .Rock: Rockstates
+        case .ROM: ROMstates
+        case .RRock: RRockstates
+        case .RU: RUstates
+        case .RUD: RUDstates
+        case .S: Sstates
+        case .SC: SCstates
+        case .Scary: Scarystates
+        case .SD: SDstates
+        case .Ser: Serstates
+        case .SiO: SiOstates
+        case .SL: SLstates
+        case .SO: SOstates
+        case .SOV: SOVstates
+        case .SP: SPstates
+        case .Spt: Sptstates
+        case .SR: SRstates
+        case .Star: Starstates
+        case .Sto: Stostates
+        case .T: Tstates
+        case .TH: THstates
+        case .Top: Topstates
+        case .TRAV: TRAVstates
+        case .TT: TTstates
+        case .TV: TVstates
+        case .TucOne: TucOnestates
+        case .TucTwo: TucTwostates
+        case .TucThree: TucThreestates
+        case .TucFour: TucFourstates
+        case .TucFive: TucFivestates
+        case .TucSix: TucSixstates
+        case .TucSeven: TucSevenstates
+        case .TucEight: TucEightstates
+        case .TucNine: TucNinestates
+        case .TucTen: TucTenstates
+        case .TucEleven: TucElevenstates
+        case .TucTwelve: TucTwelvestates
+        case .TucThirteen: TucThirteenstates
+        case .TucFourteen: TucFourteenstates
+        case .TucFifteen: TucFifteenstates
+        case .TucSixteen: TucSixteenstates
+        case .TucSeventeen: TucSeventeenstates
+        case .TW: TWstates
+        case .U: Ustates
+        case .VH: VHstates
+        case .VHS: VHSstates
+        case .W: Wstates
+        case .WM: WMstates
+        case .X: Xstates
+        case .XMAS: XMASstates
+        case .XXLEight: XXLEightstates
+        case .XXLEighteen: XXLEighteenstates
+        case .XXLEleven: XXLElevenstates
+        case .XXLFifteen: XXLFifteenstates
+        case .XXLFive: XXLFivestates
+        case .XXLFour: XXLFourstates
+        case .XXLFourteen: XXLFourteenstates
+        case .XXLNine: XXLNinestates
+        case .XXLNineteen: XXLNineteenstates
+        case .XXLOne: XXLOnestates
+        case .XXLSeven: XXLSevenstates
+        case .XXLSeventeen: XXLSeventeenstates
+        case .XXLSix: XXLSixstates
+        case .XXLSixteen: XXLSixteenstates
+        case .XXLTen: XXLTenstates
+        case .XXLThirteen: XXLThirteenstates
+        case .XXLThree: XXLThreestates
+        case .XXLTwelve: XXLTwelvestates
+        case .XXLTwenty: XXLTwentystates
+        case .XXLTwentyOne: XXLTwentyOnestates
+        case .XXLTwentyTwo: XXLTwentyTwostates
+        case .XXLTwo: XXLTwostates
+        case .Z: Zstates
+        case .none: []
+        }
+    }
+}
+
+extension QuestionSet {
+    
+    private var missingExceptions: [String] {
+        ["CLSeven72Q","CLThirteen77Q",
+        "DD11Q","DD12Q","DD13Q","DD14Q","DD15Q","DD16Q","DD17Q",
+        "DE11Q","DE12Q","DE13Q","DE14Q","DE15Q","DE16Q","DE17Q","DE52Q","DE53Q","DE57Q",
+        "DT31Q","DT32Q","DT33Q","DT34Q","DT35Q","DT36Q","DT37Q","DT61Q","DT62Q","DT63Q","DT64Q","DT65Q","DT66Q","DT67Q",
+        "Eng72Q",
+        "IT37Q",
+        "MS31Q","MS32Q","MS33Q","MS34Q","MS35Q","MS36Q","MS37Q","MS61Q","MS62Q","MS63Q","MS64Q","MS65Q","MS66Q","MS67Q",
+        "P01Q","P02Q","P03Q","P04Q","P05Q","P06Q","P07Q",
+        "RUD31Q","RUD33Q","RUD34Q","RUD35Q","RUD37Q","RUD61Q","RUD62Q","RUD63Q","RUD64Q","RUD65Q","RUD67Q",
+        "Rock62Q",
+        "Star63Q","Star65Q","Star67Q"]
+    }
+    
+    func checkForMissingFiles(withMinorErrors: Bool = true) {
+        let FEX = FileExtractor.shared
+        
+        var errors = Set<String>()
+        var minorErrors = Set<String>()
+        
+        for statesArray in states {
+            
+            for state in statesArray {
+                
+                let Q = state.question
+                if Q.isEmpty { continue }
+                                
+                switch Q.type {
+                case .justText:
+                    break
+                case .textAnsImage:
+                    if FEX.getImagePath(code: Q.code, roundStatus: .answer) == nil {
+                        errors.insert("Missing image: \(Q.code + "A")")
+                    }
+                case .textAnsMusic:
+                    if FEX.getImagePath(code: Q.code, roundStatus: .answer) == nil {
+                        minorErrors.insert("Images/\(Q.code + "A")")
+                    }
+                    if FEX.getSoundPath(code: Q.code, roundStatus: .answer) == nil {
+                        errors.insert("Missing sound: \(Q.code + "A")")
+                    }
+                case .textAnsVideo:
+                    if FEX.getVideoPath(code: Q.code, roundStatus: .answer) == nil {
+                        errors.insert("Missing video: \(Q.code + "A")")
+                    }
+                case .imageAnsImage:
+                    if FEX.getImagePath(code: Q.code, roundStatus: .question) == nil {
+                        errors.insert("Missing image: \(Q.code + "Q")")
+                    }
+                    if FEX.getImagePath(code: Q.code, roundStatus: .answer) == nil {
+                        errors.insert("Missing image: \(Q.code + "A")")
+                    }
+                case .imageAnsMusic:
+                    if FEX.getImagePath(code: Q.code, roundStatus: .question) == nil {
+                        errors.insert("Missing image: \(Q.code + "Q")")
+                    }
+                    if FEX.getImagePath(code: Q.code, roundStatus: .answer) == nil {
+                        minorErrors.insert("Images/\(Q.code + "A")")
+                    }
+                    if FEX.getSoundPath(code: Q.code, roundStatus: .answer) == nil {
+                        errors.insert("Missing sound: \(Q.code + "A")")
+                    }
+                case .imageAnsVideo:
+                    if FEX.getImagePath(code: Q.code, roundStatus: .question) == nil {
+                        errors.insert("Missing image: \(Q.code + "Q")")
+                    }
+                    if FEX.getVideoPath(code: Q.code, roundStatus: .answer) == nil {
+                        errors.insert("Missing video: \(Q.code + "A")")
+                    }
+                case .music:
+                    if FEX.getSoundPath(code: Q.code, roundStatus: .question) == nil {
+                        errors.insert("Missing sound: \(Q.code + "Q")")
+                    }
+                    if FEX.getSoundPath(code: Q.code, roundStatus: .rep) == nil {
+                        minorErrors.insert("Sounds/\(Q.code + "R")")
+                    }
+                    if FEX.getSoundPath(code: Q.code, roundStatus: .answer) == nil {
+                        errors.insert("Missing sound: \(Q.code + "A")")
+                    }
+                case .video:
+                    if FEX.getVideoPath(code: Q.code, roundStatus: .question) == nil {
+                        errors.insert("Missing video: \(Q.code + "Q")")
+                    }
+                    if FEX.getVideoPath(code: Q.code, roundStatus: .rep) == nil {
+                        minorErrors.insert("Videos/\(Q.code + "R")")
+                    }
+                    if FEX.getVideoPath(code: Q.code, roundStatus: .answer) == nil {
+                        errors.insert("Missing video: \(Q.code + "A")")
+                    }
+                }
+            }
+        }
+        
+        errors = errors.filter { errorString in
+            !missingExceptions.contains { errorString.hasSuffix($0) }
+        }
+        minorErrors = minorErrors.filter { errorString in
+            !missingExceptions.contains { errorString.hasSuffix($0) }
+        }
+        
+        for error in errors.sorted() {
+            print(error)
+        }
+        if withMinorErrors && !minorErrors.isEmpty {
+            print("\nMinor errors:")
+            for error in minorErrors.sorted() {
+                print(error)
+            }
+        }
+    }
+}

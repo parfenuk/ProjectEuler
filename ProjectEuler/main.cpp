@@ -228,14 +228,46 @@ struct StatesResult {
     bool is_blitz;
 };
 
+const vector<pair<string,int>> nums = {mp("One",1),mp("Two",2),mp("Three",3),mp("Four",4),mp("Five",5),mp("Six",6),mp("Seven",7),mp("Eight",8),mp("Nine",9),mp("Ten",10),mp("Eleven",11),mp("Twelve",12),mp("Thirteen",13),mp("Fourteen",14),mp("Fifteen",15),mp("Sixteen",16),mp("Seventeen",17),mp("Eighteen",18),mp("Nineteen",19),mp("Twenty",20),mp("TwentyOne",21),mp("TwentyTwo",22),mp("TwentyThree",23),mp("TwentyFour",24),mp("TwentyFive",25),mp("TwentySix",26),mp("TwentySeven",27),mp("TwentyEight",28),mp("TwentyNine",29),mp("Thirty",30),mp("ThirtyOne",31),mp("ThirtyTwo",32),mp("ThirtyThree",33),mp("ThirtyFour",34),mp("ThirtyFive",35),mp("ThirtySix",36),mp("ThirtySeven",37),mp("ThirtyEight",38),mp("ThirtyNine",39),mp("Fourty",40)};
+
+bool enums_sort (const string &a, const string &b)
+{
+    string pref_a = a, pref_b = b;
+    int suf_a = 0, suf_b = 0;
+    for (int i=(int)nums.size()-1; i>=0; i--) {
+        if (suf_a == 0 && StringUtils::hasSuffix(a, nums[i].fs)) {
+            pref_a = a.substr(0,a.length() - nums[i].fs.length());
+            suf_a = nums[i].sc;
+        }
+        if (suf_b == 0 && StringUtils::hasSuffix(b, nums[i].fs)) {
+            pref_b = b.substr(0,b.length() - nums[i].fs.length());
+            suf_b = nums[i].sc;
+        }
+    }
+    
+    return pref_a < pref_b || (pref_a == pref_b && suf_a < suf_b);
+}
+
 void printEnums()
 {
     ifstream in ("states.txt");
     string S;
     vector<string> W;
+    bool was_enum_start = false;
     while (getline(in,S)) {
-        W.push_back(S);
+        if (S.find("enum QuestionSet") != string::npos) {
+            was_enum_start = true;
+            continue;
+        }
+        if (!was_enum_start) continue;
+        if (S.find("}") != string::npos) break;
+        if (S.find("case") == string::npos) continue;
+        cout << S << endl;
+        W.push_back(S.substr(9,S.length()-9)); // ____ case ABC
     }
+    
+    sort(W.begin(), W.end(), enums_sort);
+    
     for (int i=0; i<(int)W.size(); i++) {
         cout << "case " << W[i] << endl;
     }
@@ -254,8 +286,10 @@ int main() {
     ios_base::sync_with_stdio(false);
 #ifndef ONLINE_JUDGE
     freopen("input.txt","rt",stdin);
-    freopen("output.txt","wt",stdout);
+    //freopen("output.txt","wt",stdout);
 #endif
+    printEnums();
+    return 0;
     
     ull ans = 0;
     
