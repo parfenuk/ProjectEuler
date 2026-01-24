@@ -80,6 +80,7 @@ public:
     Lnum& operator*= (ltype b) { *this = *this * b; return *this; }
     Lnum& operator*= (Lnum B)  { *this = *this * B; return *this; }
     Lnum& operator/= (ltype b) { *this = *this / b; return *this; }
+    Lnum& operator%= (ltype b) { *this = *this % b; return *this; }
     
     Lnum& operator++() { *this = *this + one; return *this; }
     Lnum operator++(int) { Lnum clone = *this; operator++(); return clone; }
