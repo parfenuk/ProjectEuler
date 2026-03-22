@@ -9,8 +9,8 @@
 namespace Matrix
 {
 
-#define MSIZE 28
-typedef Lnum mtype;
+#define MSIZE 200
+typedef ll mtype;
 
 struct matrix
 {
