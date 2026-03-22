@@ -35,6 +35,7 @@ namespace Algebra
     ull productmod (ull a, ull n, ull mod);
     ll powmod (ll a, ll k, ll mod = 0);
     ll inverse (ll a, ll mod, ll p = 0);
+    vull inverses (int n, ll p);
     ull modular_sqrt (ull a, ull p);
     void Eratosthenes_sieve (int n, bool fill_primes = false, bool fill_pi = false);
     bool primeQ (ull n);

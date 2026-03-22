@@ -180,6 +180,15 @@ ll inverse (ll a, ll mod, ll p/*=0*/) // returns x: a*x % mod == 1. mod = p^n, G
     return powmod(a, mod-1-mod/p, mod);
 }
 
+vull inverses (int n, ll p)
+{
+    vull inv(n+1,1);
+    for (int k=2; k<=n; k++) {
+        inv[k] = (ll)(p - (p/k)) * inv[p % k] % p;
+    }
+    return inv;
+}
+
 ull modular_sqrt (ull a, ull p) // finds r, r^2 == a mod p (prime), returns 0 if doesn't exist
 {
     if (powmod(a,(p-1)/2,p) == p-1) return 0;
