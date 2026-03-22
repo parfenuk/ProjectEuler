@@ -58,4 +58,5 @@ namespace Algebra
     ull count_divisible_by (ull n, ull lb, ull ub, ull mod = 0);
     ull sum_divisible_by (ull n, ull lb, ull ub);
     char Gauss (vvdd a, vdd &ans);
+    char Gauss (vvll a, vll &ans, int Q);
 }
