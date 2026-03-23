@@ -32,6 +32,26 @@ int main() {
     
     ull ans = 0;
     
+    const int Q = 1000000007;
+    
+    const ull N = powmod(10,16);
+    const ull K = 100000000;
+    
+    vull F = Combinatorics::generate_factorials(K,Q);
+    vull inv = generate_inverses(K,Q);
+    vull FI(K+1,1); for (int i=2; i<=K; i++) FI[i] = FI[i-1]*inv[i] % Q;
+
+    ull t = powmod(2,N,Q);
+    ull t2 = inverse(powmod(4,N/K,Q), Q);
+    
+    for (int i=0; i<=K/2; i++) {
+        ull s = F[K]*FI[i] % Q * FI[i] % Q * FI[K-2*i] % Q;
+        s = s*t % Q;
+        t = t*t2 % Q;
+        ans += s;
+        if (ans >= Q) ans -= Q;
+    }
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
