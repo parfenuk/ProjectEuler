@@ -46,15 +46,14 @@ class ViewController: NSViewController {
         goButton.target = self
         goButton.action = #selector(go)
         
-        let url = URL(fileURLWithPath: "/Users/miraslau/Downloads/Project Euler secret problem image.png")
-        if let data = try? Data(contentsOf: url) {
-            imageView.image = NSImage(data: data)
+        if let url = Bundle.main.url(forResource: "image", withExtension: "png") {
+            if let data = try? Data(contentsOf: url) {
+                imageView.image = NSImage(data: data)
+            }
+            matrix = try! grayscaleMatrix(from: url)
+        } else {
+            print("Resource image.png not found in bundle.")
         }
-
-        matrix = try! grayscaleMatrix(from: url)
-        print("Height =", matrix.count)
-        print("Width =", matrix.first?.count ?? 0)
-        print(matrix[0][0]) // value of top-left pixel, from 0 to 255
     }
     
     @objc func go() {
@@ -67,13 +66,17 @@ class ViewController: NSViewController {
             matrix = newMatrix(matrix)
         }
         print("\(step) Matrix loaded")
-        imageView.image = try! image(from: matrix, scale: 36)
+        imageView.image = try! image(from: matrix, scale: 42)
         print("\(step) Image generated")
         label.stringValue = "Step #\(step)"
     }
 
     func newMatrix(_ A: [[Int]]) -> [[Int]] {
-        var k = 0
+        
+        func actualPixel(_ s: Int) -> Int {
+            s%7
+        }
+        
         let N = A.count; let M = A[0].count
         var B = A
         for i in 0..<A.count {
@@ -83,26 +86,17 @@ class ViewController: NSViewController {
                 let t2 = j > 0 ? A[i][j-1] : A[i][M-1]
                 let t3 = i < N-1 ? A[i+1][j] : A[0][j]
                 let t4 = j < M-1 ? A[i][j+1] : A[i][0]
-                if t1 == t2 && t1 == t3 && t1 == t4 {
-                    k += 1
-                }
                 s += t1+t2+t3+t4
                 B[i][j] = actualPixel(s)
             }
         }
-        print(k)
         return B
-    }
-    
-    func actualPixel(_ s: Int) -> Int {
-        (s%7)
     }
     
     func secretAfterNStepsMod7(_ input: [[Int]], _ N: Int) -> [[Int]] {
         let h = input.count
         let w = input[0].count
 
-        // Работаем сразу по mod 7
         var current = input.map { row in
             row.map { (($0 % 7) + 7) % 7 }
         }
