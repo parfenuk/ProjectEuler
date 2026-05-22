@@ -49,6 +49,7 @@
 		D1F909651F51C2EC00A70540 /* Complex.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Complex.cpp; sourceTree = "<group>"; };
 		DE3F7FCA2D9B9AE100935F49 /* FFT.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFT.cpp; sourceTree = "<group>"; };
 		DE935ADD2C15324E0036C5C2 /* Keywords.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Keywords.cpp; sourceTree = "<group>"; };
+		DECF6CD92FC063BD00C36A5E /* Polynom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Polynom.cpp; sourceTree = "<group>"; };
 		FA120B0F20625D5200010E1F /* Geometry3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry3D.cpp; sourceTree = "<group>"; };
 		FA5901EE1FD9DF56003B1AF3 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +103,7 @@
 				D1DF344825F0F933009DF141 /* NumberUtils.hpp */,
 				D1DF344725F0F933009DF141 /* NumberUtils.cpp */,
 				D137260820433F5F00EA0886 /* Pell_Equation.cpp */,
+				DECF6CD92FC063BD00C36A5E /* Polynom.cpp */,
 				D1CDA74025F031D400BE085D /* StringUtils.cpp */,
 				D1CDA73325F0161000BE085D /* Utils.cpp */,
 				D15BA4D01F0D988F00B64B78 /* input.txt */,

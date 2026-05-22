@@ -43,7 +43,7 @@ namespace Algebra
     ull least_prime_divisor (ull n);
     vpull factorize (ull n);
     vpull merged_factorize (const vpull &F, const vpull &G);
-    ll primitiveRoot (ll p);
+    ll primitive_root (ll p);
     ull rad (ull n);
     ull Chinese_theorem (vll divs, vll rests);
     char MoebiusMu (ull n);

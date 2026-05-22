@@ -68,6 +68,7 @@ using namespace std;
 #define vpii vector<pair<int,int>>
 #define vpll vector<pair<ll,ll>>
 #define vpull vector<pair<ull,ull>>
+#define vvbool vector<vector<bool>>
 #define vvchar vector<vector<char>>
 #define vvsint vector<vector<sint>>
 #define vvint vector<vector<int>>

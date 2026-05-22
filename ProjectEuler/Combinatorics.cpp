@@ -53,7 +53,7 @@ vvsint get_combinations (sint n, sint k) // numeration starts from 1
     return b;
 }
 
-template <class Trzx>
+template <class Trzx> // needed for some functions in this module
 vector<Trzx> operator+ (vector<Trzx> a, const vector<Trzx> &b)
 {
     for (int i=0; i<(int)b.size(); i++) a.push_back(b[i]);
@@ -180,6 +180,27 @@ void fill_pythagorean_triples (ull n, vvpull &pits, bool primitive_only = true) 
     }
 }
 
+vvsint generate_bitmasks (int n)
+{
+    vvsint a;
+    vsint b(n);
+    a.push_back(b);
+    while (true) {
+        int first_zero = -1;
+        for (int i=0; i<n; i++) {
+            if (b[i] == 0) {
+                first_zero = i;
+                b[i] = 1;
+                break;
+            }
+        }
+        for (int i=0; i<first_zero; i++) b[i] = 0;
+        if (first_zero == -1) break;
+        a.push_back(b);
+    }
+    return a;
+}
+
 // returns { n^0, n^1, ... , n^k } % mod
 vull generate_powers (ull n, int k, int mod = 0)
 {
@@ -221,11 +242,12 @@ vll generate_fixed_powers (ll n, int k, int mod = 0)
 }
 
 // returns { 0!, 1!, ... , k! } % mod
-vull generate_factorials (int k, int mod = 0)
+vull generate_factorials (int n, bool inverse = false, int mod = 0)
 {
-    vull a(k+1,1);
-    for (int i=2; i<=k; i++) {
-        a[i] = a[i-1]*i;
+    vull a(n+1,1), inv;
+    if (inverse) inv = Algebra::generate_inverses(n,mod);
+    for (int i=2; i<=n; i++) {
+        a[i] = a[i-1] * (inverse ? inv[i] : i);
         if (mod) a[i] %= mod;
     }
     return a;
@@ -259,6 +281,24 @@ vvull get_binomials_matrix (int n, int k, int mod = 0)
         if (mod && C[i][j] >= mod) C[i][j] -= mod;
     }
     return C;
+}
+
+vll generate_Bernoulli_numbers (int n, int mod)
+{
+    vll B(n+1);
+    B[0] = 1;
+    vvull C = get_binomials_matrix(n+1,n+1,mod);
+    vull inv = Algebra::generate_inverses(n+1,mod);
+    for (int i=1; i<=n; i++) {
+        B[i] = (mod-1)*inv[i+1] % mod;
+        ll sum = 0;
+        for (int k=1; k<=i; k++) {
+            sum += C[i+1][k+1]*B[i-k];
+            sum %= mod;
+        }
+        B[i] = B[i]*sum % mod;
+    }
+    return B;
 }
 
 }
