@@ -49,7 +49,7 @@ namespace Algebra
     char MoebiusMu (ull n);
     vchar MoebuisMuSieve (ull n);
     ull EulerPhi (ull n);
-    void EulerPhiSieve (ull n);
+    void EulerPhiSieve (int n, int fill_sum_module = 0);
     ll EulerPhiSum (ll n, int Q);
     ull square_representations_count (ull n);
     ull coprime_count_in_range (ull N, ull from, ull to);
@@ -57,6 +57,7 @@ namespace Algebra
     ull power_fact (ull n, ull p);
     ull count_divisible_by (ull n, ull lb, ull ub, ull mod = 0);
     ull sum_divisible_by (ull n, ull lb, ull ub);
+    vector<pair<ll,pll>> get_division_blocks(ll n);
     char Gauss (vvdd a, vdd &ans);
     char Gauss (vvll a, vll &ans, int Q);
 }

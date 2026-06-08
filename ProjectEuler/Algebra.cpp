@@ -384,18 +384,24 @@ ull EulerPhi (ull n)
     return s;
 }
 
-void EulerPhiSieve (ull n)
+void EulerPhiSieve (int n, int fill_sum_module/*=0*/)
 {
     eulerPhi = vint(n+1);
     vbool sieve(n+1);
     for (int i=1; i<=n; i++) eulerPhi[i] = i;
     for (int i=2; i<=n; i++) {
-        if (!sieve[i]) {
-            for (int j=i; j<=n; j+=i) {
-                sieve[j] = true;
-                eulerPhi[j] /= i;
-                eulerPhi[j] *= i-1;
-            }
+        if (sieve[i]) continue;
+        for (int j=i; j<=n; j+=i) {
+            sieve[j] = true;
+            eulerPhi[j] /= i;
+            eulerPhi[j] *= i-1;
+        }
+    }
+    if (fill_sum_module) {
+        eulerPhiSum = vll(n+1);
+        for (int i=1; i<=n; i++) {
+            eulerPhiSum[i] = eulerPhiSum[i-1] + eulerPhi[i];
+            if (eulerPhiSum[i] >= fill_sum_module) eulerPhiSum[i] -= fill_sum_module;
         }
     }
 }
@@ -496,6 +502,25 @@ ull sum_divisible_by (ull n, ull lb, ull ub)
     ull b = ub - ub%n;
     
     return (a+b)*cnt/2;
+}
+
+vector<pair<ll,pll>> get_division_blocks(ll n)
+{
+    vector<pair<ll,pll>> A;
+    if (n < 1) return A;
+    
+    ll k = 1;
+    while (k <= n) {
+        ll v = n/k; // value n/k for this block
+        ll r = n/v; // upper bound for k for this same value
+        
+        if (r > n) r = n;
+        A.push_back(mp(v,mp(k,r)));
+        
+        k = r+1;
+    }
+    
+    return A;
 }
 
 // TODO: redesign so it can return a subspace of solutions
