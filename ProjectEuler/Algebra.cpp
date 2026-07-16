@@ -504,6 +504,21 @@ ull sum_divisible_by (ull n, ull lb, ull ub)
     return (a+b)*cnt/2;
 }
 
+/* example of return for n = 50:
+50 (1 1)
+25 (2 2)
+16 (3 3)
+12 (4 4)
+10 (5 5)
+8 (6 6)
+7 (7 7)
+6 (8 8)
+5 (9 10)
+4 (11 12)
+3 (13 16)
+2 (17 25)
+1 (26 50)
+ */
 vector<pair<ll,pll>> get_division_blocks(ll n)
 {
     vector<pair<ll,pll>> A;
