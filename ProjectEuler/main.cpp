@@ -98,8 +98,13 @@ int main() {
     vector<pair<ll,pll>> B = get_division_blocks(N);
     for (int i=0; i<(int)B.size(); i++) {
         ll m = B[i].fs, a = B[i].sc.fs, b = B[i].sc.sc;
-        if (a == b) ans += (a*mu[a]+Q)*powmod(A(m),2,Q);
-        else ans += (M(b)-M(a-1)+Q)*powmod(A(m),2,Q);
+        if (a == b) { if (mu[a]) ans += (a*mu[a]+Q)*powmod(A(m),2,Q); }
+        else {
+            ll mdif = M(b) - M(a-1);
+            if (mdif) {
+                ans += (mdif+Q)*powmod(A(m),2,Q);
+            }
+        }
         ans %= Q;
     }
     
