@@ -27,7 +27,7 @@ ll s1 (ll a, ll b) // Sum(k,k=a..b)
 {
     if (a > b) return 0;
     a %= Q; b %= Q;
-    return (b+a)*(b-a+1)%Q*i2%Q;
+    return (b+a)*(b-a+Q+1)%Q*i2%Q;
     //Lnum A(a), B(b);
     //return ((B+A)*(B-A+1)/2)[0] % Q;
 }
@@ -62,13 +62,15 @@ int main() {
     Eratosthenes_sieve(10000000);
     vchar mu = MoebuisMuSieve(10000000);
     
-    const ll N = 10000000;
+    const ll N = 100000000000000;
     
     for (ll k=1; k*k<=N; k++) {
         if (mu[k] == 0) continue;
-        ans += k*(mu[k]+Q)%Q*A(N/(k*k));
+        ans += k*(mu[k]+Q)%Q*A(N/k/k);
         ans %= Q;
     }
+    
+    ans = (ans + Q - s1(1,N)) % Q;
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
