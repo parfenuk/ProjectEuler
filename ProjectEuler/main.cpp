@@ -20,6 +20,33 @@
 using namespace Algebra;
 using namespace Containers;
 
+const int Q = 1000000007;
+const ll i2 = inverse(2,Q);
+
+ll s1 (ll a, ll b) // Sum(k,k=a..b)
+{
+    if (a > b) return 0;
+    a %= Q; b %= Q;
+    return (b+a)*(b-a+1)%Q*i2%Q;
+    //Lnum A(a), B(b);
+    //return ((B+A)*(B-A+1)/2)[0] % Q;
+}
+
+
+ll A (ll n) // A(n) = Sum(d*(n/d),d=1..n)
+{
+    ll sum = 0;
+    vector<pair<ll,pll>> B = get_division_blocks(n);
+    for (int i=0; i<(int)B.size(); i++) {
+        ll m = B[i].fs % Q, a = B[i].sc.fs, b = B[i].sc.sc;
+        sum += m*s1(a,b);
+        sum %= Q;
+    }
+    
+    return sum;
+}
+
+
 int main() {
     clock_t Total_Time = clock();
     cout.precision(12);
@@ -31,6 +58,17 @@ int main() {
 #endif
     
     ull ans = 0;
+    
+    Eratosthenes_sieve(10000000);
+    vchar mu = MoebuisMuSieve(10000000);
+    
+    const ll N = 10000000;
+    
+    for (ll k=1; k*k<=N; k++) {
+        if (mu[k] == 0) continue;
+        ans += k*(mu[k]+Q)%Q*A(N/(k*k));
+        ans %= Q;
+    }
     
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
