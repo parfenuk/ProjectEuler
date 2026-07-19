@@ -409,22 +409,24 @@ void EulerPhiSieve (int n, int fill_sum_module/*=0*/)
 ll EulerPhiSum (ll n, int Q) // return EulerPhi(1) + EulerPhi(2) + ... + EulerPhi(n) modulo Q
 {
     if (n < (ll)eulerPhiSum.size()) return eulerPhiSum[n];
-    if (eulerCache.find(n) != eulerCache.end()) return eulerCache[n];
+    mll::iterator it = eulerCache.find(n);
+    if (it != eulerCache.end()) return it->sc;
     
-    ll u = NumberUtils::lower_integer_sqrt(n);
     ll res;
     if (n % 2 == 0) res = ((n/2)%Q)*((n+1)%Q) % Q;
     else res = (((n+1)/2)%Q)*(n%Q) % Q;
     
-    for (ll i=2; i<=u; i++) {
-        res -= EulerPhiSum(n/i, Q);
+    ll i;
+    for (i=2; i*i<=n; i++) {
+        res -= EulerPhiSum(n/i,Q);
         if (res < 0) res += Q;
     }
     
-    ll ub = u;
-    if (u == n/u) ub--;
+    i--;
+    ll ub = i;
+    if (i == n/i) ub--;
     
-    for (ll i=1; i<=ub; i++) {
+    for (i=1; i<=ub; i++) {
         res -= (((n/i - n/(i+1))%Q)*EulerPhiSum(i,Q) % Q);
         if (res < 0) res += Q;
     }
