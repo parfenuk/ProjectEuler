@@ -13,7 +13,7 @@
 
 typedef int ltype;
 
-#define LSIZE 10
+#define LSIZE 7
 
 class Lnum
 {
@@ -51,6 +51,7 @@ public:
     
     static Lnum abs (Lnum A)  { A.set_sign(false); return A; }
     static Lnum sqrt (const Lnum &A);
+    static Lnum integer_sqrt (const Lnum &A);
     
     static Lnum O;
     static Lnum one;

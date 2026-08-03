@@ -104,6 +104,19 @@ Lnum Lnum::sqrt (const Lnum &A) // smallest x, that x*x <= A
     return ret;
 }
 
+Lnum Lnum::integer_sqrt (const Lnum &A) // if x*x == A, returns x, otherwise returns 0
+{
+    Lnum lb(1), ub = A;
+    while (lb <= ub) {
+        Lnum M = (lb + ub) / 2;
+        Lnum N = M*M;
+        if (N < A) lb = M + one;
+        else if (N > A) ub = M - one;
+        else return M;
+    }
+    return O;
+}
+
 istream& operator>> (istream &is, Lnum &A)
 {
     string S;
