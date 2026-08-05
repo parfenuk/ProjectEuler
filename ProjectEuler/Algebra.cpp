@@ -221,7 +221,7 @@ void Eratosthenes_sieve (int n, bool fill_primes/*=false*/, bool fill_pi/*=false
         }
     }
     
-    if (fill_primes) for (int i=3; i<=n; i++) if (isPrime[i]) primes.push_back(i);
+    if (fill_primes) for (int i=5; i<=n; i+=4) if (isPrime[i]) primes.push_back(i);
     if (fill_pi) {
         primePi = vint(n+1);
         for (int i=2; i<=n; i++) primePi[i] = primePi[i-1] + isPrime[i];
