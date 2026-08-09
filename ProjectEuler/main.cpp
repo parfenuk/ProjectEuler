@@ -32,6 +32,21 @@ int main() {
     
     ull ans = 0;
     
+    const ull N = powmod(10,14);
+    const int Q = 1234567891;
+    vector<pair<ll,pll>> A = get_division_blocks(N);
+    
+    ull n = N%Q;
+    ans = n*(n+1)%Q*powmod(2,(N-2)%(Q-1),Q)%Q;
+    ll i2 = inverse(2,Q);
+    
+    for (int i=0; i<(int)A.size(); i++) {
+        ull a = A[i].fs, k1 = A[i].sc.fs%Q, k2 = A[i].sc.sc%Q;
+        ull sum = (k1+k2)*(Q+k2-k1+1)%Q*i2%Q;
+        sum = sum*powmod(2,(N-a)%(Q-1),Q)%Q;
+        ans = (ans + Q - sum) % Q;
+    }
+    
     cout << endl << ans << endl;
     Total_Time = clock() - Total_Time;
     cout << "Running time: " << ((float)Total_Time)/CLOCKS_PER_SEC << " seconds\n";
