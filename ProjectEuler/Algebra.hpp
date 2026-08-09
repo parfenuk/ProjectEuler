@@ -57,7 +57,7 @@ namespace Algebra
     ull power_fact (ull n, ull p);
     ull count_divisible_by (ull n, ull lb, ull ub, ull mod = 0);
     ull sum_divisible_by (ull n, ull lb, ull ub);
-    vector<pair<ll,pll>> get_division_blocks(ll n);
+    vector<pair<ll,pll>> get_division_blocks (ll n);
     char Gauss (vvdd a, vdd &ans);
     char Gauss (vvll a, vll &ans, int Q);
 }

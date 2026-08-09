@@ -521,7 +521,7 @@ ull sum_divisible_by (ull n, ull lb, ull ub)
 2 (17 25)
 1 (26 50)
  */
-vector<pair<ll,pll>> get_division_blocks(ll n)
+vector<pair<ll,pll>> get_division_blocks (ll n)
 {
     vector<pair<ll,pll>> A;
     if (n < 1) return A;
