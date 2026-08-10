@@ -26,4 +26,5 @@ namespace NumberUtils
     ull ones_mod (ull k, ull mod);
     ll code_from_v (const vint &v, const vint &matches);
     vint v_from_code (ll n, const vint &matches);
+    string decimal_representation (int k);
 }

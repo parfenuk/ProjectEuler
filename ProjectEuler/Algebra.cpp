@@ -387,12 +387,10 @@ ull EulerPhi (ull n)
 void EulerPhiSieve (int n, int fill_sum_module/*=0*/)
 {
     eulerPhi = vint(n+1);
-    vbool sieve(n+1);
     for (int i=1; i<=n; i++) eulerPhi[i] = i;
     for (int i=2; i<=n; i++) {
-        if (sieve[i]) continue;
+        if (eulerPhi[i] != i) continue;
         for (int j=i; j<=n; j+=i) {
-            sieve[j] = true;
             eulerPhi[j] /= i;
             eulerPhi[j] *= i-1;
         }

@@ -141,4 +141,27 @@ vint v_from_code (ll n, const vint &matches)
     return v;
 }
 
+// decimal representation of 1/k. For instance, 1/3 = 0.(3)
+string decimal_representation (int k)
+{
+    if (k == 1) return "1.(0)";
+    vector<pii> step(k);
+    int p = 1;
+    step[p] = mp(k,1);
+    vint a(1);
+    while (true) {
+        a.push_back(10*p/k);
+        p = 10*p%k;
+        if (step[p].fs == k) break;
+        step[p] = mp(k,(int)a.size());
+    }
+    string s = "0.";
+    for (int i=1; i<step[p].sc; i++) s += ('0'+a[i]);
+    s += '(';
+    for (int i=step[p].sc; i<(int)a.size(); i++) s += ('0'+a[i]);
+    s += ')';
+    
+    return s;
+}
+
 }
